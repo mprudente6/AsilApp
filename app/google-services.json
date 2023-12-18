@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "307661631680",
+    "project_id": "asilapp-72b7f",
+    "storage_bucket": "asilapp-72b7f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307661631680:android:a68ef1fd42d344bb5efd25",
+        "android_client_info": {
+          "package_name": "com.example.main2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS-4JF4Sk1w18zkQH28thI5juajO9wi1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307661631680:android:9754532756de9e1c5efd25",
+        "android_client_info": {
+          "package_name": "it.uniba.dib.sms23248"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS-4JF4Sk1w18zkQH28thI5juajO9wi1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
