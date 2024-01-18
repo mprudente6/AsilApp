@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">AsilApp</string>
+    <string name="lingua_prompt">Lingua</string>
+    <string name="tipoUtente_prompt">Vista</string>
+    <string name="genere_prompt">Genere</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
