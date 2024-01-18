@@ -67,7 +67,7 @@ public class InformazioniFragment extends Fragment {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            uid = currentUser.getUid();  // Update the class variable 'uid'
+            uid = currentUser.getUid();
             documentStaff = dbS.collection("STAFF").document(uid);
             fetchDataCentre();
             saveButton.setOnClickListener(v -> saveDataToFirestore());

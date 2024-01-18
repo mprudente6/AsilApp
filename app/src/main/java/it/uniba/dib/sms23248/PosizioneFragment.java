@@ -23,6 +23,9 @@ import org.osmdroid.views.MapView;
 
 import it.uniba.dib.sms23248.GeocodingTask;
 import it.uniba.dib.sms23248.R;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -49,7 +52,10 @@ public class PosizioneFragment extends Fragment {
 
     private ItemizedIconOverlay<OverlayItem> itemizedOverlay;
     private GeoPoint savedCenter;
-    DocumentReference documentRef = db.collection("CENTRI_ACCOGLIENZA").document("C001");
+    DocumentReference documentRef ;
+    FirebaseAuth mauth;
+    FirebaseUser currentUser;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,8 +92,12 @@ public class PosizioneFragment extends Fragment {
             }
         });
         map.getOverlays().add(0, mapEventsOverlay);
+        mauth = FirebaseAuth.getInstance();
+         currentUser = mauth.getCurrentUser();
+        String  uid=currentUser.getUid();
+        retrieveCentroFromStaff(uid);
 
-        retrieveStoredPositionFromFirestore();
+
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -134,7 +144,7 @@ public class PosizioneFragment extends Fragment {
                 });
     }
 
-    private void retrieveStoredPositionFromFirestore() {
+    private void retrieveStoredPositionFromFirestore(DocumentReference documentRef) {
         documentRef.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
@@ -224,5 +234,45 @@ public class PosizioneFragment extends Fragment {
 
         savedCenter = (GeoPoint) map.getMapCenter();
         savedZoomLevel = map.getZoomLevelDouble();
+    }
+
+    private void retrieveCentroFromStaff(String currentUserUid) {
+        // Assuming you have a collection reference for STAFF
+        db.collection("STAFF")
+                .document(currentUserUid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String centro = documentSnapshot.getString("Centro");
+                        if (centro != null) {
+                            // Once you have Centro, query CENTRI_ACCOGLIENZA to find the matching document
+                            retrieveCentroAccoglienzaDocument(centro);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error retrieving Centro from STAFF collection", e);
+                });
+    }
+
+    private void retrieveCentroAccoglienzaDocument(String centro) {
+        // Assuming you have a collection reference for CENTRI_ACCOGLIENZA
+        db.collection("CENTRI_ACCOGLIENZA")
+                .whereEqualTo("Nome", centro)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        // Assuming there is only one matching document, you can retrieve it
+                        DocumentReference centroAccoglienzaRef = queryDocumentSnapshots.getDocuments().get(0).getReference();
+                        // Use centroAccoglienzaRef instead of hardcoding "C001"
+                        documentRef = centroAccoglienzaRef;
+
+                        // Now you can proceed with the rest of your logic
+                        retrieveStoredPositionFromFirestore(documentRef);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error retrieving Centro Accoglienza document", e);
+                });
     }
 }
