@@ -41,12 +41,9 @@ public class InformazioniFragment extends Fragment {
     private final FirebaseFirestore dbS = FirebaseFirestore.getInstance();
     DocumentReference documentStaff;
 
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
 
-    DocumentReference documentRef;
-    CollectionReference staffCollection = dbS.collection("STAFF");
 
     String uid;
 

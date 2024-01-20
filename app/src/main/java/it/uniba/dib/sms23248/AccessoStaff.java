@@ -55,7 +55,14 @@ public class AccessoStaff extends AppCompatActivity {
                 String useremail = email.getText().toString().trim();
                 String userpass = password.getText().toString().trim();
 
-
+                if (useremail.isEmpty()) {
+                    email.setError("Email required!");
+                    return; // Exit the method if email is empty
+                }
+                if (userpass.isEmpty()) {
+                    password    .setError("Password required!");
+                    return; // Exit the method if email is empty
+                }
 
                 // Call getUserRole to retrieve user role
                 getUserRole(useremail, new UserRoleCallback() {
@@ -78,7 +85,7 @@ public class AccessoStaff extends AppCompatActivity {
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(AccessoStaff.this, "Accesso fallito", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AccessoStaff.this, "Password non corretta!", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 } else {

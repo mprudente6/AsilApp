@@ -218,6 +218,32 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         ruoli.put("Ruolo", "RichiedenteAsilo");
                         documentRuoli.set(ruoli);
 
+                        DocumentReference documentCartellaClinica = db.collection("CARTELLA_CLINICA_UTENTI").document(uid);
+                        Map<String, Object> cartella = new HashMap<>();
+                        cartella.put("Utente", uid);
+                        documentCartellaClinica.set(cartella);
+
+                        DocumentReference documentTerapieUtenti = db.collection("TERAPIE_UTENTI").document(uid);
+                        Map<String, Object> terapia = new HashMap<>();
+                        cartella.put("Utente", uid);
+                        documentTerapieUtenti.set(terapia);
+
+                        DocumentReference documentValutazione = db.collection("VALUTAZIONE").document(uid);
+                        Map<String, Object> valutazione = new HashMap<>();
+                        valutazione.put("Utente", uid);
+                        documentValutazione.set(valutazione);
+
+                        DocumentReference documentSpese = db.collection("SPESE").document(uid);
+                        Map<String, Object> spese = new HashMap<>();
+                        spese.put("Utente", uid);
+                        documentSpese.set(spese);
+
+                        DocumentReference documentParametriUtenti = db.collection("PARAMETRI_UTENTI").document(uid);
+                        Map<String, Object> parametri = new HashMap<>();
+                        parametri.put("Utente", uid);
+                        documentParametriUtenti.set(parametri);
+
+
                         // Create a map with the data you want to store
                         Map<String, Object> richiedenteAsilo = new HashMap<>();
                         richiedenteAsilo.put("ID_RichiedenteAsilo", uid);
@@ -230,6 +256,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         richiedenteAsilo.put("Password", useremail);
                         richiedenteAsilo.put("Email", useremail);
                         richiedenteAsilo.put("Centro", centroValue);
+                        richiedenteAsilo.put("Budget", 0);
                         richiedenteAsilo.put("Ruolo", "RichiedenteAsilo");
 
                         documentRichiedenteAsilo.set(richiedenteAsilo)
