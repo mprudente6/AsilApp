@@ -29,4 +29,22 @@
 
     </TextView>
 
+    <Button
+        android:id="@+id/btnInformazioniCentro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Benvenuto"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Informazioni Centro Accoglienza" />
+
+    <Button
+        android:id="@+id/btnApriMappa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnInformazioniCentro"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="Visualizza Mappa Centro" />
+
 </RelativeLayout>
