@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeR">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#fe9e50"
+        app:title="AsilApp"
+        app:titleTextColor="#FFFFFF"
+        app:menu="@menu/menu_bar"/>
+
+    <TextView
+        android:id="@+id/Benvenuto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Benvenuto "
+        android:textSize="16sp"
+        android:layout_marginTop="60dp"
+        android:padding="25dp"
+        android:textStyle="bold">
+
+    </TextView>
+
+</RelativeLayout>

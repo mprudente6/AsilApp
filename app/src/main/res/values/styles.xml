@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#73B6FA</item> <!-- Color of the selected date -->
+        <item name="android:textColorPrimary">#FFFFFF</item> <!-- Color of the text and buttons -->
+
+        <item name="android:background">#FF076AEC</item> <!-- Background color of the DatePickerDialog -->
+    </style>
+</resources>

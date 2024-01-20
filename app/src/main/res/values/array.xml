@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="opzione_lingua">
+        <item>Scegli lingua</item>
+        <item>ITA</item>
+        <item>ENG</item>
+    </array>
+
+    <array name="vista_utente">
+        <item>Scegli utente</item>
+        <item>Richiedente Asilo</item>
+        <item>Staff</item>
+    </array>
+
+    <array name="gender_options">
+
+        <item>M</item>
+        <item>F</item>
+
+    </array>
+
+    <array name="parentele">
+
+        <item>madre</item>
+        <item>padre</item>
+        <item>figlio</item>
+        <item>figlia</item>
+        <item>fratello</item>
+        <item>sorella</item>
+        <item>cugino</item>
+        <item>cugina</item>
+        <item>zio</item>
+        <item>zia</item>
+        <item>nonno</item>
+        <item>nonna</item>
+        <item>nipote(zii)</item>
+        <item>nipote(nonni)</item>
+        <item>moglie</item>
+        <item>marito</item>
+
+
+    </array>
+
+
+</resources>

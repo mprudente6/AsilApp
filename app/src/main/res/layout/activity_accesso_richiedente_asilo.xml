@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:background="@color/white"
+    tools:context=".MainActivity">
+
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fe9e50"
+        app:title="AsilApp"
+        app:titleTextColor="#FFFFFF" />
+
+
+
+    <TextView
+        android:id="@+id/signupText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_marginTop="50dp"
+        android:textAlignment="center"
+        android:textColor="#504F4F"
+        android:textSize="25sp"
+        android:textStyle="normal" />
+
+
+    <LinearLayout
+        android:layout_width="377dp"
+        android:layout_height="521dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:padding="35dp">
+
+
+        <LinearLayout
+
+            android:layout_width="326dp"
+            android:layout_height="144dp"
+
+            android:layout_marginStart="0dp"
+
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/emailIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/untitled_design__3__removebg_preview" />
+
+            <EditText
+                android:id="@+id/Logemail"
+                android:layout_width="238dp"
+                android:layout_height="55dp"
+                android:drawablePadding="8dp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="326dp"
+            android:layout_height="62dp"
+
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="-47dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/passwordIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/passicon_removebg_preview__1_" />
+
+            <EditText
+                android:id="@+id/Logpassword"
+                android:layout_width="238dp"
+                android:layout_height="55dp"
+                android:drawablePadding="10dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/password_persa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password_persa"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="48dp"
+            android:onClick="Recupero_password"
+            android:padding="8dp"
+
+            android:text="Password dimenticata?"
+            android:textAlignment="textStart"
+            android:textColor="#076AEB"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#076AEC"
+            android:text="Accedi"
+            android:textSize="15sp"
+            app:cornerRadius="20dp" />
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

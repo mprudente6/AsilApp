@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "307661631680",
+    "firebase_url": "https://asilapp-72b7f-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "asilapp-72b7f",
     "storage_bucket": "asilapp-72b7f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:307661631680:android:a68ef1fd42d344bb5efd25",
+        "mobilesdk_app_id": "1:307661631680:android:853b69476f90d9995efd25",
         "android_client_info": {
-          "package_name": "com.example.main2"
+          "package_name": "com.example.authversion"
         }
       },
       "oauth_client": [],

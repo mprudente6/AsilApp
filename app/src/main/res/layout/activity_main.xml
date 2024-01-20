@@ -1,18 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="@drawable/gradient">
 
-    <TextView
+    <Spinner
+        android:id="@+id/spinner_lingua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+
+        android:entries="@array/opzione_lingua"
+        android:background="#FFA14F"
+        />
+
+
+    <TextView
+        android:id="@+id/benvenutoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="Benvenuto!"
+        android:textAlignment="center"
+        android:fontFamily="@font/eastseadokdo_font"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/icona"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="35dp"
+        app:srcCompat="@drawable/proposta_1_scritta_barca_removebg_preview__6_">
+
+    </ImageView>
+
+
+
+    <Spinner
+        android:id="@+id/spinner_scelta_Utente"
+        style="@android:style/Widget.DeviceDefault.DropDownItem.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:background="#076AEC"
+        android:entries="@array/vista_utente"
+        android:spinnerMode="dropdown"
+
+        />
+
+</LinearLayout>
+

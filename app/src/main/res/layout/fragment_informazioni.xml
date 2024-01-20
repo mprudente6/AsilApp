@@ -1,0 +1,310 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InformazioniFragment">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.InformazioniFragment">
+
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="saveDataToFirestore"
+            android:layout_marginTop="750dp"
+            android:layout_marginEnd="211dp"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="#076AEC"
+            android:text="Salva">
+
+        </Button>
+
+        <TextView
+            android:id="@+id/textDescr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="551dp"
+            android:padding="20dp"
+            android:text="Descrizione"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+
+            android:layout_centerInParent="true"
+            android:layout_marginStart="-5dp"
+            android:layout_marginTop="557dp"
+            android:layout_marginEnd="3dp"
+            android:orientation="horizontal"
+            android:padding="35dp">
+
+            <EditText
+                android:id="@+id/editDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:inputType="textMultiLine"
+                android:lines="7"
+
+                android:minLines="4"
+                android:padding="7dp"
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="223dp"
+            android:padding="20dp"
+            android:text="E-mail"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+
+
+
+
+
+        <TextView
+            android:id="@+id/textTel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="444dp"
+            android:padding="20dp"
+            android:text="Telefono"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+
+            android:layout_centerInParent="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="458dp"
+            android:layout_marginEnd="-2dp"
+            android:orientation="horizontal"
+            android:padding="35dp">
+
+            <ImageView
+                android:id="@+id/imageTel"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/untitled_design__6__removebg_preview" />
+
+            <EditText
+                android:id="@+id/editTel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:inputType="phone"
+                android:layout_weight="1"
+                />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="330dp"
+            android:padding="20dp"
+            android:text="Sito web"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+
+            android:layout_centerInParent="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="347dp"
+            android:layout_marginEnd="-2dp"
+            android:orientation="horizontal"
+            android:padding="35dp">
+
+            <ImageView
+                android:id="@+id/imageLink"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/untitled_design__5__removebg_preview__1_" />
+
+            <EditText
+                android:id="@+id/editLink"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:inputType="text"
+
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+
+            android:layout_centerInParent="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="236dp"
+            android:layout_marginEnd="-4dp"
+            android:orientation="horizontal"
+            android:padding="35dp">
+
+            <ImageView
+                android:id="@+id/imageEmail"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/untitled_design__3__removebg_preview" />
+
+            <EditText
+                android:id="@+id/editEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:inputType="textEmailAddress"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+
+            android:layout_centerInParent="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="127dp"
+            android:layout_marginEnd="-4dp"
+            android:orientation="horizontal"
+            android:padding="35dp">
+
+            <ImageView
+                android:id="@+id/imageAddress"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/untitled_design__2__removebg_preview" />
+
+            <EditText
+                android:id="@+id/editIndirizzo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:inputType="none"
+                />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="-3dp"
+            android:padding="20dp"
+            android:text="Nome"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textIndirizzo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="110dp"
+            android:padding="20dp"
+            android:text="Indirizzo"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView3"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="-47dp"
+            android:orientation="horizontal"
+            android:padding="35dp">
+
+            <ImageView
+                android:id="@+id/imageHome"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/home" />
+
+            <EditText
+                android:id="@+id/editNome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:inputType="none"
+
+                />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

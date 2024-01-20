@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PosizioneFragment">
+
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+
+    </org.osmdroid.views.MapView>
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/white"
+        android:layout_marginEnd="16dp"/>
+
+    <TextView
+        android:id="@+id/textCoordinate"
+        android:layout_below="@id/searchView"
+        android:layout_width="320dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:padding="12dp"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+
+        android:text=" Latitudine:     \n Longitudine:      " />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textCoordinate"
+        android:layout_marginTop="2dp"
+        android:layout_centerHorizontal="true"
+        android:background="#8FFFFFFF"
+        android:paddingBottom="1dp"
+        android:text="Tocca un punto della mappa per selezionare una posizione"
+        android:textAlignment="center"
+        android:textSize="12dp" />
+</RelativeLayout>
