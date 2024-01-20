@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="opzione_lingua">
+        <item>choose language</item>
+        <item>ITA</item>
+        <item>ENG</item>
+    </array>
+
+    <string name="app_name">AsilApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pw_contenitore1">Enter the container password to open it</string>
+    <string name="pw_contenitore2">Enter the container code and password to open it</string>
+    <string name="pw_contenitore_codice">Code</string>
+    <string name="pw_contenitore_password">Password</string>
+    <string name="pw_contenitore_invia">Send</string>
+
+    <string name="scansione">Open biomedical container</string>
+
+    <string name="mainActivity_apri_contenitore">Open container</string>
+    <string name="mainActivity_mostra_qr_code">Show QR Code</string>
+</resources>
