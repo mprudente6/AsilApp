@@ -5,4 +5,16 @@
     <string name="genere_prompt">Genere</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="pw_contenitore1">Inserisci la password del contenitore per aprirlo</string>
+    <string name="pw_contenitore2">Inserisci il codice la password del contenitore per aprirlo</string>
+    <string name="pw_contenitore_codice">Codice</string>
+    <string name="pw_contenitore_password">Password</string>
+    <string name="pw_contenitore_invia">Invia</string>
+
+    <string name="scansione">Apri il contenitore biomedicale</string>
+
+    <string name="mainActivity_apri_contenitore">Apri contenitore</string>
+    <string name="mainActivity_mostra_qr_code">Mostra codice QR</string>
 </resources>
