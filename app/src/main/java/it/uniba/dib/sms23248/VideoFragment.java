@@ -44,7 +44,7 @@ import java.util.List;
 
 public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClickListener, VideoAdapter.OnDownloadClickListener{
 
-    private static final int PICK_VIDEO_REQUEST = 1;
+
     private static final int PICK_VIDEO_REQUEST_GEN = 1;
     private static final int PICK_VIDEO_REQUEST_DONNA = 2;
     private View view;

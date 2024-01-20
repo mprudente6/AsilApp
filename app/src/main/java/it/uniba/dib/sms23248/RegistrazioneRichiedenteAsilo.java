@@ -186,6 +186,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
     private void registerUser(String uid) {
         String useremail = email.getText().toString().trim();
+        String userpass=password.getText().toString().trim();
         String nomeValue = nome.getText().toString().trim();
         String cognomeValue = cognome.getText().toString().trim();
         String cellulareValue = cellulare.getText().toString().trim();
@@ -253,7 +254,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         richiedenteAsilo.put("LuogoNascita", luogonascitaValue);
                         richiedenteAsilo.put("DataNascita", nascitaValue);
                         richiedenteAsilo.put("Genere", genereValue);
-                        richiedenteAsilo.put("Password", useremail);
+                        richiedenteAsilo.put("Password", userpass);
                         richiedenteAsilo.put("Email", useremail);
                         richiedenteAsilo.put("Centro", centroValue);
                         richiedenteAsilo.put("Budget", 0);
