@@ -45,6 +45,6 @@
         android:layout_below="@+id/btnInformazioniCentro"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:text="Visualizza Mappa Centro" />
+        android:text="Visualizza Mappa Centro"/>
 
 </RelativeLayout>

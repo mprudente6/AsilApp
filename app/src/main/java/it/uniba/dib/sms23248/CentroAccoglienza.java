@@ -89,6 +89,7 @@ public class CentroAccoglienza extends AppCompatActivity {
                     latitude = documentSnapshot.getDouble("latitude");
                     longitude = documentSnapshot.getDouble("longitude");
                     zoomlevel = documentSnapshot.getDouble("zoomlevel");
+
                 }
             }
         });

@@ -68,6 +68,7 @@ public class MappaCentro extends AppCompatActivity {
 
                     map.getOverlays().add(startMarker);
                     mapController.setCenter(startPoint);
+
                 }
             }
         });
