@@ -40,14 +40,12 @@
         android:id="@+id/frameLayoutPwContenitore"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:layout_editor_absoluteX="-16dp" />
 
     <FrameLayout
         android:id="@+id/frameLayoutQrCode"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="-138dp" />
 
@@ -58,6 +56,5 @@
         app:layout_constraintBottom_toTopOf="@+id/generaQrRichiedente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

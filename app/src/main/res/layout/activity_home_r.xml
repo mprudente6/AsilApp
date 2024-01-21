@@ -47,4 +47,23 @@
         android:layout_centerHorizontal="true"
         android:text="Visualizza Mappa Centro"/>
 
+    <FrameLayout
+        android:id="@+id/frameLayoutQrCode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="-138dp" />
+
+    <Button
+        android:id="@+id/generaQrRichiedente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnInformazioniCentro"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="103dp"
+        android:text="Genera QR CODE" />
+
 </RelativeLayout>

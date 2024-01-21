@@ -16,6 +16,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -79,6 +81,17 @@ public class HomeR extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent i = new Intent(HomeR.this, MappaCentro.class);
                     startActivity(i);
+                }
+            });
+
+            Button btnGeneraQR = findViewById(R.id.generaQrRichiedente);
+            btnGeneraQR.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment fragmentQrCode = null;
+                    fragmentQrCode = new qrCodeGenerato();
+                    getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutQrCode, fragmentQrCode)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                 }
             });
         }

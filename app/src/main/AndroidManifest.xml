@@ -26,6 +26,12 @@
         android:theme="@style/Theme.AsilApp"
         tools:targetApi="31">
         <activity
+            android:name=".pwContenitore"
+            android:exported="false" />
+        <activity
+            android:name=".qrCodeGenerato"
+            android:exported="false" />
+        <activity
             android:name=".MappaCentro"
             android:exported="false" />
         <activity
