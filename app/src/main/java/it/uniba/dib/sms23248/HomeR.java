@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,8 +43,9 @@ public class HomeR extends AppCompatActivity {
         benvenuto=findViewById(R.id.Benvenuto);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
+
+        ImageView avatar = findViewById(R.id.avatar);
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -94,6 +96,8 @@ public class HomeR extends AppCompatActivity {
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                 }
             });
+
+            avatar.setOnClickListener(view -> openProfiloScreen());
         }
     }
 
@@ -145,4 +149,8 @@ public class HomeR extends AppCompatActivity {
         showLogoutConfirmationDialog();
     }
 
+    private void openProfiloScreen() {
+        Intent intent = new Intent(this, ProfiloActivity.class);
+        startActivity(intent);
+    }
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfiloActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#fe9e50"
+        app:title="AsilApp"
+        app:titleTextColor="#FFFFFF"
+        app:menu="@menu/menu_bar"/>
+
+    <!-- Title: Il mio Profilo -->
+    <TextView
+        android:id="@+id/titleServices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Il mio Profilo"
+        android:textSize="40sp"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Avatar Image -->
+    <ImageView
+        android:id="@+id/bigAvatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_avatar"
+        android:layout_below="@id/titleServices"
+        android:layout_marginTop="14dp"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/schedaAnagraficaButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bigAvatar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:onClick="goToSchedaAnagraficaScreen"
+        android:text="SCHEDA ANAGRAFICA" />
+
+    <Button
+        android:id="@+id/bilancioSpeseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/schedaAnagraficaButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:onClick="goToBilancioSpeseScreen"
+        android:text="BILANCIO SPESE" />
+
+    <TextView
+        android:id="@+id/valutaAppTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bilancioSpeseButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:minHeight="48dp"
+        android:onClick="goToValutazioneScreen"
+        android:text="Valuta l'app"
+        android:textStyle="bold" />
+
+</RelativeLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ValutazioneActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#fe9e50"
+        app:title="AsilApp"
+        app:titleTextColor="#FFFFFF"
+        app:menu="@menu/menu_bar"/>
+
+    <!-- Title: Trovi che l’app sia utile? -->
+    <TextView
+        android:id="@+id/titleUsefulness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trovi che l’app sia utile?"
+        android:textSize="24sp"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleUsefulness"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Valuta l’app lasciando un punteggio da 1 a 5 stelle (da pessimo a eccellente)" />
+
+    <!-- Star Rating -->
+    <!-- RatingBar for user's app evaluation -->
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:layout_below="@id/description"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/submitRatingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Conferma Valutazione"
+        android:layout_below="@id/ratingBar"
+        android:layout_marginTop="32dp"
+        android:layout_centerHorizontal="true"
+        android:enabled="false" />
+</RelativeLayout>
