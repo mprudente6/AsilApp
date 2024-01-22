@@ -12,6 +12,12 @@
         <item>Staff</item>
     </array>
 
+    <array name="utente_demo">
+        <item>utente demo</item>
+        <item>Richiedente Asilo</item>
+        <item>Staff</item>
+    </array>
+
     <array name="gender_options">
 
         <item>M</item>

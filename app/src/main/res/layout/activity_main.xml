@@ -66,6 +66,20 @@
 
         />
 
+    <Spinner
+        android:id="@+id/spinner_utenteDemo"
+        style="@android:style/Widget.DeviceDefault.DropDownItem.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="25dp"
+        android:background="#076AEC"
+        android:entries="@array/utente_demo"
+        android:spinnerMode="dropdown"
+
+        />
+
 </LinearLayout>
 
 </ScrollView>
