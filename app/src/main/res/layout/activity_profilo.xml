@@ -15,7 +15,7 @@
         android:background="#fe9e50"
         app:title="AsilApp"
         app:titleTextColor="#FFFFFF"
-        app:menu="@menu/menu_bar"/>
+       />
 
     <!-- Title: Il mio Profilo -->
     <TextView
