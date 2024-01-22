@@ -123,7 +123,7 @@ public class AccessoStaff extends AppCompatActivity {
             }
         });
 
-        if (NetworkUtils.isNetworkAvailable(AccessoStaff.this)) {
+
 
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +131,7 @@ public class AccessoStaff extends AppCompatActivity {
                 String userEmail = email.getText().toString().trim();
 
                 if (!userEmail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
+                    if (NetworkUtils.isNetworkAvailable(AccessoStaff.this)) {
                     mAuth.sendPasswordResetEmail(userEmail)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -156,13 +157,15 @@ public class AccessoStaff extends AppCompatActivity {
                                 }
                             });
                 } else {
+                    // No internet connection, show a message to the user
+                    Toast.makeText(AccessoStaff.this, "No internet connection", Toast.LENGTH_LONG).show();
+                }
+                } else {
                     Toast.makeText(AccessoStaff.this, "Inserisci email prima di resettare la password", Toast.LENGTH_LONG).show();
                 }
             }
         });
-        } else {
-            Toast.makeText(AccessoStaff.this, "No internet connection", Toast.LENGTH_LONG).show();
-        }
+
     }
 
     private void getUserRole(String useremail, final UserRoleCallback callback) {

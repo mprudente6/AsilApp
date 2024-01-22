@@ -85,11 +85,17 @@ public class PosizioneFragment extends Fragment {
         MapEventsOverlay mapEventsOverlay = new MapEventsOverlay(new MapEventsReceiver() {
             @Override
             public boolean singleTapConfirmedHelper(GeoPoint p) {
-                Log.d(TAG, "Map tapped at: " + p.getLatitude() + ", " + p.getLongitude());
 
-                savedZoomLevel = map.getZoomLevelDouble();
-                saveChosenPositionToFirestore(p);
-                updateCoordinatesTextView( p);
+                if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                    Log.d(TAG, "Map tapped at: " + p.getLatitude() + ", " + p.getLongitude());
+
+                    savedZoomLevel = map.getZoomLevelDouble();
+                    saveChosenPositionToFirestore(p);
+                    updateCoordinatesTextView( p);
+                } else {
+                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                }
+
 
 
                 return true;

@@ -2,6 +2,8 @@ package it.uniba.dib.sms23248;
 
 
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -75,7 +77,17 @@ NetworkChangeReceiver networkChangeReceiver;
             uid = currentUser.getUid();
             documentStaff = dbS.collection("STAFF").document(uid);
             fetchDataCentre();
-            saveButton.setOnClickListener(v -> saveDataToFirestore());
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                        saveDataToFirestore();
+                    } else {
+                        Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
         } else {
             // Handle the case where the current user is null
             Log.d(TAG, "Current user is null");

@@ -106,13 +106,18 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         progressDialog.setMessage("Uploading video...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setCancelable(false);
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                targetFolder = "videos";
-                openVideoChooser(PICK_VIDEO_REQUEST_GEN);
-            }
-        });
+
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            uploadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    targetFolder = "videos";
+                    openVideoChooser(PICK_VIDEO_REQUEST_GEN);
+                }
+            });
+        } else {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+        }
 
         uploadButton2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,8 +134,12 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
 
     @Override
     public void onDeleteClick(VideoModel videoModel, String targetFolder) {
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            showDeleteConfirmationDialog(videoModel, targetFolder);
+        } else {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+        }
 
-        showDeleteConfirmationDialog(videoModel, targetFolder);
     }
 
     @Override
@@ -164,10 +173,15 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
     }
 
     private void openVideoChooser(int requestCode) {
-        Intent intent = new Intent();
-        intent.setType("video/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), requestCode);
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            Intent intent = new Intent();
+            intent.setType("video/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Video"), requestCode);
+        } else {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override

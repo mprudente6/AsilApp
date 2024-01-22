@@ -107,7 +107,12 @@ public class DocumentiFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(pdfUri!=null){
-                    uploadFile(pdfUri);
+                    if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                        uploadFile(pdfUri);
+                    } else {
+                        Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                    }
+
                 }
                 else
                     Toast.makeText(requireContext(),"Seleziona un file",Toast.LENGTH_SHORT).show();
@@ -117,14 +122,18 @@ public class DocumentiFragment extends Fragment {
         fileAdapter.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(UploadedFile uploadedFile) {
-                // Handle item click (e.g., open the file or perform some action)
+
                 downloadFile(uploadedFile.getFileUrl(), uploadedFile.getFileName());
             }
 
             @Override
             public void onDeleteClick(UploadedFile uploadedFile) {
-                // Handle delete click (e.g., show a confirmation dialog and delete the file)
-                showDeleteConfirmationDialog(uploadedFile);
+                if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                    showDeleteConfirmationDialog(uploadedFile);
+                } else {
+                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 

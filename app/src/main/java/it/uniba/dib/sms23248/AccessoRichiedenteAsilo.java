@@ -121,13 +121,14 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                 }
             }
         });
-        if (NetworkUtils.isNetworkAvailable(AccessoRichiedenteAsilo.this)) {
+
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String userEmail = email.getText().toString().trim();
 
                 if (!userEmail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
+                    if (NetworkUtils.isNetworkAvailable(AccessoRichiedenteAsilo.this)) {
                     mAuth.sendPasswordResetEmail(userEmail)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
@@ -152,15 +153,16 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                                     }
                                 }
                             });
+                    } else {
+                        // No internet connection, show a message to the user
+                        Toast.makeText(AccessoRichiedenteAsilo.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     Toast.makeText(AccessoRichiedenteAsilo.this, "Inserisci email prima di resettare la password", Toast.LENGTH_LONG).show();
                 }
             }
         });
-        } else {
-            // No internet connection, show a message to the user
-            Toast.makeText(AccessoRichiedenteAsilo.this, "No internet connection", Toast.LENGTH_LONG).show();
-        }
+
     }
 
     private void getUserRole(String useremail, final UserRoleCallback callback) {
