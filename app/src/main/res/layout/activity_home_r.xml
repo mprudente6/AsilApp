@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".HomeR">
 
+
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -25,18 +27,19 @@
         android:textSize="16sp"
         android:layout_marginTop="60dp"
         android:padding="25dp"
-        android:textStyle="bold">
+        android:textStyle="normal">
     </TextView>
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/profilllle_removebg_preview"
+
         android:layout_alignParentEnd="true"
         android:layout_alignEnd="@id/Benvenuto"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="00dp"
         android:clickable="true"
         android:focusable="true" />
 
@@ -44,7 +47,7 @@
         android:id="@+id/btnInformazioniCentro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/avatar"
+        android:layout_below="@id/Benvenuto"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Informazioni Centro Accoglienza" />
@@ -62,6 +65,8 @@
         android:id="@+id/frameLayoutQrCode"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="-138dp" />
 

@@ -25,7 +25,7 @@
         android:textSize="16sp"
         android:layout_marginTop="60dp"
         android:padding="25dp"
-        android:textStyle="bold">
+        android:textStyle="normal">
 
     </TextView>
 

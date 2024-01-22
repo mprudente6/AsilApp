@@ -18,7 +18,13 @@
         <item>F</item>
 
     </array>
-
+    <string-array name="tipi">
+        <item>igiene</item>
+        <item>cibo</item>
+        <item>farmaci</item>
+        <item>ricariche</item>
+        <item>altro</item>
+    </string-array>
     <array name="parentele">
 
         <item>madre</item>

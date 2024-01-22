@@ -24,7 +24,7 @@
         android:id="@+id/signupText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="Login Staff"
         android:layout_marginTop="50dp"
         android:textAlignment="center"
         android:textColor="#504F4F"

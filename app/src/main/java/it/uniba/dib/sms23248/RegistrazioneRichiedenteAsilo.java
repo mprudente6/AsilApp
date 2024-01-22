@@ -3,8 +3,11 @@ package it.uniba.dib.sms23248;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,11 +65,14 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
     FirebaseUser currentUserS;
     String uidStaff;
 
+    SpeseModel sharedViewModel;
+    private BilancioFragment bilancioFragment;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrazione_richiedente_asilo);
-
+        sharedViewModel = new ViewModelProvider(this).get(SpeseModel.class);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         register = findViewById(R.id.confirm_registration);
@@ -77,6 +83,8 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         cellulare = findViewById(R.id.cell);
         luogonascita = findViewById(R.id.luogoNascita);
         progressBar=findViewById(R.id.progressBar);
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -257,8 +265,10 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         richiedenteAsilo.put("Password", userpass);
                         richiedenteAsilo.put("Email", useremail);
                         richiedenteAsilo.put("Centro", centroValue);
-                        richiedenteAsilo.put("Budget", 0);
+                        richiedenteAsilo.put("Budget", 60);
                         richiedenteAsilo.put("Ruolo", "RichiedenteAsilo");
+
+
 
                         documentRichiedenteAsilo.set(richiedenteAsilo)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -266,14 +276,17 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         getStaffCredentialsAndSignIn(uidStaff);
                                         progressBar.setVisibility(View.GONE);
-                                        Toast.makeText(RegistrazioneRichiedenteAsilo.this, "Registration successful", Toast.LENGTH_SHORT).show();
 
+                                        Toast.makeText(RegistrazioneRichiedenteAsilo.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                        scheduleMonthlyAlarm(uid);
                                         // Add a delay before starting the HomeS activity
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
                                                 Intent intent= new Intent(RegistrazioneRichiedenteAsilo.this, HomeS.class);
-                                                // Remove transition animation
+
+
+
 
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                                                 startActivity(intent);
@@ -281,7 +294,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
 
                                             }
-                                        }, 3000); // Delay of 1000 milliseconds (1 second)
+                                        }, 1000); // Delay of 1000 milliseconds (1 second)
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -292,7 +305,12 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                         Log.e(TAG, "Registration failed: " + e.getMessage());
                                     }
                                 });
-                    }else {
+                    }
+
+
+
+
+                    else {
                         progressBar.setVisibility(View.GONE);
                         Log.e(TAG, "Staff document doesn't exist");
                         // Handle the case where the Staff document doesn't exist
@@ -338,6 +356,8 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         String phoneRegex = "^[+]?[0-9]{10,13}$";
         return phoneNumber.matches(phoneRegex);
     }
+
+
     private void getStaffCredentialsAndSignIn(String uid) {
         // Reference to the "Staff" collection with the user UID as the document ID
         DocumentReference documentStaff = db.collection("STAFF").document(uidStaff);
@@ -385,5 +405,32 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         });
     }
 
+    private void scheduleMonthlyAlarm(String uid) {
+        // Create an Intent for the BroadcastReceiver
+
+        Log.d("BUDGET", "scheduleMonthlyAlarm called ");
+        Intent intent = new Intent(this, MonthlyUpdateReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        intent.putExtra("UID", uid);
+        // Get the AlarmManager service
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        // Set the alarm to start on the 1st day of every month
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.DAY_OF_MONTH, 23);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);  // Midnight
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        // Set to the 1st day
+
+        // Set the repeating alarm for the 1st day of every month
+        alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,  // Repeat daily to account for variations in month lengths
+                pendingIntent
+        );
+    }
 
 }

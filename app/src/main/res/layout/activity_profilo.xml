@@ -23,8 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Il mio Profilo"
-        android:textSize="40sp"
-        android:layout_marginTop="70dp"
+        android:textSize="30sp"
+        android:layout_marginTop="110dp"
         android:layout_centerHorizontal="true" />
 
     <!-- Avatar Image -->
@@ -32,7 +32,7 @@
         android:id="@+id/bigAvatar"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/ic_avatar"
+        android:src="@drawable/profilllle_removebg_preview"
         android:layout_below="@id/titleServices"
         android:layout_marginTop="14dp"
         android:layout_centerHorizontal="true"/>
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bigAvatar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="25dp"
         android:onClick="goToSchedaAnagraficaScreen"
         android:text="SCHEDA ANAGRAFICA" />
 
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/schedaAnagraficaButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="25dp"
         android:onClick="goToBilancioSpeseScreen"
         android:text="BILANCIO SPESE" />
 
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bilancioSpeseButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="25dp"
         android:minHeight="48dp"
         android:onClick="goToValutazioneScreen"
         android:text="Valuta l'app"
