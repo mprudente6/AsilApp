@@ -82,7 +82,7 @@ public class BilancioFragment extends Fragment {
 
 
   private Button refresh;
-
+   TextView budget;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class BilancioFragment extends Fragment {
         textMese = view.findViewById(R.id.textMese);
         loadingIndicator = view.findViewById(R.id.progressBar);
          refresh=view.findViewById(R.id.refresh);
-
+         budget=view.findViewById(R.id.textBilancio);
 
            showLoadingIndicator();
            loadInitialBudget();
@@ -179,28 +179,7 @@ public class BilancioFragment extends Fragment {
                 });
     }
 
-    void scheduleBudgetUpdates(String uid) {
-        Log.d("BUDGET", "scheduleBudgetUpdates() called");
 
-        // Create the runnable
-        Runnable budgetUpdateRunnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Log.d("BUDGET", "Delayed task running");
-                    // Update budget every 30 days
-                    updateBudget(60.0, uid);
-                    Log.d("BUDGET", "Delayed ended");
-                    handler.postDelayed(this, updateInterval);
-                } catch (Exception e) {
-                    Log.e("BUDGET", "Exception in delayed task: " + e.getMessage());
-                }
-            }
-        };
-
-        // Post the initial delay explicitly
-        handler.postDelayed(budgetUpdateRunnable, updateInterval);
-    }
 
 
     private void updateBudget(double amount, String uid) {
@@ -225,13 +204,9 @@ public class BilancioFragment extends Fragment {
     }
 
     private void updateBudgetTextView(Double currentBudget) {
-        SpannableString spannableString = new SpannableString(String.format(Locale.getDefault(), "Budget:\n\n        %.2f€", currentBudget));
+        String budgetString = String.format(Locale.getDefault(), "%.2f€", currentBudget);
 
-// Set a larger text size for the currentBudget part
-        spannableString.setSpan(new RelativeSizeSpan(1.5f), 8, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-// Apply the SpannableString to the TextView
-        budgetTextView.setText(spannableString);
+        budget.setText(budgetString);
 
 
 
