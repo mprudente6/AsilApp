@@ -16,7 +16,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -97,6 +96,15 @@ public class HomeR extends AppCompatActivity {
                 }
             });
 
+            Button btnMedia = findViewById(R.id.btnMedia);
+            btnMedia.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(HomeR.this, MediaRichiedente.class);
+                    startActivity(i);
+                }
+            });
+
             Button btnGeneraQR = findViewById(R.id.generaQrRichiedente);
             btnGeneraQR.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,8 +115,6 @@ public class HomeR extends AppCompatActivity {
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                 }
             });
-
-
         }
     }
 

@@ -85,6 +85,18 @@ public class qrCodeGenerato extends Fragment {
         btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
         btnGenaraQr.setVisibility(View.INVISIBLE);
 
+        Button btnMedia = (Button) getActivity().findViewById(R.id.btnMedia);
+        btnMedia = (Button) getActivity().findViewById(R.id.btnMedia);
+        btnMedia.setVisibility(View.INVISIBLE);
+
+        Button btnApriMappa = (Button) getActivity().findViewById(R.id.btnApriMappa);
+        btnApriMappa = (Button) getActivity().findViewById(R.id.btnApriMappa);
+        btnApriMappa.setVisibility(View.INVISIBLE);
+
+        Button btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
+        btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
+        btnInformazioniCentro.setVisibility(View.INVISIBLE);
+
         /*Spinner spinnerLingua = (Spinner) getActivity().findViewById(R.id.languageList);
         spinnerLingua = (Spinner) getActivity().findViewById(R.id.languageList);
         spinnerLingua.setVisibility(View.INVISIBLE);*/
@@ -108,6 +120,18 @@ public class qrCodeGenerato extends Fragment {
                 Button btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
                 btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
                 btnGenaraQr.setVisibility(View.VISIBLE);
+
+                Button btnMedia = (Button) getActivity().findViewById(R.id.btnMedia);
+                btnMedia = (Button) getActivity().findViewById(R.id.btnMedia);
+                btnMedia.setVisibility(View.VISIBLE);
+
+                Button btnApriMappa = (Button) getActivity().findViewById(R.id.btnApriMappa);
+                btnApriMappa = (Button) getActivity().findViewById(R.id.btnApriMappa);
+                btnApriMappa.setVisibility(View.VISIBLE);
+
+                Button btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
+                btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
+                btnInformazioniCentro.setVisibility(View.VISIBLE);
 
                 getFragmentManager().beginTransaction()
                         .remove(qrCodeGenerato.this).commit();

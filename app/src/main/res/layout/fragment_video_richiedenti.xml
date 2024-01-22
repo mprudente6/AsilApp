@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VideoFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/Genlayout"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="100dp"
+            android:padding="20dp"/>
+
+        <ScrollView
+            android:id="@+id/scrollViewGen"
+            android:layout_width="match_parent"
+            android:layout_height="226dp"
+
+            android:layout_below="@id/Genlayout"
+            android:layout_marginTop="-10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewGen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" />
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/Donnalayout"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="0dp"
+            android:layout_below="@id/scrollViewGen"
+            android:padding="20dp"/>
+
+
+        <ScrollView
+            android:id="@+id/scrollViewDonna"
+            android:layout_width="match_parent"
+            android:layout_height="262dp"
+            android:layout_below="@id/Donnalayout"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="-26dp"
+            android:layout_marginBottom="9dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewDonna"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" />
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+</ScrollView>

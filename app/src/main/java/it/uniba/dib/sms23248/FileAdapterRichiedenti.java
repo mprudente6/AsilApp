@@ -12,37 +12,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
+public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
 
     private List<UploadedFile> fileList;
-    private DocumentiFragment documentiFragment;
+    private DocumentiFragmentRichiedenti documentiFragment;
 
-    public FileAdapter(List<UploadedFile> fileList, DocumentiFragment documentiFragment) {
+    public FileAdapterRichiedenti(List<UploadedFile> fileList, DocumentiFragmentRichiedenti documentiFragment) {
         this.fileList = fileList;
         this.documentiFragment = documentiFragment;
     }
 
     public interface OnItemClickListener {
         void onItemClick(UploadedFile uploadedFile);
-
-        void onDeleteClick(UploadedFile uploadedFile);
     }
 
-    private OnItemClickListener listener;
+    private FileAdapter.OnItemClickListener listener;
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(FileAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_file, parent, false);
-        return new ViewHolder(view);
+    public FileAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_file_richiedenti, parent, false);
+        return new FileAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FileAdapter.ViewHolder holder, int position) {
         UploadedFile uploadedFile = fileList.get(position);
         holder.fileNameTextView.setText(uploadedFile.getFileName());
 
@@ -56,21 +54,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
                 }
             }
         });
-
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onDeleteClick(uploadedFile);
-                }
-            }
-        });
     }
-
-
-
-
-
 
     @Override
     public int getItemCount() {
@@ -85,9 +69,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
         public ViewHolder(View view) {
             super(view);
             fileNameTextView = view.findViewById(R.id.fileNameTextView);
-            deleteButton = view.findViewById(R.id.deleteButton);
         }
     }
 }
-
 

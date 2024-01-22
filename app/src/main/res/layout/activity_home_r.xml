@@ -80,13 +80,19 @@
         android:id="@+id/generaQrRichiedente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnInformazioniCentro"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="101dp"
-        android:layout_marginTop="93dp"
-        android:layout_marginEnd="103dp"
+        android:layout_below="@+id/btnMedia"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
         android:text="Genera QR CODE" />
+
+    <Button
+        android:id="@+id/btnMedia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnApriMappa"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="Visualizza Media" />
 
 </RelativeLayout>
 </ScrollView>
