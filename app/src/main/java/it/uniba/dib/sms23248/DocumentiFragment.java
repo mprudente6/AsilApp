@@ -52,6 +52,8 @@ import java.util.List;
 
 public class DocumentiFragment extends Fragment {
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
     View view;
     Button selectFile, upload;
     TextView notification;
@@ -71,7 +73,11 @@ public class DocumentiFragment extends Fragment {
         selectFile = view.findViewById(R.id.selectFile);
         upload = view.findViewById(R.id.upload);
         notification = view.findViewById(R.id.notification);
+        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
 
+            return view;
+        }
 
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -398,6 +404,14 @@ public class DocumentiFragment extends Fragment {
                 Toast.makeText(requireContext(), "Failed to delete file from Storage: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public void onDestroyView() {
+        // Unregister the BroadcastReceiver when the fragment is destroyed
+        if (networkChangeReceiver != null) {
+            requireContext().unregisterReceiver(networkChangeReceiver);
+        }
+        super.onDestroyView();
     }
 }
 

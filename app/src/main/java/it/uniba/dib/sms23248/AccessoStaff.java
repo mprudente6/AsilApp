@@ -52,6 +52,7 @@ public class AccessoStaff extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (NetworkUtils.isNetworkAvailable(AccessoStaff.this)) {
                 String useremail = email.getText().toString().trim();
                 String userpass = password.getText().toString().trim();
 
@@ -108,6 +109,10 @@ public class AccessoStaff extends AppCompatActivity {
                         Toast.makeText(AccessoStaff.this, errorMessage, Toast.LENGTH_SHORT).show();
                     }
                 });
+                } else {
+                    // No internet connection, show a message to the user
+                    Toast.makeText(AccessoStaff.this, "No internet connection", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -117,6 +122,8 @@ public class AccessoStaff extends AppCompatActivity {
                 startActivity(new Intent(AccessoStaff.this, RegistrazioneStaff.class));
             }
         });
+
+        if (NetworkUtils.isNetworkAvailable(AccessoStaff.this)) {
 
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +160,9 @@ public class AccessoStaff extends AppCompatActivity {
                 }
             }
         });
+        } else {
+            Toast.makeText(AccessoStaff.this, "No internet connection", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void getUserRole(String useremail, final UserRoleCallback callback) {

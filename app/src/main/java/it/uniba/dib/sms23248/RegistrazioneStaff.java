@@ -130,6 +130,7 @@ public class RegistrazioneStaff extends AppCompatActivity {
                     return; // Stop registration if phone number is not valid
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
+                    if (NetworkUtils.isNetworkAvailable(RegistrazioneStaff.this)) {
                     mAuth.createUserWithEmailAndPassword(useremail, userpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -178,7 +179,9 @@ public class RegistrazioneStaff extends AppCompatActivity {
                                 Toast.makeText(RegistrazioneStaff.this,   task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
-                    });
+                    }); } else {
+                    Toast.makeText(RegistrazioneStaff.this, "No internet connection", Toast.LENGTH_LONG).show();
+                }
                 }
             }
         });

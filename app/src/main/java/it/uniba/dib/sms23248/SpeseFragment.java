@@ -1,6 +1,8 @@
 package it.uniba.dib.sms23248;
 
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import it.uniba.dib.sms23248.R;
 import com.github.mikephil.charting.animation.Easing;
@@ -45,10 +48,12 @@ public class SpeseFragment extends Fragment {
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
     FirebaseUser currentUser= mAuth.getCurrentUser();
     String uid=currentUser.getUid();
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_spese, container, false);
+
 
         db = FirebaseFirestore.getInstance();
         textView=view.findViewById(R.id.textView1);
@@ -56,13 +61,18 @@ public class SpeseFragment extends Fragment {
 
         pieChart.getDescription().setEnabled(false);
 
-        // Call method to fetch initial data and set up the listener
-        fetchDataAndSetupListener();
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            fetchDataAndSetupListener();
+        } else {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+        }
+
 
         return view;
     }
 
     private void fetchDataAndSetupListener() {
+
         db.collection("SPESE").document(uid).collection("Subspese")
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
@@ -80,6 +90,10 @@ public class SpeseFragment extends Fragment {
     }
 
     private void calculatePercentagesAndDisplayChart(List<DocumentSnapshot> documents) {
+        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            return;
+        }
         Map<String, Float> tipoTotalPrice = new HashMap<>();
         int currentMonth = getCurrentMonth();
 
@@ -153,4 +167,13 @@ public class SpeseFragment extends Fragment {
         calendar.setTime(new Date());
         return calendar.get(Calendar.MONTH);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (networkChangeReceiver != null) {
+            getActivity().unregisterReceiver(networkChangeReceiver);
+        }
+    }
+
 }

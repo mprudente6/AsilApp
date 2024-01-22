@@ -57,66 +57,71 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String useremail = email.getText().toString().trim();
-                String userpass = password.getText().toString().trim();
+                if (NetworkUtils.isNetworkAvailable(AccessoRichiedenteAsilo.this)) {
+                    String useremail = email.getText().toString().trim();
+                    String userpass = password.getText().toString().trim();
 
+                    if (useremail.isEmpty()) {
+                        email.setError("Email required!");
+                        return; // Exit the method if email is empty
+                    }
 
-                if (useremail.isEmpty()) {
-                    email.setError("Email required!");
-                    return; // Exit the method if email is empty
-                }
-                if (userpass.isEmpty()) {
-                    password.setError("Password required!");
-                    return; // Exit the method if email is empty
-                }
+                    if (userpass.isEmpty()) {
+                        password.setError("Password required!");
+                        return; // Exit the method if email is empty
+                    }
 
-                // Call getUserRole to retrieve user role
-                getUserRole(useremail, new UserRoleCallback() {
-                    @Override
-                    public void onSuccess(String userRole) {
-                        // Check if the retrieved role is "RichiedenteAsilo"
-                        if ("RichiedenteAsilo".equals(userRole)) {
-                            // Continue with login process
-                            if (!useremail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(useremail).matches()) {
-                                if (!userpass.isEmpty()) {
-                                    mAuth.signInWithEmailAndPassword(useremail, userpass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                        @Override
-                                        public void onSuccess(AuthResult authResult) {
-                                            Toast.makeText(AccessoRichiedenteAsilo.this, "Accesso avvenuto con successo", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(AccessoRichiedenteAsilo.this, HomeR.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(AccessoRichiedenteAsilo.this, "Password non corretta!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                    // Call getUserRole to retrieve user role
+                    getUserRole(useremail, new UserRoleCallback() {
+                        @Override
+                        public void onSuccess(String userRole) {
+                            // Check if the retrieved role is "RichiedenteAsilo"
+                            if ("RichiedenteAsilo".equals(userRole)) {
+                                // Continue with login process
+                                if (!useremail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(useremail).matches()) {
+                                    if (!userpass.isEmpty()) {
+                                        mAuth.signInWithEmailAndPassword(useremail, userpass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                            @Override
+                                            public void onSuccess(AuthResult authResult) {
+                                                Toast.makeText(AccessoRichiedenteAsilo.this, "Accesso avvenuto con successo", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(AccessoRichiedenteAsilo.this, HomeR.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(AccessoRichiedenteAsilo.this, "Password non corretta!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    } else {
+                                        password.setError("Password required!");
+                                    }
+                                } else if (useremail.isEmpty()) {
+                                    email.setError("Email required!");
                                 } else {
-                                    password.setError("Password required!");
+                                    email.setError("Email non valida!");
                                 }
-                            } else if (useremail.isEmpty()) {
-                                email.setError("Email required!");
                             } else {
-                                email.setError("Email non valida!");
+                                // User doesn't have the required role, show error message
+                                Toast.makeText(AccessoRichiedenteAsilo.this, "Non hai i permessi da staff", Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            // User doesn't have the required role, show error message
-                            Toast.makeText(AccessoRichiedenteAsilo.this, "Non hai i permessi da staff", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onFailure(String errorMessage) {
-                        // Handle the failure, for example, show an error message
-                        Toast.makeText(AccessoRichiedenteAsilo.this, errorMessage, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(String errorMessage) {
+                            // Handle the failure, for example, show an error message
+                            Toast.makeText(AccessoRichiedenteAsilo.this, errorMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    // No internet connection, show a message to the user
+                    Toast.makeText(AccessoRichiedenteAsilo.this, "No internet connection", Toast.LENGTH_LONG).show();
+                }
             }
         });
-
+        if (NetworkUtils.isNetworkAvailable(AccessoRichiedenteAsilo.this)) {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,6 +157,10 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                 }
             }
         });
+        } else {
+            // No internet connection, show a message to the user
+            Toast.makeText(AccessoRichiedenteAsilo.this, "No internet connection", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void getUserRole(String useremail, final UserRoleCallback callback) {

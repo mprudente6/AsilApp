@@ -1,6 +1,8 @@
 package it.uniba.dib.sms23248;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,10 +26,16 @@ public class MainActivity extends AppCompatActivity {
     Spinner demo;
     private FirebaseAuth mAuth;
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        networkChangeReceiver = new NetworkChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
         mAuth = FirebaseAuth.getInstance();
 
         choice=findViewById(R.id.spinner_scelta_Utente) ;
@@ -102,9 +110,17 @@ public class MainActivity extends AppCompatActivity {
                     demo.setSelection(0);
 
                     if (item.equals("Richiedente Asilo")) {
-                        signInDemoUserAsRichiedente();
+                        if (NetworkUtils.isNetworkAvailable(MainActivity.this)) {
+                            signInDemoUserAsRichiedente();
+                        } else {
+                            Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                        }
                     } else if (item.equals("Staff")) {
-                        signInDemoUserAsStaff();
+                        if (NetworkUtils.isNetworkAvailable(MainActivity.this)) {
+                            signInDemoUserAsStaff();
+                        } else {
+                            Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
@@ -117,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void signInDemoUserAsRichiedente() {
+
         // Simulate login process for demo user using FirebaseAuth
         mAuth.signInWithEmailAndPassword("utentedemo@gmail.com", "password")
                 .addOnCompleteListener(this, task -> {
@@ -156,7 +173,14 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        // Unregister the BroadcastReceiver when the activity is destroyed
+        super.onDestroy();
+        if (networkChangeReceiver != null) {
+            unregisterReceiver(networkChangeReceiver);
+        }
+    }
 }
 
 

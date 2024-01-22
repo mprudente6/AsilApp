@@ -143,6 +143,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
 
                 progressBar.setVisibility(View.VISIBLE);
+                if (NetworkUtils.isNetworkAvailable(RegistrazioneRichiedenteAsilo.this)) {
                 mAuth.createUserWithEmailAndPassword(useremail, userpass)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -187,7 +188,9 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                     Log.e(TAG, "Firebase authentication failed: " + task.getException().getMessage());
                                 }
                             }
-                        });
+                        }); } else {
+                    Toast.makeText(RegistrazioneRichiedenteAsilo.this, "No internet connection", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

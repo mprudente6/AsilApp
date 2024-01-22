@@ -1,5 +1,7 @@
 package it.uniba.dib.sms23248;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,11 +26,15 @@ public class ValutazioneActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private String userId;
-
+    private NetworkChangeReceiver networkChangeReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valutazione);
+
+        networkChangeReceiver = new NetworkChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -50,7 +56,11 @@ public class ValutazioneActivity extends AppCompatActivity {
 
             if (userRating > 0) {
                 // Call method to submit the rating to Firestore
+                if (NetworkUtils.isNetworkAvailable(ValutazioneActivity.this)) {
                 submitUserRatingToFirestore(userId, userRating);
+                } else {
+                    Toast.makeText(ValutazioneActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -119,5 +129,13 @@ public class ValutazioneActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Errore nel salvataggio della recensione", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+    @Override
+    protected void onDestroy() {
+        // Unregister the BroadcastReceiver when the activity is destroyed
+        super.onDestroy();
+        if (networkChangeReceiver != null) {
+            unregisterReceiver(networkChangeReceiver);
+        }
     }
 }

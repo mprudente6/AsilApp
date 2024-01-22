@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import it.uniba.dib.sms23248.R;
 import it.uniba.dib.sms23248.SpeseModel;
 
@@ -54,6 +57,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class BilancioFragment extends Fragment {
+
+    private NetworkChangeReceiver networkChangeReceiver;
 
     private SpeseModel viewModel;
     private  FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -86,6 +91,7 @@ public class BilancioFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bilancio, container, false);
         viewModel = new ViewModelProvider(requireActivity().getViewModelStore(), ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())).get(SpeseModel.class);
@@ -98,8 +104,18 @@ public class BilancioFragment extends Fragment {
          refresh=view.findViewById(R.id.refresh);
          budget=view.findViewById(R.id.textBilancio);
 
+
+
+
            showLoadingIndicator();
-           loadInitialBudget();
+
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            loadInitialBudget();
+            QuerySett();
+            QueryMese();
+        } else {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+        }
 
 
 
@@ -113,8 +129,7 @@ public class BilancioFragment extends Fragment {
 
 
 
-        QuerySett();
-        QueryMese();
+
 
         viewModel.getUpdatedBudgetLiveData().observe(getActivity(), new Observer<Double>() {
             @Override
@@ -145,19 +160,20 @@ public class BilancioFragment extends Fragment {
         super.onResume();
         // Register the BroadcastReceiver to receive the budget update broadcast
         IntentFilter filter = new IntentFilter("ACTION_UPDATE_BUDGET");
-        requireContext().registerReceiver(budgetUpdateReceiver, filter);
+        getActivity().registerReceiver(budgetUpdateReceiver, filter);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         // Unregister the BroadcastReceiver to avoid memory leaks
-        requireContext().unregisterReceiver(budgetUpdateReceiver);
+        getActivity().unregisterReceiver(budgetUpdateReceiver);
     }
 
 
 
      void loadInitialBudget() {
+
          Log.d("BUDGET", "started");
         documentReference.get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -212,6 +228,7 @@ public class BilancioFragment extends Fragment {
 
     }
     public void QuerySett() {
+
         // Define the start and end dates for the current week
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek()); // Set to the first day of the week
@@ -278,6 +295,8 @@ public class BilancioFragment extends Fragment {
 
     }
     public void QueryMese() {
+
+
         // Define the start and end dates for the current month
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, 1); // Set to the first day of the month
@@ -351,6 +370,14 @@ public class BilancioFragment extends Fragment {
     private  void hideLoadingIndicator() {
         // Hide your loading indicator
         loadingIndicator.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (networkChangeReceiver != null) {
+            getActivity().unregisterReceiver(networkChangeReceiver);
+        }
     }
 
 }

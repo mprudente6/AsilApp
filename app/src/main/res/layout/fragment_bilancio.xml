@@ -99,8 +99,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="119dp"
-        android:layout_marginEnd="183dp" />
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="171dp" />
 
     <Button
         android:id="@+id/refresh"

@@ -4,6 +4,8 @@ package it.uniba.dib.sms23248;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -40,9 +42,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class PosizioneFragment extends Fragment {
 
     View view;
+
+    NetworkChangeReceiver networkChangeReceiver;
     MapView map = null;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String locationQuery = "";
@@ -60,6 +65,11 @@ public class PosizioneFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
+
+            return view;
+        }
         view = inflater.inflate(R.layout.posizione_servizi, container, false);
         searchView = view.findViewById(R.id.searchView);
         coordinates = view.findViewById(R.id.textCoordinate);
@@ -115,6 +125,12 @@ public class PosizioneFragment extends Fragment {
                 return false;
             }
         });
+
+        networkChangeReceiver = new NetworkChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        requireContext().registerReceiver(networkChangeReceiver, intentFilter);
+
+
         return view;
     }
 
@@ -219,21 +235,25 @@ public class PosizioneFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        map.onResume();
+        if (map != null) {
+            map.onResume();
 
-        if (savedCenter != null && savedZoomLevel != -1.0) {
-            map.getController().setCenter(savedCenter);
-            map.getController().setZoom(savedZoomLevel);
+            if (savedCenter != null && savedZoomLevel != -1.0) {
+                map.getController().setCenter(savedCenter);
+                map.getController().setZoom(savedZoomLevel);
+            }
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        map.onPause();
+        if (map != null) {
+            map.onPause();
 
-        savedCenter = (GeoPoint) map.getMapCenter();
-        savedZoomLevel = map.getZoomLevelDouble();
+            savedCenter = (GeoPoint) map.getMapCenter();
+            savedZoomLevel = map.getZoomLevelDouble();
+        }
     }
 
     private void retrieveCentroFromStaff(String currentUserUid) {
@@ -274,5 +294,13 @@ public class PosizioneFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error retrieving Centro Accoglienza document", e);
                 });
+    }
+    @Override
+    public void onDestroyView() {
+        // Unregister the BroadcastReceiver when the fragment is destroyed
+        if (networkChangeReceiver != null) {
+            requireContext().unregisterReceiver(networkChangeReceiver);
+        }
+        super.onDestroyView();
     }
 }

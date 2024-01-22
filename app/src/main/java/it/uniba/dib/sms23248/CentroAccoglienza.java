@@ -1,7 +1,10 @@
 package it.uniba.dib.sms23248;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,17 +20,22 @@ public class CentroAccoglienza extends AppCompatActivity {
     Double latitude;
     Double longitude;
     Double zoomlevel;
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_centro_accoglienza);
 
+
     }
 
     @Override
     protected void onStart() {
+
+
         super.onStart();
+        if (NetworkUtils.isNetworkAvailable(CentroAccoglienza.this)) {
         centro.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -93,5 +101,17 @@ public class CentroAccoglienza extends AppCompatActivity {
                 }
             }
         });
+        } else {
+            Toast.makeText(CentroAccoglienza.this, "No internet connection", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Unregister the BroadcastReceiver when the activity is destroyed
+        super.onDestroy();
+        if (networkChangeReceiver != null) {
+            unregisterReceiver(networkChangeReceiver);
+        }
     }
 }

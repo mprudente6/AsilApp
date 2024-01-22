@@ -2,12 +2,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#fe9e50"
+            app:title="AsilApp"
+            app:titleTextColor="#FFFFFF"
+            />
+
 
         <TextView
             android:id="@+id/textDescr"
@@ -16,7 +29,7 @@
 
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="551dp"
+            android:layout_marginTop="823dp"
             android:padding="20dp"
             android:text="Descrizione"
             android:textSize="16dp"
@@ -32,9 +45,9 @@
 
 
             android:layout_centerInParent="true"
-            android:layout_marginStart="-5dp"
-            android:layout_marginTop="557dp"
-            android:layout_marginEnd="3dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="867dp"
+            android:layout_marginEnd="-6dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
@@ -57,16 +70,11 @@
 
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="223dp"
+            android:layout_marginTop="408dp"
             android:padding="20dp"
             android:text="E-mail"
             android:textSize="16dp"
             android:textStyle="bold" />
-
-
-
-
-
 
         <TextView
             android:id="@+id/textTel"
@@ -74,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="444dp"
+            android:layout_marginTop="681dp"
             android:padding="20dp"
             android:text="Telefono"
             android:textSize="16dp"
@@ -90,9 +98,9 @@
 
 
             android:layout_centerInParent="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="458dp"
-            android:layout_marginEnd="-2dp"
+            android:layout_marginStart="-3dp"
+            android:layout_marginTop="721dp"
+            android:layout_marginEnd="1dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
@@ -109,9 +117,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:linksClickable="true"
                 android:autoLink="phone"
-                />
+                android:linksClickable="true" />
 
 
         </LinearLayout>
@@ -122,11 +129,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="330dp"
+            android:layout_marginTop="547dp"
             android:padding="20dp"
             android:text="Sito web"
             android:textSize="16dp"
             android:textStyle="bold" />
+
 
         <LinearLayout
 
@@ -138,9 +146,9 @@
 
 
             android:layout_centerInParent="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="347dp"
-            android:layout_marginEnd="-2dp"
+            android:layout_marginStart="-2dp"
+            android:layout_marginTop="586dp"
+            android:layout_marginEnd="0dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
@@ -157,9 +165,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:linksClickable="true"
                 android:autoLink="web"
-                />
+                android:linksClickable="true" />
 
 
         </LinearLayout>
@@ -174,9 +181,9 @@
 
 
             android:layout_centerInParent="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="236dp"
-            android:layout_marginEnd="-4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="442dp"
+            android:layout_marginEnd="-6dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
@@ -193,9 +200,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:linksClickable="true"
                 android:autoLink="email"
-                />
+                android:linksClickable="true" />
 
 
         </LinearLayout>
@@ -210,9 +216,9 @@
 
 
             android:layout_centerInParent="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="127dp"
-            android:layout_marginEnd="-4dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="287dp"
+            android:layout_marginEnd="-3dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
@@ -237,9 +243,10 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/toolbar"
+
             android:layout_marginStart="25dp"
-            android:layout_marginTop="-3dp"
+            android:layout_marginTop="39dp"
             android:padding="20dp"
             android:text="Nome"
             android:textSize="16dp"
@@ -251,12 +258,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="249dp"
             android:padding="20dp"
             android:text="Indirizzo"
             android:textSize="16dp"
             android:textStyle="bold" />
-
 
         <LinearLayout
 
@@ -264,8 +270,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textView3"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="-47dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="-24dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
@@ -281,7 +287,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="8dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
 
         </LinearLayout>

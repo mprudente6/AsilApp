@@ -1,13 +1,16 @@
 package it.uniba.dib.sms23248;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,10 +33,14 @@ public class AnagraficaActivity extends AppCompatActivity {
     private LinearLayout personalDataLayout;
     private FirebaseUser currentUser;
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anagrafica);
+
+
 
         // Find views by ID
         Button shareButton = findViewById(R.id.shareButton);
@@ -41,7 +48,12 @@ public class AnagraficaActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareData();
+
+                if (NetworkUtils.isNetworkAvailable(AnagraficaActivity.this)) {
+                    shareData();
+                } else {
+                    Toast.makeText(AnagraficaActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -49,7 +61,11 @@ public class AnagraficaActivity extends AppCompatActivity {
         personalDataLayout = findViewById(R.id.personalDataLayout);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        fetchUserDataFromFirestore();
+        if (NetworkUtils.isNetworkAvailable(AnagraficaActivity.this)) {
+            fetchUserDataFromFirestore();
+        } else {
+            Toast.makeText(AnagraficaActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void shareData() {
@@ -192,5 +208,13 @@ public class AnagraficaActivity extends AppCompatActivity {
 
         personalDataLayout.addView(fieldTextView);
         personalDataLayout.addView(valueTextView);
+    }
+    @Override
+    protected void onDestroy() {
+        // Unregister the BroadcastReceiver when the activity is destroyed
+        super.onDestroy();
+        if (networkChangeReceiver != null) {
+            unregisterReceiver(networkChangeReceiver);
+        }
     }
 }

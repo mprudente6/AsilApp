@@ -44,7 +44,7 @@ import java.util.List;
 
 public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClickListener, VideoAdapter.OnDownloadClickListener{
 
-
+  private  NetworkChangeReceiver networkChangeReceiver;
     private static final int PICK_VIDEO_REQUEST_GEN = 1;
     private static final int PICK_VIDEO_REQUEST_DONNA = 2;
     private View view;
@@ -65,6 +65,12 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_video, container, false);
         View item_view=inflater.inflate(R.layout.item_video, container, false);
+
+        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
+
+            return view;
+        }
 
         Button uploadButton = view.findViewById(R.id.uploadButton);
         Button uploadButton2 = view.findViewById(R.id.uploadButton2);
@@ -344,7 +350,14 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
 
 
 
-
+    @Override
+    public void onDestroyView() {
+        // Unregister the BroadcastReceiver when the fragment is destroyed
+        if (networkChangeReceiver != null) {
+            requireContext().unregisterReceiver(networkChangeReceiver);
+        }
+        super.onDestroyView();
+    }
 
 
 }

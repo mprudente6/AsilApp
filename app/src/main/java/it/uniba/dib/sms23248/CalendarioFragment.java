@@ -4,6 +4,8 @@ import static androidx.viewpager.widget.PagerAdapter.POSITION_NONE;
 
 import android.app.DatePickerDialog;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +57,7 @@ public class CalendarioFragment extends Fragment {
     private EventAdapter eventAdapter;
     private Map<String, List<Event>> eventMap; // Map to store events for each date
     private String selectedDate; // Currently selected date
+    private NetworkChangeReceiver networkChangeReceiver;
 FirebaseAuth mAuth=FirebaseAuth.getInstance();
 FirebaseUser currentUser=mAuth.getCurrentUser();
 String uid=currentUser.getUid();
@@ -106,8 +109,13 @@ String uid=currentUser.getUid();
         // Set up Add Item button click listener
         btnAddItem.setOnClickListener(v -> addItemAction());
 
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            fetchItems();
+        } else {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+        }
 
-       fetchItems();
+
 
         return view;
     }
@@ -131,6 +139,10 @@ String uid=currentUser.getUid();
 
     // Add Item button click handler
     private void addItemAction() {
+        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            return;
+        }
         UUID uuid = UUID.randomUUID();
         String itemId = uuid.toString();
         String itemName = editTextName.getText().toString().trim();
@@ -191,6 +203,7 @@ String uid=currentUser.getUid();
 
 
     private void fetchItems() {
+
         CollectionReference subspeseCollection = documentRefSpese.collection("Subspese");
 
         subspeseCollection.get() // Use get() instead of addSnapshotListener
@@ -246,6 +259,13 @@ String uid=currentUser.getUid();
         if (savedInstanceState != null) {
             selectedDate = savedInstanceState.getString("selectedDate");
             updateEventsForDate(selectedDate);
+        }
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (networkChangeReceiver != null) {
+            getActivity().unregisterReceiver(networkChangeReceiver);
         }
     }
 

@@ -1,8 +1,11 @@
 package it.uniba.dib.sms23248;
 
 import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -34,14 +37,21 @@ public class MappaCentro extends AppCompatActivity {
     Double longitude;
     Double zoomlevel;
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         Context ctx = this.getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
 
         setContentView(R.layout.activity_mappa_centro);
+
+
+
+        if (NetworkUtils.isNetworkAvailable(MappaCentro.this)) {
 
         centro.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -71,7 +81,9 @@ public class MappaCentro extends AppCompatActivity {
 
                 }
             }
-        });
+        });  } else {
+            Toast.makeText(MappaCentro.this, "No internet connection", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -87,6 +99,14 @@ public class MappaCentro extends AppCompatActivity {
                     this,
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        // Unregister the BroadcastReceiver when the activity is destroyed
+        super.onDestroy();
+        if (networkChangeReceiver != null) {
+            unregisterReceiver(networkChangeReceiver);
         }
     }
 }

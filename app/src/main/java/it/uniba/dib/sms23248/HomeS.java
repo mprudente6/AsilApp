@@ -1,5 +1,7 @@
 package it.uniba.dib.sms23248;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -8,6 +10,8 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -35,10 +39,20 @@ public class HomeS extends AppCompatActivity {
 
     private Button aggiungiUtente;
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_s);
+
+        if (!NetworkUtils.isNetworkAvailable(getApplicationContext())) {
+            Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
+
+            return;
+        }
+
+
 
         mAuth = FirebaseAuth.getInstance();
         benvenuto=findViewById(R.id.Benvenuto);
@@ -96,6 +110,15 @@ public class HomeS extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        // Unregister the BroadcastReceiver when the activity is destroyed
+        super.onDestroy();
+        if (networkChangeReceiver != null) {
+            unregisterReceiver(networkChangeReceiver);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_logout,menu );
@@ -141,5 +164,7 @@ public class HomeS extends AppCompatActivity {
     public void onBackPressed() {
         showLogoutConfirmationDialog();
     }
+
+
 
 }

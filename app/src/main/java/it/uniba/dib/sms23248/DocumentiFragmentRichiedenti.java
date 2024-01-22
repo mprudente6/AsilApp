@@ -6,7 +6,9 @@ import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -52,10 +54,15 @@ public class DocumentiFragmentRichiedenti extends Fragment {
     private RecyclerView recyclerView;
     private List<UploadedFile> fileList;
     private FileAdapterRichiedenti fileAdapter;
+    private NetworkChangeReceiver networkChangeReceiver;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_documenti_richiedenti, container, false);
+
+        networkChangeReceiver = new NetworkChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        requireContext().registerReceiver(networkChangeReceiver, intentFilter);
 
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -187,6 +194,15 @@ public class DocumentiFragmentRichiedenti extends Fragment {
 
     private String sanitizeFileName(String originalFileName) {
         return originalFileName.replaceAll("[.#$\\[\\]]", "_");
+    }
+
+    @Override
+    public void onDestroyView() {
+        // Unregister the BroadcastReceiver when the fragment is destroyed
+        if (networkChangeReceiver != null) {
+            requireContext().unregisterReceiver(networkChangeReceiver);
+        }
+        super.onDestroyView();
     }
 }
 

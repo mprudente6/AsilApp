@@ -2,6 +2,8 @@ package it.uniba.dib.sms23248;
 
 
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -42,7 +44,7 @@ public class InformazioniFragment extends Fragment {
     DocumentReference documentStaff;
 
 
-
+NetworkChangeReceiver networkChangeReceiver;
 
 
     String uid;
@@ -50,6 +52,12 @@ public class InformazioniFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
+
+            return view;
+        }
         view = inflater.inflate(R.layout.fragment_informazioni, container, false);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -75,7 +83,9 @@ public class InformazioniFragment extends Fragment {
 
 
 
-
+        networkChangeReceiver = new NetworkChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        requireContext().registerReceiver(networkChangeReceiver, intentFilter);
 
 
         return view;
@@ -144,6 +154,11 @@ public class InformazioniFragment extends Fragment {
         String tel = editTel.getText().toString();
         String descr = editDescr.getText().toString();
 
+        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         documentStaff.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
@@ -187,6 +202,15 @@ public class InformazioniFragment extends Fragment {
                 .addOnFailureListener(e -> Log.e(TAG, "Error retrieving document from Staff collection: " + e.getMessage()));
     }
 
+
+    @Override
+    public void onDestroyView() {
+        // Unregister the BroadcastReceiver when the fragment is destroyed
+        if (networkChangeReceiver != null) {
+            requireContext().unregisterReceiver(networkChangeReceiver);
+        }
+        super.onDestroyView();
+    }
 
 
 }
