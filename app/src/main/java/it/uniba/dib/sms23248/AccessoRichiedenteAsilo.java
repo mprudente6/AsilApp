@@ -192,6 +192,8 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
         void onFailure(String errorMessage);
     }
 
+
+
 }
 
 

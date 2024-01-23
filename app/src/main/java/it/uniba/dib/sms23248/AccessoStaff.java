@@ -3,6 +3,8 @@ package it.uniba.dib.sms23248;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Calendar;
 
 public class AccessoStaff extends AppCompatActivity {
 
@@ -48,6 +52,8 @@ public class AccessoStaff extends AppCompatActivity {
         forgotPassword = findViewById(R.id.password_persa);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser=mAuth.getCurrentUser();
+        String uid=currentUser.getUid();
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +88,7 @@ public class AccessoStaff extends AppCompatActivity {
                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                             startActivity(intent);
                                             finish();
+
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -194,4 +201,5 @@ public class AccessoStaff extends AppCompatActivity {
         void onSuccess(String userRole);
         void onFailure(String errorMessage);
     }
+
 }

@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +62,7 @@ public class DocumentiFragment extends Fragment {
     FirebaseDatabase database;
     FirebaseStorage storage;
     int MY_PERMISSIONS_REQUEST_READ_MEDIA = 1;
+    int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE=4;
     Uri pdfUri;
 
     ProgressDialog progressDialog;
@@ -95,12 +98,20 @@ public class DocumentiFragment extends Fragment {
         selectFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    // Permission already granted, proceed with the task.
                     selectPdf();
-                } else
-                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                } else {
+                    // Request permission
+
+                    ActivityCompat.requestPermissions(requireActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+                }
             }
         });
+
 
 
         upload.setOnClickListener(new View.OnClickListener() {
@@ -291,10 +302,24 @@ public class DocumentiFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 9 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            selectPdf();
-        } else
-            Toast.makeText(requireContext(), "Si prega di fornire i permessi",Toast.LENGTH_SHORT).show();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.e("PERMISSION","Granted");
+                    selectPdf();
+                } else {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        Log.e("PERMISSION","Don't ask again");
+                        showPermissionSettingsDialog();
+                    } else {
+                        // User denied the permission without selecting "Don't ask again."
+                        // Handle this situation as needed (e.g., show a message to the user).
+                        Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
     }
     private void selectPdf () {
         Intent intent= new Intent();
@@ -421,6 +446,31 @@ public class DocumentiFragment extends Fragment {
             requireContext().unregisterReceiver(networkChangeReceiver);
         }
         super.onDestroyView();
+    }
+
+    private void showPermissionSettingsDialog() {
+        Log.e("PERMISSION","show permission dialog");
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Permission Required")
+                .setMessage("This app needs storage permission. You can grant the permission in the app settings.")
+                .setPositiveButton("Go to Settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Open app settings
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.fromParts("package", requireActivity().getPackageName(), null));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle the user's choice (e.g., show a message)
+                        Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
 }
 

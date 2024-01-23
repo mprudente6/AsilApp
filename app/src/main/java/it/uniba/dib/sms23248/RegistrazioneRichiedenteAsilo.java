@@ -249,6 +249,10 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         Map<String, Object> spese = new HashMap<>();
                         spese.put("Utente", uid);
                         documentSpese.set(spese);
+                        DocumentReference documetAllarm = db.collection("ALARMS").document(uid);
+                        Map<String, Object> alarm = new HashMap<>();
+                        alarm.put("Utente", uid);
+                        documetAllarm.set(alarm);
 
                         DocumentReference documentParametriUtenti = db.collection("PARAMETRI_UTENTI").document(uid);
                         Map<String, Object> parametri = new HashMap<>();
@@ -281,7 +285,9 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                         progressBar.setVisibility(View.GONE);
 
                                         Toast.makeText(RegistrazioneRichiedenteAsilo.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                        Log.d("BUDGET", "uid: "+uid);
                                         scheduleMonthlyAlarm(uid);
+
                                         // Add a delay before starting the HomeS activity
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
@@ -410,30 +416,46 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
     private void scheduleMonthlyAlarm(String uid) {
         // Create an Intent for the BroadcastReceiver
-
-        Log.d("BUDGET", "scheduleMonthlyAlarm called ");
+        Log.d("BUDGET", "scheduleMonthlyAlarm called with UID: " + uid);
         Intent intent = new Intent(this, MonthlyUpdateReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         intent.putExtra("UID", uid);
+
+        // Save the alarm UID to Firebase
+        saveAlarmUidToFirebase(uid);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, uid.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE);
+
         // Get the AlarmManager service
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        // Set the alarm to start on the 1st day of every month
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.DAY_OF_MONTH, 23);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);  // Midnight
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        // Set to the 1st day
+        // Cancel the existing alarm (if any) before rescheduling
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent);
+        }
 
-        // Set the repeating alarm for the 1st day of every month
-        alarmManager.setInexactRepeating(
-                AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY,  // Repeat daily to account for variations in month lengths
-                pendingIntent
-        );
+        // Calculate the time for the alarm to start, e.g., 30 days from now
+        long startTime = System.currentTimeMillis() + AlarmManager.INTERVAL_DAY * 30;
+
+        // Set the repeating alarm with the calculated start time and interval of 30 days
+        if (alarmManager != null) {
+            alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    startTime,
+                    AlarmManager.INTERVAL_DAY * 30,
+                    pendingIntent
+            );
+        }
     }
+
+    private void saveAlarmUidToFirebase(String uid) {
+        // Reference to the "ALARMS" collection with the user UID as the document ID
+        DocumentReference documentAlarms = FirebaseFirestore.getInstance().collection("ALARMS").document(uid);
+        Log.d("BUDGET", "save alarm uid to firebase ");
+        // Save the UID to the "ALARMS" collection
+        documentAlarms.set(new HashMap<>());  // You can set an empty map or any data you prefer
+    }
+
+
+
 
 }
