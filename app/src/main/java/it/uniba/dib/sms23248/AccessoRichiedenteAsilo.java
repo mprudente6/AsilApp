@@ -105,7 +105,7 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                                 }
                             } else {
                                 // User doesn't have the required role, show error message
-                                Toast.makeText(AccessoRichiedenteAsilo.this, "Non hai i permessi da staff", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AccessoRichiedenteAsilo.this, "Non hai i permessi da richiedente asilo", Toast.LENGTH_SHORT).show();
                             }
                         }
 
