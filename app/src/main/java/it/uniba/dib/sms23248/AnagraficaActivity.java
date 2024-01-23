@@ -98,36 +98,7 @@ public class AnagraficaActivity extends AppCompatActivity {
                 Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "Scegli l'app con cui condividere i tuoi dati");
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Intent[]{}));
                 startActivity(chooserIntent);
-            } else {
-                // No WhatsApp or Gmail, create a default share intent with SMS and email apps
-                Intent defaultShareIntent = new Intent(Intent.ACTION_SEND);
-                defaultShareIntent.setType("text/plain");
-                defaultShareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-                defaultShareIntent.putExtra(Intent.EXTRA_TEXT, text);
-
-                // Filter the apps to include only SMS and email apps
-                List<ResolveInfo> resolveInfos = getPackageManager().queryIntentActivities(defaultShareIntent, 0);
-                List<Intent> smsEmailIntents = new ArrayList<>();
-
-                for (ResolveInfo resolveInfo : resolveInfos) {
-                    String packageName = resolveInfo.activityInfo.packageName;
-                    if (packageName.contains("com.android.mms") || packageName.contains("com.google.android.gm")) {
-                        Intent targeted = new Intent(Intent.ACTION_SEND);
-                        targeted.setType("text/plain");
-                        targeted.putExtra(Intent.EXTRA_SUBJECT, subject);
-                        targeted.putExtra(Intent.EXTRA_TEXT, text);
-                        targeted.setPackage(packageName);
-                        smsEmailIntents.add(targeted);
-                    }
-                }
-
-                if (!smsEmailIntents.isEmpty()) {
-                    Intent chooserIntent = Intent.createChooser(smsEmailIntents.remove(0), "Condividi con");
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, smsEmailIntents.toArray(new Intent[]{}));
-                    startActivity(chooserIntent);
-                }
-                // else: Nessuna app è in grado di eseguire questa azione.
-            }
+            } // else: No WhatsApp o Gmail: il sistema mostra 'Nessuna app è in grado di eseguire questa azione.'
         }
     }
 
