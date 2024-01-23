@@ -52,8 +52,7 @@ public class AccessoStaff extends AppCompatActivity {
         forgotPassword = findViewById(R.id.password_persa);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser=mAuth.getCurrentUser();
-        String uid=currentUser.getUid();
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
