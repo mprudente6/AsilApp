@@ -20,11 +20,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link qrCodeGenerato#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class qrCodeGenerato extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -44,32 +40,9 @@ public class qrCodeGenerato extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment qrCodeGenerato.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static qrCodeGenerato newInstance(String param1, String param2) {
-        qrCodeGenerato fragment = new qrCodeGenerato();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,6 +69,10 @@ public class qrCodeGenerato extends Fragment {
         Button btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
         btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
         btnInformazioniCentro.setVisibility(View.INVISIBLE);
+
+        Button btnInformazioniSalute = (Button) getActivity().findViewById(R.id.btnSaluteR);
+        btnInformazioniSalute = (Button) getActivity().findViewById(R.id.btnSaluteR);
+        btnInformazioniSalute.setVisibility(View.INVISIBLE);
 
         /*Spinner spinnerLingua = (Spinner) getActivity().findViewById(R.id.languageList);
         spinnerLingua = (Spinner) getActivity().findViewById(R.id.languageList);
@@ -132,6 +109,10 @@ public class qrCodeGenerato extends Fragment {
                 Button btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
                 btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
                 btnInformazioniCentro.setVisibility(View.VISIBLE);
+
+                Button btnInformazioniSalute = (Button) getActivity().findViewById(R.id.btnSaluteR);
+                btnInformazioniSalute = (Button) getActivity().findViewById(R.id.btnSaluteR);
+                btnInformazioniSalute.setVisibility(View.VISIBLE);
 
                 getFragmentManager().beginTransaction()
                         .remove(qrCodeGenerato.this).commit();

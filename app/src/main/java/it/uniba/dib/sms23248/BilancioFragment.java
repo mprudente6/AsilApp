@@ -44,7 +44,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -173,51 +175,28 @@ public class BilancioFragment extends Fragment {
 
 
      void loadInitialBudget() {
-
          Log.d("BUDGET", "started");
-        documentReference.get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            Double budget = documentSnapshot.getDouble("Budget");
+         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+             @Override
+             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                 if (e != null) {
+                     // Handle the error
+                     Log.e("BUDGET", "Error fetching budget", e);
+                     return;
+                 }
 
-                            updateBudgetTextView(budget);
-                            hideLoadingIndicator();
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Handle the failure to load the initial budget
-                    }
-                });
-    }
+                 if (documentSnapshot != null && documentSnapshot.exists()) {
+                     Double budget = documentSnapshot.getDouble("Budget");
 
+                     updateBudgetTextView(budget);
+                     hideLoadingIndicator();
+                 }
+             }
+         });
+     }
 
 
 
-    private void updateBudget(double amount, String uid) {
-        currentBudget += amount;
-        Log.d("BUDGET", "budget UPDATING");
-        documentReference = firestore.collection("RICHIEDENTI_ASILO").document(uid);
-        documentReference.update("Budget", currentBudget)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-
-
-                        Log.d("BUDGET", "budget UPDATED");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Handle the failure to update the budget
-                    }
-                });
-    }
 
     private void updateBudgetTextView(Double currentBudget) {
         String budgetString = String.format(Locale.getDefault(), "%.2f€", currentBudget);

@@ -35,6 +35,19 @@
         android:textStyle="normal">
     </TextView>
 
+    <Button
+        android:id="@+id/generaQrRichiedente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnMedia"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="-311dp"
+        android:layout_marginEnd="191dp"
+        android:backgroundTint="#076AEC"
+        android:text="QR CODE" />
+
     <ImageView
         android:id="@+id/avatar"
         android:layout_width="60dp"
@@ -53,18 +66,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/Benvenuto"
+
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="Informazioni Centro Accoglienza" />
+
+        android:layout_marginTop="135dp"
+        android:text="Info centro" />
 
     <Button
         android:id="@+id/btnApriMappa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnInformazioniCentro"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:text="Visualizza Mappa Centro"/>
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="75dp"
+        android:text="Mappa" />
 
     <FrameLayout
         android:id="@+id/frameLayoutQrCode"
@@ -76,32 +92,25 @@
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="-138dp" />
 
+
     <Button
         android:id="@+id/btnMedia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnApriMappa"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:text="Visualizza Media" />
-
-    <Button
-        android:id="@+id/generaQrRichiedente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnMedia"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:text="Genera QR CODE" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-48dp"
+        android:layout_marginEnd="43dp"
+        android:text="Media" />
 
     <Button
         android:id="@+id/btnSaluteR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/generaQrRichiedente"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:text="Informazioni Salute" />
+        android:layout_marginTop="325dp"
+        android:text="Cartella clinica" />
 
 </RelativeLayout>
 </ScrollView>

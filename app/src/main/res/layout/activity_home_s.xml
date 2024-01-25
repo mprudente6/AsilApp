@@ -40,8 +40,8 @@
 
         <Button
             android:id="@+id/btnSaluteS"
-            android:layout_width="233dp"
-            android:layout_height="62dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"

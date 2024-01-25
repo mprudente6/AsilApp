@@ -175,24 +175,21 @@
         </LinearLayout>
 
         <!-- Sixth Row: Save Button -->
-        <LinearLayout
-            android:id="@+id/saveLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/glucoseLayout">
+
 
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/glucoseLayout"
                 android:text="SALVA"
+
                 app:icon="@android:drawable/ic_menu_save"
-                android:minWidth="40dp"
-                android:minHeight="64dp"
-                android:layout_marginTop="8dp"
-                app:cornerRadius="0dp"
-                android:layout_marginStart="44dp"
-                android:backgroundTint="#14144a" />
-        </LinearLayout>
+                android:padding="12dp"
+                android:layout_marginTop="40dp"
+                app:cornerRadius="22dp"
+
+                android:backgroundTint="#FF076AEC" />
+
     </RelativeLayout>
 </ScrollView>
