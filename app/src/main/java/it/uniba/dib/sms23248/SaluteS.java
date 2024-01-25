@@ -1,11 +1,9 @@
 package it.uniba.dib.sms23248;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
@@ -15,6 +13,8 @@ public class SaluteS extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private MergedPagerAdapter adapter;
+
+    public static String UID = HomeS.UID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

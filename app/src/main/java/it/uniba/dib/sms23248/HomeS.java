@@ -1,27 +1,27 @@
 package it.uniba.dib.sms23248;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.ContextMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,10 +30,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 public class HomeS extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+
+    public static String UID;
     private TextView benvenuto;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -63,7 +67,12 @@ public class HomeS extends AppCompatActivity {
 
         Button saluteButton = findViewById(R.id.btnSaluteS);
 
-        saluteButton.setOnClickListener(view -> openSaluteScreen());
+        saluteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanCode();
+            }
+        });
 
         aggiungiUtente=findViewById(R.id.btnAggiungiUtente);
 
@@ -174,6 +183,58 @@ public class HomeS extends AppCompatActivity {
         showLogoutConfirmationDialog();
     }
 
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+        String stringScansione = "Scansiona QR code utente";
+        options.setPrompt(stringScansione);
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLaucher.launch(options);
+    }
 
+    ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
+    {
+        UID = " ";
+        if (ContextCompat.checkSelfPermission(HomeS.this, "android.permission.CAMERA")
+                == PackageManager.PERMISSION_GRANTED) {
+            // I permessi sono già stati concessi, puoi procedere con l'utilizzo della fotocamera.
+            if (result.getContents() != null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(HomeS.this);
+                builder.setTitle("Result");
+                Log.d("Result", result.getContents());
 
+                UID = result.getContents();
+                openSaluteScreen();
+                /*if (result.getContents().equals(qrCodeContenitore)){
+
+                    Fragment fragmentPwContenitore = null;
+                    fragmentPwContenitore = new pwContenitore();
+                    getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutPwContenitore, fragmentPwContenitore)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+
+                }
+                else{
+                    //builder.setMessage(result.getContents());
+                    builder.setMessage("UTENTE NON TROVATO");
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
+                            dialogInterface.dismiss();
+                        }
+                    }).show();
+                }*/
+
+            }
+        } else {
+            // Richiedi i permessi della fotocamera se non sono stati concessi
+            Fragment fragmentPwContenitore = null;
+            fragmentPwContenitore = new pwContenitore();
+            getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutPwContenitore, fragmentPwContenitore)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+        }
+    });
 }

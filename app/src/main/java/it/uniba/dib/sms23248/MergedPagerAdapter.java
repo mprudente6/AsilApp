@@ -13,6 +13,7 @@ public class MergedPagerAdapter extends FragmentStateAdapter {
     private final List<Fragment> fragmentList = new ArrayList<>();
     private final List<String> fragmentTitleList = new ArrayList<>();
 
+
     public MergedPagerAdapter(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }

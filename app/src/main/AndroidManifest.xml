@@ -39,6 +39,9 @@
             android:name=".SaluteS"
             android:exported="false"/>
         <activity
+            android:name=".CaptureAct"
+            android:exported="false"/>
+        <activity
             android:name=".SaluteR"
             android:exported="false"/>
         <activity

@@ -33,7 +33,7 @@ public class CartellaClinicaFragment extends Fragment {
     private Button submitButton;
 
     private String documentId;
-    private final String userId = "1qRWhwM51WP3VjEfMnc4NejOzBh2"; // Replace with the actual user ID
+    private final String userId = HomeS.UID; // Replace with the actual user ID
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

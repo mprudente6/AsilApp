@@ -143,7 +143,7 @@ public class pwContenitore extends Fragment {
                         Log.d("CodiceNull ",pw.getText().toString());
                         if (pw.getText().toString().equals(passwordContenitore)){
                             Log.d("Vai  a ","Strumenti biomedicali");
-                            Intent i = new Intent(pwContenitore.this.getActivity(), MainActivity.class);
+                            Intent i = new Intent(pwContenitore.this.getActivity(), SaluteS.class);
                             startActivity(i);
                         }
                     }
@@ -153,7 +153,7 @@ public class pwContenitore extends Fragment {
                         Log.d("CodiceNoNull ",InserisciCodice.getText().toString());
                         if (InserisciCodice.getText().toString().equals(codiceQrContenitore) && pw.getText().toString().equals(passwordContenitore)){
                             Log.d("Vai  a ","Strumenti biomedicali");
-                            Intent i = new Intent(pwContenitore.this.getActivity(), MainActivity.class);
+                            Intent i = new Intent(pwContenitore.this.getActivity(), SaluteS.class);
                             startActivity(i);
                         }
                     }

@@ -67,7 +67,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         pulseOxLayout = view.findViewById(R.id.pulseOxLayout);
         glucoseLayout = view.findViewById(R.id.glucoseLayout);
 
-        userId = "1qRWhwM51WP3VjEfMnc4NejOzBh2"; // Replace with your actual user ID
+        userId = HomeS.UID; // Replace with your actual user ID
 
         Button temperatureButton = view.findViewById(R.id.temperatureButton);
         Button heartRateButton = view.findViewById(R.id.heartRateButton);
