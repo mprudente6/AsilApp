@@ -102,19 +102,10 @@ public class DocumentiFragment extends Fragment implements UploadCallback{
             @Override
             public void onClick(View v) {
                 Log.e("PDF","On click");
-                if (ContextCompat.checkSelfPermission(requireContext(), "android.permission.READ_EXTERNAL_STORAGE")
-                        == PackageManager.PERMISSION_GRANTED) {
-                    Log.e("PDF","Permission granted");
+
 
                     selectPdf();
-                } else {
-                    Log.e("PDF","Requesting permission");
 
-                    ActivityCompat.requestPermissions(requireActivity(),
-                            new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                            READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
-
-                }
             }
         });
 
@@ -294,35 +285,24 @@ public class DocumentiFragment extends Fragment implements UploadCallback{
 
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.e("PERMISSION", "Granted");
-                    selectPdf();
-                } else {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        Log.e("PERMISSION", "Don't ask again");
-                        showPermissionSettingsDialog();
-                    } else {
-                        // User denied the permission without selecting "Don't ask again."
-                        // Handle this situation as needed (e.g., show a message to the user).
-                        Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        }
-    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 86) {
             if (resultCode == RESULT_OK && data != null) {
-                pdfUri = data.getData();
-                String fileName = getFileNameFromUri(pdfUri);
-                notification.setText(fileName);
+                // Check for READ_EXTERNAL_STORAGE permission here
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted, proceed with getting the PDF URI
+                    pdfUri = data.getData();
+                    String fileName = getFileNameFromUri(pdfUri);
+                    notification.setText(fileName);
+                } else {
+                    // Permission not granted, show explanation or request permission again
+                    ActivityCompat.requestPermissions(requireActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+                }
             } else {
                 Toast.makeText(requireContext(), "File selection canceled", Toast.LENGTH_SHORT).show();
             }
