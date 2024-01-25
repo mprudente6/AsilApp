@@ -29,11 +29,14 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:background="#FD9D50"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
-        android:layout_alignParentBottom="true"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme"
+        app:tabIndicatorColor="#FFFFFF"
+        app:tabSelectedTextColor="#FFFFFF"
+        app:tabTextColor="#FBD8BB" />
     <com.google.android.material.tabs.TabItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.google.android.material.tabs.TabItem>
