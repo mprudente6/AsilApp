@@ -102,7 +102,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback{
             @Override
             public void onClick(View v) {
                 Log.e("PDF","On click");
-                if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                if (ContextCompat.checkSelfPermission(requireContext(), "android.permission.READ_EXTERNAL_STORAGE")
                         == PackageManager.PERMISSION_GRANTED) {
                     Log.e("PDF","Permission granted");
 
