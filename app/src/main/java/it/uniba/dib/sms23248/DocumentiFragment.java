@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +52,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DocumentiFragment extends Fragment {
+public class DocumentiFragment extends Fragment implements UploadCallback{
+
+
+
+    private NetworkChangeReceiver networkChangeReceiver;
 
     View view;
     Button selectFile, upload;
@@ -58,6 +64,7 @@ public class DocumentiFragment extends Fragment {
     FirebaseDatabase database;
     FirebaseStorage storage;
     int MY_PERMISSIONS_REQUEST_READ_MEDIA = 1;
+    int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE=4;
     Uri pdfUri;
 
     ProgressDialog progressDialog;
@@ -71,7 +78,11 @@ public class DocumentiFragment extends Fragment {
         selectFile = view.findViewById(R.id.selectFile);
         upload = view.findViewById(R.id.upload);
         notification = view.findViewById(R.id.notification);
+        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
 
+            return view;
+        }
 
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -89,19 +100,33 @@ public class DocumentiFragment extends Fragment {
         selectFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    // Permission already granted, proceed with the task.
                     selectPdf();
-                } else
-                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 9);
+                } else {
+                    // Request permission
+
+                    ActivityCompat.requestPermissions(requireActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+
+                }
             }
         });
+
 
 
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(pdfUri!=null){
-                    uploadFile(pdfUri);
+                    if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                        uploadFile(pdfUri);
+                    } else {
+                        Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                    }
+
                 }
                 else
                     Toast.makeText(requireContext(),"Seleziona un file",Toast.LENGTH_SHORT).show();
@@ -111,20 +136,38 @@ public class DocumentiFragment extends Fragment {
         fileAdapter.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(UploadedFile uploadedFile) {
-                // Handle item click (e.g., open the file or perform some action)
+
                 downloadFile(uploadedFile.getFileUrl(), uploadedFile.getFileName());
             }
 
             @Override
             public void onDeleteClick(UploadedFile uploadedFile) {
-                // Handle delete click (e.g., show a confirmation dialog and delete the file)
-                showDeleteConfirmationDialog(uploadedFile);
+                if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                    showDeleteConfirmationDialog(uploadedFile);
+                } else {
+                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
 
         return view;
 
+    }
+
+    @Override
+    public void onUploadSuccess(String fileName, String downloadUrl) {
+        // Handle successful upload, e.g., update UI or proceed with additional tasks
+        Log.d("UploadCallback", "Upload successful for file: " + fileName);
+        // You can trigger the download or any other actions here
+    }
+
+    @Override
+    public void onUploadFailure(String fileName, Exception exception) {
+        // Handle upload failure, e.g., show an error message
+        Log.e("UploadCallback", "Upload failed for file: " + fileName, exception);
+        Toast.makeText(requireContext(), "Failed to upload file: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     private void fetchDataFromDatabase() {
@@ -162,95 +205,62 @@ public class DocumentiFragment extends Fragment {
         StorageReference storageReference = storage.getReference();
         StorageReference fileReference = storageReference.child("Uploads").child(fileName);
 
-        fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                fileReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        performUpload(fileReference, pdfUri, fileName);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(requireContext(), "Failed to delete existing file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                performUpload(fileReference, pdfUri, fileName);
-            }
+        // Check if the file with the same name exists
+        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+           progressDialog.dismiss();
+            showFileExistsDialog(fileName);
+        }).addOnFailureListener(e -> {
+            // File with the same name doesn't exist, proceed with the upload
+            uploadNewFile(fileReference, pdfUri, fileName);
         });
     }
 
-    private void performUpload(StorageReference fileReference, Uri pdfUri, String fileName) {
+    private void showFileExistsDialog(String fileName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Attenzione");
+        builder.setMessage("Questo file è stato già caricato! Elimina il vecchio prima di continuare!");
+        builder.setPositiveButton("OK", null);
+        builder.show();
+    }
+
+    private void uploadNewFile(StorageReference fileReference, Uri pdfUri, String fileName) {
         UploadTask uploadTask = fileReference.putFile(pdfUri);
 
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                progressDialog.dismiss();
-                Toast.makeText(requireContext(), "File caricato!", Toast.LENGTH_SHORT).show();
+        uploadTask.addOnSuccessListener(taskSnapshot -> {
+            progressDialog.dismiss();
+            Toast.makeText(requireContext(), "File caricato!", Toast.LENGTH_SHORT).show();
 
-                removeExistingFile(fileName);
-
-                fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri downloadUri) {
-                        String url = downloadUri.toString();
-                        DatabaseReference reference = database.getReference();
-                        reference.child(fileName).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    UploadedFile uploadedFile = new UploadedFile(fileName, url);
-                                    fileList.add(uploadedFile);
-                                    fileAdapter.notifyDataSetChanged();
-                                } else {
-                                    Toast.makeText(requireContext(), "Errore nel caricare il file", Toast.LENGTH_SHORT).show();
-                                    Exception exception = task.getException();
-                                    if (exception != null) {
-                                        exception.printStackTrace(); // Print the stack trace for more details
-                                    }
-                                }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(requireContext(), "Errore nel caricare il file nel database: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+            fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                String url = uri.toString();
+                DatabaseReference reference = database.getReference();
+                reference.child(fileName).setValue(url).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        UploadedFile uploadedFile = new UploadedFile(fileName, url);
+                        fileList.add(uploadedFile);
+                        fileAdapter.notifyDataSetChanged();
+                        // Notify the callback about successful upload
+                        onUploadSuccess(fileName, url);
+                    } else {
+                        // Notify the callback about upload failure
+                        onUploadFailure(fileName, task.getException());
                     }
+                }).addOnFailureListener(e -> {
+                    // Notify the callback about upload failure
+                    onUploadFailure(fileName, e);
                 });
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                int currentProgress = (int) (100 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                progressDialog.setProgress(currentProgress);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // Handle failure during upload
-                progressDialog.dismiss();
-                Toast.makeText(requireContext(), "Failed to upload file: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            });
+        }).addOnProgressListener(snapshot -> {
+            int currentProgress = (int) (100 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+            progressDialog.setProgress(currentProgress);
+        }).addOnFailureListener(e -> {
+            // Notify the callback about upload failure
+            progressDialog.dismiss();
+            onUploadFailure(fileName, e);
         });
     }
 
-    private void removeExistingFile(String fileName) {
-        for (int i = 0; i < fileList.size(); i++) {
-            if (fileList.get(i).getFileName().equals(fileName)) {
-                fileList.remove(i);
-                fileAdapter.notifyItemRemoved(i);
-                break;
-            }
-        }
-    }
+
+
 
 
     private String getFileNameFromUri(Uri uri) {
@@ -276,10 +286,37 @@ public class DocumentiFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 9 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            selectPdf();
-        } else
-            Toast.makeText(requireContext(), "Si prega di fornire i permessi",Toast.LENGTH_SHORT).show();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.e("PERMISSION", "Granted");
+                    selectPdf();
+                } else {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        Log.e("PERMISSION", "Don't ask again");
+                        showPermissionSettingsDialog();
+                    } else {
+                        // User denied the permission without selecting "Don't ask again."
+                        // Handle this situation as needed (e.g., show a message to the user).
+                        Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 86) {
+            if (resultCode == RESULT_OK && data != null) {
+                pdfUri = data.getData();
+                String fileName = getFileNameFromUri(pdfUri);
+                notification.setText(fileName);
+            } else {
+                Toast.makeText(requireContext(), "Seleziona un file", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
     private void selectPdf () {
         Intent intent= new Intent();
@@ -334,16 +371,7 @@ public class DocumentiFragment extends Fragment {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == 86 && resultCode == RESULT_OK && data != null){
-            pdfUri = data.getData();
-            String fileName = getFileNameFromUri(pdfUri);
-            notification.setText(fileName);
-        } else {
-            Toast.makeText(requireContext(), "Seleziona un file", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     private String sanitizeFileName(String originalFileName) {
         return originalFileName.replaceAll("[.#$\\[\\]]", "_");
@@ -399,4 +427,43 @@ public class DocumentiFragment extends Fragment {
             }
         });
     }
+    @Override
+    public void onDestroyView() {
+        // Unregister the BroadcastReceiver when the fragment is destroyed
+        if (networkChangeReceiver != null) {
+            requireContext().unregisterReceiver(networkChangeReceiver);
+        }
+        super.onDestroyView();
+    }
+
+    private void showPermissionSettingsDialog() {
+        Log.e("PERMISSION","show permission dialog");
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Permission Required")
+                .setMessage("This app needs storage permission. You can grant the permission in the app settings.")
+                .setPositiveButton("Go to Settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Open app settings
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                Uri.fromParts("package", requireActivity().getPackageName(), null));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle the user's choice (e.g., show a message)
+                        Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+    public interface UploadCallback {
+        void onUploadSuccess(String fileName, String downloadUrl);
+        void onUploadFailure(String fileName, Exception exception);
+    }
+
 }
+
