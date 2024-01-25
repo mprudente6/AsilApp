@@ -331,7 +331,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback{
     private void selectPdf() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("application/pdf");  // You can specify the desired file type
+        intent.setType("application/pdf");
         startActivityForResult(intent, 86);
     }
 
