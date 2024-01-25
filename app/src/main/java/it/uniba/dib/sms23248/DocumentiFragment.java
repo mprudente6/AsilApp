@@ -324,16 +324,15 @@ public class DocumentiFragment extends Fragment implements UploadCallback{
                 String fileName = getFileNameFromUri(pdfUri);
                 notification.setText(fileName);
             } else {
-                Toast.makeText(requireContext(), "Seleziona un file", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "File selection canceled", Toast.LENGTH_SHORT).show();
             }
         }
     }
-    private void selectPdf () {
-        Log.e("PDF","selectPdf()");
-        Intent intent= new Intent();
-        intent.setType("application/pdf");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,86);
+    private void selectPdf() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/pdf");  // You can specify the desired file type
+        startActivityForResult(intent, 86);
     }
 
     public void downloadFile(String fileUrl, String fileName) {
