@@ -22,7 +22,6 @@
             app:titleTextColor="#FFFFFF"
             />
 
-
         <!-- Title -->
         <TextView
             android:id="@+id/titleCartellaClinica"
