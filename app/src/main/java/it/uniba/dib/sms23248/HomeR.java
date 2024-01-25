@@ -115,7 +115,16 @@ public class HomeR extends AppCompatActivity {
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
                 }
             });
+
+            Button saluteButton = findViewById(R.id.btnSaluteR);
+
+            saluteButton.setOnClickListener(view -> openSaluteScreen());
         }
+    }
+
+    private void openSaluteScreen() {
+        Intent intent = new Intent(this, SaluteR.class);
+        startActivity(intent);
     }
 
     @Override

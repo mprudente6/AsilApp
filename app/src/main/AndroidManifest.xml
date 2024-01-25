@@ -34,6 +34,12 @@
         android:theme="@style/Theme.AsilApp"
         tools:targetApi="31">
         <activity
+            android:name=".SaluteS"
+            android:exported="false"/>
+        <activity
+            android:name=".SaluteR"
+            android:exported="false"/>
+        <activity
             android:name=".MediaRichiedente"
             android:exported="false" />
         <activity

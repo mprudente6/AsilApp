@@ -6,140 +6,155 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeS">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-  >
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="#fe9e50"
-        app:title="AsilApp"
-        app:titleTextColor="#FFFFFF"
-        app:menu="@menu/menu_logout"/>
+        android:layout_height="match_parent"
+        >
 
-    <TextView
-        android:id="@+id/Benvenuto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=" "
-        android:textSize="16sp"
-        android:layout_marginTop="60dp"
-        android:padding="25dp"
-        android:textStyle="normal">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#fe9e50"
+            app:title="AsilApp"
+            app:titleTextColor="#FFFFFF"
+            app:menu="@menu/menu_logout"/>
 
-    </TextView>
+        <TextView
+            android:id="@+id/Benvenuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="16sp"
+            android:layout_marginTop="60dp"
+            android:padding="25dp"
+            android:textStyle="normal">
 
-
-
-
-
-    <Button
-        android:id="@+id/btnVisita"
-        android:layout_width="233dp"
-        android:layout_height="62dp"
+        </TextView>
 
 
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="123dp"
-        android:layout_marginTop="238dp"
-        android:layout_marginEnd="115dp"
-        android:backgroundTint="#FF076AEC"
-        android:elevation="12dp"
-        android:onClick="addItemAction"
-        android:text="effettua visita" />
 
-    <LinearLayout
-        android:id="@+id/itemlayout"
-        android:layout_width="294dp"
-        android:layout_height="44dp"
-
-
-        android:layout_centerInParent="true"
-        android:layout_marginTop="311dp"
-        android:layout_marginEnd="48dp"
-        android:orientation="horizontal">
 
 
         <Button
-            android:id="@+id/btnCartellaClinica"
-            android:layout_width="wrap_content"
-            android:layout_height="38dp"
+            android:id="@+id/btnSaluteS"
+            android:layout_width="233dp"
+            android:layout_height="62dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="#076AEC"
+            android:layout_marginStart="123dp"
+            android:layout_marginTop="238dp"
+            android:layout_marginEnd="115dp"
+            android:backgroundTint="#FF076AEC"
             android:elevation="12dp"
             android:onClick="addItemAction"
-            android:text="cartella clinica" />
+            android:text="Scansiona QR CODE utente" />
+
+        <!--    <Button-->
+        <!--        android:id="@+id/btnVisita"-->
+        <!--        android:layout_width="233dp"-->
+        <!--        android:layout_height="62dp"-->
+
+
+        <!--        android:layout_alignParentTop="true"-->
+        <!--        android:layout_centerHorizontal="true"-->
+        <!--        android:layout_gravity="center_horizontal"-->
+        <!--        android:layout_marginStart="123dp"-->
+        <!--        android:layout_marginTop="238dp"-->
+        <!--        android:layout_marginEnd="115dp"-->
+        <!--        android:backgroundTint="#FF076AEC"-->
+        <!--        android:elevation="12dp"-->
+        <!--        android:onClick="addItemAction"-->
+        <!--        android:text="effettua visita" />-->
+
+        <!--    <LinearLayout-->
+        <!--        android:id="@+id/itemlayout"-->
+        <!--        android:layout_width="294dp"-->
+        <!--        android:layout_height="44dp"-->
+
+
+        <!--        android:layout_centerInParent="true"-->
+        <!--        android:layout_marginTop="311dp"-->
+        <!--        android:layout_marginEnd="48dp"-->
+        <!--        android:orientation="horizontal">-->
+
+
+        <!--        <Button-->
+        <!--            android:id="@+id/btnCartellaClinica"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="38dp"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_marginTop="16dp"-->
+        <!--            android:backgroundTint="#076AEC"-->
+        <!--            android:elevation="12dp"-->
+        <!--            android:onClick="addItemAction"-->
+        <!--            android:text="cartella clinica" />-->
+
+        <!--        <Button-->
+        <!--            android:id="@+id/btnApriContenitore"-->
+        <!--            android:layout_width="133dp"-->
+        <!--            android:layout_height="38dp"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_marginStart="20dp"-->
+        <!--            android:layout_marginTop="16dp"-->
+        <!--            android:backgroundTint="#076AEC"-->
+        <!--            android:elevation="12dp"-->
+        <!--            android:onClick="addItemAction"-->
+        <!--            android:text="contenitore" />-->
+
+        <!--    </LinearLayout>-->
 
         <Button
-            android:id="@+id/btnApriContenitore"
-            android:layout_width="133dp"
-            android:layout_height="38dp"
-            android:layout_gravity="center_horizontal"
+            android:id="@+id/btnAmministrazione"
+            android:layout_width="159dp"
+            android:layout_height="59dp"
+            android:layout_below="@id/toolbar"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="482dp"
+
+            android:backgroundTint="#FD9D50"
+            android:elevation="12dp"
+            android:onClick="addItemAction"
+            android:text="Centro" />
+
+        <Button
+            android:id="@+id/btnAggiungiUtente"
+            android:layout_width="159dp"
+            android:layout_height="59dp"
+            android:layout_below="@id/toolbar"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="553dp"
+
+            android:backgroundTint="#FD9D50"
+            android:elevation="12dp"
+            android:text="Aggiungi utente" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="64dp"
+            android:layout_height="61dp"
+            android:layout_alignParentStart="true"
+
+
             android:layout_marginStart="20dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="#076AEC"
-            android:elevation="12dp"
-            android:onClick="addItemAction"
-            android:text="contenitore" />
+            android:layout_marginTop="500dp"
+            android:layout_marginBottom="0dp"
+            app:srcCompat="@drawable/_07009" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="116dp"
+            app:srcCompat="@drawable/untitled_design__7__removebg_preview" />
 
-    <Button
-        android:id="@+id/btnAmministrazione"
-        android:layout_width="159dp"
-        android:layout_height="59dp"
-        android:layout_below="@id/toolbar"
-
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="482dp"
-
-        android:backgroundTint="#FD9D50"
-        android:elevation="12dp"
-        android:onClick="addItemAction"
-        android:text="Centro" />
-
-    <Button
-        android:id="@+id/btnAggiungiUtente"
-        android:layout_width="159dp"
-        android:layout_height="59dp"
-        android:layout_below="@id/toolbar"
-
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="553dp"
-
-        android:backgroundTint="#FD9D50"
-        android:elevation="12dp"
-        android:text="Aggiungi utente" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="64dp"
-        android:layout_height="61dp"
-        android:layout_alignParentStart="true"
-
-
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="500dp"
-        android:layout_marginBottom="0dp"
-        app:srcCompat="@drawable/_07009" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="116dp"
-        app:srcCompat="@drawable/untitled_design__7__removebg_preview" />
-
-</RelativeLayout>
+    </RelativeLayout>
 </ScrollView>

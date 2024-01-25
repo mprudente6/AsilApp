@@ -116,7 +116,7 @@ public class ValutazioneActivity extends AppCompatActivity {
     // Method to create a new document in the Firestore collection
     private void createNewDocument(DocumentReference documentRef, float userRating) {
         Map<String, Object> ratingData = new HashMap<>();
-        ratingData.put("Utente", userId);
+        ratingData.put("ID_RichiedenteAsilo", userId);
         ratingData.put("Voto", (int) userRating);
 
         documentRef.set(ratingData)

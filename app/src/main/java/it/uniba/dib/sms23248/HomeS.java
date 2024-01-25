@@ -61,6 +61,10 @@ public class HomeS extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        Button saluteButton = findViewById(R.id.btnSaluteS);
+
+        saluteButton.setOnClickListener(view -> openSaluteScreen());
+
         aggiungiUtente=findViewById(R.id.btnAggiungiUtente);
 
         aggiungiUtente.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +111,11 @@ public class HomeS extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void openSaluteScreen() {
+        Intent intent = new Intent(this, SaluteS.class);
+        startActivity(intent);
     }
 
     @Override

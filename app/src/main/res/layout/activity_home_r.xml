@@ -61,7 +61,7 @@
         android:id="@+id/btnApriMappa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnInformazioniCentro"
+        android:layout_below="@id/btnInformazioniCentro"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:text="Visualizza Mappa Centro"/>
@@ -77,22 +77,31 @@
         tools:layout_editor_absoluteY="-138dp" />
 
     <Button
+        android:id="@+id/btnMedia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnApriMappa"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="Visualizza Media" />
+
+    <Button
         android:id="@+id/generaQrRichiedente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnMedia"
+        android:layout_below="@id/btnMedia"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:text="Genera QR CODE" />
 
     <Button
-        android:id="@+id/btnMedia"
+        android:id="@+id/btnSaluteR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnApriMappa"
+        android:layout_below="@id/generaQrRichiedente"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:text="Visualizza Media" />
+        android:text="Informazioni Salute" />
 
 </RelativeLayout>
 </ScrollView>
