@@ -1,7 +1,16 @@
 package it.uniba.dib.sms23248;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class ParametriMediciFragment extends Fragment {
+public class ParametriMediciFragment extends Fragment implements SensorEventListener {
     private LinearLayout temperatureLayout, heartRateLayout, bloodPressureLayout, pulseOxLayout, glucoseLayout;
     private FirebaseFirestore firestore;
     private String userId; // Assuming you have the user ID stored somewhere in your app
@@ -35,6 +44,15 @@ public class ParametriMediciFragment extends Fragment {
     private int[] simulatedBloodPressure = {0, 0};
     private int simulatedPulseOx = 0;
     private int simulatedGlucose = 0;
+
+    private SensorManager sensorManager;
+    private Sensor heartRateSensor;
+    private static final int REQUEST_BODY_SENSORS = 1;
+    private boolean isFirstHeartRateValueDisplayed = false;
+
+    private boolean isFragmentVisible = false; // Added to track fragment visibility
+
+    private float heartRate = 0;
 
     @Nullable
     @Override
@@ -63,8 +81,7 @@ public class ParametriMediciFragment extends Fragment {
         });
 
         heartRateButton.setOnClickListener(v -> {
-            showLoadingLayout(heartRateLayout, R.id.heartRateProgressBar, R.id.heartRateResultTextView);
-            simulateHeartRateMeasurement();
+            checkHeartRateSensor();
         });
 
         bloodPressureButton.setOnClickListener(v -> {
@@ -89,6 +106,86 @@ public class ParametriMediciFragment extends Fragment {
         saveButton.setOnClickListener(v -> saveButtonClicked());
 
         return view;
+    }
+
+    private void checkHeartRateSensor() {
+        // Initialize SensorManager
+        sensorManager = (SensorManager) requireActivity().getSystemService(Context.SENSOR_SERVICE);
+
+        // Heart Rate Sensor
+        heartRateSensor = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
+        if (heartRateSensor != null) {
+            sensorManager.registerListener(this, heartRateSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            showToast("Sensore Heart Rate disponibile sul tuo dispositivo!");
+            showMeasurementInstructions();
+        } else {
+            showToast("Sensore Heart Rate non disponibile sul dispositivo...");
+            showLoadingLayout(heartRateLayout, R.id.heartRateProgressBar, R.id.heartRateResultTextView);
+            simulateHeartRateMeasurement();
+        }
+
+        // Request runtime permissions if needed
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (requireContext().checkSelfPermission(Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.BODY_SENSORS}, REQUEST_BODY_SENSORS);
+            }
+        }
+    }
+
+    private void showMeasurementInstructions() {
+        // Display instructions on how to measure heart rate through available hardware
+        Toast.makeText(requireContext(), "Poggia il dito sul sensore per misurare la frequenza cardiaca", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        // Handle only heart rate sensor data changes
+        if (event.sensor.getType() == Sensor.TYPE_HEART_RATE) {
+            // Heart Rate data
+            float heartRateTmp = event.values[0];
+
+            // Display heart rate measurement if it is different from 0
+            if (heartRateTmp != 0 && !isFirstHeartRateValueDisplayed) {
+                heartRate = heartRateTmp;
+
+                Log.d("HeartRate", "Frequenza cardiaca: " + formatDouble(heartRate) + " bpm");
+                showToast("Frequenza cardiaca: " + formatDouble(heartRate) + " bpm");
+                isFirstHeartRateValueDisplayed = true;
+
+                onDestroy();
+            }
+
+            // Reset the flag when the heart rate becomes 0
+            if (heartRateTmp == 0) {
+                isFirstHeartRateValueDisplayed = false;
+                showMeasurementInstructions();
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // Handle accuracy changes if needed
+    }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//
+//        if (requestCode == REQUEST_BODY_SENSORS && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            // Permission granted, you can now use the sensors
+//        } else {
+//            // Permission denied, handle accordingly
+//        }
+//    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Unregister sensor listeners when the fragment is destroyed
+        if (sensorManager != null) {
+            sensorManager.unregisterListener(this, heartRateSensor);
+        }
     }
 
     private void saveButtonClicked() {
@@ -122,7 +219,9 @@ public class ParametriMediciFragment extends Fragment {
         if (simulatedTemperature != 0) {
             data.put("TemperaturaCorporea", formatDouble(simulatedTemperature));
         }
-        if (simulatedHeartRate != 0) {
+        if (heartRate != 0) {
+            data.put("FrequenzaCardiaca", formatDouble(heartRate));
+        } else if (simulatedHeartRate != 0) {
             data.put("FrequenzaCardiaca", simulatedHeartRate);
         }
         if (simulatedBloodPressure[0] != 0) {
@@ -163,7 +262,11 @@ public class ParametriMediciFragment extends Fragment {
 
         data.put("TemperaturaCorporea", formatDouble(simulatedTemperature));
 
-        data.put("FrequenzaCardiaca", simulatedHeartRate);
+        if (heartRate != 0) {
+            data.put("FrequenzaCardiaca", heartRate);
+        } else {
+            data.put("FrequenzaCardiaca", simulatedHeartRate);
+        }
 
         data.put("PressioneMin", simulatedBloodPressure[1]);
         data.put("PressioneMax", simulatedBloodPressure[0]);

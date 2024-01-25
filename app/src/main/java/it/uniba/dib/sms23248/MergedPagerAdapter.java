@@ -1,28 +1,30 @@
 package it.uniba.dib.sms23248;
-import androidx.annotation.Nullable;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MergedPagerAdapter extends FragmentPagerAdapter {
+public class MergedPagerAdapter extends FragmentStateAdapter {
 
     private final List<Fragment> fragmentList = new ArrayList<>();
     private final List<String> fragmentTitleList = new ArrayList<>();
 
-    public MergedPagerAdapter(FragmentManager fm) {
-        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+    public MergedPagerAdapter(FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
     }
 
+    @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         return fragmentList.get(position);
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return fragmentList.size();
     }
 
@@ -31,9 +33,11 @@ public class MergedPagerAdapter extends FragmentPagerAdapter {
         fragmentTitleList.add(title);
     }
 
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
+    public String getFragmentTitle(int position) {
         return fragmentTitleList.get(position);
+    }
+
+    public Fragment getFragment(int position) {
+        return fragmentList.get(position);
     }
 }
