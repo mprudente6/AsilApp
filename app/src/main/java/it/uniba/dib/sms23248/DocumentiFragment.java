@@ -45,6 +45,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -208,14 +209,21 @@ public class DocumentiFragment extends Fragment implements UploadCallback{
         StorageReference fileReference = storageReference.child("Uploads").child(fileName);
 
         // Check if the file with the same name exists
-        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-           progressDialog.dismiss();
+        fileReference.getMetadata().addOnSuccessListener(storageMetadata -> {
+            progressDialog.dismiss();
             showFileExistsDialog(fileName);
         }).addOnFailureListener(e -> {
             // File with the same name doesn't exist, proceed with the upload
-            uploadNewFile(fileReference, pdfUri, fileName);
+            if (e instanceof StorageException && ((StorageException) e).getErrorCode() == StorageException.ERROR_OBJECT_NOT_FOUND) {
+                uploadNewFile(fileReference, pdfUri, fileName);
+            } else {
+                progressDialog.dismiss();
+                Toast.makeText(requireContext(), "Failed to check file existence: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
     }
+
+
 
     private void showFileExistsDialog(String fileName) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
