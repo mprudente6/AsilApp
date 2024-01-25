@@ -100,15 +100,17 @@ public class DocumentiFragment extends Fragment implements UploadCallback{
         selectFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                Log.e("PDF","On click");
+                if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_GRANTED) {
-                    // Permission already granted, proceed with the task.
+                    Log.e("PDF","Permission granted");
+
                     selectPdf();
                 } else {
-                    // Request permission
+                    Log.e("PDF","Requesting permission");
 
                     ActivityCompat.requestPermissions(requireActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
                             READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
 
                 }
@@ -319,6 +321,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback{
         }
     }
     private void selectPdf () {
+        Log.e("PDF","selectPdf()");
         Intent intent= new Intent();
         intent.setType("application/pdf");
         intent.setAction(Intent.ACTION_GET_CONTENT);
