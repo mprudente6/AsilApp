@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VideoFragment">
+    tools:context=".Amministrazione.VideoFragment">
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,7 +25,7 @@
             android:layout_weight="4"
             android:padding="15dp"
             android:paddingTop="20dp"
-            android:text="Utente generico:"
+            android:text="@string/UtenteGen"
             android:textSize="16dp" />
 
         <Button
@@ -38,7 +38,7 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:backgroundTint="#076aec"
-            android:text="Carica video" />
+            android:text="@string/CaricaVid" />
 
     </LinearLayout>
 
@@ -73,7 +73,7 @@
             android:layout_weight="4"
             android:padding="15dp"
             android:paddingTop="20dp"
-            android:text="Utente donna:"
+            android:text="@string/Utentedon"
             android:textSize="16dp" />
 
         <Button
@@ -86,7 +86,7 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:backgroundTint="#076aec"
-            android:text="Carica video" />
+            android:text="@string/CaricaVid" />
 
     </LinearLayout>
 

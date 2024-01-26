@@ -25,7 +25,6 @@
                 android:paddingStart="8dp"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:text="File Name"
                 android:textColor="#0B44D3"
                 android:textColorLink="#0B44D3"
                 android:clickable="true"

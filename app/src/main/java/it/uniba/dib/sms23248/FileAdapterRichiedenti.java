@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import it.uniba.dib.sms23248.Amministrazione.FileAdapter;
+import it.uniba.dib.sms23248.Amministrazione.UploadedFile;
+
 public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
 
     private List<UploadedFile> fileList;

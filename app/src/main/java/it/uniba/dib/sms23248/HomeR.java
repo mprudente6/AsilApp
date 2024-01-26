@@ -32,6 +32,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class HomeR extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+
+
+
     private TextView benvenuto;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -39,7 +42,7 @@ public class HomeR extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_r);
-
+        String benvenutoString = getString(R.string.benvenuto);
         mAuth = FirebaseAuth.getInstance();
         benvenuto=findViewById(R.id.Benvenuto);
 
@@ -72,7 +75,7 @@ public class HomeR extends AppCompatActivity {
                             String nome = document.getString("Nome");
 
                             // Use the retrieved value as needed
-                            benvenuto.setText("Benvenuto, " + nome + "!");
+                            benvenuto.setText(benvenutoString +" "+ nome + "!");
                         }
                     }
                 }
@@ -177,11 +180,14 @@ public class HomeR extends AppCompatActivity {
         popupMenu.show();
     }
     private void showLogoutConfirmationDialog() {
+        String sicuro = getString(R.string.VuoiUscire);
+        String si = getString(R.string.Si);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout");
-        builder.setMessage("Sei sicuro di voler uscire?");
+        builder.setMessage(sicuro);
 
-        builder.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(si, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mAuth.signOut();

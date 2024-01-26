@@ -40,7 +40,7 @@
                 android:id="@+id/signupText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sign-up"
+                android:text="@string/StaffSignup"
                 android:layout_marginTop="80dp"
                 android:textAlignment="center"
                 android:textColor="#504F4F"
@@ -63,7 +63,7 @@
                 android:paddingBottom="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="21dp"
-                android:text=" Email"
+                android:text="@string/email"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
                 android:layout_gravity="left"
                 android:layout_marginStart="21dp"
                 android:layout_marginTop="8dp"
-                android:text=" Password"
+                android:text="@string/password"
                 android:textSize="16dp"
                 android:paddingBottom="5dp"
                 android:textStyle="bold" />
@@ -137,7 +137,7 @@
                 android:layout_gravity="left"
                 android:layout_marginStart="21dp"
                 android:layout_marginTop="8dp"
-                android:text=" Cellulare"
+                android:text="@string/Cellulare"
                 android:paddingBottom="5dp"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -177,7 +177,7 @@
                 android:layout_marginStart="21dp"
 
                 android:layout_marginTop="8dp"
-                android:text=" Centro di accoglienza"
+                android:text="@string/CentroAccoglienza"
                 android:textSize="16dp"
                 android:paddingBottom="5dp"
                 android:textStyle="bold" />
@@ -249,7 +249,7 @@
                     android:onClick="Recupero_password"
                     android:padding="8dp"
                     android:textSize="15sp"
-                    android:text="Sei già registrato? Login"
+                    android:text="@string/GiaRegsitrato"
                     android:textAlignment="textStart"
                     android:textColor="#076AEB"
 

@@ -28,7 +28,7 @@
         android:id="@+id/Benvenuto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Benvenuto "
+        android:text="@string/benvenuto"
         android:textSize="16sp"
         android:layout_marginTop="60dp"
         android:padding="25dp"
@@ -46,7 +46,7 @@
         android:layout_marginTop="-311dp"
         android:layout_marginEnd="191dp"
         android:backgroundTint="#076AEC"
-        android:text="QR CODE" />
+        android:text="@string/QrCode" />
 
     <ImageView
         android:id="@+id/avatar"
@@ -70,7 +70,7 @@
         android:layout_centerHorizontal="true"
 
         android:layout_marginTop="135dp"
-        android:text="Info centro" />
+        android:text="@string/info_centro" />
 
     <Button
         android:id="@+id/btnApriMappa"
@@ -80,7 +80,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="43dp"
         android:layout_marginTop="75dp"
-        android:text="Mappa" />
+        android:text="@string/mappa_string" />
 
     <FrameLayout
         android:id="@+id/frameLayoutQrCode"
@@ -101,7 +101,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="-48dp"
         android:layout_marginEnd="43dp"
-        android:text="Media" />
+        android:text="@string/media" />
 
     <Button
         android:id="@+id/btnSaluteR"
@@ -110,7 +110,7 @@
         android:layout_below="@id/generaQrRichiedente"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="325dp"
-        android:text="Cartella clinica" />
+        android:text="@string/cartella_clinica" />
 
 </RelativeLayout>
 </ScrollView>

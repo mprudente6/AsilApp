@@ -17,4 +17,94 @@
 
     <string name="mainActivity_apri_contenitore">Apri contenitore</string>
     <string name="mainActivity_mostra_qr_code">Mostra codice QR</string>
+
+
+    <!-- Stringhe delle cartelle Amministrazione, Login e SpeseRichiedente -->
+    <string name="password_dimenticata">Password dimenticata?</string>
+    <string name="accedi">Accedi</string>
+    <string name="non_ancora_registrato">Non sei ancora registrato? Clicca qui!</string>
+    <string name="nuova_password">nuova password</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="Login" translatable="false">Login</string>
+    <string name="Login_staff" >Login Staff</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="SignUp">Registrazione utente</string>
+    <string name="Nome">Nome</string>
+    <string name="Cognome">Cognome</string>
+    <string name="Genere">Genere</string>
+    <string name="Cellulare">Cellulare</string>
+    <string name="Data_di_nascita">Data di nascita</string>
+    <string name="Luogo_nascita">Luogo di nascita</string>
+    <string name="Conferma">Conferma</string>
+    <string name="StaffSignup">Registrati</string>
+    <string name="CentroAccoglienza">Centro di accoglienza</string>
+    <string name="GiaRegsitrato">Sei già registrato? Accedi</string>
+    <string name="Spese">Spese</string>
+    <string name="Saldo">Saldo</string>
+    <string name="Analisi">Analisi</string>
+    <string name="refresh">aggiorna</string>
+    <string name="BilancioBudget" translatable="false">Budget: </string>
+    <string name="Spesasettimana">Spesa settimanale: </string>
+    <string name="SpesaMensile">Spesa mensile: </string>
+    <string name="userWarnBudget">Il saldo si aggiornerà ogni mese. La quota mensile spettante è di 60.00€.</string>
+    <string name="prodotto">prodotto</string>
+    <string name="prezzo">prezzo</string>
+    <string name="AggiungiSpesa">Aggiungi nuova spesa</string>
+    <string name="seleziona">Seleziona pdf</string>
+    <string name="Nessunfile">Nessun file selezionato</string>
+    <string name="Upload">Carica pdf</string>
+    <string name="Indirizzo">Indirizzo</string>
+    <string name="Sito_web">Sito web</string>
+    <string name="Descrizione">Descrizione</string>
+    <string name="Telefono">Telefono</string>
+    <string name="Chart">Analisi spese mensili</string>
+    <string name="SpeseGraf">Spese</string>
+    <string name="UtenteGen">Utente generico:</string>
+    <string name="Utentedon">Utente donna:</string>
+    <string name="CaricaVid">Carica video</string>
+    <string name="Prezzo">Prezzo: </string>
+    <string name="Prodotto">Prodotto: </string>
+    <string name="Tipo">Tipo: </string>
+    <string name="LatLong">Latitudine:     \n Longitudine:      </string>
+    <string name="ClickMap">Tocca un punto della mappa per salvare la posizione dle tuo centro</string>
+
+    <!-- Stringhe di HomeS, HomeR, Main(Benvenuto) -->
+    <string name="Demo">Utente Demo</string>
+    <string name="Logout">Esci</string>
+    <string name="ScegliUt">Scegli utente</string>
+    <string name="RichiedenteAsilo">Richiedente Asilo</string>
+    <string name="Profilo">Profilo</string>
+    <string name="benvenuto">Benvenuto, </string>
+    <string name="mappa_string">Mappa</string>
+    <string name="media" translatable="false">Media</string>
+    <string name="cartella_clinica">Cartella clinica</string>
+    <string name="info_centro">Il mio centro</string>
+    <string name="QrCode">Il mio QR Code</string>
+    <string name="centroString">Centro</string>
+    <string name="aggiungi_utente">Registra nuovo utente</string>
+    <string name="scansionaQRCode">Scansiona QR Code utente</string>
+    <string name="Benvenuto_Main">Benvenuto!</string>
+    <string name="Dati">Dati</string>
+    <string name="Video">Video</string>
+    <string name="Attenzione">Attenzione</string>
+    <string name="FilegiaCaricato">Questo file è stato già caricato! Elimina il vecchio prima di continuare!</string>
+    <string name="EliminaFile">Elimina file</string>
+    <string name="VuoiEliminare">Sei sicuro di voler eliminare questo file?</string>
+    <string name="Delete">Elimina</string>
+    <string name="Cancel">Annulla</string>
+    <string name="LatiGeo">Latitudine</string>
+    <string name="LongiGeo">Longitudine</string>
+    <string name="Passwordcaratter">La password deve essere almeno di 6 caratteri!</string>
+    <string name="Riempicampi">Riempire tutti i campi!</string>
+    <string name="Emailinvalid">Email non valida!</string>
+    <string name="Cellulareinvalid">Cellulare non valido!</string>
+    <string name="IncorrectPass">Password non corretta!</string>
+    <string name="EmailnonEsiste">Email insesistente!</string>
+    <string name="ResetPass">Inserisci Email prima di resettare la password!</string>
+    <string name="PermessiR">Non hai i permessi da richiedente asilo</string>
+    <string name="PermessiS">Non hai i permessi da staff</string>
+    <string name="PrezzoAlto">Il prezzo è troppo alto!</string>
+    <string name="VuoiUscire">Sei sicuro di voler uscire?</string>
+    <string name="Si">Sì</string>
+    <string name="Caricamento">Caricamento in corso</string>
 </resources>

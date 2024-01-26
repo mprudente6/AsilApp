@@ -51,7 +51,7 @@
             android:backgroundTint="#FF076AEC"
             android:elevation="12dp"
             android:onClick="addItemAction"
-            android:text="Scansiona QR CODE utente" />
+            android:text="@string/scansionaQRCode" />
 
         <!--    <Button-->
         <!--        android:id="@+id/btnVisita"-->
@@ -112,14 +112,14 @@
             android:layout_width="159dp"
             android:layout_height="59dp"
             android:layout_below="@id/toolbar"
-
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="482dp"
+
+
+            android:layout_marginTop="470dp"
 
             android:backgroundTint="#FD9D50"
             android:elevation="12dp"
-            android:onClick="addItemAction"
-            android:text="Centro" />
+            android:text="@string/centroString" />
 
         <Button
             android:id="@+id/btnAggiungiUtente"
@@ -132,7 +132,7 @@
 
             android:backgroundTint="#FD9D50"
             android:elevation="12dp"
-            android:text="Aggiungi utente" />
+            android:text="@string/aggiungi_utente" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -141,8 +141,9 @@
             android:layout_alignParentStart="true"
 
 
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="500dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="406dp"
             android:layout_marginBottom="0dp"
             app:srcCompat="@drawable/_07009" />
 

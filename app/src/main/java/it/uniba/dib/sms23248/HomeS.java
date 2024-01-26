@@ -33,6 +33,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+import it.uniba.dib.sms23248.Amministrazione.Amministrazione;
+import it.uniba.dib.sms23248.Amministrazione.RegistrazioneRichiedenteAsilo;
+
 public class HomeS extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -151,11 +154,14 @@ public class HomeS extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private void showLogoutConfirmationDialog() {
+        String sicuro = getString(R.string.VuoiUscire);
+        String si = getString(R.string.Si);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Logout");
-        builder.setMessage("Sei sicuro di voler uscire?");
+        builder.setMessage(sicuro);
 
-        builder.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(si, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mAuth.signOut();

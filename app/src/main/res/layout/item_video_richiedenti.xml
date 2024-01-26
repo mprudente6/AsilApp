@@ -51,7 +51,6 @@
                 android:gravity="center_vertical"
                 android:padding="10dp"
 
-                android:text="TextView"
                 android:textColor="#0B44D3"
                 android:textColorLink="#0B44D3"
                 android:textSize="13dp" />

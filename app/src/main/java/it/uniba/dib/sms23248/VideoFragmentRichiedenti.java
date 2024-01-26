@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,6 +31,10 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.uniba.dib.sms23248.Amministrazione.VideoAdapter;
+import it.uniba.dib.sms23248.Amministrazione.VideoAdapterRichiedenti;
+import it.uniba.dib.sms23248.Amministrazione.VideoModel;
 
 
 public class VideoFragmentRichiedenti extends Fragment implements VideoAdapter.OnDownloadClickListener{

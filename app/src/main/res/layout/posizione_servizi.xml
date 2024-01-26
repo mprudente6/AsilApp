@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PosizioneFragment">
+    tools:context=".Amministrazione.PosizioneFragment">
 
 
     <org.osmdroid.views.MapView
@@ -35,7 +35,7 @@
         android:background="@color/white"
         android:layout_height="wrap_content"
 
-        android:text=" Latitudine:     \n Longitudine:      " />
+        android:text="@string/LatLong" />
 
     <TextView
         android:id="@+id/textView1"
@@ -46,7 +46,7 @@
         android:layout_centerHorizontal="true"
         android:background="#8FFFFFFF"
         android:paddingBottom="1dp"
-        android:text="Tocca un punto della mappa per selezionare una posizione"
+        android:text="@string/ClickMap"
         android:textAlignment="center"
         android:textSize="12dp" />
 </RelativeLayout>

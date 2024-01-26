@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InformazioniFragment">
+    tools:context=".Amministrazione.InformazioniFragment">
 
 
     <RelativeLayout
@@ -22,7 +22,7 @@
             android:layout_marginEnd="211dp"
             android:layout_marginBottom="30dp"
             android:backgroundTint="#076AEC"
-            android:text="Salva">
+            android:text="@string/Conferma">
 
         </Button>
 
@@ -35,7 +35,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="551dp"
             android:padding="20dp"
-            android:text="Descrizione"
+            android:text="@string/Descrizione"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="223dp"
             android:padding="20dp"
-            android:text="E-mail"
+            android:text="@string/email"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="444dp"
             android:padding="20dp"
-            android:text="Telefono"
+            android:text="@string/Telefono"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -143,7 +143,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="330dp"
             android:padding="20dp"
-            android:text="Sito web"
+            android:text="@string/Sito_web"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -258,7 +258,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="-3dp"
             android:padding="20dp"
-            android:text="Nome"
+            android:text="@string/Nome"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -270,7 +270,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="110dp"
             android:padding="20dp"
-            android:text="Indirizzo"
+            android:text="@string/Indirizzo"
             android:textSize="16dp"
             android:textStyle="bold" />
 

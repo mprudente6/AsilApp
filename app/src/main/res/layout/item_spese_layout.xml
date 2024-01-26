@@ -17,7 +17,7 @@
             android:id="@+id/tvNome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prodotto: "
+            android:text="@string/Prodotto"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold" />
@@ -26,7 +26,7 @@
             android:id="@+id/tvTipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tipo: "
+            android:text="@string/Tipo"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
             android:id="@+id/tvPrezzo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Prezzo: "
+            android:text="@string/Prezzo"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold" />
 

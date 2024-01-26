@@ -63,7 +63,7 @@
             android:name=".qrCodeGenerato"
             android:exported="false" />
         <activity
-            android:name=".Spese"
+            android:name=".SpeseRichiedente.Spese"
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -73,29 +73,29 @@
             android:name=".CentroAccoglienza"
             android:exported="false" />
         <activity
-            android:name=".PasswordDimenticata"
+            android:name=".Login.PasswordDimenticata"
             android:exported="false" />
         <activity
-            android:name=".Amministrazione"
+            android:name=".Amministrazione.Amministrazione"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".RegistrazioneRichiedenteAsilo"
+            android:name=".Amministrazione.RegistrazioneRichiedenteAsilo"
             android:exported="false" />
         <activity
-            android:name=".RegistrazioneStaff"
+            android:name=".Login.RegistrazioneStaff"
             android:exported="false" />
         <activity
             android:name=".HomeS"
             android:exported="false" />
         <activity
-            android:name=".AccessoStaff"
+            android:name=".Login.AccessoStaff"
             android:exported="false" />
         <activity
             android:name=".HomeR"
             android:exported="false" />
         <activity
-            android:name=".AccessoRichiedenteAsilo"
+            android:name=".Login.AccessoRichiedenteAsilo"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -106,10 +106,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".MonthlyUpdateReceiver" />
+        <receiver android:name=".SpeseRichiedente.MonthlyUpdateReceiver" />
 
         <service
-            android:name=".MonthlyUpdateJobIntentService"
+            android:name=".SpeseRichiedente.MonthlyUpdateJobIntentService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 

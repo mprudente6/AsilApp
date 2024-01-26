@@ -7,7 +7,7 @@
     android:layout_weight="55"
     android:backgroundTint="#FE9E50"
 
-    tools:context=".CalendarioFragment">
+    tools:context=".SpeseRichiedente.CalendarioFragment">
 
 
     <CalendarView
@@ -42,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="prodotto"
+            android:hint="@string/prodotto"
             android:textSize="15dp"
             android:inputType="text"
             />
@@ -63,7 +63,7 @@
             android:layout_width="3dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="prezzo"
+            android:hint="@string/prezzo"
             android:inputType="numberDecimal"
             android:textSize="15dp" />
     </LinearLayout>
@@ -80,7 +80,7 @@
         android:onClick="addItemAction"
         android:elevation="12dp"
         android:translationZ="19dp"
-        android:text="Aggiungi spesa" />
+        android:text="@string/AggiungiSpesa" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewEvents"

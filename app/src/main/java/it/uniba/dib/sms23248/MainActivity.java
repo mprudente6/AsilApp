@@ -6,8 +6,6 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,6 +17,9 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import it.uniba.dib.sms23248.Login.AccessoRichiedenteAsilo;
+import it.uniba.dib.sms23248.Login.AccessoStaff;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,10 +49,14 @@ public class MainActivity extends AppCompatActivity {
         FlagSpinnerAdapter adapter = new FlagSpinnerAdapter(this, R.layout.flag_spinner, languages);
         languageSpinner.setAdapter(adapter);
 
+        String scegliUtente = getString(R.string.ScegliUt);
+        String richiedente = getString(R.string.RichiedenteAsilo);
+        String utenteDemo = getString(R.string.Demo);
+
 
         List<String> views_user=new ArrayList<>();
-        views_user.add(0,"Scegli Utente");
-        views_user.add("Richiedente Asilo");
+        views_user.add(0,scegliUtente);
+        views_user.add(richiedente);
         views_user.add("Staff");
 
 
@@ -64,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         choice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (parent.getItemAtPosition(position).equals("Scegli Utente")) {
+                if (parent.getItemAtPosition(position).equals(scegliUtente)) {
                     // Clear the selection
                     choice.setSelection(0);
                 } else {
@@ -73,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     // Clear the selection
                     choice.setSelection(0);
 
-                    if (item.equals("Richiedente Asilo")) {
+                    if (item.equals(richiedente)) {
                         Intent intent = new Intent(MainActivity.this, AccessoRichiedenteAsilo.class);
                         startActivity(intent);
                     } else if (item.equals("Staff")) {
@@ -89,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         List<String> views_demo = new ArrayList<>();
-        views_demo.add(0, "Utente demo");
-        views_demo.add("Richiedente Asilo");
+        views_demo.add(0, utenteDemo);
+        views_demo.add(richiedente);
         views_demo.add("Staff");
 
         UserSpinnerAdapter demoAdapter = new UserSpinnerAdapter(this, android.R.layout.simple_spinner_item, views_demo.toArray(new String[0]));
@@ -100,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         demo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (parent.getItemAtPosition(position).equals("Utente demo")) {
+                if (parent.getItemAtPosition(position).equals(utenteDemo)) {
                     // Clear the selection
                     demo.setSelection(0);
                 } else {
@@ -109,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     // Clear the selection
                     demo.setSelection(0);
 
-                    if (item.equals("Richiedente Asilo")) {
+                    if (item.equals(richiedente)) {
                         if (NetworkUtils.isNetworkAvailable(MainActivity.this)) {
                             signInDemoUserAsRichiedente();
                         } else {
@@ -175,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        // Unregister the BroadcastReceiver when the activity is destroyed
+
         super.onDestroy();
         if (networkChangeReceiver != null) {
             unregisterReceiver(networkChangeReceiver);

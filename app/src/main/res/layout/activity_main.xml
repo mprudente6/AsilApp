@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="Benvenuto!"
+        android:text="@string/Benvenuto_Main"
         android:textAlignment="center"
         android:fontFamily="@font/eastseadokdo_font"
         android:textColor="#FFFFFF"

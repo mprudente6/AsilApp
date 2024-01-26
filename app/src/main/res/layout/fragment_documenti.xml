@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DocumentiFragment">
+    tools:context=".Amministrazione.DocumentiFragment">
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,7 +20,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="26dp"
         android:layout_marginTop="36dp"
-        android:text="Seleziona file" />
+        android:text="@string/seleziona" />
 
     <Button
         android:id="@+id/upload"
@@ -31,7 +31,7 @@
         android:layout_marginStart="128dp"
         android:layout_marginTop="72dp"
         android:backgroundTint="#076aec"
-        android:text="Upload" />
+        android:text="@string/Upload" />
 
     <TextView
         android:id="@+id/notification"
@@ -43,7 +43,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="112dp"
 
-        android:text="Nessun file selezionato" />
+        android:text="@string/Nessunfile" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

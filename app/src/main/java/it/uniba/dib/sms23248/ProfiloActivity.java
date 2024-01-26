@@ -6,6 +6,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import it.uniba.dib.sms23248.SpeseRichiedente.Spese;
+
 public class ProfiloActivity extends AppCompatActivity {
 
     @Override
