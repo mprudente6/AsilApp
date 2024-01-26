@@ -47,14 +47,14 @@ public class CalendarioFragment extends Fragment {
     private EditText editTextPrice;
     private Spinner spinnerType;
     private Button btnAddItem;
-    private RecyclerView recyclerViewEvents;
-    private EventAdapter eventAdapter;
-    private Map<String, List<Event>> eventMap; // Map to store events for each date
-    private String selectedDate; // Currently selected date
+    private RecyclerView recyclerViewItemsSpesa;
+    private ItemSpeseAdapter itemSpeseAdapter;
+    private Map<String, List<ItemSpese>> itemSpesaMap; //  Map per inserire gli itemSpesa per ogni data
+    private String selectedDate;
     private NetworkChangeReceiver networkChangeReceiver;
-FirebaseAuth mAuth=FirebaseAuth.getInstance();
-FirebaseUser currentUser=mAuth.getCurrentUser();
-String uid=currentUser.getUid();
+    FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    FirebaseUser currentUser=mAuth.getCurrentUser();
+    String uid=currentUser.getUid();
     private SpeseModel viewModel;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference documentRefBudget = db.collection("RICHIEDENTI_ASILO").document(uid);
@@ -72,37 +72,41 @@ String uid=currentUser.getUid();
         spinnerType = view.findViewById(R.id.spinnerType);
         editTextPrice = view.findViewById(R.id.editTextPrice);
         btnAddItem = view.findViewById(R.id.btnAddItem);
-        recyclerViewEvents = view.findViewById(R.id.recyclerViewEvents);
+        recyclerViewItemsSpesa = view.findViewById(R.id.recyclerViewEvents);
 
+        //Spinner dei tipi
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 requireContext(), R.array.tipi, android.R.layout.simple_spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapter);
-        // Initialize event map
-        eventMap = new HashMap<>();
 
-        // Set up RecyclerView
-        eventAdapter = new EventAdapter(requireContext(),new ArrayList<>(), viewModel, recyclerViewEvents);
-        recyclerViewEvents.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewEvents.setAdapter(eventAdapter);
+        // inizializzazione di del Map per inserire i dati di ogni ItemSpesa
+        itemSpesaMap = new HashMap<>();
 
-        eventAdapter.enableSwipeToDelete();
+        //RecyclerView
+        itemSpeseAdapter = new ItemSpeseAdapter(requireContext(),new ArrayList<>(), viewModel, recyclerViewItemsSpesa);
+        recyclerViewItemsSpesa.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewItemsSpesa.setAdapter(itemSpeseAdapter);
+        // in modo da cancellare gli ItemSpesa con lo SwipeUp
+        itemSpeseAdapter.enableSwipeToDelete();
 
-        // Set up CalendarView listener
+
+        // la view è inizializzata alla data corrente
+        selectedDate = getCurrentDate();
+        showItemsSpesaForDate(selectedDate);
+
+        //il listener aggiorna selectedDate alla data selezionata dall'user nel calendario
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            // Update events for the selected date
+
             selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth);
-            updateEventsForDate(selectedDate);
+            showItemsSpesaForDate(selectedDate);
         });
 
-        // Set initial date
-        selectedDate = getCurrentDate();
-        updateEventsForDate(selectedDate);
-
-        // Set up Add Item button click listener
+        //Inseirto listener al bottone per aggiungere un nuovo ItemSpesa
         btnAddItem.setOnClickListener(v -> addItemAction());
 
+        //Se Interent non è disponibile, mostra il messaggio
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
             fetchItems();
         } else {
@@ -114,136 +118,133 @@ String uid=currentUser.getUid();
         return view;
     }
 
-    // Get the current date in "yyyy-MM-dd" format
+ //metodo che garantisce che la data sia inizializzata
     private String getCurrentDate() {
-        // Get the current date from the CalendarView
-        return Event.getCurrentDate();
+
+        return ItemSpese.getCurrentDate();
     }
 
-    // Update events for the selected date
-    private void updateEventsForDate(String date) {
-        List<Event> events = eventMap.get(date);
-        if (events != null) {
-            eventAdapter.setEvents(events);
+    // metodo che mostra gli itemSpesa per la rispettiva data selezionata
+    private void showItemsSpesaForDate(String date) {
+        //ottiene liste di ItemsSpesa associata alla data se ce ne sono
+        List<ItemSpese> itemSpese = itemSpesaMap.get(date);
+
+        //se sono presenti ItemSpesa vengono impostati nell'adattore così li mostra nel RecyclerViwer
+        if (itemSpese != null) {
+            itemSpeseAdapter.setItemSpese(itemSpese);
         } else {
-            eventAdapter.setEvents(new ArrayList<>());
+            //se invece è nulla viene impostato un ArrayList vuoto
+            itemSpeseAdapter.setItemSpese(new ArrayList<>());
         }
-        eventAdapter.notifyDataSetChanged();
+        itemSpeseAdapter.notifyDataSetChanged();
     }
 
-    // Add Item button click handler
+
     private void addItemAction() {
         String riempicampi = getString(R.string.Riempicampi);
         String prezzoalto = getString(R.string.PrezzoAlto);
+
+        //Se Internet non è disponibile non è possibile aggiungere nuovi ItemSpesa
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
             Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
             return;
         }
 
+        //Viene creato un UID random che sarà l'IdProdotto
         UUID uuid = UUID.randomUUID();
         String itemId = uuid.toString();
         String itemName = editTextName.getText().toString().trim();
         String itemType = spinnerType.getSelectedItem().toString().trim();
         String itemPriceText = editTextPrice.getText().toString().trim();
 
+        //controlla che i campi siano riempiti
         if (!itemName.isEmpty() && !itemPriceText.isEmpty()) {
-            try {
+                //se itemPrice è vuoto e viene convertito prima del controllo !itemPriceText.isEmpty()
+                // viene lanciata l'Eccezione
                 Double itemPrice = Double.valueOf(itemPriceText);
 
-                // Create a new event with the entered item details
-                Event newItem = new Event(selectedDate, itemId, itemName, itemPrice, itemType);
+                //viene impostato l'ItemSpesa con i dati frontiti dall'EditText e la data selezionata dall'utente
+                ItemSpese newItem = new ItemSpese(selectedDate, itemId, itemName, itemPrice, itemType);
                 Log.e("DATE ADD", "data: " + selectedDate);
 
-                // Add the item to the map for the selected date
-                List<Event> eventsForDate = eventMap.get(selectedDate);
-                if (eventsForDate == null) {
-                    eventsForDate = new ArrayList<>();
-                    eventMap.put(selectedDate, eventsForDate);
+                // L'itemSpesa è aggiunto nel Map per la data selezionata
+                List<ItemSpese> ItemSpesaForDate = itemSpesaMap.get(selectedDate);
+                if (ItemSpesaForDate == null) {
+                    ItemSpesaForDate = new ArrayList<>();
+                    itemSpesaMap.put(selectedDate, ItemSpesaForDate);
                 }
 
-                // Get values from the UI for validation
-                String nome = editTextName.getText().toString();
-                String tipo = spinnerType.getSelectedItem().toString();
-                double prezzo = itemPrice;
+                // Eseguiamo il Fetch del Budget dalla Collection RICHIEDENTI_ASILO dell'user corrente
 
-                // Fetch budget data
-                List<Event> finalEventsForDate = eventsForDate;
+                //dichiariamo finalItemsSpesaForDate poiché andrà usata in una lamda
+                //e quindi non deve più essere modificata (effectively final)
+                List<ItemSpese> finalItemsSpesaForDate = ItemSpesaForDate;
                 documentRefBudget.get()
                         .addOnSuccessListener(documentSnapshot -> {
                             if (documentSnapshot.exists()) {
                                 Double currentBudget = documentSnapshot.getDouble("Budget");
 
-                                if (currentBudget != null && currentBudget - prezzo >= 0) {
-                                    // Update the events for the selected date
-                                    finalEventsForDate.add(newItem);
-                                    updateEventsForDate(selectedDate);
+                                //se il budget è minore del prezzo, si informa l'utente che il prezzo è troppo alto
+                                if (currentBudget != null && currentBudget - itemPrice >= 0) {
+                                    // ItemSpesa è aggiunto alla lista
+                                    finalItemsSpesaForDate.add(newItem);
+                                    showItemsSpesaForDate(selectedDate);
+                                    viewModel.addItem(itemId, String.valueOf(editTextName), itemType, itemPrice, selectedDate);
 
-                                    // Add the item to the ViewModel
-                                    viewModel.addItem(itemId, nome, tipo, prezzo, selectedDate);
-
-                                    // Clear the input fields
+                                    // I campi di input ritornano vuoti
                                     editTextName.getText().clear();
                                     spinnerType.setSelection(0);
                                     editTextPrice.getText().clear();
                                 } else {
                                     Toast.makeText(getContext(), prezzoalto, Toast.LENGTH_SHORT).show();
-                                    clearInputFields();
+                                    editTextName.getText().clear();
+                                    spinnerType.setSelection(0);
+                                    editTextPrice.getText().clear();
                                 }
                             }
                         })
                         .addOnFailureListener(e -> {
-                            // Handle the failure to fetch budget data
+
                         });
 
-            } catch (NumberFormatException e) {
-                Toast.makeText(getContext(), riempicampi, Toast.LENGTH_SHORT).show();
-                clearInputFields();
-            }
         } else {
             Toast.makeText(getContext(), riempicampi, Toast.LENGTH_SHORT).show();
-            clearInputFields();
+
         }
     }
 
-    // Helper method to clear input fields
-    private void clearInputFields() {
-        editTextName.getText().clear();
-        spinnerType.setSelection(0);
-        editTextPrice.getText().clear();
-    }
 
 
-
+   // Fetch ItemSpesa da Firebase
     private void fetchItems() {
-
+       //è stato necessario creare una subcollection, poiché altrimenti ogni item aggiunto sovrascrive il precedente
         CollectionReference subspeseCollection = documentRefSpese.collection("Subspese");
 
-        subspeseCollection.get() // Use get() instead of addSnapshotListener
+        subspeseCollection.get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    // Clear existing data in eventMap
-
 
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        // Parse the data and update your UI or data structure accordingly
-                        Event subspeseItem = document.toObject(Event.class); // Assuming Event is the model class
+                         //converte il documento in un oggetto ItemSpese
+                        ItemSpese subspeseItem = document.toObject(ItemSpese.class);
 
-                        // Add log statements to debug
                         Log.d("fetchItems", "Retrieved Event: " + subspeseItem.getNome() + ", " + subspeseItem.getTipo() + ", " + subspeseItem.getPrezzo() + ", " + subspeseItem.getData());
 
-                        // Extract date from subspeseItem and add to eventMap
+                        //Ottiene la data
                         String subspeseItemDate = subspeseItem.getData();
-                        List<Event> eventsForDate = eventMap.get(subspeseItemDate);
+                        //Ottiene gli itemSpesa presenti per la data associata e li mette nella lista
+                        List<ItemSpese> itemSpeseForDate = itemSpesaMap.get(subspeseItemDate);
 
-                        if (eventsForDate == null) {
-                            eventsForDate = new ArrayList<>();
-                            eventMap.put(subspeseItemDate, eventsForDate);
+                        //se esiste, riempie il Map con l'ItemSpesa per quella data
+                        if (itemSpeseForDate == null) {
+                            itemSpeseForDate = new ArrayList<>();
+                            itemSpesaMap.put(subspeseItemDate, itemSpeseForDate);
                         }
-
-                        eventsForDate.add(subspeseItem);
+                      //aggiunge ItemSpese alla lista
+                        itemSpeseForDate.add(subspeseItem);
                     }
 
-                    // Update UI for the selected date
-                    updateEventsForDate(selectedDate);
+                    // aggiorna l'UI
+                    showItemsSpesaForDate(selectedDate);
                 })
                 .addOnFailureListener(e -> {
                     // Handle the failure to fetch items
@@ -257,24 +258,25 @@ String uid=currentUser.getUid();
 
 
     }
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        // Save your fragment's state if needed
+
         outState.putString("selectedDate", selectedDate);
     }
-
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        // Restore your fragment's state if needed
+
         if (savedInstanceState != null) {
             selectedDate = savedInstanceState.getString("selectedDate");
-            updateEventsForDate(selectedDate);
+            showItemsSpesaForDate(selectedDate);
         }
     }
     @Override
     public void onDestroyView() {
+        //deregistra il networkChangeReceiver per Internet non disponibile
         super.onDestroyView();
         if (networkChangeReceiver != null) {
             getActivity().unregisterReceiver(networkChangeReceiver);

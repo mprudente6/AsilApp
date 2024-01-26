@@ -18,28 +18,31 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
+public class ItemSpeseAdapter extends RecyclerView.Adapter<ItemSpeseAdapter.ViewHolder> {
     private Context context;
 
 
-    private List<Event> events;
+    private List<ItemSpese> itemSpese;
     private RecyclerView recyclerView;
     private SpeseModel viewModel;
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
     FirebaseUser currentUser=mAuth.getCurrentUser();
     String uid=currentUser.getUid();
 
-    public EventAdapter(Context context, List<Event> events, SpeseModel viewModel, RecyclerView recyclerView) {
+    //costruttore per inizializzare l'adapter che popolerà il RecyclerViewer con gli ItemSpesa
+    public ItemSpeseAdapter(Context context, List<ItemSpese> itemSpese, SpeseModel viewModel, RecyclerView recyclerView) {
         this.context = context;
-        this.events = events;
+        this.itemSpese = itemSpese;
         this.recyclerView = recyclerView;
         this.viewModel=viewModel;
     }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
+//notifica all'adapter che la lista è stata aggiornata
+    public void setItemSpese(List<ItemSpese> itemSpese) {
+        this.itemSpese = itemSpese;
         notifyDataSetChanged();
     }
+
+    //abilita lo Swipe up come per eliminare un ItemSpesa
     public void enableSwipeToDelete() {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(this, viewModel));
         itemTouchHelper.attachToRecyclerView(recyclerView);
@@ -57,22 +60,22 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         String tipo = context.getString(R.string.Tipo);
         String prezzo = context.getString(R.string.Prezzo);
 
-        Event event = events.get(position);
-        holder.textName.setText(prodotto + " "+event.getNome());
-        holder.textType.setText(tipo +" "+ event.getTipo());
-        holder.textPrice.setText(prezzo + " "+event.getPrezzo()+"€");
+        ItemSpese itemSpese = this.itemSpese.get(position);
+        holder.textName.setText(prodotto + " "+ itemSpese.getNome());
+        holder.textType.setText(tipo +" "+ itemSpese.getTipo());
+        holder.textPrice.setText(prezzo + " "+ itemSpese.getPrezzo()+"€");
     }
 
     @Override
     public int getItemCount() {
-        return events.size();
+        return itemSpese.size();
     }
 
 
 
     public void deleteItem(int position) {
-        if (position >= 0 && position < events.size()) {
-            Event deletedItem = events.remove(position);
+        if (position >= 0 && position < itemSpese.size()) {
+            ItemSpese deletedItem = itemSpese.remove(position);
             notifyItemRemoved(position);
             viewModel.deleteItem(deletedItem.getIdProdotto());
         }

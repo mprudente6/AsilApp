@@ -12,7 +12,7 @@ public class MonthlyUpdateReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String uid = intent.getStringExtra("UID");
 
-        // Enqueue the work using JobIntentService
+
         Intent serviceIntent = new Intent(context, MonthlyUpdateJobIntentService.class);
         serviceIntent.putExtra("UID", uid);
         MonthlyUpdateJobIntentService.enqueueWork(context, serviceIntent);

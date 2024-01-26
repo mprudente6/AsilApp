@@ -60,12 +60,6 @@ public class BilancioFragment extends Fragment {
     private  DocumentReference documentReference = firestore.collection("RICHIEDENTI_ASILO").document(uid);
 
     private  TextView budgetTextView;
-    private double currentBudget = 60.0; // Initial budget
-
-    private Handler handler = new Handler(Looper.getMainLooper());
-
-    private long updateInterval =  30 * 24 * 60 * 60 * 1000L; // 30 days in milliseconds
-    //  FOR TESTING  private long updateInterval =  1 * 60 * 1000L; // 1 minute in milliseconds
 
     CardView cardView1;
     TextView textSett;
@@ -83,7 +77,7 @@ public class BilancioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_bilancio, container, false);
         viewModel = new ViewModelProvider(requireActivity().getViewModelStore(), ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())).get(SpeseModel.class);
         budgetTextView = view.findViewById(R.id.textView2);
@@ -100,7 +94,7 @@ public class BilancioFragment extends Fragment {
            showLoadingIndicator();
 
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
-            loadInitialBudget();
+            loadBudget();
             QuerySett();
             QueryMese();
         } else {
@@ -112,7 +106,7 @@ public class BilancioFragment extends Fragment {
            refresh.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                   loadInitialBudget();
+                   loadBudget();
                }
            });
 
@@ -124,9 +118,9 @@ public class BilancioFragment extends Fragment {
         viewModel.getUpdatedBudgetLiveData().observe(getActivity(), new Observer<Double>() {
             @Override
             public void onChanged(Double newBudget) {
+                loadBudget();
 
-                updateBudgetTextView(newBudget);
-                loadInitialBudget();
+
 
             }
         });
@@ -136,39 +130,14 @@ public class BilancioFragment extends Fragment {
     }
 
 
-    private BroadcastReceiver budgetUpdateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Update the budget when receiving the broadcast
-            String uid = intent.getStringExtra("UID");
-            loadInitialBudget();
-        }
-    };
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Register the BroadcastReceiver to receive the budget update broadcast
-        IntentFilter filter = new IntentFilter("ACTION_UPDATE_BUDGET");
-        getActivity().registerReceiver(budgetUpdateReceiver, filter);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // Unregister the BroadcastReceiver to avoid memory leaks
-        getActivity().unregisterReceiver(budgetUpdateReceiver);
-    }
-
-
-
-     void loadInitialBudget() {
+     void loadBudget() {
          Log.d("BUDGET", "started");
          documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
              @Override
              public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                  if (e != null) {
-                     // Handle the error
+
                      Log.e("BUDGET", "Error fetching budget", e);
                      return;
                  }
@@ -196,42 +165,50 @@ public class BilancioFragment extends Fragment {
     }
     public void QuerySett() {
 
-        // Define the start and end dates for the current week
+
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek()); // Set to the first day of the week
-        Date startDate = calendar.getTime(); // Start date is the first day of the week
 
-        calendar.add(Calendar.DAY_OF_WEEK, 6); // Move to the last day of the week
-        Date endDate = calendar.getTime(); // End date is the last day of the week
+// Imposta il calendario al primo giorno della settimana
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
 
-        // Convert start and end dates to timestamps
+
+// Ottieni la data di inizio settimana
+        Date startDate = calendar.getTime();
+
+// Spostati in avanti di 6 giorni per ottenere la fine della settimana
+        calendar.add(Calendar.DAY_OF_WEEK, 6);
+
+// Ottieni la data di fine settimana
+        Date endDate = calendar.getTime();
+
+
         long startTimeStamp = startDate.getTime();
         long endTimeStamp = endDate.getTime();
 
-        // Reference to your Firestore collection
+
         DocumentReference parentDocument = firestore.collection("SPESE").document(uid);
 
-        // Get a reference to the subcollection
+
         parentDocument.collection("Subspese")
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
-                        // Handle the error
+
                         Log.e("Fetching", "Error getting prices for the current week", e);
                         return;
                     }
 
                     Double totSett = 0.00;
-                    Log.e("TotSett", "Getting prices for the current week: " + totSett);
 
-                    // Iterate through the documents and filter based on the date range
+
+
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        // Retrieve the date as a String
+
                         String dateString = document.getString("data");
 
-                        // Convert the date to a timestamp
+
                         long timeStamp = convertDateToTimestamp(dateString);
 
-                        // Check if the timestamp is within the desired range
+
                         if (timeStamp >= startTimeStamp && timeStamp <= endTimeStamp) {
                             Double prezzo = document.getDouble("prezzo");
                             if (prezzo != null) {
@@ -242,7 +219,7 @@ public class BilancioFragment extends Fragment {
                     }
 
                     displayTotSett(totSett);
-                    // You can further process or display this data as needed
+
                 });
     }
 
@@ -258,7 +235,7 @@ public class BilancioFragment extends Fragment {
         int startIndex = text.indexOf(String.format(Locale.getDefault(), "%.2f", totSett));
         int endIndex = startIndex + String.format(Locale.getDefault(), "%.2f", totSett).length();
 
-        // Apply bold style to the totMese value
+
         spannableString.setSpan(new StyleSpan(Typeface.BOLD), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         textSett.setText(spannableString);
@@ -267,28 +244,27 @@ public class BilancioFragment extends Fragment {
     }
     public void QueryMese() {
 
-
-        // Define the start and end dates for the current month
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, 1); // Set to the first day of the month
-        Date startDate = calendar.getTime(); // Start date is the first day of the month
+        calendar.set(Calendar.DAY_OF_MONTH, 1); // Imposta al primo giorno del mese
+        Date startDate = calendar.getTime(); // La data di inizio è il primo giorno del mese
 
-        calendar.add(Calendar.MONTH, 1); // Move to the first day of the next month
-        calendar.add(Calendar.DAY_OF_MONTH, -1); // Move to the last day of the current month
-        Date endDate = calendar.getTime(); // End date is the last day of the month
+        calendar.add(Calendar.MONTH, 1); // Sposta al primo giorno del mese successivo
+        calendar.add(Calendar.DAY_OF_MONTH, -1); // Sposta all'ultimo giorno del mese corrente
+        Date endDate = calendar.getTime(); // La data di fine è l'ultimo giorno del mese
 
-        // Convert start and end dates to timestamps
+
+
         long startTimeStamp = startDate.getTime();
         long endTimeStamp = endDate.getTime();
 
-        // Reference to your Firestore collection
+
         DocumentReference parentDocument = firestore.collection("SPESE").document(uid);
 
-        // Get a reference to the subcollection
+
         parentDocument.collection("Subspese")
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
-                        // Handle the error
+
                         Log.e("Fetching", "Error getting prices for the current month", e);
                         return;
                     }
@@ -296,15 +272,15 @@ public class BilancioFragment extends Fragment {
                     Double totMese = 0.00;
                     Log.d("TotSett", "Getting prices for the current month: " + totMese);
 
-                    // Iterate through the documents and extract prices
+
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        // Retrieve the date as a String
+
                         String dateString = document.getString("data");
 
-                        // Convert the date to a timestamp
+
                         long timeStamp = convertDateToTimestamp(dateString);
 
-                        // Check if the timestamp is within the desired range
+
                         if (timeStamp >= startTimeStamp && timeStamp <= endTimeStamp) {
                             Double prezzo = document.getDouble("prezzo");
                             if (prezzo != null) {
@@ -315,7 +291,7 @@ public class BilancioFragment extends Fragment {
                     }
 
                     displayTotMese(totMese);
-                    // You can further process or display this data as needed
+
                 });
     }
 
@@ -328,19 +304,19 @@ public class BilancioFragment extends Fragment {
         int startIndex = text.indexOf(String.format(Locale.getDefault(), "%.2f", totMese));
         int endIndex = startIndex + String.format(Locale.getDefault(), "%.2f", totMese).length();
 
-        // Apply bold style to the totMese value
+
         spannableString.setSpan(new StyleSpan(Typeface.BOLD), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         textMese.setText(spannableString);
     }
 
      void showLoadingIndicator() {
-        // Show your loading indicator
+
         loadingIndicator.setVisibility(View.VISIBLE);
     }
 
     private  void hideLoadingIndicator() {
-        // Hide your loading indicator
+
         loadingIndicator.setVisibility(View.GONE);
     }
 

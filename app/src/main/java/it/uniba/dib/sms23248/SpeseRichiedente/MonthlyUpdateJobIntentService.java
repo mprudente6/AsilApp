@@ -16,7 +16,7 @@ public class MonthlyUpdateJobIntentService extends JobIntentService {
     protected void onHandleWork(Intent intent) {
         String uid = intent.getStringExtra("UID");
 
-        // Your background task logic goes here, using the UID
+
         Log.d("BUDGET", "onHandleWork with UID: " + uid);
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -26,10 +26,9 @@ public class MonthlyUpdateJobIntentService extends JobIntentService {
             if (documentSnapshot.exists()) {
                 Double currentBudget = documentSnapshot.getDouble("Budget");
 
-                // Update the budget (for example, add 60 to the current budget)
                 double updatedBudget = currentBudget + 60.0;
                 Log.d("BUDGET", "+ 60: " + updatedBudget);
-                // Save the updated budget back to Firestore
+
                 documentReference.update("Budget", updatedBudget)
                         .addOnSuccessListener(aVoid -> {
                             Log.d("BUDGET", "Budget updated successfully");

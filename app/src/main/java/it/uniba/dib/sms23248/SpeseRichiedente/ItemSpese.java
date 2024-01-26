@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Event {
+public class ItemSpese {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
@@ -16,11 +16,11 @@ public class Event {
     private String idProdotto;
     private String data;
 
-    public Event() {
-        // Default constructor required for Firestore
+    public ItemSpese() {
+
     }
 
-    public Event(String data, String idProdotto, String nome, Double prezzo, String tipo) {
+    public ItemSpese(String data, String idProdotto, String nome, Double prezzo, String tipo) {
         this.data = data;
         this.idProdotto = idProdotto;
         this.nome = nome;
@@ -49,7 +49,7 @@ public class Event {
     }
 
     public static String getCurrentDate() {
-        // Get the current date
+
         long currentDateMillis = System.currentTimeMillis();
         return dateFormat.format(new Date(currentDateMillis));
     }

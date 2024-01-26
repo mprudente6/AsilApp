@@ -10,18 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import it.uniba.dib.sms23248.SpeseRichiedente.EventAdapter;
-import it.uniba.dib.sms23248.SpeseRichiedente.SpeseModel;
-
 public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
-    private EventAdapter adapter;
+    private ItemSpeseAdapter adapter;
     private SpeseModel viewModel;
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
     FirebaseUser currentUser=mAuth.getCurrentUser();
     String uid=currentUser.getUid();
 
-    public SwipeToDeleteCallback(EventAdapter adapter, SpeseModel viewModel) {
-        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+    public SwipeToDeleteCallback(ItemSpeseAdapter adapter, SpeseModel viewModel) {
+        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT); //va bene si detsra che sinistra, no drag and drop
         this.adapter = adapter;
         this.viewModel = viewModel;
 
@@ -35,9 +32,9 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
-        String idProdotto = String.valueOf(adapter.getItemId(position)); // Assuming you have a method to get the item ID
+        String idProdotto = String.valueOf(adapter.getItemId(position));
         adapter.deleteItem(position);
-        viewModel.deleteItem(idProdotto); // Call the deleteItem method in your ViewModel
+        viewModel.deleteItem(idProdotto);
     }
 
 }

@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,7 +39,6 @@ import java.util.Map;
 import it.uniba.dib.sms23248.HomeS;
 import it.uniba.dib.sms23248.NetworkUtils;
 import it.uniba.dib.sms23248.R;
-import it.uniba.dib.sms23248.SpeseRichiedente.BilancioFragment;
 import it.uniba.dib.sms23248.SpeseRichiedente.SpeseModel;
 import it.uniba.dib.sms23248.SpeseRichiedente.MonthlyUpdateReceiver;
 
@@ -50,7 +48,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final FirebaseFirestore dbS = FirebaseFirestore.getInstance();
+
     private EditText email;
     private EditText password;
     private EditText nome;
@@ -62,7 +60,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
     private EditText datadinascita;
 
     private Button register;
-    private TextView loginRedirect;
+
 
     private ProgressBar progressBar;
 
@@ -70,7 +68,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
     String uidStaff;
 
     SpeseModel sharedViewModel;
-    private BilancioFragment bilancioFragment;
+
 
 
 
@@ -258,10 +256,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         Map<String, Object> spese = new HashMap<>();
                         spese.put("Utente", uid);
                         documentSpese.set(spese);
-                        DocumentReference documetAllarm = db.collection("ALARMS").document(uid);
-                        Map<String, Object> alarm = new HashMap<>();
-                        alarm.put("Utente", uid);
-                        documetAllarm.set(alarm);
+
 
                         DocumentReference documentParametriUtenti = db.collection("PARAMETRI_UTENTI").document(uid);
                         Map<String, Object> parametri = new HashMap<>();
@@ -424,28 +419,25 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
     }
 
     private void scheduleMonthlyAlarm(String uid) {
-        // Create an Intent for the BroadcastReceiver
-        Log.d("BUDGET", "scheduleMonthlyAlarm called with UID: " + uid);
-        Intent intent = new Intent(this, MonthlyUpdateReceiver.class);
-        intent.putExtra("UID", uid);
 
-        // Save the alarm UID to Firebase
-        saveAlarmUidToFirebase(uid);
+        Intent intent = new Intent(this, MonthlyUpdateReceiver.class);
+
+
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, uid.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE);
 
-        // Get the AlarmManager service
+
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        // Cancel the existing alarm (if any) before rescheduling
+
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);
         }
 
-        // Calculate the time for the alarm to start, e.g., 30 days from now
+
         long startTime = System.currentTimeMillis() + AlarmManager.INTERVAL_DAY * 30;
 
-        // Set the repeating alarm with the calculated start time and interval of 30 days
+
         if (alarmManager != null) {
             alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
@@ -456,13 +448,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         }
     }
 
-    private void saveAlarmUidToFirebase(String uid) {
-        // Reference to the "ALARMS" collection with the user UID as the document ID
-        DocumentReference documentAlarms = FirebaseFirestore.getInstance().collection("ALARMS").document(uid);
-        Log.d("BUDGET", "save alarm uid to firebase ");
-        // Save the UID to the "ALARMS" collection
-        documentAlarms.set(new HashMap<>());  // You can set an empty map or any data you prefer
-    }
+
 
 
 

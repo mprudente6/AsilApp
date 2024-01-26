@@ -14,7 +14,7 @@ import android.widget.Toast;
 import it.uniba.dib.sms23248.NetworkChangeReceiver;
 import it.uniba.dib.sms23248.NetworkUtils;
 import it.uniba.dib.sms23248.R;
-import it.uniba.dib.sms23248.SpeseRichiedente.DateConverter;
+
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -58,7 +58,7 @@ public class SpeseFragment extends Fragment {
         pieChart.getDescription().setEnabled(false);
 
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
-            fetchDataAndSetupListener();
+            fetchSubSpese();
         } else {
             Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
         }
@@ -67,19 +67,19 @@ public class SpeseFragment extends Fragment {
         return view;
     }
 
-    private void fetchDataAndSetupListener() {
+    private void fetchSubSpese() {
 
         db.collection("SPESE").document(uid).collection("Subspese")
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
-                        // Handle the error
+
                         Log.e("FirestoreListener", "Error getting data", error);
                         return;
                     }
 
                     if (value != null) {
                         List<DocumentSnapshot> documents = value.getDocuments();
-                        // Now you have the updated documents, proceed to calculate percentages and display the pie chart.
+
                         calculatePercentagesAndDisplayChart(documents);
                     }
                 });
@@ -93,12 +93,12 @@ public class SpeseFragment extends Fragment {
         Map<String, Float> tipoTotalPrice = new HashMap<>();
         int currentMonth = getCurrentMonth();
 
-        // Calculate total price for each type only for the current month
+
         for (DocumentSnapshot document : documents) {
-            // Retrieve the "data" field as a long
+
             String  dataF = document.getString("data");
              Long timestampMillis= DateConverter.convertDateToTimestamp(dataF);
-            // Convert the long to a Date object
+
             Date date = new Date(timestampMillis);
 
             Calendar calendar = Calendar.getInstance();
@@ -119,18 +119,16 @@ public class SpeseFragment extends Fragment {
         List<PieEntry> entries = new ArrayList<>();
         float totalPrices = 0f;
 
-        // Calculate total prices
         for (Map.Entry<String, Float> entry : tipoTotalPrice.entrySet()) {
             totalPrices += entry.getValue();
         }
 
-        // Create entries with percentages based on total prices
+
         for (Map.Entry<String, Float> entry : tipoTotalPrice.entrySet()) {
             String tipo = entry.getKey();
             float totalPrice = entry.getValue();
             float percentage = (totalPrice / totalPrices) * 100;
 
-            // Set the actual value associated with each slice
             entries.add(new PieEntry(percentage, tipo + "\n€" + String.format("%.2f", totalPrice)));
         }
 
@@ -150,14 +148,14 @@ public class SpeseFragment extends Fragment {
         pieChart.setCenterTextSize(16f);
         Legend legend = pieChart.getLegend();
 
-// Set legend orientation to vertical
+
         legend.setOrientation(Legend.LegendOrientation.VERTICAL);
         legend.setXEntrySpace(10f);
         legend.setYOffset(60f);
 
     }
 
-    // Get the current month
+
     private int getCurrentMonth() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
