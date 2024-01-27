@@ -38,6 +38,8 @@ public class pwContenitore extends Fragment {
     TextView TitoloCodice;
     TextView TitoloNoCodice;
 
+    static boolean contenitoreAperto = false;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -85,14 +87,14 @@ public class pwContenitore extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        /*
         Button btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
         btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
         btnCamera.setVisibility(View.INVISIBLE);
 
         Button btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
         btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
-        btnGenaraQr.setVisibility(View.INVISIBLE);
+        btnGenaraQr.setVisibility(View.INVISIBLE);*/
 
 
 
@@ -143,6 +145,7 @@ public class pwContenitore extends Fragment {
                         Log.d("CodiceNull ",pw.getText().toString());
                         if (pw.getText().toString().equals(passwordContenitore)){
                             Log.d("Vai  a ","Strumenti biomedicali");
+                            contenitoreAperto = true;
                             Intent i = new Intent(pwContenitore.this.getActivity(), SaluteS.class);
                             startActivity(i);
                         }
@@ -153,6 +156,7 @@ public class pwContenitore extends Fragment {
                         Log.d("CodiceNoNull ",InserisciCodice.getText().toString());
                         if (InserisciCodice.getText().toString().equals(codiceQrContenitore) && pw.getText().toString().equals(passwordContenitore)){
                             Log.d("Vai  a ","Strumenti biomedicali");
+                            contenitoreAperto = true;
                             Intent i = new Intent(pwContenitore.this.getActivity(), SaluteS.class);
                             startActivity(i);
                         }

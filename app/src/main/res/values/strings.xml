@@ -9,6 +9,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="pw_contenitore1">Inserisci la password del contenitore per aprirlo</string>
     <string name="pw_contenitore2">Inserisci il codice la password del contenitore per aprirlo</string>
+    <string name="emailUtente">Email</string>
+    <string name="titleEmailFragment">Inserisci l\'email dell\'utente</string>
     <string name="pw_contenitore_codice">Codice</string>
     <string name="pw_contenitore_password">Password</string>
     <string name="pw_contenitore_invia">Invia</string>

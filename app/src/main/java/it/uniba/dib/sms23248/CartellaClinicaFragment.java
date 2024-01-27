@@ -1,6 +1,7 @@
 package it.uniba.dib.sms23248;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -59,6 +61,22 @@ public class CartellaClinicaFragment extends Fragment {
             }
             return false;
         });
+
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Your logic for back press goes here
+                boolean contenitoreAperto = pwContenitore.contenitoreAperto;
+                if (contenitoreAperto) {
+                    // The boolean variable is true, perform the desired action
+                    // For example, navigate to another activity and call a method
+                    openScanCode();
+                }
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
 
         return view;
     }
@@ -201,5 +219,12 @@ public class CartellaClinicaFragment extends Fragment {
         if (requireActivity().getCurrentFocus() != null) {
             inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(requireActivity().getCurrentFocus()).getWindowToken(), 0);
         }
+    }
+
+    private void openScanCode() {
+        // Create an Intent to navigate to another activity
+        Intent intent = new Intent(CartellaClinicaFragment.this.getActivity(), HomeS.class);
+        // Start the other activity
+        startActivity(intent);
     }
 }

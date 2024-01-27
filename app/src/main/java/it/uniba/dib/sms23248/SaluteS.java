@@ -16,6 +16,8 @@ public class SaluteS extends AppCompatActivity {
 
     public static String UID = HomeS.UID;
 
+    boolean contenitoreAperto = pwContenitore.contenitoreAperto;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +25,11 @@ public class SaluteS extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPager);
         setupViewPager(viewPager);
+
+        if (contenitoreAperto) {
+            viewPager.setCurrentItem(2, false); // The second parameter (false) ensures smooth scrolling
+        }
+
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         new TabLayoutMediator(tabLayout, viewPager,

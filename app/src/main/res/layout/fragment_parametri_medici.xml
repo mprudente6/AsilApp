@@ -19,7 +19,8 @@
         <LinearLayout
             android:id="@+id/temperatureLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/temperatureButton"
@@ -51,7 +52,8 @@
             android:id="@+id/heartRateLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/temperatureLayout">
+            android:layout_below="@id/temperatureLayout"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/heartRateButton"
@@ -83,7 +85,8 @@
             android:id="@+id/bloodPressureLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/heartRateLayout">
+            android:layout_below="@id/heartRateLayout"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/bloodPressureButton"
@@ -115,7 +118,8 @@
             android:id="@+id/pulseOxLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bloodPressureLayout">
+            android:layout_below="@id/bloodPressureLayout"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/pulseOxButton"
@@ -147,7 +151,8 @@
             android:id="@+id/glucoseLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/pulseOxLayout">
+            android:layout_below="@id/pulseOxLayout"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/glucoseButton"
@@ -175,21 +180,29 @@
         </LinearLayout>
 
         <!-- Sixth Row: Save Button -->
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/glucoseLayout"
+            android:text="SALVA"
 
+            app:icon="@android:drawable/ic_menu_save"
+            android:padding="12dp"
+            android:layout_marginTop="40dp"
+            app:cornerRadius="22dp"
+            android:visibility="gone"
+            android:backgroundTint="#FF076AEC" />
 
-            <Button
-                android:id="@+id/saveButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/glucoseLayout"
-                android:text="SALVA"
+        <Button
+            android:id="@+id/apriContenitore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/saveButton"
+            android:text="Apri contenitore"
+            android:minWidth="224dp"
+            android:minHeight="64dp" />
 
-                app:icon="@android:drawable/ic_menu_save"
-                android:padding="12dp"
-                android:layout_marginTop="40dp"
-                app:cornerRadius="22dp"
-
-                android:backgroundTint="#FF076AEC" />
 
     </RelativeLayout>
 </ScrollView>

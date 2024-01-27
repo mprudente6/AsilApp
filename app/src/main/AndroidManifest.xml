@@ -39,6 +39,9 @@
             android:name=".SaluteS"
             android:exported="false"/>
         <activity
+            android:name=".Contenitore"
+            android:exported="false"/>
+        <activity
             android:name=".CaptureAct"
             android:exported="false"/>
         <activity
@@ -55,12 +58,6 @@
             android:exported="false" />
         <activity
             android:name=".ValutazioneActivity"
-            android:exported="false" />
-        <activity
-            android:name=".pwContenitore"
-            android:exported="false" />
-        <activity
-            android:name=".qrCodeGenerato"
             android:exported="false" />
         <activity
             android:name=".SpeseRichiedente.Spese"

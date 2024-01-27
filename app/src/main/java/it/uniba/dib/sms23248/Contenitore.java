@@ -2,16 +2,11 @@ package it.uniba.dib.sms23248;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +20,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
-import java.util.Locale;
 
 public class Contenitore extends AppCompatActivity {
 
@@ -42,22 +35,12 @@ public class Contenitore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contenitore);
 
-        btnCamera = (Button) findViewById(R.id.apriContenitore);
-        btnCamera.setOnClickListener(new View.OnClickListener() {
+        scanCode();
+
+        // MULTILINGUA
 
 
-            @Override
-            public void onClick(View v) {
-                try {
-                    scanCode();
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        Spinner spinner = (Spinner) findViewById(R.id.languageList);
+        /*Spinner spinner = (Spinner) findViewById(R.id.languageList);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
@@ -103,10 +86,10 @@ public class Contenitore extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             };
-        });
+        });*/
 
 
-
+        /*
         brnMostraQr = (Button) findViewById(R.id.generaQrRichiedente);
 
         brnMostraQr.setOnClickListener(new View.OnClickListener() {
@@ -117,19 +100,18 @@ public class Contenitore extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutQrCode, fragmentQrCode)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
             }
-        });
+        });*/
 
         Contenitore.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 qrCodeContenitore  = documentSnapshot.getString("QrCode");
-                Log.d("qrContenitore1",qrCodeContenitore);
             }
         });
 
     }
 
-    private void scanCode()
+    public void scanCode()
     {
         ScanOptions options = new ScanOptions();
         String stringScansione = getString(R.string.scansione);
@@ -148,8 +130,9 @@ public class Contenitore extends AppCompatActivity {
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Contenitore.this);
                 builder.setTitle("Result");
-                Log.d("Result",result.getContents());
 
+
+                Log.d("qrContenitore1",qrCodeContenitore);
 
                 if (result.getContents().equals(qrCodeContenitore)){
 
@@ -168,6 +151,8 @@ public class Contenitore extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i)
                         {
                             dialogInterface.dismiss();
+                            Intent intent = new Intent(Contenitore.this, SaluteS.class);
+                            startActivity(intent);
                         }
                     }).show();
                 }

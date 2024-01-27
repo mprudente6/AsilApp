@@ -2,6 +2,7 @@ package it.uniba.dib.sms23248;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -20,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -54,6 +56,8 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
     private float heartRate = 0;
 
+    boolean contenitoreAperto = pwContenitore.contenitoreAperto;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,6 +78,10 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         Button bloodPressureButton = view.findViewById(R.id.bloodPressureButton);
         Button pulseOxButton = view.findViewById(R.id.pulseOxButton);
         Button glucoseButton = view.findViewById(R.id.glucoseButton);
+
+        Button apriContenitoreButton = view.findViewById(R.id.apriContenitore);
+        apriContenitoreButton.setOnClickListener(v -> apriContenitoreButtonClicked());
+
 
         temperatureButton.setOnClickListener(v -> {
             showLoadingLayout(temperatureLayout, R.id.temperatureProgressBar, R.id.temperatureResultTextView);
@@ -105,7 +113,51 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         // Set a click listener for the save button
         saveButton.setOnClickListener(v -> saveButtonClicked());
 
+        if (contenitoreAperto) {
+            // Set visibility of other layouts to visible
+            temperatureLayout.setVisibility(View.VISIBLE);
+            heartRateLayout.setVisibility(View.VISIBLE);
+            bloodPressureLayout.setVisibility(View.VISIBLE);
+            pulseOxLayout.setVisibility(View.VISIBLE);
+            glucoseLayout.setVisibility(View.VISIBLE);
+            saveButton.setVisibility(View.VISIBLE);
+
+            // Set visibility of the button to gone
+            apriContenitoreButton.setVisibility(View.GONE);
+        }
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Your logic for back press goes here
+                boolean contenitoreAperto = pwContenitore.contenitoreAperto;
+                if (contenitoreAperto) {
+                    pwContenitore.contenitoreAperto = false;
+                    contenitoreAperto = pwContenitore.contenitoreAperto;
+                    // Set visibility of other layouts to visible
+                    temperatureLayout.setVisibility(View.GONE);
+                    heartRateLayout.setVisibility(View.GONE);
+                    bloodPressureLayout.setVisibility(View.GONE);
+                    pulseOxLayout.setVisibility(View.GONE);
+                    glucoseLayout.setVisibility(View.GONE);
+                    saveButton.setVisibility(View.GONE);
+
+                    // Set visibility of the button to gone
+                    apriContenitoreButton.setVisibility(View.VISIBLE);
+
+                }else{
+                    openScanCode();
+                }
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
         return view;
+    }
+
+    private void apriContenitoreButtonClicked() {
+        Intent intent = new Intent(ParametriMediciFragment.this.getActivity(), Contenitore.class);
+        startActivity(intent);
     }
 
     private void checkHeartRateSensor() {
@@ -167,17 +219,6 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // Handle accuracy changes if needed
     }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//
-//        if (requestCode == REQUEST_BODY_SENSORS && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            // Permission granted, you can now use the sensors
-//        } else {
-//            // Permission denied, handle accordingly
-//        }
-//    }
 
     @Override
     public void onDestroy() {
@@ -401,5 +442,12 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Initialize views and set listeners here if needed
+    }
+
+    private void openScanCode() {
+        // Create an Intent to navigate to another activity
+        Intent intent = new Intent(ParametriMediciFragment.this.getActivity(), HomeS.class);
+        // Start the other activity
+        startActivity(intent);
     }
 }

@@ -7,10 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".HomeS">
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
+        <RelativeLayout
+            android:id="@+id/LayoutHomeS"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -156,6 +160,12 @@
             android:layout_marginStart="29dp"
             android:layout_marginTop="116dp"
             app:srcCompat="@drawable/untitled_design__7__removebg_preview" />
+        </RelativeLayout>
+        <FrameLayout
+            android:id="@+id/frameLayoutEmailUtente"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="-16dp" />
 
     </RelativeLayout>
 </ScrollView>

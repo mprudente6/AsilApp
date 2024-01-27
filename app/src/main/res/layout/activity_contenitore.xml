@@ -13,7 +13,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
   >
-
+<!--
     <Button
         android:backgroundTint="#076aec"
         android:id="@+id/apriContenitore"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.826" />
 
-    <Button
+     <Button
         android:backgroundTint="#076aec"
         android:id="@+id/generaQrRichiedente"
         android:layout_width="269dp"
@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.626" />
-
+-->
     <FrameLayout
         android:id="@+id/frameLayoutPwContenitore"
         android:layout_width="match_parent"
@@ -54,6 +54,7 @@
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="-138dp" />
 
+    <!--
     <Spinner
         android:id="@+id/languageList"
         android:layout_width="wrap_content"
@@ -61,6 +62,6 @@
         app:layout_constraintBottom_toTopOf="@+id/generaQrRichiedente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints" /> -->
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

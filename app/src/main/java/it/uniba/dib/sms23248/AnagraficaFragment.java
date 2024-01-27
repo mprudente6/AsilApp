@@ -1,13 +1,16 @@
 package it.uniba.dib.sms23248;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -34,6 +37,23 @@ public class AnagraficaFragment extends Fragment {
         personalDataLayout = view.findViewById(R.id.personalDataLayout);
 
         fetchUserDataFromFirestore(view);
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Your logic for back press goes here
+                boolean contenitoreAperto = pwContenitore.contenitoreAperto;
+                if (contenitoreAperto) {
+                    // The boolean variable is true, perform the desired action
+                    // For example, navigate to another activity and call a method
+                    Log.d("SONO QUI","PRECISAMENTE QUI");
+                    openScanCode();
+                }
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
+
 
         return view;
     }
@@ -95,5 +115,12 @@ public class AnagraficaFragment extends Fragment {
 
         personalDataLayout.addView(fieldTextView);
         personalDataLayout.addView(valueTextView);
+    }
+
+    private void openScanCode() {
+        // Create an Intent to navigate to another activity
+        Intent intent = new Intent(AnagraficaFragment.this.getActivity(), HomeS.class);
+        // Start the other activity
+        startActivity(intent);
     }
 }

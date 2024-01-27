@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,8 +59,11 @@ public class HomeS extends AppCompatActivity {
 
             return;
         }
-
-
+        boolean contenitoreAperto = pwContenitore.contenitoreAperto;
+        if (contenitoreAperto) {
+            //pwContenitore.contenitoreAperto = false;
+            contenitoreAperto = pwContenitore.contenitoreAperto;
+        }
 
         mAuth = FirebaseAuth.getInstance();
         benvenuto=findViewById(R.id.Benvenuto);
@@ -237,9 +241,11 @@ public class HomeS extends AppCompatActivity {
             }
         } else {
             // Richiedi i permessi della fotocamera se non sono stati concessi
-            Fragment fragmentPwContenitore = null;
-            fragmentPwContenitore = new pwContenitore();
-            getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutPwContenitore, fragmentPwContenitore)
+            RelativeLayout layoutHomeS = findViewById(R.id.LayoutHomeS);
+            layoutHomeS.setVisibility(View.GONE);
+            Fragment emailUtente = null;
+            emailUtente = new emailUtente();
+            getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutEmailUtente, emailUtente)
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
         }
     });
