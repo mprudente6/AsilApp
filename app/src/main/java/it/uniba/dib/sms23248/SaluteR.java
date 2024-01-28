@@ -110,9 +110,15 @@ public class SaluteR extends AppCompatActivity {
             TextView valueTextView = (TextView) personalDataLayout.getChildAt(i + 1);
 
             String field = fieldTextView.getText().toString();
-            String value = valueTextView.getText().toString();
+            if (valueTextView!=null) {
+                String value = valueTextView.getText().toString();
+                textBuilder.append(field).append(": ").append(value).append("\n");
+            } else{
+                Toast.makeText(SaluteR.this,"Non ci sono dati da condividere", Toast.LENGTH_SHORT).show();
 
-            textBuilder.append(field).append(": ").append(value).append("\n");
+            }
+
+
         }
 
         return textBuilder.toString();
