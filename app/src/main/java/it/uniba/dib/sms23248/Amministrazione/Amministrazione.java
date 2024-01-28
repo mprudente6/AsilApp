@@ -21,7 +21,7 @@ import it.uniba.dib.sms23248.R;
 public class Amministrazione extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
-    MyViewPageAdapter myViewPageAdapter;
+    AmministrazionePageAdapter amministrazionePageAdapter;
     ImageView homeIcon;
 
     @Override
@@ -45,10 +45,9 @@ public class Amministrazione extends AppCompatActivity {
 
         });
 
-        myViewPageAdapter = new MyViewPageAdapter(this);
-        viewPager2.setAdapter(myViewPageAdapter);
+        amministrazionePageAdapter = new AmministrazionePageAdapter(this);
+        viewPager2.setAdapter(amministrazionePageAdapter);
 
-        myViewPageAdapter.setupTabLayout(tabLayout, viewPager2);
         viewPager2.setOffscreenPageLimit(4);
         viewPager2.setUserInputEnabled(false);
         String mappa = getString(R.string.mappa_string);

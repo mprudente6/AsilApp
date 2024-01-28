@@ -33,8 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.uniba.dib.sms23248.Amministrazione.VideoAdapter;
-import it.uniba.dib.sms23248.Amministrazione.VideoAdapterRichiedenti;
 import it.uniba.dib.sms23248.Amministrazione.VideoModel;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
 
 
 public class VideoFragmentRichiedenti extends Fragment implements VideoAdapter.OnDownloadClickListener{
@@ -129,20 +129,13 @@ public class VideoFragmentRichiedenti extends Fragment implements VideoAdapter.O
 
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, videoModel.getName());
 
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, videoModel.getName());
+
         DownloadManager downloadManager = (DownloadManager) requireContext().getSystemService(Context.DOWNLOAD_SERVICE);
 
-        long downloadId = downloadManager.enqueue(request);
-
-        BroadcastReceiver onComplete = new BroadcastReceiver() {
-            public void onReceive(Context context, Intent intent) {
-                long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-                if (downloadId == id) {
-                    Toast.makeText(getContext(), "Download completed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
-        requireContext().registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        downloadManager.enqueue(request);
     }
     private void fetchVideoUrlsGen() {
         videoListGen.clear();

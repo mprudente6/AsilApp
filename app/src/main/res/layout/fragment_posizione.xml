@@ -15,22 +15,12 @@
 
     </org.osmdroid.views.MapView>
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/white"
-        android:layout_marginEnd="16dp"/>
 
     <TextView
         android:id="@+id/textCoordinate"
-        android:layout_below="@id/searchView"
         android:layout_width="320dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="35dp"
         android:padding="12dp"
         android:background="@color/white"
         android:layout_height="wrap_content"

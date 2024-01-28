@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import it.uniba.dib.sms23248.NetworkChangeReceiver;
-import it.uniba.dib.sms23248.NetworkUtils;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 import it.uniba.dib.sms23248.R;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -189,7 +189,7 @@ public class CalendarioFragment extends Fragment {
                                     // ItemSpesa è aggiunto alla lista
                                     finalItemsSpesaForDate.add(newItem);
                                     showItemsSpesaForDate(selectedDate);
-                                    viewModel.addItem(itemId, String.valueOf(editTextName), itemType, itemPrice, selectedDate);
+                                    viewModel.addItem(itemId,  editTextName.getText().toString(), itemType, itemPrice, selectedDate);
 
                                     // I campi di input ritornano vuoti
                                     editTextName.getText().clear();

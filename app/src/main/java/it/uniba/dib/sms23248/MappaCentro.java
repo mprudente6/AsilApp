@@ -3,20 +3,15 @@ package it.uniba.dib.sms23248;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -29,7 +24,8 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.OverlayItem;
 
-import java.util.ArrayList;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 
 public class MappaCentro extends AppCompatActivity {
     private MapView map = null;

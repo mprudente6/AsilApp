@@ -41,6 +41,7 @@ import java.util.List;
 
 import it.uniba.dib.sms23248.Amministrazione.FileAdapter;
 import it.uniba.dib.sms23248.Amministrazione.UploadedFile;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
 
 
 public class DocumentiFragmentRichiedenti extends Fragment {

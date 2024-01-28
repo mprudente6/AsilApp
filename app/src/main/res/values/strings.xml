@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">AsilApp</string>
-    <string name="lingua_prompt">Lingua</string>
-    <string name="tipoUtente_prompt">Vista</string>
-    <string name="genere_prompt">Genere</string>
+    <string name="lingua_prompt" translatable="false">Lingua</string>
+    <string name="tipoUtente_prompt" translatable="false">Vista</string>
+    <string name="genere_prompt" translatable="false">Genere</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -109,8 +109,8 @@
     <string name="VuoiUscire">Sei sicuro di voler uscire?</string>
     <string name="Si">Sì</string>
     <string name="Caricamento">Caricamento in corso</string>
-    <string name="email_richiesta">Email richiesta!</string>
-    <string name="password_richiesta">Password richiesta!</string>
+    <string name="email_richiesta">Email obbligatoria!</string>
+    <string name="password_richiesta">Password obbligatoria!</string>
     <string name="login_con_successo">Autenticazione eseguita con successo!</string>
     <string name="connessione">Nessuna connessione ad internet.</string>
     <string name="invio_reset">L\\\'email con il reset della password è stata inoltrata.Controlla in posta</string>
@@ -126,6 +126,5 @@
     <string name="aggiornaFail">Aggiornamento password in Firestore fallito.</string>
     <string name="registraCompletato">Registrazione completata con successo!</string>
     <string name="registrazione_fallita">Registrazione fallita!</string>
-    <string name="not_permission">Non hai il permesso per registrare utenti.</string>
     <string name="not_connection">Nessuna connesione ad internet.</string>
 </resources>

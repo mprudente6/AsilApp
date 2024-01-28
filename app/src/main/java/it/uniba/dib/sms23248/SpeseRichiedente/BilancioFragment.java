@@ -2,10 +2,6 @@ package it.uniba.dib.sms23248.SpeseRichiedente;
 
 import static it.uniba.dib.sms23248.SpeseRichiedente.DateConverter.convertDateToTimestamp;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -15,8 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
@@ -29,8 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import it.uniba.dib.sms23248.NetworkChangeReceiver;
-import it.uniba.dib.sms23248.NetworkUtils;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 import it.uniba.dib.sms23248.R;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -168,17 +162,17 @@ public class BilancioFragment extends Fragment {
 
         Calendar calendar = Calendar.getInstance();
 
-// Imposta il calendario al primo giorno della settimana
+        // Imposta il calendario al primo giorno della settimana
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
 
 
-// Ottieni la data di inizio settimana
+        // Ottieni la data di inizio settimana
         Date startDate = calendar.getTime();
 
-// Spostati in avanti di 6 giorni per ottenere la fine della settimana
+        // Spostati in avanti di 6 giorni per ottenere la fine della settimana
         calendar.add(Calendar.DAY_OF_WEEK, 6);
 
-// Ottieni la data di fine settimana
+        // Ottieni la data di fine settimana
         Date endDate = calendar.getTime();
 
 

@@ -21,17 +21,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import it.uniba.dib.sms23248.HomeR;
-import it.uniba.dib.sms23248.NetworkUtils;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 import it.uniba.dib.sms23248.R;
 
 public class AccessoRichiedenteAsilo extends AppCompatActivity {
 
-    private static final String TAG = "AccessoRichiedenteAsilo"; // Add this line to define the TAG
+    private static final String TAG = "AccessoRichiedenteAsilo";
     private FirebaseAuth mAuth;
     private EditText email;
     private EditText password;
@@ -40,7 +39,7 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private TextView forgotPassword;
-    FirebaseUser currentUserS;
+
 
     String uidS;
     @Override
@@ -78,12 +77,12 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
 
                     if (useremail.isEmpty()) {
                         email.setError(obbligoMail);
-                        return; // Exit the method if email is empty
+                        return;
                     }
 
                     if (userpass.isEmpty()) {
                         password.setError(obbligoPassword);
-                        return; // Exit the method if email is empty
+                        return;
                     }
 
                     // Call getUserRole to retrieve user role

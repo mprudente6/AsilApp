@@ -1,7 +1,6 @@
 package it.uniba.dib.sms23248.Amministrazione;
 
 
-
 public class UploadedFile {
     private String fileName;
     private String fileUrl;

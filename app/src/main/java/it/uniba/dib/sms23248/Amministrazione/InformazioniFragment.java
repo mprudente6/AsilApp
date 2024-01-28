@@ -2,11 +2,11 @@ package it.uniba.dib.sms23248.Amministrazione;
 
 
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import it.uniba.dib.sms23248.NetworkChangeReceiver;
-import it.uniba.dib.sms23248.NetworkUtils;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 import it.uniba.dib.sms23248.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -54,15 +54,14 @@ NetworkChangeReceiver networkChangeReceiver;
     String uid;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        view = inflater.inflate(R.layout.fragment_informazioni, container, false);
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
             Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
 
             return view;
         }
-        view = inflater.inflate(R.layout.fragment_informazioni, container, false);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
@@ -79,19 +78,16 @@ NetworkChangeReceiver networkChangeReceiver;
             uid = currentUser.getUid();
             documentStaff = dbS.collection("STAFF").document(uid);
             fetchDataCentre();
-            saveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (NetworkUtils.isNetworkAvailable(requireContext())) {
-                        saveDataToFirestore();
-                    } else {
-                        Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
-                    }
-
+            saveButton.setOnClickListener(v -> {
+                if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                    saveDataToFirestore();
+                } else {
+                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
                 }
+
             });
         } else {
-            // Handle the case where the current user is null
+
             Log.d(TAG, "Current user is null");
         }
 
@@ -118,17 +114,17 @@ NetworkChangeReceiver networkChangeReceiver;
         documentStaff.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // Check if the document exists
+
                         String centroValue = documentSnapshot.getString("Centro");
                         Log.e(TAG, "Centro : " + centroValue);
                         if (centroValue != null) {
                             fetchFieldFromCentroAccoglienza(fieldName, editText, centroValue);
                         } else {
-                            // Handle the case where "Centro" field in "Staff" is null
+
                             Log.d(TAG, "Centro field is null for user with UID " + uid);
                         }
                     } else {
-                        // Handle the case where the "Staff" document does not exist
+
                         Log.d(TAG, "No document found in Staff collection for user with UID " + uid);
                     }
                 })
@@ -139,20 +135,20 @@ NetworkChangeReceiver networkChangeReceiver;
         CollectionReference centroAccoglienzaCollection = dbS.collection("CENTRI_ACCOGLIENZA");
 
         centroAccoglienzaCollection.whereEqualTo("Nome", centroValue)
-                .limit(1) // Limit to one document, since we only need one
+                .limit(1) // prendi solo un documento
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        // There is a matching document in "CentroAccoglienza"
+                                                                              //primo documento da questa lista
                         DocumentSnapshot matchingDocument = queryDocumentSnapshots.getDocuments().get(0);
                         String fieldValue = matchingDocument.getString(fieldName);
 
-                        // UPDATE EDITTEXT
+
                         if (fieldValue != null) {
                             editText.setText(fieldValue);
                         }
                     } else {
-                        // No matching document found in "CentroAccoglienza"
+
                         Log.d(TAG, "No matching document found in CentroAccoglienza collection for Centro: " + centroValue);
                     }
                 })
@@ -200,7 +196,7 @@ NetworkChangeReceiver networkChangeReceiver;
                                                     })
                                                     .addOnFailureListener(e -> Log.e(TAG, "Errore: " + e.getMessage()));
 
-                                            // You can update other UI elements if needed
+
                                         } else {
                                             Log.d(TAG, "No matching document found in CentroAccoglienza collection for Centro: " + centroValue);
                                         }
@@ -219,7 +215,7 @@ NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     public void onDestroyView() {
-        // Unregister the BroadcastReceiver when the fragment is destroyed
+
         if (networkChangeReceiver != null) {
             requireContext().unregisterReceiver(networkChangeReceiver);
         }

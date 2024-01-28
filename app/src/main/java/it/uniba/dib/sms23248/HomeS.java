@@ -36,6 +36,8 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 import it.uniba.dib.sms23248.Amministrazione.Amministrazione;
 import it.uniba.dib.sms23248.Amministrazione.RegistrazioneRichiedenteAsilo;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 
 public class HomeS extends AppCompatActivity {
 

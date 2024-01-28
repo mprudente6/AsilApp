@@ -24,7 +24,5 @@ public class VideoModel {
         return videoUrl;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
+
 }

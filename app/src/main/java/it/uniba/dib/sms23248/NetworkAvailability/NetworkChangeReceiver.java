@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.NetworkAvailability;
 
 
 
@@ -16,6 +16,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
+
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
+import it.uniba.dib.sms23248.R;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
 

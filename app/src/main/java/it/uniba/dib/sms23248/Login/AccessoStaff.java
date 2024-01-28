@@ -23,7 +23,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import it.uniba.dib.sms23248.HomeS;
-import it.uniba.dib.sms23248.NetworkUtils;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 import it.uniba.dib.sms23248.R;
 
 public class AccessoStaff extends AppCompatActivity {

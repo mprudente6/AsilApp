@@ -5,11 +5,9 @@ import static android.app.Activity.RESULT_OK;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,8 +31,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.uniba.dib.sms23248.NetworkChangeReceiver;
-import it.uniba.dib.sms23248.NetworkUtils;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 import it.uniba.dib.sms23248.R;
 
 
@@ -54,14 +51,14 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
     private RecyclerView recyclerViewGen;
     private RecyclerView recyclerViewDonna;
     private ProgressDialog progressDialog;
-    private TextView textVideoName;
+
     private String targetFolder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_video, container, false);
-        View item_view=inflater.inflate(R.layout.item_video, container, false);
+
 
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
             Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
@@ -69,11 +66,11 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
             return view;
         }
 
-        Button uploadButton = view.findViewById(R.id.uploadButton);
-        Button uploadButton2 = view.findViewById(R.id.uploadButton2);
+        Button uploadButtonGenerico = view.findViewById(R.id.uploadButton);
+        Button uploadButtonDonna = view.findViewById(R.id.uploadButton2);
         recyclerViewGen = view.findViewById(R.id.recyclerViewGen);
         recyclerViewDonna = view.findViewById(R.id.recyclerViewDonna);
-        textVideoName=item_view.findViewById(R.id.NomeVideo);
+
         storageReference = FirebaseStorage.getInstance().getReference();
 
         videoListGen = new ArrayList<>();
@@ -96,19 +93,19 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        fetchVideoUrlsGen();
-        fetchVideoUrlsDonna();
+        fetchVideoGenerico();
+        fetchVideoDonna();
 
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Uploading video...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
 
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
-            uploadButton.setOnClickListener(new View.OnClickListener() {
+            uploadButtonGenerico.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    targetFolder = "videos";
+
                     openVideoChooser(PICK_VIDEO_REQUEST_GEN);
                 }
             });
@@ -116,10 +113,10 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
             Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
         }
 
-        uploadButton2.setOnClickListener(new View.OnClickListener() {
+        uploadButtonDonna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                targetFolder = "videosDonna";
+
                 openVideoChooser(PICK_VIDEO_REQUEST_DONNA);
             }
         });
@@ -141,33 +138,24 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
 
     @Override
     public void onDownloadClick(VideoModel videoModel) {
-
         String videoUrl = videoModel.getVideoUrl();
 
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(videoUrl));
         request.setTitle("Downloading Video");
         request.setDescription(videoModel.getName());
+        request.allowScanningByMediaScanner();
+
+
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, videoModel.getName());
 
         DownloadManager downloadManager = (DownloadManager) requireContext().getSystemService(Context.DOWNLOAD_SERVICE);
 
-        long downloadId = downloadManager.enqueue(request);
-
-
-
-        BroadcastReceiver onComplete = new BroadcastReceiver() {
-            public void onReceive(Context context, Intent intent) {
-                long id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-                if (downloadId == id) {
-                    Toast.makeText(getContext(), "Download completed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
-        requireContext().registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        downloadManager.enqueue(request);
 
     }
+
 
     private void openVideoChooser(int requestCode) {
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
@@ -188,15 +176,15 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         if (resultCode == RESULT_OK && data != null) {
             selectedVideoUri = data.getData();
             if (selectedVideoUri != null) {
-                // Get the original file name
-                String originalFileName = getFileName(selectedVideoUri);
+
+                String videoName = getFileName(selectedVideoUri);
 
                 if (requestCode == PICK_VIDEO_REQUEST_GEN) {
-                    targetFolder = "videos";  // Set targetFolder here
-                    uploadVideo(selectedVideoUri, originalFileName, "videos");
+                    targetFolder = "videos";
+                    uploadVideo(selectedVideoUri, videoName, "videos");
                 } else if (requestCode == PICK_VIDEO_REQUEST_DONNA) {
-                    targetFolder = "videosDonna";  // Set targetFolder here
-                    uploadVideo(selectedVideoUri, originalFileName, "videosDonna");
+                    targetFolder = "videosDonna";
+                    uploadVideo(selectedVideoUri, videoName, "videosDonna");
                 }
             } else {
                 Toast.makeText(getContext(), "Failed to get selected video", Toast.LENGTH_SHORT).show();
@@ -229,22 +217,22 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         return result;
     }
 
-    private void uploadVideo(Uri videoUri, String originalFileName, String targetFolder) {
+    private void uploadVideo(Uri videoUri, String videoName, String targetFolder) {
         if (videoUri != null) {
-            String videoFileName = originalFileName;
+
 
             progressDialog.show();
 
 
 
-            storageReference.child(targetFolder + "/" + videoFileName).putFile(videoUri)
+            storageReference.child(targetFolder + "/" + videoName).putFile(videoUri)
                     .addOnSuccessListener(taskSnapshot -> {
                         Toast.makeText(getContext(), "Video uploaded successfully", Toast.LENGTH_SHORT).show();
 
                         if ("videosDonna".equals(targetFolder)) {
-                            fetchVideoUrlsDonna();
+                            fetchVideoDonna();
                         } else {
-                            fetchVideoUrlsGen();
+                            fetchVideoGenerico();
                         }
 
                         progressDialog.dismiss();
@@ -259,7 +247,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                     });
         }
     }
-    private void fetchVideoUrlsGen() {
+    private void fetchVideoGenerico() {
         videoListGen.clear();
 
         StorageReference videosRef = storageReference.child("videos");
@@ -283,7 +271,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                 });
     }
 
-    private void fetchVideoUrlsDonna() {
+    private void fetchVideoDonna() {
         videoListDonna.clear();
 
         StorageReference videosRef = storageReference.child("videosDonna");
@@ -317,7 +305,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         builder.setPositiveButton(delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Call a method to delete the file from Firebase and update the UI
+
                 deleteVideo(videoModel, targetFolder);
             }
         });
@@ -332,7 +320,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         String videoUrl = videoModel.getVideoUrl();
         Uri uri = Uri.parse(videoUrl);
         String fileName = uri.getLastPathSegment();
-        // Extract the file name from the video URL
+
         if (targetFolder != null && !targetFolder.isEmpty() && fileName.startsWith(targetFolder + "/")) {
             fileName = fileName.substring(targetFolder.length() + 1);
         }
@@ -345,12 +333,12 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         videoReference.getMetadata().addOnSuccessListener(metadata -> {
             videoReference.delete().addOnSuccessListener(aVoid -> {
                 if ("videosDonna".equals(targetFolder)) {
-                    fetchVideoUrlsDonna();
+                    fetchVideoDonna();
 
-// or
+
                     videoAdapterDonna.notifyDataSetChanged();
                 } else {
-                    fetchVideoUrlsGen();
+                    fetchVideoGenerico();
                     videoAdapterGen.notifyDataSetChanged();
                 }
 
@@ -367,7 +355,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
 
     @Override
     public void onDestroyView() {
-        // Unregister the BroadcastReceiver when the fragment is destroyed
+
         if (networkChangeReceiver != null) {
             requireContext().unregisterReceiver(networkChangeReceiver);
         }

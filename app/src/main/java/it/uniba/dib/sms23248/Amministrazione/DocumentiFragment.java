@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.OpenableColumns;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +32,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import it.uniba.dib.sms23248.NetworkChangeReceiver;
-import it.uniba.dib.sms23248.NetworkUtils;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 import it.uniba.dib.sms23248.R;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,7 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DocumentiFragment extends Fragment implements UploadCallback {
+public class DocumentiFragment extends Fragment {
 
 
 
@@ -61,12 +60,12 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
 
     View view;
     Button selectFile, upload;
-    TextView notification;
+    TextView selectNotification;
     FirebaseDatabase database;
     FirebaseStorage storage;
-    int MY_PERMISSIONS_REQUEST_READ_MEDIA = 1;
-    int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE=4;
+
     Uri pdfUri;
+    int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE=4;
 
     ProgressDialog progressDialog;
     private RecyclerView recyclerView;
@@ -79,7 +78,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
         view = inflater.inflate(R.layout.fragment_documenti, container, false);
         selectFile = view.findViewById(R.id.selectFile);
         upload = view.findViewById(R.id.upload);
-        notification = view.findViewById(R.id.notification);
+        selectNotification = view.findViewById(R.id.selectNotification);
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
             Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
 
@@ -104,11 +103,16 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
         selectFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("PDF","On click");
-
-
+                Log.e("PDF", "On click");
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     selectPdf();
+                } else {
 
+
+                    ActivityCompat.requestPermissions(requireActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+                }
             }
         });
 
@@ -119,7 +123,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
             public void onClick(View v) {
                 if(pdfUri!=null){
                     if (NetworkUtils.isNetworkAvailable(requireContext())) {
-                        uploadFile(pdfUri);
+                        startsUploadAndCheckExistingFile(pdfUri);
                     } else {
                         Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
                     }
@@ -134,7 +138,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
             @Override
             public void onItemClick(UploadedFile uploadedFile) {
 
-                downloadFile(uploadedFile.getFileUrl(), uploadedFile.getFileName());
+                downloadFile(uploadedFile.getFileUrl());
             }
 
             @Override
@@ -153,18 +157,26 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
 
     }
 
-    @Override
-    public void onUploadSuccess(String fileName, String downloadUrl) {
-        // Handle successful upload, e.g., update UI or proceed with additional tasks
-        Log.d("UploadCallback", "Upload successful for file: " + fileName);
-        // You can trigger the download or any other actions here
+    private void selectPdf() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/pdf");
+        startActivityForResult(intent, 86);
     }
 
     @Override
-    public void onUploadFailure(String fileName, Exception exception) {
-        // Handle upload failure, e.g., show an error message
-        Log.e("UploadCallback", "Upload failed for file: " + fileName, exception);
-        Toast.makeText(requireContext(), "Failed to upload file: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 86) {
+            if (resultCode == RESULT_OK && data != null) {
+
+                pdfUri = data.getData();
+                String fileName = getFileNameFromUri(pdfUri);
+                selectNotification.setText(fileName);
+
+            } else {
+                Toast.makeText(requireContext(), "File selection canceled", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void fetchDataFromDatabase() {
@@ -173,7 +185,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                fileList.clear(); // Clear the existing list
+                fileList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String fileName = snapshot.getKey();
                     String fileUrl = snapshot.getValue(String.class);
@@ -190,7 +202,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
         });
     }
 
-    private void uploadFile(Uri pdfUri) {
+    private void startsUploadAndCheckExistingFile(Uri pdfUri) {
         String caricamento = getString(R.string.Caricamento);
         progressDialog = new ProgressDialog(requireContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -203,12 +215,12 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
         StorageReference storageReference = storage.getReference();
         StorageReference fileReference = storageReference.child("Uploads").child(fileName);
 
-        // Check if the file with the same name exists
+
         fileReference.getMetadata().addOnSuccessListener(storageMetadata -> {
             progressDialog.dismiss();
             showFileExistsDialog(fileName);
         }).addOnFailureListener(e -> {
-            // File with the same name doesn't exist, proceed with the upload
+
             if (e instanceof StorageException && ((StorageException) e).getErrorCode() == StorageException.ERROR_OBJECT_NOT_FOUND) {
                 uploadNewFile(fileReference, pdfUri, fileName);
             } else {
@@ -246,24 +258,23 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
                         UploadedFile uploadedFile = new UploadedFile(fileName, url);
                         fileList.add(uploadedFile);
                         fileAdapter.notifyDataSetChanged();
-                        // Notify the callback about successful upload
-                        onUploadSuccess(fileName, url);
+
+
                     } else {
-                        // Notify the callback about upload failure
-                        onUploadFailure(fileName, task.getException());
+
+
                     }
                 }).addOnFailureListener(e -> {
-                    // Notify the callback about upload failure
-                    onUploadFailure(fileName, e);
+
                 });
             });
         }).addOnProgressListener(snapshot -> {
             int currentProgress = (int) (100 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
             progressDialog.setProgress(currentProgress);
         }).addOnFailureListener(e -> {
-            // Notify the callback about upload failure
+      
             progressDialog.dismiss();
-            onUploadFailure(fileName, e);
+
         });
     }
 
@@ -294,35 +305,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
 
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 86) {
-            if (resultCode == RESULT_OK && data != null) {
-                // Check for READ_EXTERNAL_STORAGE permission here
-                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    // Permission granted, proceed with getting the PDF URI
-                    pdfUri = data.getData();
-                    String fileName = getFileNameFromUri(pdfUri);
-                    notification.setText(fileName);
-                } else {
-                    // Permission not granted, show explanation or request permission again
-                    ActivityCompat.requestPermissions(requireActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
-                }
-            } else {
-                Toast.makeText(requireContext(), "File selection canceled", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-    private void selectPdf() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("application/pdf");
-        startActivityForResult(intent, 86);
-    }
-
-    public void downloadFile(String fileUrl, String fileName) {
+    public void downloadFile(String fileUrl) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(fileUrl);
 
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -330,8 +313,8 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
             public void onSuccess(Uri uri) {
 
                 String downloadUrl = uri.toString();
-                String filename=uri.getPath();
-                openBrowser(downloadUrl, filename);
+                String filename=uri.getPath(); //restituisce /Uploads/nome_file.pdf
+                downloadingOnDevice(downloadUrl, filename);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -341,6 +324,8 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
         });
     }
 
+
+
     private String getFileNameFromPath(String filePath) {
         int lastSlashIndex = filePath.lastIndexOf('/');
         if (lastSlashIndex != -1 && lastSlashIndex < filePath.length() - 1) {
@@ -349,7 +334,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
             return filePath;
         }
     }
-    private void openBrowser(String url, String fileName) {
+    private void downloadingOnDevice(String url, String fileName) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String fileNameOnly = getFileNameFromPath(fileName);
         request.setTitle(fileNameOnly);
@@ -385,6 +370,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
         builder.setPositiveButton(delete, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 deleteFile(uploadedFile);
             }
         });
@@ -415,7 +401,7 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Handle failure to delete from Database
+
                         Toast.makeText(requireContext(), "Failed to delete file from Database: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -423,14 +409,14 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                // Handle failure to delete from Storage
+
                 Toast.makeText(requireContext(), "Failed to delete file from Storage: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
     @Override
     public void onDestroyView() {
-        // Unregister the BroadcastReceiver when the fragment is destroyed
+
         if (networkChangeReceiver != null) {
             requireContext().unregisterReceiver(networkChangeReceiver);
         }
@@ -438,10 +424,6 @@ public class DocumentiFragment extends Fragment implements UploadCallback {
     }
 
 
-    public interface UploadCallback {
-        void onUploadSuccess(String fileName, String downloadUrl);
-        void onUploadFailure(String fileName, Exception exception);
-    }
 
 }
 

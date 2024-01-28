@@ -3,19 +3,19 @@ package it.uniba.dib.sms23248.Amministrazione;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import android.content.Context;
+
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +23,8 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.views.MapView;
 
-import it.uniba.dib.sms23248.Amministrazione.GeocodingTask;
-import it.uniba.dib.sms23248.NetworkChangeReceiver;
-import it.uniba.dib.sms23248.NetworkUtils;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 import it.uniba.dib.sms23248.R;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +32,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.osmdroid.config.Configuration;
 import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
@@ -52,10 +50,9 @@ public class PosizioneFragment extends Fragment {
     NetworkChangeReceiver networkChangeReceiver;
     MapView map = null;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String locationQuery = "";
-    SearchView searchView;
+
     TextView coordinates;
-    private double savedZoomLevel = -1.0;
+    private double savedZoomLevel = 3;
 
     private ItemizedIconOverlay<OverlayItem> itemizedOverlay;
     private GeoPoint savedCenter;
@@ -65,24 +62,25 @@ public class PosizioneFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
             Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
 
             return view;
         }
-        view = inflater.inflate(R.layout.posizione_servizi, container, false);
-        searchView = view.findViewById(R.id.searchView);
-        coordinates = view.findViewById(R.id.textCoordinate);
+        view = inflater.inflate(R.layout.fragment_posizione, container, false);
 
-        Context ctx = getContext();
-        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        coordinates = view.findViewById(R.id.textCoordinate);
 
 
         map = view.findViewById(R.id.mapView);
 
 
+        mauth = FirebaseAuth.getInstance();
+        currentUser = mauth.getCurrentUser();
+        String  uid=currentUser.getUid();
+        retrieveCentroFromStaff(uid);
 
         MapEventsOverlay mapEventsOverlay = new MapEventsOverlay(new MapEventsReceiver() {
             @Override
@@ -105,50 +103,34 @@ public class PosizioneFragment extends Fragment {
 
             @Override
             public boolean longPressHelper(GeoPoint p) {
-                // Handle the long press event here
+
                 return false;
             }
         });
+
         map.getOverlays().add(0, mapEventsOverlay);
-        mauth = FirebaseAuth.getInstance();
-         currentUser = mauth.getCurrentUser();
-        String  uid=currentUser.getUid();
-        retrieveCentroFromStaff(uid);
 
 
 
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                locationQuery = query;
-
-                new GeocodingTask(map, view).execute(locationQuery);
-
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
+         //controlla la connessione internet
         networkChangeReceiver = new NetworkChangeReceiver();
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         requireContext().registerReceiver(networkChangeReceiver, intentFilter);
+
 
 
         return view;
     }
 
     private void saveChosenPositionToFirestore(GeoPoint chosenPosition) {
-        // Assuming you have a document reference already defined
+
         Map<String, Object> data = new HashMap<>();
         data.put("latitude", chosenPosition.getLatitude());
         data.put("longitude", chosenPosition.getLongitude());
         data.put("zoomlevel", savedZoomLevel);
 
+        // Document Reference del Centro di Accoglienza di appertenenza dello Staff loggatto
         documentRef.update(data)
                 .addOnSuccessListener(aVoid -> {
                     Log.d(TAG, "Chosen position saved to Firestore successfully");
@@ -182,7 +164,7 @@ public class PosizioneFragment extends Fragment {
                             if (storedZoomLevel != null) {
                                 initializeMap(storedPosition, storedZoomLevel);
                             } else {
-                                initializeMap(storedPosition, -1.0); // Default zoom level if not saved
+                                initializeMap(storedPosition, 3);
                             }
 
                             updateCoordinatesTextView(storedPosition);
@@ -194,7 +176,7 @@ public class PosizioneFragment extends Fragment {
 
                         } else {
 
-                            initializeMap(null, -1.0);
+                            initializeMap(null, 3);
                         }
                     }
                 })
@@ -218,10 +200,8 @@ public class PosizioneFragment extends Fragment {
 
             IMapController mapController = map.getController();
 
-            if (zoomLevel != -1.0) {
+            if (zoomLevel != 3) {
                 mapController.setZoom(zoomLevel);
-            } else {
-                mapController.setZoom(9.5);
             }
 
             if (centerPoint != null) {
@@ -247,10 +227,11 @@ public class PosizioneFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         if (map != null) {
             map.onResume();
 
-            if (savedCenter != null && savedZoomLevel != -1.0) {
+            if (savedCenter != null && savedZoomLevel != 3) {
                 map.getController().setCenter(savedCenter);
                 map.getController().setZoom(savedZoomLevel);
             }
@@ -260,6 +241,7 @@ public class PosizioneFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
         if (map != null) {
             map.onPause();
 
@@ -269,7 +251,7 @@ public class PosizioneFragment extends Fragment {
     }
 
     private void retrieveCentroFromStaff(String currentUserUid) {
-        // Assuming you have a collection reference for STAFF
+
         db.collection("STAFF")
                 .document(currentUserUid)
                 .get()
@@ -277,7 +259,7 @@ public class PosizioneFragment extends Fragment {
                     if (documentSnapshot.exists()) {
                         String centro = documentSnapshot.getString("Centro");
                         if (centro != null) {
-                            // Once you have Centro, query CENTRI_ACCOGLIENZA to find the matching document
+
                             retrieveCentroAccoglienzaDocument(centro);
                         }
                     }
@@ -288,18 +270,15 @@ public class PosizioneFragment extends Fragment {
     }
 
     private void retrieveCentroAccoglienzaDocument(String centro) {
-        // Assuming you have a collection reference for CENTRI_ACCOGLIENZA
+
         db.collection("CENTRI_ACCOGLIENZA")
                 .whereEqualTo("Nome", centro)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        // Assuming there is only one matching document, you can retrieve it
-                        DocumentReference centroAccoglienzaRef = queryDocumentSnapshots.getDocuments().get(0).getReference();
-                        // Use centroAccoglienzaRef instead of hardcoding "C001"
-                        documentRef = centroAccoglienzaRef;
 
-                        // Now you can proceed with the rest of your logic
+                        documentRef = queryDocumentSnapshots.getDocuments().get(0).getReference();
+
                         retrieveStoredPositionFromFirestore(documentRef);
                     }
                 })
@@ -307,9 +286,12 @@ public class PosizioneFragment extends Fragment {
                     Log.e(TAG, "Error retrieving Centro Accoglienza document", e);
                 });
     }
+
+
+
     @Override
     public void onDestroyView() {
-        // Unregister the BroadcastReceiver when the fragment is destroyed
+
         if (networkChangeReceiver != null) {
             requireContext().unregisterReceiver(networkChangeReceiver);
         }

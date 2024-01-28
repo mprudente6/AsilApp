@@ -38,7 +38,6 @@ public class MediaRichiedente extends AppCompatActivity {
         myViewPageAdapter = new MyViewPageAdapterRichiedenti(this);
         viewPager2.setAdapter(myViewPageAdapter);
 
-        myViewPageAdapter.setupTabLayout(tabLayout, viewPager2);
         viewPager2.setOffscreenPageLimit(2);
         viewPager2.setUserInputEnabled(false);
 

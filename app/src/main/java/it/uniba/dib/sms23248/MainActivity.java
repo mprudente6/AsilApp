@@ -20,6 +20,8 @@ import java.util.List;
 
 import it.uniba.dib.sms23248.Login.AccessoRichiedenteAsilo;
 import it.uniba.dib.sms23248.Login.AccessoStaff;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity {
 

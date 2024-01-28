@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248.Amministrazione;
+package it.uniba.dib.sms23248;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +11,16 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import it.uniba.dib.sms23248.Amministrazione.VideoAdapter;
+import it.uniba.dib.sms23248.Amministrazione.VideoModel;
 import it.uniba.dib.sms23248.R;
 
-public class VideoAdapterRichiedenti extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
+public class VideoAdapterRichiedenti extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
     private final List<VideoModel> videoList;
     private final String targetFolder;
     private VideoAdapter.OnDownloadClickListener onDownloadClickListener;
+
     // Constructor
     public VideoAdapterRichiedenti(List<VideoModel> videoList, VideoAdapter.OnDownloadClickListener onDownloadClickListener, String targetFolder) {
         this.videoList = videoList;
@@ -27,13 +30,13 @@ public class VideoAdapterRichiedenti extends RecyclerView.Adapter<VideoAdapter.V
 
     @NonNull
     @Override
-    public VideoAdapter.VideoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public VideoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video_richiedenti, parent, false);
-        return new VideoAdapter.VideoViewHolder(view);
+        return new VideoAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VideoAdapter.VideoViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VideoAdapter.ViewHolder holder, int position) {
         VideoModel videoModel = videoList.get(position);
         holder.textNomeVideo.setText(videoModel.getName());
 

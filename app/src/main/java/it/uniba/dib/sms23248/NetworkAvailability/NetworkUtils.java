@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.NetworkAvailability;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

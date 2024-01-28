@@ -39,11 +39,5 @@ public class MyViewPageAdapterRichiedenti extends FragmentStateAdapter {
         return 2;
     }
 
-    public void setupTabLayout(TabLayout tabLayout, ViewPager2 viewPager) {
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            View tabView = LayoutInflater.from(context).inflate(R.layout.custom_tab, null);
 
-            tab.setCustomView(tabView);
-        }).attach();
-    }
 }

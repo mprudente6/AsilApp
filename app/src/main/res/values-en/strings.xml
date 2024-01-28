@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <array name="opzione_lingua">
         <item>choose language</item>
         <item>ITA</item>
         <item>ENG</item>
     </array>
-
     <string name="app_name">AsilApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -15,9 +13,110 @@
     <string name="pw_contenitore_codice">Code</string>
     <string name="pw_contenitore_password">Password</string>
     <string name="pw_contenitore_invia">Send</string>
-
     <string name="scansione">Open biomedical container</string>
 
     <string name="mainActivity_apri_contenitore">Open container</string>
     <string name="mainActivity_mostra_qr_code">Show QR Code</string>
+
+    <!-- Stringhe delle cartelle Amministrazione, Login e SpeseRichiedente, HomeS e HomeR -->
+    <string name="password_dimenticata">Forgot password?</string>
+    <string name="accedi">Sign in</string>
+    <string name="nuova_password">new password</string>
+    <string name="non_ancora_registrato">Not yet registered? Sign up!</string>
+    <string name="Login_staff" >Staff Login</string>
+    <string name="centroString">Center</string>
+    <string name="benvenuto">Welcome, </string>
+    <string name="mappa_string">Map</string>
+    <string name="cartella_clinica">Medical record</string>
+    <string name="QrCode">My QR Code</string>
+    <string name="info_centro">My center</string>
+    <string name="aggiungi_utente">Register new user</string>
+    <string name="scansionaQRCode">Scan user QR Code</string>
+    <string name="Benvenuto_Main">Welcome!</string>
+    <string name="SignUp">Sign up user</string>
+    <string name="Nome">Name</string>
+    <string name="Cognome">Surname</string>
+    <string name="Genere">Gender</string>
+    <string name="Cellulare">Phone number</string>
+    <string name="Data_di_nascita">Birthdate</string>
+    <string name="Luogo_nascita">Birthplace</string>
+    <string name="Conferma">Confirm</string>
+    <string name="StaffSignup">Sign up</string>
+    <string name="CentroAccoglienza">Refugee center</string>
+    <string name="GiaRegsitrato">Already registered? Login</string>
+    <string name="Spese">Your expenses</string>
+    <string name="Saldo">Budget</string>
+    <string name="Analisi">Chart</string>
+    <string name="refresh">refresh</string>
+    <string name="Spesasettimana">Weekly expenses: </string>
+    <string name="SpesaMensile">Monthly expenses: </string>
+    <string name="userWarnBudget">Your budget will be updated every month. Your monthly share is of 60€.</string>
+    <string name="prodotto">product</string>
+    <string name="prezzo">price</string>
+    <string name="AggiungiSpesa">Add new expense</string>
+    <string name="seleziona">Select pdf</string>
+    <string name="Nessunfile">No file selected</string>
+    <string name="Indirizzo">Address</string>
+    <string name="Sito_web">Website</string>
+    <string name="Descrizione">Description</string>
+    <string name="Telefono">Phone number</string>
+    <string name="Chart">Monthly expenses chart</string>
+    <string name="SpeseGraf">Expenses</string>
+    <string name="Upload">Upload</string>
+    <string name="UtenteGen">Generic user:</string>
+    <string name="Utentedon">Woman:</string>
+    <string name="CaricaVid">Upload video</string>
+    <string name="Prezzo">Price: </string>
+    <string name="Prodotto">Product: </string>
+    <string name="Tipo">Type: </string>
+    <string name="LatLong">Latitude:     \n Longitude:      </string>
+    <string name="ClickMap">Click a place on the map to save the position of your center</string>
+    <string name="ScegliUt">Select user</string>
+    <string name="RichiedenteAsilo">Asylum seeker</string>
+    <string name="Profilo">Profile</string>
+    <string name="Demo">Demo User</string>
+    <string name="Logout">Logout</string>
+    <string name="Dati">Data</string>
+    <string name="Video">Videos</string>
+    <string name="Attenzione">Attention!</string>
+    <string name="FilegiaCaricato">This file has been already uploaded! Delete the old one before proceeding!</string>
+    <string name="EliminaFile">Delete file</string>
+    <string name="VuoiEliminare">Are you sure you want to delete this file?</string>
+    <string name="Delete">Delete</string>
+    <string name="Cancel">Cancel</string>
+    <string name="LatiGeo">Latitude</string>
+    <string name="LongiGeo">Longitude</string>
+    <string name="Passwordcaratter">Password must be at least 6 characters long!</string>
+    <string name="Riempicampi">Fill all the fields!</string>
+    <string name="Emailinvalid">Invalid email!</string>
+    <string name="Cellulareinvalid">Invalid phone number!</string>
+    <string name="IncorrectPass">Incorrect password!</string>
+    <string name="EmailnonEsiste">This email doesn\'t exist!</string>
+    <string name="ResetPass">Enter Email before resetting password!</string>
+    <string name="PermessiR">You don\'t have asylum seeker permissions!</string>
+    <string name="PermessiS">You don\'t have staff permissions</string>
+    <string name="PrezzoAlto">It\'s too expensive!</string>
+    <string name="VuoiUscire">Are you sure you want to log out?</string>
+    <string name="Si">Yes</string>
+    <string name="Caricamento">Uploading...</string>
+    <string name="email_richiesta">Email required!</string>
+    <string name="password_richiesta">Password required!</string>
+    <string name="login_con_successo">Login successful!</string>
+    <string name="connessione">No Internet connection</string>
+    <string name="invio_reset">The email with reset password was sent. Check your emails.</string>
+    <string name="resetFallito">Email with password reset was not sent.</string>
+    <string name="erroreRecupero">Error fetching document</string>
+    <string name="loginFallito">Failed authentication: user doesn\'t exist</string>
+    <string name="autenticaFallito">Failed Authentication!</string>
+    <string name="riempiCampi">Email and password cannot be null</string>
+    <string name="userSconosciuto">User Role not recognized</string>
+    <string name="NotFound">User not found</string>
+    <string name="fallitoRitrovamento">Impossible retrieving user role</string>
+    <string name="passAggiorna">Password updated!</string>
+    <string name="aggiornaFail">Password update failed!</string>
+    <string name="registraCompletato">Registration successful!</string>
+    <string name="registrazione_fallita">Registration failed!</string>
+    <string name="not_connection">No Internet connection</string>
+    <string name="emailUtente">Email</string>
+    <string name="titleEmailFragment">Enter user email</string>
 </resources>
