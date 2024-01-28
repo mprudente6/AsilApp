@@ -202,9 +202,10 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
+                    Log.e("REGISTRAZIONE","onComplete: "+uidStaff);
                     DocumentSnapshot staffDocument = task.getResult();
                     if (staffDocument.exists()) {
-
+                        Log.e("REGISTRAZIONE","inserting data");
                         String regSuccess=getString(R.string.registraCompletato);
                         String regFail=getString(R.string.registrazione_fallita);                     String centroValue = staffDocument.getString("Centro");
 
@@ -239,7 +240,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         documentParametriUtenti.set(parametri);
 
 
-                        // Create a map with the data you want to store
                         Map<String, Object> richiedenteAsilo = new HashMap<>();
                         richiedenteAsilo.put("ID_RichiedenteAsilo", uid);
                         richiedenteAsilo.put("Nome", nomeValue);

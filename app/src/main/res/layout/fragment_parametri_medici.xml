@@ -192,16 +192,20 @@
             android:layout_marginTop="40dp"
             app:cornerRadius="22dp"
             android:visibility="gone"
-            android:backgroundTint="#FF076AEC" />
+            android:background="#FF076AEC" />
 
         <Button
             android:id="@+id/apriContenitore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/saveButton"
-            android:text="Apri contenitore"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="213dp"
+            android:textSize="18sp"
+            android:backgroundTint="#FF076AEC"
             android:minWidth="224dp"
-            android:minHeight="64dp" />
+            android:minHeight="64dp"
+            android:text="Apri contenitore" />
 
 
     </RelativeLayout>

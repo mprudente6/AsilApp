@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,95 +15,148 @@
         android:id="@+id/textViewPermission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pw_contenitore1"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="82dp"
+        android:padding="40dp"
+
+        android:text="@string/pw_contenitore2"
         android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/CodiceContenitore"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.502" />
+        app:layout_constraintVertical_bias="0.133" />
 
     <TextView
         android:id="@+id/textViewNoPermission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="80dp"
+
+        android:padding="40dp"
         android:text="@string/pw_contenitore2"
         android:textAlignment="center"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/CodiceContenitore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/PasswordContenitore"
-        android:layout_width="217dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="292dp"
-        android:ems="10"
-        android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.847"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.131" />
 
-    <EditText
-        android:id="@+id/CodiceContenitore"
-        android:layout_width="226dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="64dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/PasswordContenitore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.847"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonInvia"
-        android:layout_width="185dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginTop="92dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="506dp"
+        android:layout_marginBottom="159dp"
         android:backgroundTint="#076aec"
         android:text="@string/pw_contenitore_invia"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PasswordContenitore"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/Codice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pw_contenitore_codice"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/Password"
-        app:layout_constraintEnd_toStartOf="@+id/CodiceContenitore"
-        app:layout_constraintHorizontal_bias="0.456"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPermission"
-        app:layout_constraintVertical_bias="0.57"
-        tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="258dp"
+        android:layout_marginEnd="7dp"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/Password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
-        android:text="@string/pw_contenitore_password"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/PasswordContenitore"
-        app:layout_constraintHorizontal_bias="0.44"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPermission"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/Codice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/pw_contenitore_codice"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/Password"
+            app:layout_constraintEnd_toStartOf="@+id/CodiceContenitore"
+            app:layout_constraintHorizontal_bias="0.456"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.761"
+            tools:ignore="MissingConstraints" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/CodiceContenitore"
+            android:layout_width="226dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="268dp"
+            android:ems="10"
+            android:inputType="text"
+
+            app:layout_constraintHorizontal_bias="0.891"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:padding="15dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="370dp"
+        android:layout_marginEnd="11dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/pw_contenitore_password"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/Password"
+            app:layout_constraintEnd_toStartOf="@+id/CodiceContenitore"
+            app:layout_constraintHorizontal_bias="0.456"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.761"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/PasswordContenitore"
+            android:layout_width="217dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="304dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
