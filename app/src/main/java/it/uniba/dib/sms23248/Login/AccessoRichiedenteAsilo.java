@@ -70,8 +70,9 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
 
 
 
-
+                //controllo la connessione ad Internet
                 if (NetworkUtils.isNetworkAvailable(AccessoRichiedenteAsilo.this)) {
+                    //rilevo email e password dagli editText
                     String useremail = email.getText().toString().trim();
                     String userpass = password.getText().toString().trim();
 
@@ -85,16 +86,18 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                         return;
                     }
 
-                    // Call getUserRole to retrieve user role
+                     //se ottengo il ruolo
                     getUserRole(useremail, new UserRoleCallback() {
                         @Override
                         public void onSuccess(String userRole) {
 
-                            // Check if the retrieved role is "RichiedenteAsilo"
+                            //controllo che il ruolo recuperato sia quello di richiedente asilo
                             if ("RichiedenteAsilo".equals(userRole)) {
-                                // Continue with login process
+
                                 if (!useremail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(useremail).matches()) {
                                     if (!userpass.isEmpty()) {
+
+                                        //login
                                         mAuth.signInWithEmailAndPassword(useremail, userpass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                             @Override
                                             public void onSuccess(AuthResult authResult) {
@@ -146,34 +149,40 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                 String userEmail = email.getText().toString().trim();
                 String resetFallito=getString(R.string.resetFallito);
 
+                //si richiede di inserire comunque l'email
                 if (!userEmail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
                     if (NetworkUtils.isNetworkAvailable(AccessoRichiedenteAsilo.this)) {
+                        //viene mandato il reset password all'email inserita
                     mAuth.sendPasswordResetEmail(userEmail)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        // Password reset email sent successfully
+
                                         Toast.makeText(AccessoRichiedenteAsilo.this,invio_reset, Toast.LENGTH_SHORT).show();
 
-                                        // Delay the Intent by 6 seconds
+                                        // poiché non era possibile fare in modo che dopo il reset l'user fosse rimandato
+                                        // al nuovo login in modo da memorizzare la nuova password nel databse(Firebase Authentication
+                                        //non permette di ricavare la password), abbiamo deciso di inserire un ritardo di 10 seconid
+                                        //tempo in cui di solito l'utente esce dall'ap per controllare l'email. In caso questo non succede,
+                                        //viene rimandato al login, senza che però questo influsca sul funzionamento
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                // Handle successful password reset, for example, navigate to another activity
+
                                                 Intent intent = new Intent(AccessoRichiedenteAsilo.this, PasswordDimenticata.class);
                                                 startActivity(intent);
-                                                finish(); // Optional: Close the current activity if needed
+                                                finish();
                                             }
-                                        }, 6000); // 6000 milliseconds = 6 seconds
+                                        }, 10000); //10 sec
                                     } else {
-                                        // Password reset email sending failed
+
                                         Toast.makeText(AccessoRichiedenteAsilo.this,resetFallito, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                     } else {
-                        // No internet connection, show a message to the user
+
                         Toast.makeText(AccessoRichiedenteAsilo.this,connession,Toast.LENGTH_LONG).show();
                     }
                 } else {
@@ -184,6 +193,7 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
 
     }
 
+    //metodo che usa UserRoleCallback per verificare l'esito dell'operazione
     private void getUserRole(String useremail, final UserRoleCallback callback) {
         String EmailinonEsiste = getString(R.string.EmailnonEsiste);
         db.collection("RUOLI").document(useremail)

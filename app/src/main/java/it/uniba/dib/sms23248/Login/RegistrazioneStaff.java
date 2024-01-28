@@ -37,7 +37,7 @@ import it.uniba.dib.sms23248.R;
 
 public class RegistrazioneStaff extends AppCompatActivity {
 
-    private static final String TAG = "AccessoRichiedenteAsilo"; // Add this line to define the TAG
+    private static final String TAG = "AccessoRichiedenteAsilo";
     private FirebaseAuth mAuth;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EditText email;
@@ -77,18 +77,19 @@ public class RegistrazioneStaff extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        // fetching dei nomi dei centri disponibili da mettere nello spinner
         db.collection("CENTRI_ACCOGLIENZA")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<String> centerNames = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            // Assuming "Nome" is the field you want to retrieve
+
                             String nome = document.getString("Nome");
                             centerNames.add(nome);
                         }
 
-                        // Populate Spinner with center names
+                         //inizializzazione spinner con adapter
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, centerNames);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         centroSpinner.setAdapter(adapter);
@@ -102,6 +103,7 @@ public class RegistrazioneStaff extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // dati degli editText
                 String passsLong = getString(R.string.Passwordcaratter);
                 String riempiCampi = getString(R.string.Riempicampi);
                 String invalidEmail = getString(R.string.Emailinvalid);
@@ -131,16 +133,19 @@ public class RegistrazioneStaff extends AppCompatActivity {
                     Toast.makeText(RegistrazioneStaff.this, riempiCampi, Toast.LENGTH_SHORT).show();
                 } if (!isValidEmail(useremail)) {
                     Toast.makeText(RegistrazioneStaff.this, invalidEmail, Toast.LENGTH_SHORT).show();
-                    return; // Stop registration if email is not valid
+                    return;
                 }
 
-                // Validate phone number format
+
                 if (!isValidPhoneNumber(cellulareValue)) {
                     Toast.makeText(RegistrazioneStaff.this, invalidCell, Toast.LENGTH_SHORT).show();
-                    // Stop registration if phone number is not valid
+
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
+                    //controllo disponibilità rete
                     if (NetworkUtils.isNetworkAvailable(RegistrazioneStaff.this)) {
+
+                        //registrazione in Firebase Authentication
                     mAuth.createUserWithEmailAndPassword(useremail, userpass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -149,6 +154,7 @@ public class RegistrazioneStaff extends AppCompatActivity {
                                 String uid = currentUser.getUid();
                                 String email=currentUser.getEmail();
 
+                                //inserimento dati in Firebase database
                                 DocumentReference documentRuoli = db.collection("RUOLI").document(email);
                                 Map<String, Object> ruoli = new HashMap<>();
                                 ruoli.put("Ruolo", "Staff");
@@ -208,16 +214,16 @@ public class RegistrazioneStaff extends AppCompatActivity {
 
 
 
-    // Email validation method
+
     private boolean isValidEmail(String email) {
-        // Use a simple regex for email validation
+
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
     }
 
-    // Phone number validation method
+
     private boolean isValidPhoneNumber(String phoneNumber) {
-        // Use a simple regex for phone number validation
+
         String phoneRegex = "^[+]?[0-9]{10,13}$";
         return phoneNumber.matches(phoneRegex);
     }

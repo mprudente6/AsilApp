@@ -66,29 +66,32 @@ public class AccessoStaff extends AppCompatActivity {
                 String obbligoMail=getString(R.string.email_richiesta);
                 String obbligoPassword=getString(R.string.password_richiesta);
 
+                //controllo coneesione a Internet
                 if (NetworkUtils.isNetworkAvailable(AccessoStaff.this)) {
                 String useremail = email.getText().toString().trim();
                 String userpass = password.getText().toString().trim();
 
                 if (useremail.isEmpty()) {
                     email.setError(obbligoMail);
-                    return; // Exit the method if email is empty
+                    return;
                 }
                 if (userpass.isEmpty()) {
                     password    .setError(obbligoPassword);
-                    return; // Exit the method if email is empty
+                    return;
                 }
 
-                // Call getUserRole to retrieve user role
+
                 getUserRole(useremail, new UserRoleCallback() {
                     @Override
                     public void onSuccess(String userRole) {
                         String logpositivo=getString(R.string.login_con_successo);
-                        // Check if the retrieved role is "Staff"
+                        //controllo che l'user che sta accedendo sia uno staff
                         if ("Staff".equals(userRole)) {
                             // Continue with login process
                             if (!useremail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(useremail).matches()) {
                                 if (!userpass.isEmpty()) {
+
+                                    //login
                                     mAuth.signInWithEmailAndPassword(useremail, userpass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                         @Override
                                         public void onSuccess(AuthResult authResult) {
@@ -121,12 +124,12 @@ public class AccessoStaff extends AppCompatActivity {
 
                     @Override
                     public void onFailure(String errorMessage) {
-                        // Handle the failure, for example, show an error message
+
                         Toast.makeText(AccessoStaff.this, errorMessage, Toast.LENGTH_SHORT).show();
                     }
                 });
                 } else {
-                    // No internet connection, show a message to the user
+
                     Toast.makeText(AccessoStaff.this,connessione, Toast.LENGTH_LONG).show();
                 }
             }
@@ -158,19 +161,20 @@ public class AccessoStaff extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        // Password reset email sent successfully
+
                                         Toast.makeText(AccessoStaff.this, invio_reset, Toast.LENGTH_SHORT).show();
 
-                                        // Delay the Intent by 6 seconds
+                                        // ritardo di 10 secondi per dare il tempo all'utente di accedere alle email prima
+                                        //di essere rimandato all'email in cui avverrà la memorizzazione della password resettata
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
                                                 // Handle successful password reset, for example, navigate to another activity
                                                 Intent intent = new Intent(AccessoStaff.this, PasswordDimenticata.class);
                                                 startActivity(intent);
-                                                finish(); // Optional: Close the current activity if needed
+                                                finish();
                                             }
-                                        }, 10000); // 6000 milliseconds = 6 seconds
+                                        }, 10000);
                                     } else {
                                         // Password reset email sending failed
                                         Toast.makeText(AccessoStaff.this, resetFallito, Toast.LENGTH_SHORT).show();
