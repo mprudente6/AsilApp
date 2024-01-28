@@ -71,7 +71,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
 
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrazione_richiedente_asilo);
@@ -86,6 +85,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         cellulare = findViewById(R.id.cell);
         luogonascita = findViewById(R.id.luogoNascita);
         progressBar=findViewById(R.id.progressBar);
+
 
 
 
@@ -107,6 +107,12 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                String obbligoMail=getString(R.string.email_richiesta);
+                String obbligoPassword=getString(R.string.password_richiesta);
+                String noConnection=getString(R.string.not_connection);
+                String noPermesso=getString(R.string.not_permission);
                 String passsLong = getString(R.string.Passwordcaratter);
                 String riempiCampi = getString(R.string.Riempicampi);
                 String invalidEmail = getString(R.string.Emailinvalid);
@@ -124,10 +130,10 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                 Log.e(TAG, "Current UID: " + currentUid);
 
                 if (useremail.isEmpty()) {
-                    email.setError("Email required");
+                    email.setError(obbligoMail);
                 }
                 if (userpass.isEmpty()) {
-                    password.setError("Password required");
+                    password.setError(obbligoPassword);
                 }
                 if (userpass.length() < 6) {
                     password.setError( passsLong);
@@ -175,7 +181,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                                         registerUser(uid);
                                                     } else {
                                                         progressBar.setVisibility(View.GONE);  // Dismiss progress bar
-                                                        Toast.makeText(RegistrazioneRichiedenteAsilo.this, "You don't have permission to register users.", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(RegistrazioneRichiedenteAsilo.this, noPermesso, Toast.LENGTH_SHORT).show();
                                                         Log.e(TAG, "User doesn't have permission to register");
                                                     }
                                                 } else {
@@ -196,7 +202,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                 }
                             }
                         }); } else {
-                    Toast.makeText(RegistrazioneRichiedenteAsilo.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegistrazioneRichiedenteAsilo.this,noConnection, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -230,6 +236,9 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot staffDocument = task.getResult();
                     if (staffDocument.exists()) {
+                        String regSuccess=getString(R.string.registraCompletato);
+                        String regFail=getString(R.string.registrazione_fallita);
+
                         // Retrieve Centro from the Staff document
                         String centroValue = staffDocument.getString("Centro");
 
@@ -288,7 +297,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                         getStaffCredentialsAndSignIn(uidStaff);
                                         progressBar.setVisibility(View.GONE);
 
-                                        Toast.makeText(RegistrazioneRichiedenteAsilo.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegistrazioneRichiedenteAsilo.this,regSuccess, Toast.LENGTH_SHORT).show();
                                         Log.d("BUDGET", "uid: "+uid);
                                         scheduleMonthlyAlarm(uid);
 
@@ -314,7 +323,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         progressBar.setVisibility(View.GONE);
-                                        Toast.makeText(RegistrazioneRichiedenteAsilo.this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegistrazioneRichiedenteAsilo.this, regFail+ e.getMessage(), Toast.LENGTH_SHORT).show();
                                         Log.e(TAG, "Registration failed: " + e.getMessage());
                                     }
                                 });
@@ -372,6 +381,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
 
     private void getStaffCredentialsAndSignIn(String uid) {
+        String Autfail=getString(R.string.autenticaFallito);
         // Reference to the "Staff" collection with the user UID as the document ID
         DocumentReference documentStaff = db.collection("STAFF").document(uidStaff);
 
@@ -403,7 +413,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                         } else {
                                             // If sign in fails, display a message to the user.
                                             Log.w(TAG, "Sign in failed", task.getException());
-                                            Toast.makeText(RegistrazioneRichiedenteAsilo.this, "Sign in failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegistrazioneRichiedenteAsilo.this,Autfail + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });

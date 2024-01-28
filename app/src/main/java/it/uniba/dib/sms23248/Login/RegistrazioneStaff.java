@@ -57,7 +57,11 @@ public class RegistrazioneStaff extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_registrazione_staff);
+
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -95,6 +99,7 @@ public class RegistrazioneStaff extends AppCompatActivity {
 
 
         register.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String passsLong = getString(R.string.Passwordcaratter);
@@ -103,18 +108,20 @@ public class RegistrazioneStaff extends AppCompatActivity {
                 String invalidCell = getString(R.string.Cellulareinvalid);
                 String useremail = email.getText().toString().trim();
                 String userpass = password.getText().toString().trim();
-
+                String obbligoMail=getString(R.string.email_richiesta);
+                String obbligoPassword=getString(R.string.password_richiesta);
+                String connect=getString(R.string.connessione);
                 String cellulareValue = cellulare.getText().toString().trim();
-
-
+                String regSuccess=getString(R.string.registraCompletato);
+                String regFail=getString(R.string.registrazione_fallita);
 
                 String centroValue = centroSpinner.getSelectedItem().toString();
 
                 if (useremail.isEmpty()) {
-                    email.setError("Email required");
+                    email.setError(obbligoMail);
                 }
                 if (userpass.isEmpty()) {
-                    password.setError("Password required");
+                    password.setError(obbligoPassword);
                 }   if (userpass.length() < 6) {
                     password.setError( passsLong);
 
@@ -130,7 +137,7 @@ public class RegistrazioneStaff extends AppCompatActivity {
                 // Validate phone number format
                 if (!isValidPhoneNumber(cellulareValue)) {
                     Toast.makeText(RegistrazioneStaff.this, invalidCell, Toast.LENGTH_SHORT).show();
-                    return; // Stop registration if phone number is not valid
+                    // Stop registration if phone number is not valid
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
                     if (NetworkUtils.isNetworkAvailable(RegistrazioneStaff.this)) {
@@ -163,7 +170,7 @@ public class RegistrazioneStaff extends AppCompatActivity {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 progressBar.setVisibility(View.GONE);
-                                                Toast.makeText(RegistrazioneStaff.this, "Registration completed successfully", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(RegistrazioneStaff.this,regSuccess, Toast.LENGTH_SHORT).show();
                                                 startActivity(new Intent(RegistrazioneStaff.this, AccessoStaff.class));
                                                 Log.d(TAG, "FINISH successful");
                                             }
@@ -173,17 +180,17 @@ public class RegistrazioneStaff extends AppCompatActivity {
                                             public void onFailure(@NonNull Exception e) {
                                                 Log.e(TAG, "Failed to write document", e);
                                                 progressBar.setVisibility(View.GONE);
-                                                Toast.makeText(RegistrazioneStaff.this, "Failed Registration" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(RegistrazioneStaff.this,regFail + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             } else {
                                 Log.e(TAG, "Authentication failed", task.getException());
                                 progressBar.setVisibility(View.GONE);
-                                Toast.makeText(RegistrazioneStaff.this,   task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistrazioneStaff.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }); } else {
-                    Toast.makeText(RegistrazioneStaff.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegistrazioneStaff.this,connect, Toast.LENGTH_LONG).show();
                 }
                 }
             }

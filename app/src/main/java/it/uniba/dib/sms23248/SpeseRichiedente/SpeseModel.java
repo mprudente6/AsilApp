@@ -34,7 +34,7 @@ public class SpeseModel extends ViewModel {
 
 
 
-    private MutableLiveData<Double> updatedBudgetLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Double> updatedBudgetLiveData = new MutableLiveData<>();
 
     public LiveData<Double> getUpdatedBudgetLiveData() {
 

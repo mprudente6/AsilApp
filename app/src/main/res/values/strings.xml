@@ -101,7 +101,7 @@
     <string name="Emailinvalid">Email non valida!</string>
     <string name="Cellulareinvalid">Cellulare non valido!</string>
     <string name="IncorrectPass">Password non corretta!</string>
-    <string name="EmailnonEsiste">Email insesistente!</string>
+    <string name="EmailnonEsiste">Email inesistente!</string>
     <string name="ResetPass">Inserisci Email prima di resettare la password!</string>
     <string name="PermessiR">Non hai i permessi da richiedente asilo</string>
     <string name="PermessiS">Non hai i permessi da staff</string>
@@ -109,4 +109,23 @@
     <string name="VuoiUscire">Sei sicuro di voler uscire?</string>
     <string name="Si">Sì</string>
     <string name="Caricamento">Caricamento in corso</string>
+    <string name="email_richiesta">Email richiesta!</string>
+    <string name="password_richiesta">Password richiesta!</string>
+    <string name="login_con_successo">Autenticazione eseguita con successo!</string>
+    <string name="connessione">Nessuna connessione ad internet.</string>
+    <string name="invio_reset">L\\\'email con il reset della password è stata inoltrata.Controlla in posta</string>
+    <string name="resetFallito">Non è stata inoltrata l\'email con il reset della password.</string>
+    <string name="erroreRecupero">Errore nel recupero del documento:</string>
+    <string name="loginFallito">Autenticazione fallita.L\'utente è inesistente</string>
+    <string name="autenticaFallito">Autenticazione fallita!</string>
+    <string name="riempiCampi">I campi email e password non possono essere vuoti.</string>
+    <string name="userSconosciuto">Ruolo utente non riconosciuto.</string>
+    <string name="NotFound">Utente non ritrovato.</string>
+    <string name="fallitoRitrovamento">Impossibile recuperare il ruolo utente.</string>
+    <string name="passAggiorna">Password aggiornata con successo.</string>
+    <string name="aggiornaFail">Aggiornamento password in Firestore fallito.</string>
+    <string name="registraCompletato">Registrazione completata con successo!</string>
+    <string name="registrazione_fallita">Registrazione fallita!</string>
+    <string name="not_permission">Non hai il permesso per registrare utenti.</string>
+    <string name="not_connection">Nessuna connesione ad internet.</string>
 </resources>

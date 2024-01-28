@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         demo.setAdapter(demoAdapter);
 
         demo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            final String connect=getString(R.string.connessione);
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (parent.getItemAtPosition(position).equals(utenteDemo)) {
@@ -118,13 +119,13 @@ public class MainActivity extends AppCompatActivity {
                         if (NetworkUtils.isNetworkAvailable(MainActivity.this)) {
                             signInDemoUserAsRichiedente();
                         } else {
-                            Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,connect, Toast.LENGTH_LONG).show();
                         }
                     } else if (item.equals("Staff")) {
                         if (NetworkUtils.isNetworkAvailable(MainActivity.this)) {
                             signInDemoUserAsStaff();
                         } else {
-                            Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,connect, Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void signInDemoUserAsRichiedente() {
+        String autFailed=getString(R.string.autenticaFallito);
 
         // Simulate login process for demo user using FirebaseAuth
         mAuth.signInWithEmailAndPassword("utentedemo@gmail.com", "password")
@@ -152,13 +154,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(MainActivity.this, "Authentication failed.",
+                        Toast.makeText(MainActivity.this,autFailed,
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void signInDemoUserAsStaff() {
+        String autFailed=getString(R.string.autenticaFallito);
+
         // Simulate login process for demo user using FirebaseAuth
         mAuth.signInWithEmailAndPassword("utentedemo@gmail.com", "password")
                 .addOnCompleteListener(this, task -> {
@@ -172,8 +176,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(MainActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,autFailed, Toast.LENGTH_SHORT).show();
                     }
                 });
     }

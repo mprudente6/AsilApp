@@ -52,7 +52,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     private static final int REQUEST_BODY_SENSORS = 1;
     private boolean isFirstHeartRateValueDisplayed = false;
 
-    private boolean isFragmentVisible = false; // Added to track fragment visibility
+    private final boolean isFragmentVisible = false; // Added to track fragment visibility
 
     private float heartRate = 0;
 

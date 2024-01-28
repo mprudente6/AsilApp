@@ -17,8 +17,8 @@ import it.uniba.dib.sms23248.Amministrazione.UploadedFile;
 
 public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
 
-    private List<UploadedFile> fileList;
-    private DocumentiFragmentRichiedenti documentiFragment;
+    private final List<UploadedFile> fileList;
+    private final DocumentiFragmentRichiedenti documentiFragment;
 
     public FileAdapterRichiedenti(List<UploadedFile> fileList, DocumentiFragmentRichiedenti documentiFragment) {
         this.fileList = fileList;

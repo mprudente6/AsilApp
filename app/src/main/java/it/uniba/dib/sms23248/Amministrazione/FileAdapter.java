@@ -16,8 +16,8 @@ import it.uniba.dib.sms23248.R;
 
 public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
 
-    private List<UploadedFile> fileList;
-    private DocumentiFragment documentiFragment;
+    private final List<UploadedFile> fileList;
+    private final DocumentiFragment documentiFragment;
 
     public FileAdapter(List<UploadedFile> fileList, DocumentiFragment documentiFragment) {
         this.fileList = fileList;

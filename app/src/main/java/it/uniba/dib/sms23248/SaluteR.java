@@ -40,7 +40,7 @@ public class SaluteR extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private LinearLayout personalDataLayout;
-    private Map<String, View> addedViewsMap = new HashMap<>();
+    private final Map<String, View> addedViewsMap = new HashMap<>();
 
     private NetworkChangeReceiver networkChangeReceiver;
 

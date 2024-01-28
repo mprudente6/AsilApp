@@ -64,6 +64,11 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                 String incorrectPass = getString(R.string.IncorrectPass);
                 String invalidEmail = getString(R.string.Emailinvalid);
                 String permissionR = getString(R.string.PermessiR);
+                String obbligoMail=getString(R.string.email_richiesta);
+                String obbligoPassword=getString(R.string.password_richiesta);
+                String logpositivo=getString(R.string.login_con_successo);
+                String connession=getString(R.string.connessione);
+
 
 
 
@@ -72,12 +77,12 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                     String userpass = password.getText().toString().trim();
 
                     if (useremail.isEmpty()) {
-                        email.setError("Email required!");
+                        email.setError(obbligoMail);
                         return; // Exit the method if email is empty
                     }
 
                     if (userpass.isEmpty()) {
-                        password.setError("Password required!");
+                        password.setError(obbligoPassword);
                         return; // Exit the method if email is empty
                     }
 
@@ -85,6 +90,7 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                     getUserRole(useremail, new UserRoleCallback() {
                         @Override
                         public void onSuccess(String userRole) {
+
                             // Check if the retrieved role is "RichiedenteAsilo"
                             if ("RichiedenteAsilo".equals(userRole)) {
                                 // Continue with login process
@@ -93,7 +99,7 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                                         mAuth.signInWithEmailAndPassword(useremail, userpass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                             @Override
                                             public void onSuccess(AuthResult authResult) {
-                                                Toast.makeText(AccessoRichiedenteAsilo.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(AccessoRichiedenteAsilo.this,logpositivo, Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(AccessoRichiedenteAsilo.this, HomeR.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent);
@@ -106,10 +112,10 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                                             }
                                         });
                                     } else {
-                                        password.setError("Password required!");
+                                        password.setError(obbligoPassword);
                                     }
                                 } else if (useremail.isEmpty()) {
-                                    email.setError("Email required!");
+                                    email.setError(obbligoMail);
                                 } else {
                                     email.setError(invalidEmail);
                                 }
@@ -127,7 +133,7 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                     });
                 } else {
                     // No internet connection, show a message to the user
-                    Toast.makeText(AccessoRichiedenteAsilo.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AccessoRichiedenteAsilo.this,connession, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -135,9 +141,11 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String connession=getString(R.string.connessione);
                 String Emailfirst = getString(R.string.ResetPass);
-
+                String invio_reset=getString(R.string.invio_reset);
                 String userEmail = email.getText().toString().trim();
+                String resetFallito=getString(R.string.resetFallito);
 
                 if (!userEmail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
                     if (NetworkUtils.isNetworkAvailable(AccessoRichiedenteAsilo.this)) {
@@ -147,7 +155,7 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         // Password reset email sent successfully
-                                        Toast.makeText(AccessoRichiedenteAsilo.this, "Password reset email sent. Check your email.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AccessoRichiedenteAsilo.this,invio_reset, Toast.LENGTH_SHORT).show();
 
                                         // Delay the Intent by 6 seconds
                                         new Handler().postDelayed(new Runnable() {
@@ -161,13 +169,13 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                                         }, 6000); // 6000 milliseconds = 6 seconds
                                     } else {
                                         // Password reset email sending failed
-                                        Toast.makeText(AccessoRichiedenteAsilo.this, "Failed to send password reset email.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AccessoRichiedenteAsilo.this,resetFallito, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                     } else {
                         // No internet connection, show a message to the user
-                        Toast.makeText(AccessoRichiedenteAsilo.this, "No internet connection", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AccessoRichiedenteAsilo.this,connession,Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(AccessoRichiedenteAsilo.this, Emailfirst, Toast.LENGTH_LONG).show();
@@ -193,9 +201,10 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
+                    final String erroreRecupero=getString(R.string.erroreRecupero);
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        callback.onFailure("Error retrieving document: " + e.getMessage());
+                        callback.onFailure(erroreRecupero + e.getMessage());
                     }
                 });
     }

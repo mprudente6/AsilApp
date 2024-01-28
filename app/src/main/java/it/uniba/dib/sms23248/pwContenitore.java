@@ -103,18 +103,18 @@ public class pwContenitore extends Fragment {
         if (ContextCompat.checkSelfPermission(getActivity(), "android.permission.CAMERA")
                 == PackageManager.PERMISSION_GRANTED)
         {
-            TitoloCodice = (TextView) rootView.findViewById(R.id.textViewNoPermission);
+            TitoloCodice = rootView.findViewById(R.id.textViewNoPermission);
             TitoloCodice.setVisibility(View.INVISIBLE);
 
-            Codice = (TextView) rootView.findViewById(R.id.Codice);
+            Codice = rootView.findViewById(R.id.Codice);
             Codice.setVisibility(View.INVISIBLE);
 
-            InserisciCodice = (EditText) rootView.findViewById(R.id.CodiceContenitore);
+            InserisciCodice = rootView.findViewById(R.id.CodiceContenitore);
             InserisciCodice.setVisibility(View.INVISIBLE);
 
         } else
         {
-            TitoloNoCodice = (TextView) rootView.findViewById(R.id.textViewPermission);
+            TitoloNoCodice = rootView.findViewById(R.id.textViewPermission);
             TitoloNoCodice.setVisibility(View.INVISIBLE);
 
         }
@@ -132,10 +132,10 @@ public class pwContenitore extends Fragment {
             }
         });
 
-        pw = (EditText)rootView.findViewById(R.id.PasswordContenitore);
+        pw = rootView.findViewById(R.id.PasswordContenitore);
 
 
-        btnInvia = (Button) rootView.findViewById(R.id.buttonInvia);
+        btnInvia = rootView.findViewById(R.id.buttonInvia);
 
         btnInvia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +152,7 @@ public class pwContenitore extends Fragment {
                     }
                     else{
 
-                        InserisciCodice = (EditText) rootView.findViewById(R.id.CodiceContenitore);
+                        InserisciCodice = rootView.findViewById(R.id.CodiceContenitore);
                         Log.d("CodiceNoNull ",InserisciCodice.getText().toString());
                         if (InserisciCodice.getText().toString().equals(codiceQrContenitore) && pw.getText().toString().equals(passwordContenitore)){
                             Log.d("Vai  a ","Strumenti biomedicali");

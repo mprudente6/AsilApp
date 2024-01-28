@@ -31,7 +31,7 @@ public class GeocodingTask extends AsyncTask<String, Void, GeoPoint> {
     private static final String TAG = "GeocodingTask";
     private static final String NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search";
     private static final int MAX_RESULTS = 1;
-    private MapView map;
+    private final MapView map;
     View view;
 
     private double savedZoomLevel = -1.0;

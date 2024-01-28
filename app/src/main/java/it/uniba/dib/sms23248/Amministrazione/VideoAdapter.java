@@ -20,9 +20,9 @@ import java.util.List;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
 
-    private List<VideoModel> videoList;
+    private final List<VideoModel> videoList;
     private OnDeleteClickListener onDeleteClickListener;
-    private String targetFolder;
+    private final String targetFolder;
     private OnDownloadClickListener onDownloadClickListener;
     // Constructor
     public VideoAdapter(List<VideoModel> videoList, OnDeleteClickListener onDeleteClickListener, OnDownloadClickListener onDownloadClickListener, String targetFolder) {

@@ -54,24 +54,24 @@ public class qrCodeGenerato extends Fragment {
         btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
         btnCamera.setVisibility(View.INVISIBLE);*/
 
-        Button btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
-        btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
+        Button btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
+        btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
         btnGenaraQr.setVisibility(View.INVISIBLE);
 
-        Button btnMedia = (Button) getActivity().findViewById(R.id.btnMedia);
-        btnMedia = (Button) getActivity().findViewById(R.id.btnMedia);
+        Button btnMedia = getActivity().findViewById(R.id.btnMedia);
+        btnMedia = getActivity().findViewById(R.id.btnMedia);
         btnMedia.setVisibility(View.INVISIBLE);
 
-        Button btnApriMappa = (Button) getActivity().findViewById(R.id.btnApriMappa);
-        btnApriMappa = (Button) getActivity().findViewById(R.id.btnApriMappa);
+        Button btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
+        btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
         btnApriMappa.setVisibility(View.INVISIBLE);
 
-        Button btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
-        btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
+        Button btnInformazioniCentro = getActivity().findViewById(R.id.btnInformazioniCentro);
+        btnInformazioniCentro = getActivity().findViewById(R.id.btnInformazioniCentro);
         btnInformazioniCentro.setVisibility(View.INVISIBLE);
 
-        Button btnInformazioniSalute = (Button) getActivity().findViewById(R.id.btnSaluteR);
-        btnInformazioniSalute = (Button) getActivity().findViewById(R.id.btnSaluteR);
+        Button btnInformazioniSalute = getActivity().findViewById(R.id.btnSaluteR);
+        btnInformazioniSalute = getActivity().findViewById(R.id.btnSaluteR);
         btnInformazioniSalute.setVisibility(View.INVISIBLE);
 
         /*Spinner spinnerLingua = (Spinner) getActivity().findViewById(R.id.languageList);
@@ -82,10 +82,10 @@ public class qrCodeGenerato extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_qr_code_generato, container, false);
 
         ImageView imageQrCode;
-        imageQrCode = (ImageView) rootView.findViewById(R.id.qrCode);
+        imageQrCode = rootView.findViewById(R.id.qrCode);
 
         ImageButton chiudi;
-        chiudi = (ImageButton) rootView.findViewById(R.id.chiudiFragment);
+        chiudi = rootView.findViewById(R.id.chiudiFragment);
 
         chiudi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,24 +94,24 @@ public class qrCodeGenerato extends Fragment {
                 btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
                 btnCamera.setVisibility(View.VISIBLE);*/
 
-                Button btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
-                btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
+                Button btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
+                btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
                 btnGenaraQr.setVisibility(View.VISIBLE);
 
-                Button btnMedia = (Button) getActivity().findViewById(R.id.btnMedia);
-                btnMedia = (Button) getActivity().findViewById(R.id.btnMedia);
+                Button btnMedia = getActivity().findViewById(R.id.btnMedia);
+                btnMedia = getActivity().findViewById(R.id.btnMedia);
                 btnMedia.setVisibility(View.VISIBLE);
 
-                Button btnApriMappa = (Button) getActivity().findViewById(R.id.btnApriMappa);
-                btnApriMappa = (Button) getActivity().findViewById(R.id.btnApriMappa);
+                Button btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
+                btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
                 btnApriMappa.setVisibility(View.VISIBLE);
 
-                Button btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
-                btnInformazioniCentro = (Button) getActivity().findViewById(R.id.btnInformazioniCentro);
+                Button btnInformazioniCentro = getActivity().findViewById(R.id.btnInformazioniCentro);
+                btnInformazioniCentro = getActivity().findViewById(R.id.btnInformazioniCentro);
                 btnInformazioniCentro.setVisibility(View.VISIBLE);
 
-                Button btnInformazioniSalute = (Button) getActivity().findViewById(R.id.btnSaluteR);
-                btnInformazioniSalute = (Button) getActivity().findViewById(R.id.btnSaluteR);
+                Button btnInformazioniSalute = getActivity().findViewById(R.id.btnSaluteR);
+                btnInformazioniSalute = getActivity().findViewById(R.id.btnSaluteR);
                 btnInformazioniSalute.setVisibility(View.VISIBLE);
 
                 getFragmentManager().beginTransaction()
@@ -133,7 +133,7 @@ public class qrCodeGenerato extends Fragment {
                     e.printStackTrace();
                 }
 
-            };
+            }
 
         return rootView;
     }

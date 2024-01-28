@@ -15,8 +15,8 @@ import it.uniba.dib.sms23248.R;
 
 public class VideoAdapterRichiedenti extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
 
-    private List<VideoModel> videoList;
-    private String targetFolder;
+    private final List<VideoModel> videoList;
+    private final String targetFolder;
     private VideoAdapter.OnDownloadClickListener onDownloadClickListener;
     // Constructor
     public VideoAdapterRichiedenti(List<VideoModel> videoList, VideoAdapter.OnDownloadClickListener onDownloadClickListener, String targetFolder) {

@@ -27,7 +27,7 @@ public class AnagraficaFragment extends Fragment {
     private FirebaseFirestore db;
     private LinearLayout personalDataLayout;
 
-    private String userId =  HomeS.UID;   //"1qRWhwM51WP3VjEfMnc4NejOzBh2";  Da sostituire con UID di Richiedente Asilo di cui si è scansionato QR CODE
+    private final String userId =  HomeS.UID;   //"1qRWhwM51WP3VjEfMnc4NejOzBh2";  Da sostituire con UID di Richiedente Asilo di cui si è scansionato QR CODE
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

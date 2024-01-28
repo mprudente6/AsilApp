@@ -80,7 +80,7 @@ public class PosizioneFragment extends Fragment {
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
 
 
-        map = (MapView) view.findViewById(R.id.mapView);
+        map = view.findViewById(R.id.mapView);
 
 
 

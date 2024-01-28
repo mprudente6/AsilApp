@@ -19,12 +19,12 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 public class ItemSpeseAdapter extends RecyclerView.Adapter<ItemSpeseAdapter.ViewHolder> {
-    private Context context;
+    private final Context context;
 
 
     private List<ItemSpese> itemSpese;
-    private RecyclerView recyclerView;
-    private SpeseModel viewModel;
+    private final RecyclerView recyclerView;
+    private final SpeseModel viewModel;
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
     FirebaseUser currentUser=mAuth.getCurrentUser();
     String uid=currentUser.getUid();
@@ -83,9 +83,9 @@ public class ItemSpeseAdapter extends RecyclerView.Adapter<ItemSpeseAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textName;
-        private TextView textType;
-        private TextView textPrice;
+        private final TextView textName;
+        private final TextView textType;
+        private final TextView textPrice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

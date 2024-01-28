@@ -11,8 +11,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
-    private ItemSpeseAdapter adapter;
-    private SpeseModel viewModel;
+    private final ItemSpeseAdapter adapter;
+    private final SpeseModel viewModel;
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
     FirebaseUser currentUser=mAuth.getCurrentUser();
     String uid=currentUser.getUid();

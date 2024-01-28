@@ -52,12 +52,12 @@ public class BilancioFragment extends Fragment {
     private NetworkChangeReceiver networkChangeReceiver;
 
     private SpeseModel viewModel;
-    private  FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
      FirebaseAuth mAuth=FirebaseAuth.getInstance();
 
      FirebaseUser currentUser=mAuth.getCurrentUser();
      String uid=currentUser.getUid();
-    private  DocumentReference documentReference = firestore.collection("RICHIEDENTI_ASILO").document(uid);
+    private final DocumentReference documentReference = firestore.collection("RICHIEDENTI_ASILO").document(uid);
 
     private  TextView budgetTextView;
 

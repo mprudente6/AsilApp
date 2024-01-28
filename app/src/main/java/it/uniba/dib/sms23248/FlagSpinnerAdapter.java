@@ -10,8 +10,8 @@ import java.util.List;
 
 public class FlagSpinnerAdapter extends ArrayAdapter<String> {
 
-    private List<String> languages; // Your list of languages
-    private LayoutInflater inflater;
+    private final List<String> languages; // Your list of languages
+    private final LayoutInflater inflater;
 
     public FlagSpinnerAdapter(Context context, int resource, List<String> objects) {
         super(context, resource, objects);

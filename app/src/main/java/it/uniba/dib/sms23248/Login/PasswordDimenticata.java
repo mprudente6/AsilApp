@@ -31,6 +31,8 @@ public class PasswordDimenticata extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +54,12 @@ public class PasswordDimenticata extends AppCompatActivity {
     }
 
     private void signInAndUpdate() {
+
         String userEmail = email.getText().toString().trim();
         String newPassword = newpassword.getText().toString().trim();
+        String Signfail=getString(R.string.loginFallito);
+        String autfallita=getString(R.string.autenticaFallito);
+        String riempiCampi=getString(R.string.riempiCampi);
 
         if (!userEmail.isEmpty() && !newPassword.isEmpty()) {
             mAuth.signInWithEmailAndPassword(userEmail, newPassword)
@@ -67,17 +73,17 @@ public class PasswordDimenticata extends AppCompatActivity {
                                     updatePasswordAndRedirect(user.getUid(), newPassword, userEmail);
                                 } else {
                                     // Handle the case where the user is unexpectedly null
-                                    Toast.makeText(PasswordDimenticata.this, "Sign-in failed. User is null.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(PasswordDimenticata.this, Signfail, Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Toast.makeText(PasswordDimenticata.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PasswordDimenticata.this, autfallita, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
         } else {
             // Handle empty email or password
-            Toast.makeText(PasswordDimenticata.this, "Email and password cannot be empty.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PasswordDimenticata.this,riempiCampi, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -88,6 +94,9 @@ public class PasswordDimenticata extends AppCompatActivity {
         userRoleRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String fallitoRitrovamento=getString(R.string.fallitoRitrovamento);
+                String sconosciuto=getString(R.string.userSconosciuto);
+                String NotFound=getString(R.string.NotFound);
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
@@ -107,21 +116,23 @@ public class PasswordDimenticata extends AppCompatActivity {
                             finish();
                         } else {
                             // Handle other roles if needed
-                            Toast.makeText(PasswordDimenticata.this, "Unknown user role.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PasswordDimenticata.this,sconosciuto, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // Handle the case where the document does not exist
-                        Toast.makeText(PasswordDimenticata.this, "User not found.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PasswordDimenticata.this,NotFound, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     // Handle failures
-                    Toast.makeText(PasswordDimenticata.this, "Failed to retrieve user role.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PasswordDimenticata.this,fallitoRitrovamento, Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void updatePasswordInCollection(String collectionName, String uid, String newPassword) {
+        String passUpdate=getString(R.string.passAggiorna);
+        String updateFail=getString(R.string.aggiornaFail);
         DocumentReference userDocRef = db.collection(collectionName).document(uid);
         userDocRef.update("Password", newPassword)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -129,10 +140,10 @@ public class PasswordDimenticata extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             // Password in Firestore updated successfully
-                            Toast.makeText(PasswordDimenticata.this, "Password updated successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PasswordDimenticata.this, passUpdate, Toast.LENGTH_SHORT).show();
                         } else {
                             // Handle failure to update password in Firestore
-                            Toast.makeText(PasswordDimenticata.this, "Failed to update password in Firestore.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PasswordDimenticata.this,updateFail, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

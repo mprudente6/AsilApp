@@ -50,6 +50,10 @@ public class AccessoStaff extends AppCompatActivity {
         registerRedirect = findViewById(R.id.notyetRegistered);
         forgotPassword = findViewById(R.id.password_persa);
 
+        String connessione=getString(R.string.connessione);
+
+
+
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -57,20 +61,21 @@ public class AccessoStaff extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String incorrectPass = getString(R.string.IncorrectPass);
-
                 String invalidEmail = getString(R.string.Emailinvalid);
-
                 String permissionS = getString(R.string.PermessiS);
+                String obbligoMail=getString(R.string.email_richiesta);
+                String obbligoPassword=getString(R.string.password_richiesta);
+
                 if (NetworkUtils.isNetworkAvailable(AccessoStaff.this)) {
                 String useremail = email.getText().toString().trim();
                 String userpass = password.getText().toString().trim();
 
                 if (useremail.isEmpty()) {
-                    email.setError("Email required!");
+                    email.setError(obbligoMail);
                     return; // Exit the method if email is empty
                 }
                 if (userpass.isEmpty()) {
-                    password    .setError("Password required!");
+                    password    .setError(obbligoPassword);
                     return; // Exit the method if email is empty
                 }
 
@@ -78,6 +83,7 @@ public class AccessoStaff extends AppCompatActivity {
                 getUserRole(useremail, new UserRoleCallback() {
                     @Override
                     public void onSuccess(String userRole) {
+                        String logpositivo=getString(R.string.login_con_successo);
                         // Check if the retrieved role is "Staff"
                         if ("Staff".equals(userRole)) {
                             // Continue with login process
@@ -86,7 +92,7 @@ public class AccessoStaff extends AppCompatActivity {
                                     mAuth.signInWithEmailAndPassword(useremail, userpass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                         @Override
                                         public void onSuccess(AuthResult authResult) {
-                                            Toast.makeText(AccessoStaff.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AccessoStaff.this,logpositivo, Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(AccessoStaff.this, HomeS.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                             startActivity(intent);
@@ -100,10 +106,10 @@ public class AccessoStaff extends AppCompatActivity {
                                         }
                                     });
                                 } else {
-                                    password.setError("Password required!");
+                                    password.setError(obbligoPassword);
                                 }
                             } else if (useremail.isEmpty()) {
-                                email.setError("Email required!");
+                                email.setError(obbligoMail);
                             } else {
                                 email.setError(invalidEmail);
                             }
@@ -121,7 +127,7 @@ public class AccessoStaff extends AppCompatActivity {
                 });
                 } else {
                     // No internet connection, show a message to the user
-                    Toast.makeText(AccessoStaff.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AccessoStaff.this,connessione, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -138,7 +144,8 @@ public class AccessoStaff extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String invio_reset=getString(R.string.invio_reset);
+                String resetFallito=getString(R.string.resetFallito);
 
                 String Emailfirst = getString(R.string.ResetPass);
 
@@ -152,7 +159,7 @@ public class AccessoStaff extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         // Password reset email sent successfully
-                                        Toast.makeText(AccessoStaff.this, "Password reset email sent. Check your email.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AccessoStaff.this, invio_reset, Toast.LENGTH_SHORT).show();
 
                                         // Delay the Intent by 6 seconds
                                         new Handler().postDelayed(new Runnable() {
@@ -166,13 +173,13 @@ public class AccessoStaff extends AppCompatActivity {
                                         }, 10000); // 6000 milliseconds = 6 seconds
                                     } else {
                                         // Password reset email sending failed
-                                        Toast.makeText(AccessoStaff.this, "Failed to send password reset email.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AccessoStaff.this, resetFallito, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 } else {
                     // No internet connection, show a message to the user
-                    Toast.makeText(AccessoStaff.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AccessoStaff.this, connessione, Toast.LENGTH_LONG).show();
                 }
                 } else {
                     Toast.makeText(AccessoStaff.this, Emailfirst, Toast.LENGTH_LONG).show();
@@ -198,9 +205,10 @@ public class AccessoStaff extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
+                    final String erroreRecupero=getString(R.string.erroreRecupero);
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        callback.onFailure("Error retrieving document: " + e.getMessage());
+                        callback.onFailure(erroreRecupero + e.getMessage());
                     }
                 });
     }
