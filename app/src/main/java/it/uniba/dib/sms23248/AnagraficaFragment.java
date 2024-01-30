@@ -38,23 +38,6 @@ public class AnagraficaFragment extends Fragment {
 
         fetchUserDataFromFirestore(view);
 
-        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                // Your logic for back press goes here
-                boolean contenitoreAperto = pwContenitore.contenitoreAperto;
-                if (contenitoreAperto) {
-                    // The boolean variable is true, perform the desired action
-                    // For example, navigate to another activity and call a method
-                    Log.d("SONO QUI","PRECISAMENTE QUI");
-                    openScanCode();
-                }
-            }
-        };
-
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
-
-
         return view;
     }
 
@@ -115,12 +98,5 @@ public class AnagraficaFragment extends Fragment {
 
         personalDataLayout.addView(fieldTextView);
         personalDataLayout.addView(valueTextView);
-    }
-
-    private void openScanCode() {
-        // Create an Intent to navigate to another activity
-        Intent intent = new Intent(AnagraficaFragment.this.getActivity(), HomeS.class);
-        // Start the other activity
-        startActivity(intent);
     }
 }

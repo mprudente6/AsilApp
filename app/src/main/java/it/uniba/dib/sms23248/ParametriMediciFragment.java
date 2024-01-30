@@ -144,14 +144,14 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
                     // Set visibility of the button to gone
                     apriContenitoreButton.setVisibility(View.VISIBLE);
-
-                }else{
+                } else {
                     openScanCode();
                 }
             }
         };
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
+
         return view;
     }
 
