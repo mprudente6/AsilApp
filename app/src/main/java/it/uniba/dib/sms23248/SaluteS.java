@@ -30,7 +30,6 @@ public class SaluteS extends AppCompatActivity {
             viewPager.setCurrentItem(2, false); // The second parameter (false) ensures smooth scrolling
         }
 
-
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(adapter.getFragmentTitle(position))

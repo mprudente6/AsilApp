@@ -110,7 +110,7 @@
         android:layout_below="@id/generaQrRichiedente"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="325dp"
-        android:text="@string/cartella_clinica" />
+        android:text="Salute" />
 
 </RelativeLayout>
 </ScrollView>

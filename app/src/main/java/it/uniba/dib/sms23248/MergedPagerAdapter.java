@@ -37,8 +37,4 @@ public class MergedPagerAdapter extends FragmentStateAdapter {
     public String getFragmentTitle(int position) {
         return fragmentTitleList.get(position);
     }
-
-    public Fragment getFragment(int position) {
-        return fragmentList.get(position);
-    }
 }

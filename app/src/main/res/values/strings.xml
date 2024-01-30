@@ -127,4 +127,6 @@
     <string name="registraCompletato">Registrazione completata con successo!</string>
     <string name="registrazione_fallita">Registrazione fallita!</string>
     <string name="not_connection">Nessuna connesione ad internet.</string>
+    <string name="parametri_medici">Parametri medici</string>
+    <string name="condividi_su">Condividi su...</string>
 </resources>
