@@ -120,5 +120,12 @@
     <string name="emailUtente">Email</string>
     <string name="titleEmailFragment">Enter user email</string>
     <string name="parametri_medici">Medical parameters</string>
-    <string name="condividi_su">Share via...</string>
+    <string name="condividi_su">Share via…</string>
+    <string name="salute">Health</string>
+    <string name="scheda_anagrafica">Personal details</string>
+    <string name="profilo">My Account</string>
+    <string name="app_utile">Enjoying AsilApp?</string>
+    <string name="punteggio_stelle">Tap a star to rate the app (select 1-5 stars).</string>
+    <string name="conferma_valutazione">Submit</string>
+    <string name="salva">SAVE</string>
 </resources>

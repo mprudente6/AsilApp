@@ -28,7 +28,7 @@
         android:id="@+id/titleAnagrafica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scheda anagrafica"
+        android:text="@string/scheda_anagrafica"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="95dp" />
@@ -41,7 +41,7 @@
         android:layout_below="@id/titleAnagrafica"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Condividi su..." />
+        android:text="@string/condividi_su" />
 
     <!-- Personal Data Sheet/List -->
     <ScrollView
