@@ -27,7 +27,7 @@
         android:id="@+id/titleServices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Il mio Profilo"
+        android:text="@string/profilo"
         android:textSize="30sp"
         android:layout_marginTop="110dp"
         android:layout_centerHorizontal="true" />

@@ -39,10 +39,10 @@
             android:name=".SaluteS"
             android:exported="false"/>
         <activity
-            android:name=".Contenitore"
+            android:name=".CaptureAct"
             android:exported="false"/>
         <activity
-            android:name=".CaptureAct"
+            android:name=".Contenitore"
             android:exported="false"/>
         <activity
             android:name=".SaluteR"

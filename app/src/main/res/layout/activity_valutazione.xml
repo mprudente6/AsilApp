@@ -27,7 +27,7 @@
         android:id="@+id/titleUsefulness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Trovi che l’app sia utile?"
+        android:text="@string/app_utile"
         android:textSize="24sp"
         android:layout_marginTop="150dp"
         android:layout_centerHorizontal="true"/>
@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:layout_marginTop="25dp"
-        android:text="Valuta l’app lasciando un punteggio da 1 a 5 stelle (da pessimo a eccellente)" />
+        android:text="@string/punteggio_stelle" />
 
     <!-- Star Rating -->
     <!-- RatingBar for user's app evaluation -->
@@ -62,7 +62,7 @@
         android:id="@+id/submitRatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Conferma Valutazione"
+        android:text="@string/conferma_valutazione"
         android:layout_below="@id/ratingBar"
         android:layout_marginTop="32dp"
         android:layout_centerHorizontal="true"

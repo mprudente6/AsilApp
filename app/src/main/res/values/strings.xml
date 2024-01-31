@@ -135,4 +135,13 @@
     <string name="registraCompletato">Registrazione completata con successo!</string>
     <string name="registrazione_fallita">Registrazione fallita!</string>
     <string name="not_connection">Nessuna connesione ad internet.</string>
+    <string name="parametri_medici">Parametri medici</string>
+    <string name="condividi_su">Condividi su…</string>
+    <string name="salute">Salute</string>
+    <string name="scheda_anagrafica">Scheda anagrafica</string>
+    <string name="profilo">Il mio Profilo</string>
+    <string name="app_utile">Trovi che l’app sia utile?</string>
+    <string name="punteggio_stelle">Valuta l’app lasciando un punteggio da 1 a 5 stelle (da pessimo a eccellente)</string>
+    <string name="conferma_valutazione">Conferma Valutazione</string>
+    <string name="salva">SALVA</string>
 </resources>

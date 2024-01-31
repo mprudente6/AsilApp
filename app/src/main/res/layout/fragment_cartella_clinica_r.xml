@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cartella_clinica_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="55"
     android:backgroundTint="#FE9E50"
-
-    tools:context=".AnagraficaFragment">
+    tools:context=".CartellaClinicaR">
 
     <!-- Title -->
     <TextView
-        android:id="@+id/titleAnagrafica"
+        android:id="@+id/titleCartellaClinica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/scheda_anagrafica"
+        android:text="@string/cartella_clinica"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp" />
+
+    <!-- Share Button -->
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleCartellaClinica"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/condividi_su" />
 
     <!-- Personal Data Sheet/List -->
     <ScrollView
         android:id="@+id/personalDataScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titleAnagrafica"
+        android:layout_below="@id/shareButton"
         android:layout_marginTop="18dp"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"

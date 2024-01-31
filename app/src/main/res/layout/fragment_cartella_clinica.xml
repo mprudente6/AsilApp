@@ -14,7 +14,7 @@
         android:id="@+id/titleCartellaClinica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cartella clinica"
+        android:text="@string/cartella_clinica"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp" />
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/personalDataScrollView"
         android:layout_centerHorizontal="true"
-        android:text="SALVA"
+        android:text="@string/salva"
         android:padding="12dp"
         android:backgroundTint="#FF076AEC"
         app:cornerRadius="22dp"

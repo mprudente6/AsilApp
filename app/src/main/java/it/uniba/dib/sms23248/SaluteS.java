@@ -1,7 +1,9 @@
 package it.uniba.dib.sms23248;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -30,11 +32,25 @@ public class SaluteS extends AppCompatActivity {
             viewPager.setCurrentItem(2, false); // The second parameter (false) ensures smooth scrolling
         }
 
-
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(adapter.getFragmentTitle(position))
         ).attach();
+
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Your logic for back press goes here
+                pwContenitore.contenitoreAperto = false;
+                contenitoreAperto = pwContenitore.contenitoreAperto;
+
+                if (viewPager.getCurrentItem() == 0) {
+                    openScanCode();
+                }
+            }
+        };
+
+        getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
     }
 
     private void setupViewPager(ViewPager2 viewPager) {
@@ -43,5 +59,12 @@ public class SaluteS extends AppCompatActivity {
         adapter.addFragment(new CartellaClinicaFragment(), "CARTELLA CLINICA");
         adapter.addFragment(new ParametriMediciFragment(), "CONTENITORE BIOMEDICALE");
         viewPager.setAdapter(adapter);
+    }
+
+    private void openScanCode() {
+        // Create an Intent to navigate to another activity
+        Intent intent = new Intent(SaluteS.this, HomeS.class);
+        // Start the other activity
+        startActivity(intent);
     }
 }

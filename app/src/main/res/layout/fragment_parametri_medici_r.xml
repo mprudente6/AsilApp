@@ -5,36 +5,45 @@
     android:layout_height="match_parent"
     android:layout_weight="55"
     android:backgroundTint="#FE9E50"
-
-    tools:context=".AnagraficaFragment">
+    tools:context=".ParametriMediciR">
 
     <!-- Title -->
     <TextView
-        android:id="@+id/titleAnagrafica"
+        android:id="@+id/titleParametriMedici"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/scheda_anagrafica"
+        android:text="@string/parametri_medici"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp" />
 
-    <!-- Personal Data Sheet/List -->
+    <!-- Share Button -->
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleParametriMedici"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/condividi_su" />
+
+    <!-- ScrollView for Personal Data List -->
     <ScrollView
         android:id="@+id/personalDataScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titleAnagrafica"
+        android:layout_below="@id/shareButton"
         android:layout_marginTop="18dp"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
         android:layout_marginBottom="18dp">
-
+        <!-- Parametri Layout -->
         <LinearLayout
-            android:id="@+id/personalDataLayout"
+            android:id="@+id/parametriLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
         </LinearLayout>
     </ScrollView>
-
 </RelativeLayout>
