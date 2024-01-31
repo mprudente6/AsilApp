@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,111 +5,233 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeR">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-  >
 
-
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="#fe9e50"
-        app:title="AsilApp"
-        app:titleTextColor="#FFFFFF"
-        app:menu="@menu/menu_bar"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/Benvenuto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/benvenuto"
-        android:textSize="16sp"
-        android:layout_marginTop="60dp"
-        android:padding="25dp"
-        android:textStyle="normal">
-    </TextView>
+        <Button
+            android:id="@+id/generaQrRichiedente"
+            android:layout_width="113dp"
+            android:layout_height="59dp"
+            android:layout_below="@id/Benvenuto"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="103dp"
+            android:backgroundTint="#FD9D50"
+            android:maxWidth="48dp"
+            android:maxHeight="48dp"
+            android:scaleType="fitCenter"
+            android:text="@string/QrCode" />
 
-    <Button
-        android:id="@+id/generaQrRichiedente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnMedia"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="-311dp"
-        android:layout_marginEnd="191dp"
-        android:backgroundTint="#076AEC"
-        android:text="@string/QrCode" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/profilllle_removebg_preview"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fe9e50"
+                app:title="AsilApp"
+                app:titleTextColor="#FFFFFF"
+                app:menu="@menu/menu_bar"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
-        android:layout_alignParentEnd="true"
-        android:layout_alignEnd="@id/Benvenuto"
-        android:layout_marginEnd="2dp"
-        android:layout_marginTop="00dp"
-        android:clickable="true"
-        android:focusable="true" />
-
-    <Button
-        android:id="@+id/btnInformazioniCentro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/Benvenuto"
-
-        android:layout_centerHorizontal="true"
-
-        android:layout_marginTop="135dp"
-        android:text="@string/info_centro" />
-
-    <Button
-        android:id="@+id/btnApriMappa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnInformazioniCentro"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="75dp"
-        android:text="@string/mappa_string" />
-
-    <FrameLayout
-        android:id="@+id/frameLayoutQrCode"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-
-        android:layout_alignParentTop="true"
-        tools:layout_editor_absoluteX="-16dp"
-        tools:layout_editor_absoluteY="-138dp" />
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/profilllle_removebg_preview"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/toolbar"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="1dp"
+                android:clickable="true"
+                android:focusable="true"
+                />
 
 
-    <Button
-        android:id="@+id/btnMedia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnApriMappa"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-48dp"
-        android:layout_marginEnd="43dp"
-        android:text="@string/media" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <FrameLayout
+            android:id="@+id/frameLayoutQrCode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
 
-    <Button
-        android:id="@+id/btnSaluteR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/generaQrRichiedente"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="325dp"
-        android:text="@string/cartella_clinica" />
+            android:layout_alignParentTop="true"
+            tools:layout_editor_absoluteX="-16dp"
+            tools:layout_editor_absoluteY="-138dp" />
 
-</RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/Benvenuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/benvenuto"
+            android:textSize="16sp"
+            android:layout_marginTop="60dp"
+            android:padding="25dp"
+            android:textStyle="normal" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="140dp"
+            android:layout_height="130dp"
+            android:id="@+id/cardInfoCentro"
+            android:layout_below="@id/Benvenuto"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="134dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="8dp"
+
+          >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#2A7FB8"
+                android:padding="1dp">
+
+                <ImageView
+                    android:id="@+id/btnInfoCentroImage"
+                    android:layout_width="116dp"
+                    android:layout_height="81dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:src="@drawable/home_2x_removebg_preview" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:paddingBottom="8dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/info_centro"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="140dp"
+            android:layout_height="130dp"
+            android:id="@+id/cardMap"
+            android:layout_below="@id/cardInfoCentro"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            app:cardElevation="8dp"
+            android:layout_marginTop="-130dp"
+            app:cardCornerRadius="15dp"
+          >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#2A7FB8"
+                android:padding="1dp">
+
+                <ImageView
+                    android:id="@+id/btnApriMappa"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/mapbutton_removebg_preview"
+                    android:scaleType="fitCenter"
+                    android:paddingTop="5dp"
+                    android:layout_weight="1"
+
+                     />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mappa_string"
+                    android:textAlignment="center"
+                    android:paddingBottom="8dp"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="140dp"
+            android:layout_height="130dp"
+            android:id="@+id/cardMedia"
+            android:layout_below="@id/cardMap"
+           android:layout_alignParentLeft="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="30dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="8dp"
+           >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#2A7FB7"
+                android:orientation="vertical"
+                android:padding="1dp">
+
+                <ImageView
+                    android:id="@+id/btnMediaImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:src="@drawable/medic_removebg_preview" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/media"
+                    android:paddingBottom="8dp"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardSaluteR"
+            android:layout_width="140dp"
+            android:layout_height="130dp"
+            android:layout_below="@id/cardMedia"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="-131dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="15dp"
+
+         >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#2A7FB7"
+                android:padding="1dp">
+
+                <ImageView
+                    android:id="@+id/btnSaluteRImage"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/medical_logo_medical_record_medical_diagnosis_clinic_medicine_clinical_trial_flat_design_patient_png_clipart_removebg_preview" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cartella_clinica"
+                    android:textAlignment="center"
+                    android:paddingBottom="8dp"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
 </ScrollView>

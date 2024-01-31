@@ -124,6 +124,7 @@ public class PosizioneFragment extends Fragment {
     }
 
     private void saveChosenPositionToFirestore(GeoPoint chosenPosition) {
+        String positionsaved = getString(R.string.posizione_salvata);
 
         Map<String, Object> data = new HashMap<>();
         data.put("latitude", chosenPosition.getLatitude());
@@ -133,24 +134,24 @@ public class PosizioneFragment extends Fragment {
         // Document Reference del Centro di Accoglienza di appertenenza dello Staff loggatto
         documentRef.update(data)
                 .addOnSuccessListener(aVoid -> {
-                    Log.d(TAG, "Chosen position saved to Firestore successfully");
-                    Toast.makeText(getContext(), "Position has been saved!", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getContext(), positionsaved, Toast.LENGTH_SHORT).show();
 
                     itemizedOverlay.removeAllItems();
 
-                    OverlayItem overlayItem = new OverlayItem("Chosen Position", "Description", chosenPosition);
+                    OverlayItem overlayItem = new OverlayItem("Posizione", "posizione scelta", chosenPosition);
                     itemizedOverlay.addItem(overlayItem);
 
                     map.invalidate();
                 })
 
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error saving chosen position to Firestore", e);
-                    Toast.makeText(getContext(), "Error saving chosen position", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(getContext(), "Error: "+e, Toast.LENGTH_SHORT).show();
                 });
     }
 
-    private void retrieveStoredPositionFromFirestore(DocumentReference documentRef) {
+    private void retrievePositionFromFirestore(DocumentReference documentRef) {
         documentRef.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
@@ -181,7 +182,7 @@ public class PosizioneFragment extends Fragment {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error retrieving stored position from Firestore", e);
+                    Log.e(TAG, "Error", e);
                 });
     }
 
@@ -265,7 +266,7 @@ public class PosizioneFragment extends Fragment {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error retrieving Centro from STAFF collection", e);
+                    Log.e(TAG, "Error", e);
                 });
     }
 
@@ -279,11 +280,11 @@ public class PosizioneFragment extends Fragment {
 
                         documentRef = queryDocumentSnapshots.getDocuments().get(0).getReference();
 
-                        retrieveStoredPositionFromFirestore(documentRef);
+                        retrievePositionFromFirestore(documentRef);
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error retrieving Centro Accoglienza document", e);
+                    Log.e(TAG, "Error", e);
                 });
     }
 

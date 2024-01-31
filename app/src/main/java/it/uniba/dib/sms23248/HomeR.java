@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -81,7 +82,7 @@ public class HomeR extends AppCompatActivity {
                 }
             });
 
-            Button btnInformazioni = findViewById(R.id.btnInformazioniCentro);
+            CardView btnInformazioni = findViewById(R.id.cardInfoCentro);
             btnInformazioni.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -90,7 +91,7 @@ public class HomeR extends AppCompatActivity {
                 }
             });
 
-            Button btnMappa = findViewById(R.id.btnApriMappa);
+            CardView btnMappa = findViewById(R.id.cardMap);
             btnMappa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,7 +100,7 @@ public class HomeR extends AppCompatActivity {
                 }
             });
 
-            Button btnMedia = findViewById(R.id.btnMedia);
+            CardView btnMedia = findViewById(R.id.cardMedia);
             btnMedia.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -119,7 +120,7 @@ public class HomeR extends AppCompatActivity {
                 }
             });
 
-            Button saluteButton = findViewById(R.id.btnSaluteR);
+            CardView saluteButton = findViewById(R.id.cardSaluteR);
 
             saluteButton.setOnClickListener(view -> openSaluteScreen());
         }

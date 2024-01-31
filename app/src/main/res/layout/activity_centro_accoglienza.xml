@@ -29,7 +29,7 @@
 
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="823dp"
+            android:layout_marginTop="803dp"
             android:padding="20dp"
             android:text="Descrizione"
             android:textSize="16dp"
@@ -46,7 +46,7 @@
 
             android:layout_centerInParent="true"
             android:layout_marginStart="6dp"
-            android:layout_marginTop="867dp"
+            android:layout_marginTop="847dp"
             android:layout_marginEnd="-6dp"
             android:orientation="horizontal"
             android:padding="35dp">
@@ -70,7 +70,7 @@
 
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="408dp"
+            android:layout_marginTop="388dp"
             android:padding="20dp"
             android:text="E-mail"
             android:textSize="16dp"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="681dp"
+            android:layout_marginTop="661dp"
             android:padding="20dp"
             android:text="Telefono"
             android:textSize="16dp"
@@ -99,7 +99,7 @@
 
             android:layout_centerInParent="true"
             android:layout_marginStart="-3dp"
-            android:layout_marginTop="721dp"
+            android:layout_marginTop="688dp"
             android:layout_marginEnd="1dp"
             android:orientation="horizontal"
             android:padding="35dp">
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="547dp"
+            android:layout_marginTop="527dp"
             android:padding="20dp"
             android:text="Sito web"
             android:textSize="16dp"
@@ -138,7 +138,7 @@
 
         <LinearLayout
 
-            android:layout_width="match_parent"
+            android:layout_width="455dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -147,8 +147,8 @@
 
             android:layout_centerInParent="true"
             android:layout_marginStart="-2dp"
-            android:layout_marginTop="586dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginTop="553dp"
+            android:layout_marginEnd="2dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
@@ -173,17 +173,17 @@
 
         <LinearLayout
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="455dp"
+            android:layout_height="118dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
 
 
             android:layout_centerInParent="true"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="442dp"
-            android:layout_marginEnd="-6dp"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="415dp"
+            android:layout_marginEnd="5dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
@@ -208,7 +208,7 @@
 
         <LinearLayout
 
-            android:layout_width="match_parent"
+            android:layout_width="455dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -217,7 +217,7 @@
 
             android:layout_centerInParent="true"
             android:layout_marginStart="1dp"
-            android:layout_marginTop="287dp"
+            android:layout_marginTop="267dp"
             android:layout_marginEnd="-3dp"
             android:orientation="horizontal"
             android:padding="35dp">
@@ -258,7 +258,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="249dp"
+            android:layout_marginTop="239dp"
             android:padding="20dp"
             android:text="Indirizzo"
             android:textSize="16dp"
@@ -266,12 +266,12 @@
 
         <LinearLayout
 
-            android:layout_width="match_parent"
+            android:layout_width="455dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/textView3"
             android:layout_alignParentStart="true"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="-24dp"
+            android:layout_marginTop="-37dp"
             android:orientation="horizontal"
             android:padding="35dp">
 

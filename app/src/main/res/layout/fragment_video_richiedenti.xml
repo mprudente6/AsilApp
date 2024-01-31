@@ -1,67 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Amministrazione.VideoFragment">
-    <RelativeLayout
+    android:layout_height="wrap_content"
+    tools:context=".VideoFragmentRichiedenti">
+
+    <ImageView
+        android:id="@+id/ImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="253dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="2dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/why_are_healthcare_explainer_videos_important_01_2" />
 
-        <LinearLayout
-            android:id="@+id/Genlayout"
+    <ScrollView
+        android:id="@+id/scrollViewGen"
+        android:layout_width="match_parent"
+        android:layout_height="479dp"
+        android:layout_below="@id/ImageView"
+        android:layout_marginTop="-17dp"
+        android:layout_marginBottom="15dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="100dp"
-            android:padding="20dp"/>
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp" />
 
-        <ScrollView
-            android:id="@+id/scrollViewGen"
-            android:layout_width="match_parent"
-            android:layout_height="226dp"
+    </ScrollView>
 
-            android:layout_below="@id/Genlayout"
-            android:layout_marginTop="-10dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewGen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" />
-
-        </ScrollView>
-
-        <LinearLayout
-            android:id="@+id/Donnalayout"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="0dp"
-            android:layout_below="@id/scrollViewGen"
-            android:padding="20dp"/>
-
-
-        <ScrollView
-            android:id="@+id/scrollViewDonna"
-            android:layout_width="match_parent"
-            android:layout_height="262dp"
-            android:layout_below="@id/Donnalayout"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="-26dp"
-            android:layout_marginBottom="9dp">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewDonna"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" />
-
-        </ScrollView>
-
-
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

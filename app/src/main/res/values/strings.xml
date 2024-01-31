@@ -78,6 +78,14 @@
     <string name="Profilo">Profilo</string>
     <string name="benvenuto">Benvenuto, </string>
     <string name="mappa_string">Mappa</string>
+    <string name="posizione_salvata">"Coordinate salvate!"</string>
+    <string name="select_pdf">"Seleziona un pdf"</string>
+    <string name="upload_pdf">"File caricato!"</string>
+    <string name="download_manager">"Download Manager non disponibile"</string>
+    <string name="video_uploaded">"Video caricato con successo!"</string>
+    <string name="failed_upload">"Errore: video non caricato!"</string>
+    <string name="deleted_video">"Video eliminato"</string>
+    <string name="deleted_pdf">"Pdf eliminato"</string>
     <string name="media" translatable="false">Media</string>
     <string name="cartella_clinica">Cartella clinica</string>
     <string name="info_centro">Il mio centro</string>

@@ -277,7 +277,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                     public void onFailure(@NonNull Exception e) {
                                         progressBar.setVisibility(View.GONE);
                                         Toast.makeText(RegistrazioneRichiedenteAsilo.this, regFail + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        Log.e(TAG, "Registration failed: " + e.getMessage());
+
                                     }
                                 });
                     }
@@ -287,12 +287,11 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
                     else {
                         progressBar.setVisibility(View.GONE);
-                        Log.e(TAG, "Staff document doesn't exist");
-                        // Handle the case where the Staff document doesn't exist
+
                     }
                 } else {
                     progressBar.setVisibility(View.GONE);
-                    Log.e(TAG, "Error getting Staff document: " + task.getException().getMessage());
+                    Log.e(TAG, "Error: " + task.getException().getMessage());
                 }
             }
         });
@@ -354,7 +353,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
 
-                                            Log.d(TAG, "Sign in success");
+
                                             FirebaseUser user = mAuth.getCurrentUser();
                                             if (user != null) {
                                                 Log.d(TAG, "User signed in: " + user.getUid());
@@ -363,17 +362,11 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                                             startActivity(intent);
                                         } else {
 
-                                            Log.w(TAG, "Sign in failed", task.getException());
                                             Toast.makeText(RegistrazioneRichiedenteAsilo.this, Autfail + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
-                    } else {
-                        Log.e(TAG, "Staff document doesn't exist");
-
                     }
-                } else {
-                    Log.e(TAG, "Error getting Staff document: " + task.getException().getMessage());
                 }
             }
         });

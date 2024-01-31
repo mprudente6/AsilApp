@@ -63,7 +63,7 @@ public class ItemSpeseAdapter extends RecyclerView.Adapter<ItemSpeseAdapter.View
         ItemSpese itemSpese = this.itemSpese.get(position);
         holder.textName.setText(prodotto + " "+ itemSpese.getNome());
         holder.textType.setText(tipo +" "+ itemSpese.getTipo());
-        holder.textPrice.setText(prezzo + " "+ itemSpese.getPrezzo()+"€");
+        holder.textPrice.setText(prezzo + " "+ "%.2f"+itemSpese.getPrezzo()+"€");
     }
 
     @Override

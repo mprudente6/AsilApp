@@ -77,10 +77,10 @@ NetworkChangeReceiver networkChangeReceiver;
         if (currentUser != null) {
             uid = currentUser.getUid();
             documentStaff = dbS.collection("STAFF").document(uid);
-            fetchDataCentre();
+            fetchInformazioniCentro();
             saveButton.setOnClickListener(v -> {
                 if (NetworkUtils.isNetworkAvailable(requireContext())) {
-                    saveDataToFirestore();
+                    salvaInformazioniFirestore();
                 } else {
                     Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
                 }
@@ -101,16 +101,10 @@ NetworkChangeReceiver networkChangeReceiver;
         return view;
     }
 
-    private void fetchDataCentre() {
-        fetchField("Nome", editNome);
-        fetchField("Indirizzo", editIndirizzo);
-        fetchField("Sito web", editLink);
-        fetchField("Email", editEmail);
-        fetchField("Telefono", editTel);
-        fetchField("Descrizione", editDescr);
-    }
 
-    private void fetchField(String fieldName, EditText editText) {
+
+    private void fetchInformazioniCentro() {
+        CollectionReference centroAccoglienzaCollection = dbS.collection("CENTRI_ACCOGLIENZA");
         documentStaff.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
@@ -118,44 +112,38 @@ NetworkChangeReceiver networkChangeReceiver;
                         String centroValue = documentSnapshot.getString("Centro");
                         Log.e(TAG, "Centro : " + centroValue);
                         if (centroValue != null) {
-                            fetchFieldFromCentroAccoglienza(fieldName, editText, centroValue);
-                        } else {
+                            centroAccoglienzaCollection.whereEqualTo("Nome", centroValue)
+                                    .limit(1) // prendi solo un documento
+                                    .get()
+                                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                                        if (!queryDocumentSnapshots.isEmpty()) {
 
-                            Log.d(TAG, "Centro field is null for user with UID " + uid);
+                                            DocumentSnapshot matchingDocument = queryDocumentSnapshots.getDocuments().get(0);
+                                            String name = matchingDocument.getString("Nome");
+                                            String address = matchingDocument.getString("Indirizzo");
+                                            String link = matchingDocument.getString("Sito web");
+                                            String email = matchingDocument.getString("Email");
+                                            String tel = matchingDocument.getString("Telefono");
+                                            String descr = matchingDocument.getString("Descrizione");
+
+                                            editNome.setText(name);
+                                            editIndirizzo.setText(address);
+                                            editLink.setText(link);
+                                            editEmail.setText(email);
+                                            editTel.setText(tel);
+                                            editDescr.setText(descr);
+
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> Log.e(TAG, "Error: " + e.getMessage()));
                         }
-                    } else {
-
-                        Log.d(TAG, "No document found in Staff collection for user with UID " + uid);
-                    }
+                       }
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Error retrieving document from Staff collection: " + e.getMessage()));
     }
 
-    private void fetchFieldFromCentroAccoglienza(String fieldName, EditText editText, String centroValue) {
-        CollectionReference centroAccoglienzaCollection = dbS.collection("CENTRI_ACCOGLIENZA");
 
-        centroAccoglienzaCollection.whereEqualTo("Nome", centroValue)
-                .limit(1) // prendi solo un documento
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                                                                              //primo documento da questa lista
-                        DocumentSnapshot matchingDocument = queryDocumentSnapshots.getDocuments().get(0);
-                        String fieldValue = matchingDocument.getString(fieldName);
-
-
-                        if (fieldValue != null) {
-                            editText.setText(fieldValue);
-                        }
-                    } else {
-
-                        Log.d(TAG, "No matching document found in CentroAccoglienza collection for Centro: " + centroValue);
-                    }
-                })
-                .addOnFailureListener(e -> Log.e(TAG, "Error querying CentroAccoglienza collection: " + e.getMessage()));
-    }
-
-    private void saveDataToFirestore() {
+    private void salvaInformazioniFirestore() {
         CollectionReference centroAccoglienzaCollection = dbS.collection("CENTRI_ACCOGLIENZA");
         String nome = editNome.getText().toString();
         String indirizzo = editIndirizzo.getText().toString();
@@ -191,25 +179,17 @@ NetworkChangeReceiver networkChangeReceiver;
 
                                             documentRef.update(newData)
                                                     .addOnSuccessListener(aVoid -> {
-                                                        Log.d(TAG, "Document updated successfully");
+
                                                         Toast.makeText(getContext(), "I dati sono stati aggiornati!", Toast.LENGTH_SHORT).show();
                                                     })
                                                     .addOnFailureListener(e -> Log.e(TAG, "Errore: " + e.getMessage()));
-
-
-                                        } else {
-                                            Log.d(TAG, "No matching document found in CentroAccoglienza collection for Centro: " + centroValue);
                                         }
                                     })
-                                    .addOnFailureListener(e -> Log.e(TAG, "Error querying CentroAccoglienza collection: " + e.getMessage()));
-                        } else {
-                            Log.d(TAG, "Centro field is null for user with UID " + uid);
+                                    .addOnFailureListener(e -> Log.e(TAG, "Error: " + e.getMessage()));
                         }
-                    } else {
-                        Log.d(TAG, "No document found in Staff collection for user with UID " + uid);
                     }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Error retrieving document from Staff collection: " + e.getMessage()));
+                .addOnFailureListener(e -> Log.e(TAG, "Error: " + e.getMessage()));
     }
 
 

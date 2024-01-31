@@ -121,16 +121,18 @@ public class DocumentiFragment extends Fragment {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String connessione=getString(R.string.connessione);
+                String select=getString(R.string.select_pdf);
                 if(pdfUri!=null){
                     if (NetworkUtils.isNetworkAvailable(requireContext())) {
                         startsUploadAndCheckExistingFile(pdfUri);
                     } else {
-                        Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
                     }
 
                 }
                 else
-                    Toast.makeText(requireContext(),"Seleziona un file",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(),select,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -143,10 +145,11 @@ public class DocumentiFragment extends Fragment {
 
             @Override
             public void onDeleteClick(UploadedFile uploadedFile) {
+                String connessione=getString(R.string.connessione);
                 if (NetworkUtils.isNetworkAvailable(requireContext())) {
                     showDeleteConfirmationDialog(uploadedFile);
                 } else {
-                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -173,8 +176,6 @@ public class DocumentiFragment extends Fragment {
                 String fileName = getFileNameFromUri(pdfUri);
                 selectNotification.setText(fileName);
 
-            } else {
-                Toast.makeText(requireContext(), "File selection canceled", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -197,7 +198,7 @@ public class DocumentiFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(requireContext(), "Failed to fetch data: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -225,7 +226,7 @@ public class DocumentiFragment extends Fragment {
                 uploadNewFile(fileReference, pdfUri, fileName);
             } else {
                 progressDialog.dismiss();
-                Toast.makeText(requireContext(), "Failed to check file existence: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -244,11 +245,12 @@ public class DocumentiFragment extends Fragment {
     }
 
     private void uploadNewFile(StorageReference fileReference, Uri pdfUri, String fileName) {
+        String uploaded_file=getString(R.string.upload_pdf);
         UploadTask uploadTask = fileReference.putFile(pdfUri);
 
         uploadTask.addOnSuccessListener(taskSnapshot -> {
             progressDialog.dismiss();
-            Toast.makeText(requireContext(), "File uploaded!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), uploaded_file, Toast.LENGTH_SHORT).show();
 
             fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
                 String url = uri.toString();
@@ -319,7 +321,7 @@ public class DocumentiFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(requireContext(), "Failed to get download URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -335,6 +337,7 @@ public class DocumentiFragment extends Fragment {
         }
     }
     private void downloadingOnDevice(String url, String fileName) {
+        String downloadM = getString(R.string.FilegiaCaricato);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String fileNameOnly = getFileNameFromPath(fileName);
         request.setTitle(fileNameOnly);
@@ -379,6 +382,7 @@ public class DocumentiFragment extends Fragment {
     }
 
     private void deleteFile(UploadedFile uploadedFile) {
+        String deletedVideo = getString(R.string.deleted_video);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -402,7 +406,7 @@ public class DocumentiFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
-                        Toast.makeText(requireContext(), "Failed to delete file from Database: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -410,7 +414,7 @@ public class DocumentiFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
 
-                Toast.makeText(requireContext(), "Failed to delete file from Storage: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

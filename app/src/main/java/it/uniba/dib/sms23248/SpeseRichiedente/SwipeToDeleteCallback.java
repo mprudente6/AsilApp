@@ -13,9 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     private final ItemSpeseAdapter adapter;
     private final SpeseModel viewModel;
-    FirebaseAuth mAuth=FirebaseAuth.getInstance();
-    FirebaseUser currentUser=mAuth.getCurrentUser();
-    String uid=currentUser.getUid();
+
+
+
 
     public SwipeToDeleteCallback(ItemSpeseAdapter adapter, SpeseModel viewModel) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT); //va bene si detsra che sinistra, no drag and drop

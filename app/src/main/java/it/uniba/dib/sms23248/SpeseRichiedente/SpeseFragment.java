@@ -49,7 +49,7 @@ public class SpeseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_spese, container, false);
-
+        String connessione = getString(R.string.connessione);
 
         db = FirebaseFirestore.getInstance();
         textView=view.findViewById(R.id.textView1);
@@ -60,7 +60,7 @@ public class SpeseFragment extends Fragment {
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
             fetchSubSpese();
         } else {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
         }
 
 
@@ -73,7 +73,7 @@ public class SpeseFragment extends Fragment {
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
 
-                        Log.e("FirestoreListener", "Error getting data", error);
+                        Log.e("FirestoreListener", "Error: ", error);
                         return;
                     }
 
@@ -86,8 +86,9 @@ public class SpeseFragment extends Fragment {
     }
 
     private void calculatePercentagesAndDisplayChart(List<DocumentSnapshot> documents) {
+        String connessione = getString(R.string.connessione);
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
             return;
         }
         Map<String, Float> tipoTotalPrice = new HashMap<>();

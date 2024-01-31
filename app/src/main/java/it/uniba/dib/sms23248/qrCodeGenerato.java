@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,20 +59,20 @@ public class qrCodeGenerato extends Fragment {
         btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
         btnGenaraQr.setVisibility(View.INVISIBLE);
 
-        Button btnMedia = getActivity().findViewById(R.id.btnMedia);
-        btnMedia = getActivity().findViewById(R.id.btnMedia);
+        CardView btnMedia = getActivity().findViewById(R.id.cardMedia);
+        btnMedia = getActivity().findViewById(R.id.cardMedia);
         btnMedia.setVisibility(View.INVISIBLE);
 
         Button btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
         btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
         btnApriMappa.setVisibility(View.INVISIBLE);
 
-        Button btnInformazioniCentro = getActivity().findViewById(R.id.btnInformazioniCentro);
-        btnInformazioniCentro = getActivity().findViewById(R.id.btnInformazioniCentro);
+        CardView btnInformazioniCentro = getActivity().findViewById(R.id.cardInfoCentro);
+        btnInformazioniCentro = getActivity().findViewById(R.id.cardInfoCentro);
         btnInformazioniCentro.setVisibility(View.INVISIBLE);
 
-        Button btnInformazioniSalute = getActivity().findViewById(R.id.btnSaluteR);
-        btnInformazioniSalute = getActivity().findViewById(R.id.btnSaluteR);
+        CardView btnInformazioniSalute = getActivity().findViewById(R.id.cardSaluteR);
+        btnInformazioniSalute = getActivity().findViewById(R.id.cardSaluteR);
         btnInformazioniSalute.setVisibility(View.INVISIBLE);
 
         /*Spinner spinnerLingua = (Spinner) getActivity().findViewById(R.id.languageList);
@@ -98,20 +99,20 @@ public class qrCodeGenerato extends Fragment {
                 btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
                 btnGenaraQr.setVisibility(View.VISIBLE);
 
-                Button btnMedia = getActivity().findViewById(R.id.btnMedia);
-                btnMedia = getActivity().findViewById(R.id.btnMedia);
+                CardView btnMedia = getActivity().findViewById(R.id.cardMedia);
+                btnMedia = getActivity().findViewById(R.id.cardMedia);
                 btnMedia.setVisibility(View.VISIBLE);
 
                 Button btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
                 btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
                 btnApriMappa.setVisibility(View.VISIBLE);
 
-                Button btnInformazioniCentro = getActivity().findViewById(R.id.btnInformazioniCentro);
-                btnInformazioniCentro = getActivity().findViewById(R.id.btnInformazioniCentro);
+                CardView btnInformazioniCentro = getActivity().findViewById(R.id.cardInfoCentro);
+                btnInformazioniCentro = getActivity().findViewById(R.id.cardInfoCentro);
                 btnInformazioniCentro.setVisibility(View.VISIBLE);
 
-                Button btnInformazioniSalute = getActivity().findViewById(R.id.btnSaluteR);
-                btnInformazioniSalute = getActivity().findViewById(R.id.btnSaluteR);
+                CardView btnInformazioniSalute = getActivity().findViewById(R.id.cardSaluteR);
+                btnInformazioniSalute = getActivity().findViewById(R.id.cardSaluteR);
                 btnInformazioniSalute.setVisibility(View.VISIBLE);
 
                 getFragmentManager().beginTransaction()

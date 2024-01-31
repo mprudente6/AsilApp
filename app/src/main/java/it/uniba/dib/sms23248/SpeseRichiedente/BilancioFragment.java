@@ -71,7 +71,7 @@ public class BilancioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        String connessione = getString(R.string.connessione);
         View view = inflater.inflate(R.layout.fragment_bilancio, container, false);
         viewModel = new ViewModelProvider(requireActivity().getViewModelStore(), ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())).get(SpeseModel.class);
         budgetTextView = view.findViewById(R.id.textView2);
@@ -92,7 +92,7 @@ public class BilancioFragment extends Fragment {
             QuerySett();
             QueryMese();
         } else {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
         }
 
 

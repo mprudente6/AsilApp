@@ -58,10 +58,10 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_video, container, false);
-
+        String connessione = getString(R.string.connessione);
 
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), connessione, Toast.LENGTH_LONG).show();
 
             return view;
         }
@@ -97,7 +97,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         fetchVideoDonna();
 
         progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Uploading video...");
+        progressDialog.setMessage("Upload...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setCancelable(true);
 
@@ -110,7 +110,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                 }
             });
         } else {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
         }
 
         uploadButtonDonna.setOnClickListener(new View.OnClickListener() {
@@ -128,10 +128,11 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
 
     @Override
     public void onDeleteClick(VideoModel videoModel, String targetFolder) {
+        String connessione = getString(R.string.connessione);
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
             showDeleteConfirmationDialog(videoModel, targetFolder);
         } else {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -158,13 +159,14 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
 
 
     private void openVideoChooser(int requestCode) {
+        String connessione = getString(R.string.connessione);
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
             Intent intent = new Intent();
-            intent.setType("video/*");
+            intent.setType("image/gif");;
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Video"), requestCode);
         } else {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
         }
 
     }
@@ -187,7 +189,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                     uploadVideo(selectedVideoUri, videoName, "videosDonna");
                 }
             } else {
-                Toast.makeText(getContext(), "Failed to get selected video", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -218,6 +220,8 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
     }
 
     private void uploadVideo(Uri videoUri, String videoName, String targetFolder) {
+        String uploadedVid = getString(R.string.video_uploaded);
+        String failedUpload = getString(R.string.failed_upload);
         if (videoUri != null) {
 
 
@@ -227,7 +231,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
 
             storageReference.child(targetFolder + "/" + videoName).putFile(videoUri)
                     .addOnSuccessListener(taskSnapshot -> {
-                        Toast.makeText(getContext(), "Video uploaded successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), uploadedVid, Toast.LENGTH_SHORT).show();
 
                         if ("videosDonna".equals(targetFolder)) {
                             fetchVideoDonna();
@@ -238,7 +242,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                         progressDialog.dismiss();
                     })
                     .addOnFailureListener(exception -> {
-                        Toast.makeText(getContext(), "Failed to upload video", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), failedUpload, Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     })
                     .addOnProgressListener(snapshot -> {
@@ -262,12 +266,12 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                             videoAdapterGen.notifyDataSetChanged();
 
                         }).addOnFailureListener(exception -> {
-                            Toast.makeText(getContext(), "Failed to get download URL", Toast.LENGTH_SHORT).show();
+
                         });
                     }
                 })
                 .addOnFailureListener(exception -> {
-                    Toast.makeText(getContext(), "Failed to list videos", Toast.LENGTH_SHORT).show();
+
                 });
     }
 
@@ -285,12 +289,12 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                             videoListDonna.add(videoModel);
                             videoAdapterDonna.notifyDataSetChanged();
                         }).addOnFailureListener(exception -> {
-                            Toast.makeText(getContext(), "Failed to get download URL", Toast.LENGTH_SHORT).show();
+
                         });
                     }
                 })
                 .addOnFailureListener(exception -> {
-                    Toast.makeText(getContext(), "Failed to list Donna videos", Toast.LENGTH_SHORT).show();
+
                 });
     }
 
@@ -314,6 +318,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
     }
 
     private void deleteVideo(VideoModel videoModel, String targetFolder) {
+        String deletedVideo = getString(R.string.deleted_video);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
 
@@ -342,12 +347,10 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                     videoAdapterGen.notifyDataSetChanged();
                 }
 
-                Toast.makeText(getContext(), "Video deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), deletedVideo, Toast.LENGTH_SHORT).show();
             }).addOnFailureListener(e -> {
-                Toast.makeText(getContext(), "Failed to delete video: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             });
         }).addOnFailureListener(e -> {
-            Toast.makeText(getContext(), "File does not exist", Toast.LENGTH_SHORT).show();
         });
     }
 

@@ -65,7 +65,7 @@ public class CalendarioFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendario, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(SpeseModel.class);
-
+        String connessione = getString(R.string.connessione);
 
         calendarView = view.findViewById(R.id.calendarView);
         editTextName = view.findViewById(R.id.editTextName);
@@ -110,7 +110,7 @@ public class CalendarioFragment extends Fragment {
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
             fetchItems();
         } else {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
         }
 
 
@@ -247,8 +247,7 @@ public class CalendarioFragment extends Fragment {
                     showItemsSpesaForDate(selectedDate);
                 })
                 .addOnFailureListener(e -> {
-                    // Handle the failure to fetch items
-                    Log.e("fetchItems", "Error fetching items: " + e.getMessage());
+
                 });
     }
 

@@ -10,6 +10,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:elevation="130dp"
 
     android:orientation="vertical"
    >
@@ -34,6 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:text="@string/Benvenuto_Main"
+        android:shadowColor="#4A4A49"
+        android:shadowDx="3"
+        android:shadowRadius="3"
+        android:shadowDy="2"
         android:textAlignment="center"
         android:fontFamily="@font/eastseadokdo_font"
         android:textColor="#FFFFFF"
@@ -45,6 +50,10 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_gravity="center"
+        android:shadowColor="#4A4A49"
+        android:shadowDx="3"
+        android:shadowRadius="3"
+        android:elevation="30dp"
         android:layout_marginTop="35dp"
         app:srcCompat="@drawable/proposta_1_scritta_barca_removebg_preview__6_">
 
@@ -59,6 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
+        android:elevation="10dp"
         android:layout_marginBottom="25dp"
         android:background="#076AEC"
         android:entries="@array/vista_utente"
@@ -73,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:elevation="10dp"
         android:layout_marginBottom="25dp"
         android:background="#076AEC"
         android:entries="@array/utente_demo"

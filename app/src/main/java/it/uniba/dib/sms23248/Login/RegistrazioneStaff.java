@@ -184,7 +184,7 @@ public class RegistrazioneStaff extends AppCompatActivity {
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.e(TAG, "Failed to write document", e);
+                                                Log.e(TAG, "Error", e);
                                                 progressBar.setVisibility(View.GONE);
                                                 Toast.makeText(RegistrazioneStaff.this,regFail + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
