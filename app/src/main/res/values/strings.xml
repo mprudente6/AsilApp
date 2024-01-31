@@ -86,7 +86,7 @@
     <string name="failed_upload">"Errore: video non caricato!"</string>
     <string name="deleted_video">"Video eliminato"</string>
     <string name="deleted_pdf">"Pdf eliminato"</string>
-    <string name="media" translatable="false">Media</string>
+    <string name="media" translatable="false">Media &amp; Docs</string>
     <string name="cartella_clinica">Cartella clinica</string>
     <string name="info_centro">Il mio centro</string>
     <string name="QrCode">Il mio QR Code</string>

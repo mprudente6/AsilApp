@@ -45,10 +45,10 @@ public class MediaRichiedente extends AppCompatActivity {
                 (tab, position) -> {
                     switch (position) {
                         case 0:
-                            tab.setText("Pdf");
+                            tab.setText("Documenti utili");
                             break;
                         case 1:
-                            tab.setText("Video");
+                            tab.setText("Video per te");
                             break;
                     }
                 }).attach();
