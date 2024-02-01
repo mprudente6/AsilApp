@@ -31,6 +31,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
@@ -48,6 +50,8 @@ public class HomeS extends AppCompatActivity {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private Button aggiungiUtente;
+
+    public Boolean userExist = false;
 
     private NetworkChangeReceiver networkChangeReceiver;
 
@@ -218,27 +222,41 @@ public class HomeS extends AppCompatActivity {
                 Log.d("Result", result.getContents());
 
                 UID = result.getContents();
-                openSaluteScreen();
-                /*if (result.getContents().equals(qrCodeContenitore)){
 
-                    Fragment fragmentPwContenitore = null;
-                    fragmentPwContenitore = new pwContenitore();
-                    getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutPwContenitore, fragmentPwContenitore)
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
-
-                }
-                else{
-                    //builder.setMessage(result.getContents());
-                    builder.setMessage("UTENTE NON TROVATO");
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i)
+                db.collection("RICHIEDENTI_ASILO").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful())
                         {
-                            dialogInterface.dismiss();
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (result.getContents().equals(document.getId()))
+                                {
+                                    userExist = true;
+                                    break;
+                                }
+                            }
+                            if (userExist == true){
+
+                                openSaluteScreen();
+
+                            }
+                            else{
+                                //builder.setMessage(result.getContents());
+                                builder.setMessage("UTENTE NON TROVATO");
+                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i)
+                                    {
+                                        dialogInterface.dismiss();
+                                    }
+                                }).show();
+                            }
                         }
-                    }).show();
-                }*/
+                    }
+                });
+
 
             }
         } else {
