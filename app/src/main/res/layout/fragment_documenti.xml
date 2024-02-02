@@ -29,9 +29,33 @@
         android:layout_below="@id/selectFile"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="128dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="63dp"
         android:backgroundTint="#076aec"
-        android:text="@string/Upload" />
+        android:text="Upload Centro" />
+
+    <Button
+        android:id="@+id/upload2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/selectFile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="346dp"
+        android:backgroundTint="#076aec"
+        android:text="Upload Documenti Utili" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="393dp"
+        android:layout_height="253dp"
+        android:layout_below="@id/upload"
+
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="285dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="275dp" />
 
     <TextView
         android:id="@+id/selectNotification"
@@ -47,15 +71,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="489dp"
+        android:layout_width="397dp"
+        android:layout_height="217dp"
         android:layout_below="@id/upload"
 
-        android:layout_marginTop="16dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="275dp" />
 
 </RelativeLayout>
 </ScrollView>

@@ -58,7 +58,7 @@
     <string name="Nessunfile">No file selected</string>
     <string name="Indirizzo">Address</string>
     <string name="Sito_web">Website</string>
-    <string name="Descrizione">Description</string>
+    <string name="Descrizione">Services</string>
     <string name="Telefono">Phone number</string>
     <string name="Chart">Monthly expenses chart</string>
     <string name="SpeseGraf">Expenses</string>

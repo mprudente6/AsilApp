@@ -63,9 +63,13 @@ public class qrCodeGenerato extends Fragment {
         btnMedia = getActivity().findViewById(R.id.cardMedia);
         btnMedia.setVisibility(View.INVISIBLE);
 
-        Button btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
+        ImageView btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
         btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
         btnApriMappa.setVisibility(View.INVISIBLE);
+
+        CardView mappacard = getActivity().findViewById(R.id.cardMap);
+        mappacard = getActivity().findViewById(R.id.cardMap);
+        mappacard.setVisibility(View.INVISIBLE);
 
         CardView btnInformazioniCentro = getActivity().findViewById(R.id.cardInfoCentro);
         btnInformazioniCentro = getActivity().findViewById(R.id.cardInfoCentro);
@@ -103,9 +107,13 @@ public class qrCodeGenerato extends Fragment {
                 btnMedia = getActivity().findViewById(R.id.cardMedia);
                 btnMedia.setVisibility(View.VISIBLE);
 
-                Button btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
+                ImageView btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
                 btnApriMappa = getActivity().findViewById(R.id.btnApriMappa);
                 btnApriMappa.setVisibility(View.VISIBLE);
+
+                CardView mappacard = getActivity().findViewById(R.id.cardMap);
+                mappacard = getActivity().findViewById(R.id.cardMap);
+                mappacard.setVisibility(View.VISIBLE);
 
                 CardView btnInformazioniCentro = getActivity().findViewById(R.id.cardInfoCentro);
                 btnInformazioniCentro = getActivity().findViewById(R.id.cardInfoCentro);

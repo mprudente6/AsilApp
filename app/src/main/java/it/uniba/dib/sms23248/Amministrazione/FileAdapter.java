@@ -16,12 +16,16 @@ import it.uniba.dib.sms23248.R;
 
 public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
 
+
+
     private final List<UploadedFile> fileList;
     private final DocumentiFragment documentiFragment;
+
 
     public FileAdapter(List<UploadedFile> fileList, DocumentiFragment documentiFragment) {
         this.fileList = fileList;
         this.documentiFragment = documentiFragment;
+
     }
 
     public interface OnItemClickListener {
@@ -33,7 +37,6 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
     private OnItemClickListener listener;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-
         this.listener = listener;
     }
 
@@ -52,7 +55,6 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
         holder.fileNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Log.d("FileAdapter", "Text clicked for item: " + uploadedFile.getFileName());
                 if (listener != null) {
                     listener.onItemClick(uploadedFile);
@@ -70,14 +72,8 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
         });
     }
 
-
-
-
-
-
     @Override
     public int getItemCount() {
-
         return fileList.size();
     }
 
@@ -93,5 +89,3 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
         }
     }
 }
-
-

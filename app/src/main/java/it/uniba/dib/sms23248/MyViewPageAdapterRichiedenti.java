@@ -25,9 +25,9 @@ public class MyViewPageAdapterRichiedenti extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch(position){
-            case 0:
-                return new DocumentiFragmentRichiedenti();
             case 1:
+                return new DocumentiFragmentRichiedenti();
+            case 0:
                 return new VideoFragmentRichiedenti();
             default:
                 return new DocumentiFragmentRichiedenti();

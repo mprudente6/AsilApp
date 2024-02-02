@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,7 @@ public class DocumentiFragmentRichiedenti extends Fragment {
         fileAdapter.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(UploadedFile uploadedFile) {
-                // Handle item click (e.g., open the file or perform some action)
+
                 downloadFile(uploadedFile.getFileUrl(), uploadedFile.getFileName());
             }
 
@@ -99,18 +100,44 @@ public class DocumentiFragmentRichiedenti extends Fragment {
     }
 
     private void fetchDataFromDatabase() {
-        DatabaseReference reference = database.getReference();
-
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference documentiUtiliReference = database.getReference("DocumentiUtili");
+        documentiUtiliReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                fileList.clear(); // Clear the existing list
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String fileName = snapshot.getKey();
-                    String fileUrl = snapshot.getValue(String.class);
-                    UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
-                    fileList.add(uploadedFile);
+                fileList.clear();
+
+
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
+                        Log.d("FirebaseDebug", "File Snapshot Key: " + fileSnapshot.getKey());
+                        Log.d("FirebaseDebug", "File Snapshot Value: " + fileSnapshot.getValue());
+
+                        String fileName = fileSnapshot.getKey();
+
+                        // Check if "url" exists as a child
+                        if (fileSnapshot.hasChild("url")) {
+                            String fileUrl = fileSnapshot.child("url").getValue().toString();
+                            Log.d("FirebaseDebug", "File URL: " + fileUrl);
+
+                            if (fileName != null && fileUrl != null) {
+                                UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
+                                fileList.add(uploadedFile);
+
+                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                            }
+                        } else {
+                            // If "url" doesn't exist as a child, try to directly get the value as a URL
+                            String fileUrl = fileSnapshot.getValue(String.class);
+                            if (fileName != null && fileUrl != null) {
+                                UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
+                                fileList.add(uploadedFile);
+
+                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                            }
+                        }
+                    }
                 }
+
                 fileAdapter.notifyDataSetChanged();
             }
 

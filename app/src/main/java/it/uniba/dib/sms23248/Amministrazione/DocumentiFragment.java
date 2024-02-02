@@ -49,7 +49,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class DocumentiFragment extends Fragment {
@@ -69,8 +71,12 @@ public class DocumentiFragment extends Fragment {
 
     ProgressDialog progressDialog;
     private RecyclerView recyclerView;
+    private RecyclerView recyclerView2;
     private List<UploadedFile> fileList;
     private FileAdapter fileAdapter;
+    private FileAdapter fileAdapter2;
+    private List<UploadedFile> fileListUploads;
+    private List<UploadedFile> fileListDocumentiUtili;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +84,7 @@ public class DocumentiFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_documenti, container, false);
         selectFile = view.findViewById(R.id.selectFile);
         upload = view.findViewById(R.id.upload);
+        Button upload2=view.findViewById(R.id.upload2);
         selectNotification = view.findViewById(R.id.selectNotification);
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
             Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
@@ -89,8 +96,13 @@ public class DocumentiFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        fileList = new ArrayList<>();
-        fileAdapter = new FileAdapter(fileList,this);
+        recyclerView2= view.findViewById(R.id.recyclerView2);
+
+        fileListUploads = new ArrayList<>();
+        fileListDocumentiUtili = new ArrayList<>();
+        fileAdapter = new FileAdapter(fileListUploads, this);
+        fileAdapter2 = new FileAdapter(fileListDocumentiUtili, this);
+
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -98,7 +110,16 @@ public class DocumentiFragment extends Fragment {
 
 
 
-        fetchDataFromDatabase();
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(requireContext());
+        recyclerView2.setLayoutManager(layoutManager2);
+        recyclerView2.setAdapter(fileAdapter2);
+
+
+
+
+
+       fetchUploads();
+        fetchDocumentiUtili();
 
         selectFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,20 +142,43 @@ public class DocumentiFragment extends Fragment {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String connessione=getString(R.string.connessione);
-                String select=getString(R.string.select_pdf);
-                if(pdfUri!=null){
+                String connessione = getString(R.string.connessione);
+                String select = getString(R.string.select_pdf);
+
+                if (pdfUri != null) {
                     if (NetworkUtils.isNetworkAvailable(requireContext())) {
-                        startsUploadAndCheckExistingFile(pdfUri);
+
+                        String destinationPath = "Uploads/" + getFileNameFromUri(pdfUri);
+                        startsUploadAndCheckExistingFile(pdfUri, destinationPath);
                     } else {
                         Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
                     }
-
+                } else {
+                    Toast.makeText(requireContext(), select, Toast.LENGTH_SHORT).show();
                 }
-                else
-                    Toast.makeText(requireContext(),select,Toast.LENGTH_SHORT).show();
             }
         });
+
+        upload2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String connessione = getString(R.string.connessione);
+                String select = getString(R.string.select_pdf);
+
+                if (pdfUri != null) {
+                    if (NetworkUtils.isNetworkAvailable(requireContext())) {
+
+                        String destinationPath = "DocumentiUtili/" + getFileNameFromUri(pdfUri);
+                        startsUploadAndCheckExistingFile(pdfUri, destinationPath);
+                    } else {
+                        Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(requireContext(), select, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         fileAdapter.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
             @Override
@@ -145,16 +189,30 @@ public class DocumentiFragment extends Fragment {
 
             @Override
             public void onDeleteClick(UploadedFile uploadedFile) {
-                String connessione=getString(R.string.connessione);
+                String connessione = getString(R.string.connessione);
                 if (NetworkUtils.isNetworkAvailable(requireContext())) {
                     showDeleteConfirmationDialog(uploadedFile);
                 } else {
                     Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
                 }
-
             }
         });
+        fileAdapter2.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(UploadedFile uploadedFile) {
+                downloadFile(uploadedFile.getFileUrl());
+            }
 
+            @Override
+            public void onDeleteClick(UploadedFile uploadedFile) {
+                String connessione = getString(R.string.connessione);
+                if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                    showDeleteConfirmationDialog(uploadedFile);
+                } else {
+                    Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         return view;
 
@@ -180,30 +238,117 @@ public class DocumentiFragment extends Fragment {
         }
     }
 
-    private void fetchDataFromDatabase() {
-        DatabaseReference reference = database.getReference();
+    private void fetchUploads() {
 
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference documentiUploads = database.getReference("Uploads");
+
+
+        documentiUploads.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                fileList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String fileName = snapshot.getKey();
-                    String fileUrl = snapshot.getValue(String.class);
-                    UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
-                    fileList.add(uploadedFile);
+
+                fileListUploads.clear();
+
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
+                        Log.d("FirebaseDebug", "File Snapshot Key: " + fileSnapshot.getKey());
+                        Log.d("FirebaseDebug", "File Snapshot Value: " + fileSnapshot.getValue());
+
+                        String fileName = fileSnapshot.getKey();
+
+                        // Check if "url" exists as a child
+                        if (fileSnapshot.hasChild("url")) {
+                            String fileUrl = fileSnapshot.child("url").getValue().toString();
+                            Log.d("FirebaseDebug", "File URL: " + fileUrl);
+
+                            if (fileName != null && fileUrl != null) {
+                                UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
+                                fileListUploads.add(uploadedFile);
+
+                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                            }
+                        } else {
+                            // If "url" doesn't exist as a child, try to directly get the value as a URL
+                            String fileUrl = fileSnapshot.getValue(String.class);
+                            if (fileName != null && fileUrl != null) {
+                                UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
+                                fileListUploads.add(uploadedFile);
+
+                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                            }
+                        }
+                    }
                 }
+
                 fileAdapter.notifyDataSetChanged();
             }
 
+
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FirebaseDebug", "Error fetching data: " + databaseError.getMessage());
                 Toast.makeText(requireContext(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
-    private void startsUploadAndCheckExistingFile(Uri pdfUri) {
+private void fetchDocumentiUtili(){
+    DatabaseReference documentiUtiliReference = database.getReference("DocumentiUtili");
+    documentiUtiliReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            fileListDocumentiUtili.clear();
+
+
+            for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
+                    Log.d("FirebaseDebug", "File Snapshot Key: " + fileSnapshot.getKey());
+                    Log.d("FirebaseDebug", "File Snapshot Value: " + fileSnapshot.getValue());
+
+                    String fileName = fileSnapshot.getKey();
+
+                    // Check if "url" exists as a child
+                    if (fileSnapshot.hasChild("url")) {
+                        String fileUrl = fileSnapshot.child("url").getValue().toString();
+                        Log.d("FirebaseDebug", "File URL: " + fileUrl);
+
+                        if (fileName != null && fileUrl != null) {
+                            UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
+                            fileListDocumentiUtili.add(uploadedFile);
+
+                            Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                        }
+                    } else {
+
+                        String fileUrl = fileSnapshot.getValue(String.class);
+                        if (fileName != null && fileUrl != null) {
+                            UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
+                            fileListDocumentiUtili.add(uploadedFile);
+
+                            Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                        }
+                    }
+                }
+            }
+
+            fileAdapter2.notifyDataSetChanged();
+        }
+
+
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            Log.e("FirebaseDebug", "Error fetching data: " + databaseError.getMessage());
+            Toast.makeText(requireContext(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    });
+}
+
+
+    private void startsUploadAndCheckExistingFile(Uri pdfUri, String destinationPath) {
         String caricamento = getString(R.string.Caricamento);
         progressDialog = new ProgressDialog(requireContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -214,22 +359,68 @@ public class DocumentiFragment extends Fragment {
         String fileName = getFileNameFromUri(pdfUri);
 
         StorageReference storageReference = storage.getReference();
-        StorageReference fileReference = storageReference.child("Uploads").child(fileName);
-
+        StorageReference fileReference = storageReference.child(destinationPath).child(fileName);
 
         fileReference.getMetadata().addOnSuccessListener(storageMetadata -> {
             progressDialog.dismiss();
             showFileExistsDialog(fileName);
         }).addOnFailureListener(e -> {
-
             if (e instanceof StorageException && ((StorageException) e).getErrorCode() == StorageException.ERROR_OBJECT_NOT_FOUND) {
-                uploadNewFile(fileReference, pdfUri, fileName);
+                uploadNewFile(fileReference, pdfUri, fileName, destinationPath);
             } else {
                 progressDialog.dismiss();
                 Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private void uploadNewFile(StorageReference fileReference, Uri pdfUri, String fileName, String destinationPath) {
+        String uploaded_file = getString(R.string.upload_pdf);
+        UploadTask uploadTask = fileReference.putFile(pdfUri);
+
+        uploadTask.addOnSuccessListener(taskSnapshot -> {
+            progressDialog.dismiss();
+            Toast.makeText(requireContext(), uploaded_file, Toast.LENGTH_SHORT).show();
+
+            fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                String url = uri.toString();
+                DatabaseReference reference = database.getReference(destinationPath);
+
+                int index = destinationPath.indexOf('/');
+
+                    String folderName= destinationPath.substring(0, index);
+
+                reference.child(fileName).setValue(url).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.e("UPLOAD","Upload Centro: "+folderName);
+                        if (folderName.equals("Uploads")) {
+                            Log.e("UPLOAD","Upload Centro: "+folderName);
+                            UploadedFile uploadedFile = new UploadedFile(fileName, url);
+                            fileListUploads.add(uploadedFile);
+
+                            fileAdapter.notifyDataSetChanged();
+                            fetchUploads();
+
+                        } else if (folderName.equals("DocumentiUtili")) {
+                            UploadedFile uploadedFile = new UploadedFile(fileName, url);
+                            fileListDocumentiUtili.add(uploadedFile);
+                            fileAdapter2.notifyDataSetChanged();
+                            fetchDocumentiUtili();
+                        }
+                    }
+                }).addOnFailureListener(e -> {
+
+                });
+            });
+        }).addOnProgressListener(snapshot -> {
+            int currentProgress = (int) (100 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+            progressDialog.setProgress(currentProgress);
+        }).addOnFailureListener(e -> {
+            progressDialog.dismiss();
+
+        });
+    }
+
 
 
 
@@ -244,41 +435,7 @@ public class DocumentiFragment extends Fragment {
         builder.show();
     }
 
-    private void uploadNewFile(StorageReference fileReference, Uri pdfUri, String fileName) {
-        String uploaded_file=getString(R.string.upload_pdf);
-        UploadTask uploadTask = fileReference.putFile(pdfUri);
 
-        uploadTask.addOnSuccessListener(taskSnapshot -> {
-            progressDialog.dismiss();
-            Toast.makeText(requireContext(), uploaded_file, Toast.LENGTH_SHORT).show();
-
-            fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                String url = uri.toString();
-                DatabaseReference reference = database.getReference();
-                reference.child(fileName).setValue(url).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        UploadedFile uploadedFile = new UploadedFile(fileName, url);
-                        fileList.add(uploadedFile);
-                        fileAdapter.notifyDataSetChanged();
-
-
-                    } else {
-
-
-                    }
-                }).addOnFailureListener(e -> {
-
-                });
-            });
-        }).addOnProgressListener(snapshot -> {
-            int currentProgress = (int) (100 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-            progressDialog.setProgress(currentProgress);
-        }).addOnFailureListener(e -> {
-      
-            progressDialog.dismiss();
-
-        });
-    }
 
 
 
@@ -382,42 +539,66 @@ public class DocumentiFragment extends Fragment {
     }
 
     private void deleteFile(UploadedFile uploadedFile) {
-        String deletedVideo = getString(R.string.deleted_video);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         String fileName = uploadedFile.getFileName();
+        String destinationPath = uploadedFile.getFileUrl().contains("Uploads") ? "Uploads" : "DocumentiUtili";
 
-        StorageReference fileReference = storageReference.child("Uploads").child(fileName);
-        DatabaseReference fileDatabaseReference = databaseReference.child(fileName);
+        DatabaseReference parentNodeReference = databaseReference.child(destinationPath);
 
-        fileReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        parentNodeReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onSuccess(Void aVoid) {
-                fileDatabaseReference.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        fileList.remove(uploadedFile);
-                        fileAdapter.notifyDataSetChanged();
-                        Toast.makeText(requireContext(), "File deleted", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
 
-                        Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        String fileKey = fileSnapshot.getKey();
+                        String fileUrl = fileSnapshot.child("url").getValue(String.class);
+
+                        if (fileName.equals(fileKey)) {
+                            DatabaseReference fileDatabaseReference = parentNodeReference.child(categorySnapshot.getKey()).child(fileKey);
+                            StorageReference fileReference = storageReference.child(destinationPath).child(categorySnapshot.getKey()).child(fileKey);
+
+
+                            fileReference.delete().addOnSuccessListener(aVoid -> {
+
+                                fileDatabaseReference.removeValue().addOnSuccessListener(aVoid1 -> {
+                                    if (destinationPath.equals("Uploads")) {
+                                        fileListUploads.clear();
+                                        fetchUploads();
+                                        fileAdapter.notifyDataSetChanged();
+                                    } else if (destinationPath.equals("DocumentiUtili")) {
+                                        fileListDocumentiUtili.clear();
+                                        fetchDocumentiUtili();
+                                        fileAdapter2.notifyDataSetChanged();
+                                    }
+                                    Toast.makeText(requireContext(), "File deleted successfully", Toast.LENGTH_SHORT).show();
+                                }).addOnFailureListener(e -> {
+                                    Toast.makeText(requireContext(), "Error removing file from database: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+                            }).addOnFailureListener(e -> {
+                                Toast.makeText(requireContext(), "Error deleting file from storage: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                            return;
+                        }
                     }
-                });
+                }
+
+
+                Toast.makeText(requireContext(), "File not found in database", Toast.LENGTH_SHORT).show();
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
 
-                Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(requireContext(), "Error finding file: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
+
     @Override
     public void onDestroyView() {
 

@@ -67,7 +67,6 @@ public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.Vie
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView fileNameTextView;
-        public ImageButton deleteButton;
 
         public ViewHolder(View view) {
             super(view);

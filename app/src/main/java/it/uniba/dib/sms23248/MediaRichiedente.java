@@ -44,10 +44,10 @@ public class MediaRichiedente extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager2,
                 (tab, position) -> {
                     switch (position) {
-                        case 0:
+                        case 1:
                             tab.setText("Documenti utili");
                             break;
-                        case 1:
+                        case 0:
                             tab.setText("Video per te");
                             break;
                     }
