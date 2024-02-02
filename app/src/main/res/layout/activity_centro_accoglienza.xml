@@ -36,8 +36,8 @@
             android:textStyle="bold" />
 
         <LinearLayout
-
-            android:layout_width="match_parent"
+            android:id="@+id/lastL"
+            android:layout_width="426dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -47,7 +47,7 @@
             android:layout_centerInParent="true"
             android:layout_marginStart="1dp"
             android:layout_marginTop="647dp"
-            android:layout_marginEnd="-1dp"
+            android:layout_marginEnd="0dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
@@ -290,7 +290,19 @@
                 android:layout_weight="1" />
 
 
+
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lastL"
+            android:layout_marginTop="-48dp"
+            android:layout_weight="1"
+
+            android:padding="15dp"></androidx.recyclerview.widget.RecyclerView>
+
 
     </RelativeLayout>
 

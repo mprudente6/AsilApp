@@ -55,7 +55,7 @@ public class DocumentiFragmentRichiedenti extends Fragment {
     int MY_PERMISSIONS_REQUEST_READ_MEDIA = 1;
     Uri pdfUri;
 
-    ProgressDialog progressDialog;
+
     private RecyclerView recyclerView;
     private List<UploadedFile> fileList;
     private FileAdapterRichiedenti fileAdapter;
@@ -229,7 +229,7 @@ public class DocumentiFragmentRichiedenti extends Fragment {
 
     @Override
     public void onDestroyView() {
-        // Unregister the BroadcastReceiver when the fragment is destroyed
+
         if (networkChangeReceiver != null) {
             requireContext().unregisterReceiver(networkChangeReceiver);
         }

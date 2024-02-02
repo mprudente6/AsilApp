@@ -15,14 +15,13 @@ import java.util.List;
 import it.uniba.dib.sms23248.Amministrazione.FileAdapter;
 import it.uniba.dib.sms23248.Amministrazione.UploadedFile;
 
-public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
+public class FileAdapterCentro extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
 
     private final List<UploadedFile> fileList;
-    private final DocumentiFragmentRichiedenti documentiFragment;
 
-    public FileAdapterRichiedenti(List<UploadedFile> fileList, DocumentiFragmentRichiedenti documentiFragment) {
+
+    public FileAdapterCentro(List<UploadedFile> fileList) {
         this.fileList = fileList;
-        this.documentiFragment = documentiFragment;
     }
 
 
@@ -40,7 +39,7 @@ public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.Vie
     @NonNull
     @Override
     public FileAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_file_richiedenti, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_file_centro, parent, false);
         return new FileAdapter.ViewHolder(view);
     }
 
@@ -52,7 +51,7 @@ public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.Vie
         holder.fileNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Check if the clicked view is the TextView
+
                 Log.d("FileAdapter", "Text clicked for item: " + uploadedFile.getFileName());
                 if (listener != null) {
                     listener.onItemClick(uploadedFile);
