@@ -144,4 +144,6 @@
     <string name="punteggio_stelle">Valuta l’app lasciando un punteggio da 1 a 5 stelle (da pessimo a eccellente)</string>
     <string name="conferma_valutazione">Conferma Valutazione</string>
     <string name="salva">SALVA</string>
+    <string name="noChartData">Nessuna misurazione di </string>
+    <string name="noParametri">Non hai ancora effettuato la tua prima visita...</string>
 </resources>

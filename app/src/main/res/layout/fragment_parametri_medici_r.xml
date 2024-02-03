@@ -1,49 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="55"
-    android:backgroundTint="#FE9E50"
-    tools:context=".ParametriMediciR">
+    android:layout_height="match_parent">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleParametriMedici"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/parametri_medici"
-        android:textSize="24sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp" />
-
-    <!-- Share Button -->
-    <Button
-        android:id="@+id/shareButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleParametriMedici"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="@string/condividi_su" />
-
-    <!-- ScrollView for Personal Data List -->
-    <ScrollView
-        android:id="@+id/personalDataScrollView"
+    <RelativeLayout
+        android:id="@+id/chartContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shareButton"
-        android:layout_marginTop="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="18dp">
-        <!-- Parametri Layout -->
-        <LinearLayout
-            android:id="@+id/parametriLayout"
+        android:orientation="vertical">
+
+        <!-- BarChart for TemperaturaCorporea -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartTemperaturaCorporea"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+            android:layout_height="200dp" />
+
+        <!-- BarChart for FrequenzaCardiaca -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartFrequenzaCardiaca"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/barChartTemperaturaCorporea"
+            android:layout_marginTop="16dp" />
+
+        <!-- BarChart for PressioneMax -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartPressioneMax"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/barChartFrequenzaCardiaca"
+            android:layout_marginTop="16dp" />
+
+        <!-- BarChart for PressioneMin -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartPressioneMin"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/barChartPressioneMax"
+            android:layout_marginTop="16dp" />
+
+        <!-- BarChart for Saturazione -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartSaturazione"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/barChartPressioneMin"
+            android:layout_marginTop="16dp" />
+
+        <!-- BarChart for Glucosio -->
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChartGlucosio"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/barChartSaturazione"
+            android:layout_marginTop="16dp" />
+
+    </RelativeLayout>
+
+</ScrollView>

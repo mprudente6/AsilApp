@@ -136,4 +136,6 @@
     <string name="punteggio_stelle">Tap a star to rate the app (select 1-5 stars).</string>
     <string name="conferma_valutazione">Submit</string>
     <string name="salva">SAVE</string>
+    <string name="noChartData">No measurement detected for </string>
+    <string name="noParametri">You haven\'t made your first visit yet...</string>
 </resources>

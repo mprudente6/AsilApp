@@ -31,7 +31,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -52,11 +55,13 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     private static final int REQUEST_BODY_SENSORS = 1;
     private boolean isFirstHeartRateValueDisplayed = false;
 
-    private final boolean isFragmentVisible = false; // Added to track fragment visibility
-
     private float heartRate = 0;
 
     boolean contenitoreAperto = pwContenitore.contenitoreAperto;
+
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    String formattedCurrentDate = dateFormat.format(new Date());
 
     @Nullable
     @Override
@@ -230,18 +235,46 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     }
 
     private void saveButtonClicked() {
-        // Check if the document exists in the database
+        // Check if any document exists for the user
         firestore.collection("PARAMETRI_UTENTI")
-                .document(userId)
+                .whereEqualTo("ID_RichiedenteAsilo", userId)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            // Document exists, update the measurement fields
-                            updateExistingDocument(userId);
+                        boolean documentExists = !task.getResult().isEmpty();
+
+                        if (documentExists) {
+                            // If documents exist, check if there is a document with the current date
+                            checkExistingDocumentWithCurrentDate();
                         } else {
-                            // Document does not exist, create a new one
+                            // If no documents exist, create a new document
+                            showToast("Benvenuto! Questa è la tua prima visita.");
+                            createNewDocument();
+                        }
+                    } else {
+                        // Handle error
+                        showToast("Errore durante la verifica del documento");
+                    }
+                });
+    }
+
+    private void checkExistingDocumentWithCurrentDate() {
+
+        // Check if there is a document with the current date
+        firestore.collection("PARAMETRI_UTENTI")
+                .whereEqualTo("ID_RichiedenteAsilo", userId)
+                .whereEqualTo("DataVisita", formattedCurrentDate)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        boolean documentExistsWithCurrentDate = !task.getResult().isEmpty();
+
+                        if (documentExistsWithCurrentDate) {
+                            // If a document with the current date exists, update it
+                            DocumentSnapshot existingDocument = task.getResult().getDocuments().get(0);
+                            updateExistingDocument(existingDocument.getId());
+                        } else {
+                            // If no document with the current date exists, create a new one
                             createNewDocument();
                         }
                     } else {
@@ -253,8 +286,6 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
     private void updateExistingDocument(String documentId) {
         Map<String, Object> data = new HashMap<>();
-        data.put("ID_RichiedenteAsilo", userId);
-        data.put("DataVisita", new java.util.Date());
 
         // Check and update each field if it has a non-zero value
         if (simulatedTemperature != 0) {
@@ -276,6 +307,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         }
         if (simulatedGlucose != 0) {
             data.put("Glucosio", simulatedGlucose);
+            //        data.put("Glicemia", simulatedGlucose);
         }
 
         // Update the document in the database
@@ -299,7 +331,8 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     private void createNewDocument() {
         Map<String, Object> data = new HashMap<>();
         data.put("ID_RichiedenteAsilo", userId);
-        data.put("DataVisita", new java.util.Date());
+
+        data.put("DataVisita", formattedCurrentDate);
 
         data.put("TemperaturaCorporea", formatDouble(simulatedTemperature));
 
@@ -315,14 +348,14 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         data.put("Saturazione", simulatedPulseOx);
 
         data.put("Glucosio", simulatedGlucose);
+//        data.put("Glicemia", simulatedGlucose);
 
         // Use the userId as the document ID
         String documentId = userId;
 
         // Create a new document in the database
         firestore.collection("PARAMETRI_UTENTI")
-                .document(documentId)  // Set the document ID
-                .set(data)             // Use set() instead of add()
+                .add(data)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Handle success if needed

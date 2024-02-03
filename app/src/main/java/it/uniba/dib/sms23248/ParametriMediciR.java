@@ -1,40 +1,36 @@
 package it.uniba.dib.sms23248;
 
-import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.graphics.Typeface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
-
 public class ParametriMediciR extends Fragment {
-    private LinearLayout parametriLayout;
     private FirebaseFirestore firestore;
     private String userId;
+    private List<BarChart> barCharts;
 
-    private Map<String, TextView> addedViewsMap = new HashMap<>();
+    boolean allChartsEmpty = true;
 
     @Nullable
     @Override
@@ -50,189 +46,126 @@ public class ParametriMediciR extends Fragment {
             showToast("User not logged in");
         }
 
-        parametriLayout = view.findViewById(R.id.parametriLayout);
+        // Initialize the list of BarCharts
+        barCharts = new ArrayList<>();
+        barCharts.add(view.findViewById(R.id.barChartTemperaturaCorporea));
+        barCharts.add(view.findViewById(R.id.barChartFrequenzaCardiaca));
+        barCharts.add(view.findViewById(R.id.barChartPressioneMax));
+        barCharts.add(view.findViewById(R.id.barChartPressioneMin));
+        barCharts.add(view.findViewById(R.id.barChartSaturazione));
+        barCharts.add(view.findViewById(R.id.barChartGlucosio));
 
-        // Find views by ID
-        Button shareButton = view.findViewById(R.id.shareButton);
-
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (NetworkUtils.isNetworkAvailable(requireContext())) {
-                    shareData();
-                } else {
-                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
-                }
+        for (int i = 0; i < barCharts.size(); i++) {
+            BarChart barChart = barCharts.get(i);
+            if (barChart != null) {
+                barChart.setNoDataText(getString(R.string.noChartData) + "\n" + getFieldName(i));
             }
-        });
-
-        if (NetworkUtils.isNetworkAvailable(requireContext())) {
-            fetchUserData();
-        } else {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
         }
+
+        fetchDataFromFirestore(userId);
 
         return view;
     }
 
-
-    private void shareData() {
-        String subject = "PARAMETRI MEDICI";
-        String text = prepareTextToShare();
-
-        // Get the list of apps that can handle the share intent
-        List<Intent> targetedShareIntents = new ArrayList<>();
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, text);
-
-        List<ResolveInfo> resInfo = requireContext().getPackageManager().queryIntentActivities(shareIntent, 0);
-
-        if (!resInfo.isEmpty()) {
-            for (ResolveInfo resolveInfo : resInfo) {
-                String packageName = resolveInfo.activityInfo.packageName;
-                if (packageName.contains("com.whatsapp") || packageName.contains("com.google.android.gm")) {
-                    Intent targeted = new Intent(Intent.ACTION_SEND);
-                    targeted.setType("text/plain");
-                    targeted.putExtra(Intent.EXTRA_SUBJECT, subject);
-                    targeted.putExtra(Intent.EXTRA_TEXT, text);
-                    targeted.setPackage(packageName);
-                    targetedShareIntents.add(targeted);
-                }
-            }
-
-            if (!targetedShareIntents.isEmpty()) {
-                Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "Scegli l'app con cui condividere i tuoi dati");
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Intent[]{}));
-                startActivity(chooserIntent);
-            } // else: No WhatsApp o Gmail: il sistema mostra 'Nessuna app è in grado di eseguire questa azione.'
-        }
+    private String getFieldName(int index) {
+        // Return the field name based on the index
+        String[] fieldNames = {"Temperatura Corporea", "Frequenza Cardiaca", "Pressione Massima", "Pressione Minima", "Saturazione", "Glicemia"};
+        return fieldNames[index];
     }
 
-    private String prepareTextToShare() {
-        StringBuilder textBuilder = new StringBuilder();
-
-        for (int i = 0; i < parametriLayout.getChildCount(); i += 2) {
-            TextView fieldTextView = (TextView) parametriLayout.getChildAt(i);
-            TextView valueTextView = (TextView) parametriLayout.getChildAt(i + 1);
-
-            String field = fieldTextView.getText().toString();
-            if (valueTextView!=null) {
-                String value = valueTextView.getText().toString();
-                textBuilder.append(field).append(": ").append(value).append("\n");
-            } else{
-                Toast.makeText(requireContext(),"Non ci sono dati da condividere", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        return textBuilder.toString();
-    }
-
-    private void fetchUserData() {
+    private void fetchDataFromFirestore(String uid) {
         firestore.collection("PARAMETRI_UTENTI")
-                .document(userId)
+                .whereEqualTo("ID_RichiedenteAsilo", uid)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            // Document exists, display data
-                            displayUserData(document);
-                        } else {
-                            // Document does not exist, show toast message
-                            showToast("Siamo spiacenti, i tuoi parametri medici non sono ancora stati caricati!");
+                        Map<String, List<BarEntry>> fieldEntriesMap = new HashMap<>();
+                        List<String> dateValues = new ArrayList<>();
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String dateValue = document.getString("DataVisita");
+                            dateValues.add(dateValue);
+
+                            Map<String, Object> data = document.getData();
+
+                            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                                String fieldName = entry.getKey();
+                                Object fieldValue = entry.getValue();
+
+                                if (!fieldName.equals("Utente") && !fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
+                                    // Handle the field name and value
+                                    float value = ((Number) fieldValue).floatValue();
+
+                                    if (value != 0) {
+                                        List<BarEntry> entries = fieldEntriesMap.get(fieldName);
+                                        if (entries == null) {
+                                            entries = new ArrayList<>();
+                                            fieldEntriesMap.put(fieldName, entries);
+                                            allChartsEmpty = false;
+                                        }
+                                        entries.add(new BarEntry(entries.size() + 1, value));
+                                    }
+                                }
+                            }
                         }
+
+                        // Populate and adjust the BarCharts
+                        setupBarCharts(fieldEntriesMap, dateValues);
                     } else {
-                        // Handle error
-                        showToast("Errore nella ricerca dei tuoi parametri medici!");
+                        // Handle errors
+                        showToast("Error fetching data");
                     }
                 });
     }
 
-    private void displayUserData(DocumentSnapshot document) {
-        // Display the fetched data in the parametri layout
-        // You can customize this part based on your data structure
+    private void setupBarCharts(Map<String, List<BarEntry>> fieldEntriesMap, List<String> dateValues) {
+        int index = 0;
 
-        for (Map.Entry<String, Object> entry : document.getData().entrySet()) {
-            String field = entry.getKey();
-            Object value = entry.getValue();
+        for (Map.Entry<String, List<BarEntry>> entry : fieldEntriesMap.entrySet()) {
+            String fieldName = entry.getKey();
+            List<BarEntry> entries = entry.getValue();
 
-            // Exclude specific fields
-            if (!field.equals("Utente") && !field.equals("ID_RichiedenteAsilo") && !field.equals("DataVisita")) {
-                // Update the corresponding view if the field exists
-                updateDataInView(field, value);
+            BarDataSet dataSet = new BarDataSet(entries, getDisplayName(fieldName));
+            dataSet.setColors(getColor(fieldName));
+            dataSet.setDrawValues(true);
+            dataSet.setValueTextSize(12f);
+
+            BarData barData = new BarData(dataSet);
+
+            BarChart barChart = barCharts.get(index++);
+            customizeBarChart(barChart, dateValues);
+
+            barChart.setData(barData);
+
+            // Hide the empty chart if there are no values
+            if (entries.isEmpty()) {
+                barChart.setVisibility(View.GONE);
             }
+
+            barChart.invalidate();
         }
-    }
 
-    private void updateDataInView(String field, Object value) {
-        // Check if the field view already exists
-        if (addedViewsMap.containsKey(field)) {
-            // Field view already exists, update the corresponding value view
-            TextView valueTextView = addedViewsMap.get(field);
-            valueTextView.setText(formatValue(field, value));
-        } else {
-            // Field view doesn't exist, create and add both field and value views
-            // Field view
-            TextView fieldTextView = new TextView(requireContext());
-            fieldTextView.setText(getDisplayNameForField(field));
-            fieldTextView.setTypeface(null, Typeface.BOLD);
-            fieldTextView.setPadding(26, 6, 6, 6);
-            fieldTextView.setTextSize(15);
-
-            // Value view
-            TextView valueTextView = new TextView(requireContext());
-            valueTextView.setText(formatValue(field, value));
-            valueTextView.setTextSize(15);
-            valueTextView.setPadding(26, 6, 6, 6);
-
-            // Add views to the layout
-            parametriLayout.addView(fieldTextView);
-            parametriLayout.addView(valueTextView);
-
-            // Store the views in the map
-            addedViewsMap.put(field, valueTextView);
+        // Show toast only if all charts are empty
+        if (allChartsEmpty) {
+            showToast(getString(R.string.noParametri));
         }
+
+        allChartsEmpty = true; // Reset the flag for the next iteration
     }
 
-    private String formatValue(String field, Object value) {
-        if (value == null) {
-            return "N/A";
-        } else if (value instanceof Double) {
-            return String.format("%.2f %s", value, getMeasurementUnit(field));
-        } else {
-            return value + " " + getMeasurementUnit(field);
-        }
+    private void customizeBarChart(BarChart barChart, List<String> dateValues) {
+        barChart.getDescription().setEnabled(false); // Disable description
+
+        barChart.getXAxis().setValueFormatter(new DateAxisValueFormatter(dateValues));
+
+        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM); // Display X-axis at the bottom
+
+        // Disable X-axis labels
+        barChart.getXAxis().setEnabled(false);
     }
 
-    private String getMeasurementUnit(String field) {
-        switch (field) {
-            case "TemperaturaCorporea":
-                return "°C";
-            case "FrequenzaCardiaca":
-                return "bpm";
-            case "PressioneMax":
-                return "mmHg";
-            case "PressioneMin":
-                return "mmHg";
-            case "Glucosio":
-                return "mg/dl";
-            case "Saturazione":
-                return "%";
-            default:
-                return "";
-        }
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    private String getDisplayNameForField(String field) {
-        // Modify this function to handle display names for fields with more than one word
-        switch (field) {
+    private String getDisplayName(String fieldName) {
+        switch (fieldName) {
             case "TemperaturaCorporea":
                 return "Temperatura Corporea";
             case "FrequenzaCardiaca":
@@ -241,10 +174,54 @@ public class ParametriMediciR extends Fragment {
                 return "Pressione Massima";
             case "PressioneMin":
                 return "Pressione Minima";
+            case "Saturazione":
+                return "Saturazione";
             case "Glucosio":
                 return "Glicemia";
             default:
-                return field;
+                return fieldName;
+        }
+    }
+
+    private int getColor(String fieldName) {
+        // Assign colors based on field name
+        switch (fieldName) {
+            case "TemperaturaCorporea":
+                return Color.RED;
+            case "FrequenzaCardiaca":
+                return Color.MAGENTA;
+            case "PressioneMax":
+                return Color.CYAN;
+            case "PressioneMin":
+                return Color.BLUE;
+            case "Saturazione":
+                return Color.GREEN;
+            case "Glucosio":
+                return Color.YELLOW;
+            default:
+                return Color.GRAY;
+        }
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    // Custom ValueFormatter for X-axis to display date values
+    private static class DateAxisValueFormatter extends ValueFormatter {
+        private final List<String> dateValues;
+
+        public DateAxisValueFormatter(List<String> dateValues) {
+            this.dateValues = dateValues;
+        }
+
+        @Override
+        public String getAxisLabel(float value, AxisBase axis) {
+            int index = (int) value;
+            if (index >= 0 && index < dateValues.size()) {
+                return dateValues.get(index);
+            }
+            return "";
         }
     }
 }
