@@ -2,10 +2,14 @@ package it.uniba.dib.sms23248;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import it.uniba.dib.sms23248.Login.AccessoRichiedenteAsilo;
 import it.uniba.dib.sms23248.Login.AccessoStaff;
@@ -137,6 +142,57 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
+        });
+
+        // MULTILINGUA
+
+
+        ArrayAdapter<CharSequence> adapterLingua = ArrayAdapter.createFromResource(
+                this,
+                R.array.opzione_lingua,
+                android.R.layout.simple_spinner_item
+        );
+        // Specify the layout to use when the list of choices appears.
+        adapterLingua.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner.
+        languageSpinner.setAdapter(adapterLingua);
+
+
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedLang = parent.getItemAtPosition(position).toString();
+                if(selectedLang.equals("ITA")){
+                    Log.d("ITA","ITA");
+                    Locale locale = new Locale("it");
+                    Locale.setDefault(locale);
+                    Resources resources = MainActivity.this.getResources();
+                    Configuration config = resources.getConfiguration();
+                    config.setLocale(locale);
+                    resources.updateConfiguration(config,resources.getDisplayMetrics());
+                    finish();
+                    startActivity(getIntent());
+
+                } else if (selectedLang.equals("ENG")){
+                    Log.d("ENG","ENG");
+                    Locale locale = new Locale("en");
+                    Locale.setDefault(locale);
+                    Resources resources = MainActivity.this.getResources();
+                    Configuration config = resources.getConfiguration();
+                    config.setLocale(locale);
+                    resources.updateConfiguration(config,resources.getDisplayMetrics());
+                    finish();
+                    startActivity(getIntent());
+                }
+                if (selectedLang.equals("Scegli la lingua")){
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            };
         });
 
     }
