@@ -80,7 +80,7 @@
                     android:id="@+id/emailIcon"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/untitled_design__3__removebg_preview" />
+                    android:src="@drawable/email" />
 
                 <EditText
                     android:id="@+id/email"
@@ -118,7 +118,7 @@
                     android:id="@+id/passwordIcon2"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/passicon_removebg_preview__1_" />
+                    android:src="@drawable/password" />
 
                 <EditText
                     android:id="@+id/password"
@@ -156,7 +156,7 @@
                     android:id="@+id/cellIcon"
                     android:layout_width="49dp"
                     android:layout_height="49dp"
-                    android:src="@drawable/untitled_design__6__removebg_preview" />
+                    android:src="@drawable/phone" />
 
                 <EditText
                     android:id="@+id/cell"
@@ -195,7 +195,7 @@
                     android:id="@+id/placeIcon"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/home" />
+                    android:src="@drawable/casa" />
 
                 <Spinner
                     android:id="@+id/spinner_centro"

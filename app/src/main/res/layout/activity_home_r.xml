@@ -79,7 +79,7 @@
                 android:id="@+id/avatar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/profilllle_removebg_preview"
+                android:src="@drawable/user1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/toolbar"
                 android:layout_marginEnd="2dp"
@@ -90,6 +90,8 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <FrameLayout
             android:id="@+id/frameLayoutQrCode"
             android:layout_width="match_parent"
@@ -97,24 +99,26 @@
             android:layout_alignParentStart="true"
 
             android:layout_alignParentTop="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="0dp"
             tools:layout_editor_absoluteX="-16dp"
-            tools:layout_editor_absoluteY="-138dp" >
+            tools:layout_editor_absoluteY="-138dp">
 
             <LinearLayout
+                android:id="@+id/l"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:layout_marginTop="270dp"
-                android:id="@+id/l"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardInfoCentro"
                     android:layout_width="140dp"
                     android:layout_height="130dp"
-                    android:padding="6dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="10dp"
+                    android:padding="6dp"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="8dp"
 
@@ -151,9 +155,9 @@
                     android:layout_width="140dp"
                     android:layout_height="130dp"
                     android:layout_marginStart="8dp"
-                    android:padding="6dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="30dp"
+                    android:padding="6dp"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="8dp">
 
@@ -188,8 +192,6 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </FrameLayout>
-
-
 
         <TextView
             android:id="@+id/Benvenuto"

@@ -34,7 +34,8 @@
         android:textAlignment="center"
         android:textColor="#504F4F"
         android:textSize="25sp"
-        android:textStyle="normal" />
+        android:fontFamily="@font/protest_revolution"
+        android:textStyle="bold" />
 
 
     <LinearLayout
@@ -59,7 +60,7 @@
                 android:id="@+id/emailIcon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/untitled_design__3__removebg_preview" />
+                android:src="@drawable/email" />
 
             <EditText
                 android:id="@+id/Logemail"
@@ -86,7 +87,7 @@
                 android:id="@+id/passwordIcon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/passicon_removebg_preview__1_" />
+                android:src="@drawable/password" />
 
             <EditText
                 android:id="@+id/Logpassword"

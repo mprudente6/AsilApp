@@ -37,7 +37,7 @@
         android:id="@+id/bigAvatar"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/profilllle_removebg_preview"
+        android:src="@drawable/user1"
         android:layout_below="@id/titleServices"
         android:layout_marginTop="14dp"
         android:layout_centerHorizontal="true"/>

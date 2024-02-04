@@ -121,7 +121,7 @@
                 android:id="@+id/imageTel"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/untitled_design__6__removebg_preview" />
+                android:src="@drawable/phone" />
 
             <EditText
                 android:id="@+id/editTel"
@@ -167,7 +167,7 @@
                 android:id="@+id/imageLink"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/untitled_design__5__removebg_preview__1_" />
+                android:src="@drawable/website" />
 
             <EditText
                 android:id="@+id/editLink"
@@ -202,7 +202,7 @@
                 android:id="@+id/imageEmail"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/untitled_design__3__removebg_preview" />
+                android:src="@drawable/email" />
 
             <EditText
                 android:id="@+id/editEmail"
@@ -236,7 +236,7 @@
                 android:id="@+id/imageAddress"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/untitled_design__2__removebg_preview" />
+                android:src="@drawable/place" />
 
             <EditText
                 android:id="@+id/editIndirizzo"
@@ -290,7 +290,7 @@
                 android:id="@+id/imageHome"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/home" />
+                android:src="@drawable/casa" />
 
             <EditText
                 android:id="@+id/editNome"

@@ -41,11 +41,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/SignUp"
+                android:fontFamily="@font/poor_story"
                 android:layout_marginTop="80dp"
                 android:textAlignment="center"
                 android:textColor="#504F4F"
-                android:textSize="25sp"
-                android:textStyle="normal" />
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textNome"
@@ -71,7 +72,7 @@
                     android:id="@+id/personIcon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/profilllle_removebg_preview" />
+                    android:src="@drawable/user1" />
 
                 <EditText
                     android:id="@+id/nome"
@@ -108,7 +109,7 @@
                     android:id="@+id/cognomIcon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/profilllle_removebg_preview" />
+                    android:src="@drawable/user1" />
 
                 <EditText
                     android:id="@+id/cognome"
@@ -145,7 +146,7 @@
                     android:id="@+id/genderIcon"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/gendericon_removebg_preview__3_" />
+                    android:src="@drawable/gender" />
 
                 <Spinner
                     android:id="@+id/spinner_genere"
@@ -193,7 +194,7 @@
                     android:id="@+id/emailIcon"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/untitled_design__3__removebg_preview" />
+                    android:src="@drawable/email" />
 
                 <EditText
                     android:id="@+id/email"
@@ -231,7 +232,7 @@
                     android:id="@+id/passwordIcon2"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/passicon_removebg_preview__1_" />
+                    android:src="@drawable/password" />
 
                 <EditText
                     android:id="@+id/password"
@@ -269,7 +270,7 @@
                     android:id="@+id/cellIcon"
                     android:layout_width="49dp"
                     android:layout_height="49dp"
-                    android:src="@drawable/untitled_design__6__removebg_preview" />
+                    android:src="@drawable/phone" />
 
                 <EditText
                     android:id="@+id/cell"
@@ -308,7 +309,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
 
-                    android:src="@drawable/ccal_removebg_preview__1_" />
+                    android:src="@drawable/calendar" />
                 <EditText
                     android:id="@+id/dataNascita"
                     android:layout_width="220dp"
@@ -348,7 +349,7 @@
                     android:id="@+id/placeIcon"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/untitled_design__2__removebg_preview" />
+                    android:src="@drawable/place" />
 
                 <EditText
                     android:id="@+id/luogoNascita"

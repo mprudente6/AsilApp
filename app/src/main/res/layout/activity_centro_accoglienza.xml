@@ -109,7 +109,7 @@
                 android:id="@+id/imageTel"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/untitled_design__6__removebg_preview" />
+                android:src="@drawable/phone" />
 
             <TextView
                 android:id="@+id/Tel"
@@ -156,7 +156,7 @@
                 android:id="@+id/imageLink"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/untitled_design__5__removebg_preview__1_" />
+                android:src="@drawable/website" />
 
             <TextView
                 android:id="@+id/Link"
@@ -191,7 +191,7 @@
                 android:id="@+id/imageEmail"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/untitled_design__3__removebg_preview" />
+                android:src="@drawable/email" />
 
             <TextView
                 android:id="@+id/Email"
@@ -226,7 +226,7 @@
                 android:id="@+id/imageAddress"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/untitled_design__2__removebg_preview" />
+                android:src="@drawable/place" />
 
             <TextView
                 android:id="@+id/Indirizzo"
@@ -279,7 +279,7 @@
                 android:id="@+id/imageHome"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/home" />
+                android:src="@drawable/casa" />
 
             <TextView
                 android:id="@+id/Nome"
