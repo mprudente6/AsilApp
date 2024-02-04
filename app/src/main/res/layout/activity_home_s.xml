@@ -11,155 +11,213 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
         <RelativeLayout
             android:id="@+id/LayoutHomeS"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:background="#fe9e50"
-            app:title="AsilApp"
-            app:titleTextColor="#FFFFFF"
-            app:menu="@menu/menu_logout"/>
 
-        <TextView
-            android:id="@+id/Benvenuto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=" "
-            android:textSize="16sp"
-            android:layout_marginTop="60dp"
-            android:padding="25dp"
-            android:textStyle="normal">
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="#fe9e50"
+                app:menu="@menu/menu_logout"
+                app:title="AsilApp"
+                app:titleTextColor="#FFFFFF" />
 
-        </TextView>
+            <TextView
+                android:id="@+id/Benvenuto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:padding="25dp"
+                android:text=" "
+                android:textSize="16sp"
+                android:textStyle="normal">
 
+            </TextView>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardSa"
+                android:layout_width="300dp"
+                android:layout_height="205dp"
+                android:layout_below="@id/Benvenuto"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#C7E3FA"
+                android:elevation="8dp"
+                android:padding="0dp"
+                app:cardCornerRadius="30dp">
 
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="17dp"
+                    app:srcCompat="@drawable/untitled_design__7__removebg_preview" />
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnSaluteS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="61dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    app:cardCornerRadius="60dp"
+                    android:layout_marginTop="120dp"
+                   app:cardElevation="8dp"
+                    android:backgroundTint="#FF076AEC"
+                    android:elevation="12dp"
 
-        <Button
-            android:id="@+id/btnSaluteS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="123dp"
-            android:layout_marginTop="238dp"
-            android:layout_marginEnd="115dp"
-            android:backgroundTint="#FF076AEC"
-            android:elevation="12dp"
-            android:onClick="addItemAction"
-            android:text="@string/scansionaQRCode" />
+                   >
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-        <!--    <Button-->
-        <!--        android:id="@+id/btnVisita"-->
-        <!--        android:layout_width="233dp"-->
-        <!--        android:layout_height="62dp"-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:textAlignment="center"
+                            android:layout_gravity="center"
+                            android:paddingStart="12dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/white"
+                            android:text="@string/scansionaQRCode">
 
+                        </TextView>
 
-        <!--        android:layout_alignParentTop="true"-->
-        <!--        android:layout_centerHorizontal="true"-->
-        <!--        android:layout_gravity="center_horizontal"-->
-        <!--        android:layout_marginStart="123dp"-->
-        <!--        android:layout_marginTop="238dp"-->
-        <!--        android:layout_marginEnd="115dp"-->
-        <!--        android:backgroundTint="#FF076AEC"-->
-        <!--        android:elevation="12dp"-->
-        <!--        android:onClick="addItemAction"-->
-        <!--        android:text="effettua visita" />-->
+                        <ImageView
+                            android:layout_width="68dp"
+                            android:layout_height="61dp"
+                            android:layout_marginRight="5dp"
+                            android:paddingTop="5dp"
+                            android:scaleType="centerCrop"
+                            android:paddingBottom="5dp"
 
-        <!--    <LinearLayout-->
-        <!--        android:id="@+id/itemlayout"-->
-        <!--        android:layout_width="294dp"-->
-        <!--        android:layout_height="44dp"-->
+                            android:layout_weight="1"
+                            android:src="@drawable/qcode_removebg_preview">
 
+                        </ImageView>
 
-        <!--        android:layout_centerInParent="true"-->
-        <!--        android:layout_marginTop="311dp"-->
-        <!--        android:layout_marginEnd="48dp"-->
-        <!--        android:orientation="horizontal">-->
+                    </LinearLayout>
 
-
-        <!--        <Button-->
-        <!--            android:id="@+id/btnCartellaClinica"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="38dp"-->
-        <!--            android:layout_gravity="center_horizontal"-->
-        <!--            android:layout_marginTop="16dp"-->
-        <!--            android:backgroundTint="#076AEC"-->
-        <!--            android:elevation="12dp"-->
-        <!--            android:onClick="addItemAction"-->
-        <!--            android:text="cartella clinica" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/btnApriContenitore"-->
-        <!--            android:layout_width="133dp"-->
-        <!--            android:layout_height="38dp"-->
-        <!--            android:layout_gravity="center_horizontal"-->
-        <!--            android:layout_marginStart="20dp"-->
-        <!--            android:layout_marginTop="16dp"-->
-        <!--            android:backgroundTint="#076AEC"-->
-        <!--            android:elevation="12dp"-->
-        <!--            android:onClick="addItemAction"-->
-        <!--            android:text="contenitore" />-->
-
-        <!--    </LinearLayout>-->
-
-        <Button
-            android:id="@+id/btnAmministrazione"
-            android:layout_width="159dp"
-            android:layout_height="59dp"
-            android:layout_below="@id/toolbar"
-            android:layout_centerHorizontal="true"
+                </androidx.cardview.widget.CardView>
 
 
-            android:layout_marginTop="470dp"
 
-            android:backgroundTint="#FD9D50"
-            android:elevation="12dp"
-            android:text="@string/centroString" />
+            </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btnAggiungiUtente"
-            android:layout_width="159dp"
-            android:layout_height="59dp"
-            android:layout_below="@id/toolbar"
+            <androidx.cardview.widget.CardView
+                android:layout_width="304dp"
+                android:layout_height="290dp"
+                android:layout_below="@id/cardSa"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:backgroundTint="#FFEDDF"
+                android:elevation="8dp"
+                android:padding="0dp"
+                app:cardCornerRadius="30dp">
 
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="553dp"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnAmministrazione"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/toolbar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
 
-            android:backgroundTint="#FD9D50"
-            android:elevation="12dp"
-            android:text="@string/aggiungi_utente" />
+                    android:layout_marginTop="110dp"
+                    android:backgroundTint="#FD9D50"
+                    android:elevation="12dp"
+                    app:cardCornerRadius="60dp">
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="64dp"
-            android:layout_height="61dp"
-            android:layout_alignParentStart="true"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:paddingStart="10dp"
+                            android:text="@string/centroString"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"></TextView>
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="69dp"
+                            android:layout_weight="50"
+                            android:paddingRight="13dp"
+                            android:src="@drawable/alloggio_removebg_preview">
+
+                        </ImageView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btnAggiungiUtente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cardSa"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="200dp"
+                    android:backgroundTint="#FD9D50"
+                    android:elevation="12dp"
+                    app:cardCornerRadius="60dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:paddingStart="10dp"
+                            android:text="@string/aggiungi_utente"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="15sp">
 
 
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="406dp"
-            android:layout_marginBottom="0dp"
-            app:srcCompat="@drawable/_07009" />
+                        </TextView>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="29dp"
-            android:layout_marginTop="136dp"
-            app:srcCompat="@drawable/untitled_design__7__removebg_preview" />
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="60dp"
+                            android:layout_weight="1"
+                            android:src="@drawable/profilllle_removebg_preview">
+
+                        </ImageView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="64dp"
+                    android:layout_height="61dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:elevation="8dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="17dp"
+
+                    android:layout_marginBottom="0dp"
+                    app:srcCompat="@drawable/_07009" />
+
+            </androidx.cardview.widget.CardView>
         </RelativeLayout>
         <FrameLayout
             android:id="@+id/frameLayoutEmailUtente"

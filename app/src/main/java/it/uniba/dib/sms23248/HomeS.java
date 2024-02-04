@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -49,7 +50,8 @@ public class HomeS extends AppCompatActivity {
     private TextView benvenuto;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private Button aggiungiUtente;
+    private CardView aggiungiUtente;
+
 
     public Boolean userExist = false;
 
@@ -74,11 +76,12 @@ public class HomeS extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         benvenuto=findViewById(R.id.Benvenuto);
 
+
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
-        Button saluteButton = findViewById(R.id.btnSaluteS);
+        CardView saluteButton = findViewById(R.id.btnSaluteS);
 
         saluteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +100,7 @@ public class HomeS extends AppCompatActivity {
             }
         });
 
-        Button admin=findViewById(R.id.btnAmministrazione);
+        CardView admin=findViewById(R.id.btnAmministrazione);
 
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +113,8 @@ public class HomeS extends AppCompatActivity {
             }
 
         });
+
+
 
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
