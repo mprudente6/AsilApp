@@ -51,10 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Spinner languageSpinner = findViewById(R.id.spinner_lingua);
 
 
-        List<String> languages = Arrays.asList("ITA", "ENG");
 
-        FlagSpinnerAdapter adapter = new FlagSpinnerAdapter(this, R.layout.flag_spinner, languages);
-        languageSpinner.setAdapter(adapter);
 
         String scegliUtente = getString(R.string.ScegliUt);
         String richiedente = getString(R.string.RichiedenteAsilo);
@@ -146,16 +143,10 @@ public class MainActivity extends AppCompatActivity {
 
         // MULTILINGUA
 
+        List<String> languages = Arrays.asList("","ITA", "ENG");
 
-        ArrayAdapter<CharSequence> adapterLingua = ArrayAdapter.createFromResource(
-                this,
-                R.array.opzione_lingua,
-                android.R.layout.simple_spinner_item
-        );
-        // Specify the layout to use when the list of choices appears.
-        adapterLingua.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner.
-        languageSpinner.setAdapter(adapterLingua);
+        FlagSpinnerAdapter adapter = new FlagSpinnerAdapter(this, R.layout.flag_spinner, languages);
+        languageSpinner.setAdapter(adapter);
 
 
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -171,7 +162,10 @@ public class MainActivity extends AppCompatActivity {
                     config.setLocale(locale);
                     resources.updateConfiguration(config,resources.getDisplayMetrics());
                     finish();
-                    startActivity(getIntent());
+                    Intent intent = getIntent();
+
+                    startActivity(intent);
+
 
                 } else if (selectedLang.equals("ENG")){
                     Log.d("ENG","ENG");
@@ -181,10 +175,16 @@ public class MainActivity extends AppCompatActivity {
                     Configuration config = resources.getConfiguration();
                     config.setLocale(locale);
                     resources.updateConfiguration(config,resources.getDisplayMetrics());
+
+                    Intent intent = getIntent();
+
+
                     finish();
-                    startActivity(getIntent());
+
+                    startActivity(intent);
+
                 }
-                if (selectedLang.equals("Scegli la lingua")){
+                if (selectedLang.equals("")){
 
                 }
 

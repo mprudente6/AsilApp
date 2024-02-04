@@ -33,14 +33,13 @@ public class FlagSpinnerAdapter extends ArrayAdapter<String> {
         View view = inflater.inflate(R.layout.flag_spinner, parent, false);
         ImageView flagImageView = view.findViewById(R.id.flagImageView);
 
-        // Set the flag image based on the language
         if (languages.get(position).equals("ITA")) {
             flagImageView.setImageResource(R.drawable.flag_of_italy_svg);
         } else if (languages.get(position).equals("ENG")) {
             flagImageView.setImageResource(R.drawable.engflag);
+        } else if (languages.get(position).equals("")) {
+            flagImageView.setImageResource(R.drawable.scegli__3__removebg_preview);
         }
-
-        // You can set additional information if needed
 
         return view;
     }
