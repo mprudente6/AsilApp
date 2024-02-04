@@ -36,6 +36,7 @@
     <string name="SignUp">Sign up user</string>
     <string name="Nome">Name</string>
     <string name="Cognome">Surname</string>
+
     <string name="Genere">Gender</string>
     <string name="Cellulare">Phone number</string>
     <string name="Data_di_nascita">Birthdate</string>

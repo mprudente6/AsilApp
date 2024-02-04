@@ -55,7 +55,7 @@ public class qrCodeGenerato extends Fragment {
         btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
         btnCamera.setVisibility(View.INVISIBLE);*/
 
-        Button btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
+        CardView btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
         btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
         btnGenaraQr.setVisibility(View.INVISIBLE);
 
@@ -99,7 +99,7 @@ public class qrCodeGenerato extends Fragment {
                 btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
                 btnCamera.setVisibility(View.VISIBLE);*/
 
-                Button btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
+                CardView btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
                 btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
                 btnGenaraQr.setVisibility(View.VISIBLE);
 

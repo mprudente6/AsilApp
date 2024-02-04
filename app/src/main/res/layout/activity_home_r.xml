@@ -1,4 +1,7 @@
-<ScrollView
+
+
+
+    <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,23 +9,52 @@
     android:layout_height="match_parent"
     tools:context=".HomeR">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
+        <androidx.cardview.widget.CardView
             android:id="@+id/generaQrRichiedente"
-            android:layout_width="113dp"
+            android:layout_width="wrap_content"
             android:layout_height="59dp"
             android:layout_below="@id/Benvenuto"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="2dp"
+            android:elevation="8dp"
             android:layout_marginEnd="103dp"
             android:backgroundTint="#FD9D50"
-            android:maxWidth="48dp"
-            android:maxHeight="48dp"
-            android:scaleType="fitCenter"
-            android:text="@string/QrCode" />
+           app:cardCornerRadius="100dp"
+
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/QrCode"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"></TextView>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="59dp"
+                    android:layout_weight="1"
+                    android:paddingRight="13dp"
+                    android:adjustViewBounds="true"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/qqrcode">
+
+                </ImageView>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -62,7 +94,96 @@
 
             android:layout_alignParentTop="true"
             tools:layout_editor_absoluteX="-16dp"
-            tools:layout_editor_absoluteY="-138dp" />
+            tools:layout_editor_absoluteY="-138dp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="270dp"
+                android:id="@+id/l"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardInfoCentro"
+                    android:layout_width="140dp"
+                    android:layout_height="130dp"
+                    android:padding="6dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="8dp"
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#2A7FB8"
+                        android:orientation="vertical"
+                        android:padding="1dp">
+
+                        <ImageView
+                            android:id="@+id/btnInfoCentroImage"
+                            android:layout_width="72dp"
+                            android:layout_height="102dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:src="@drawable/alloggio" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="8dp"
+                            android:text="@string/info_centro"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardMap"
+                    android:layout_width="140dp"
+                    android:layout_height="130dp"
+                    android:layout_marginStart="8dp"
+                    android:padding="6dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#2A7FB8"
+                        android:orientation="vertical"
+                        android:padding="1dp">
+
+                        <ImageView
+                            android:id="@+id/btnApriMappa"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="1"
+                            android:paddingTop="5dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/mapbutton_removebg_preview"
+
+                            />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="8dp"
+                            android:text="@string/mappa_string"
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </FrameLayout>
 
 
 
@@ -76,95 +197,24 @@
             android:padding="25dp"
             android:textStyle="normal" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="140dp"
-            android:layout_height="130dp"
-            android:id="@+id/cardInfoCentro"
-            android:layout_below="@id/Benvenuto"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="134dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="8dp"
-
-          >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#2A7FB8"
-                android:padding="1dp">
-
-                <ImageView
-                    android:id="@+id/btnInfoCentroImage"
-                    android:layout_width="116dp"
-                    android:layout_height="81dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:src="@drawable/home_2x_removebg_preview" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:paddingBottom="8dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/info_centro"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="140dp"
-            android:layout_height="130dp"
-            android:id="@+id/cardMap"
-            android:layout_below="@id/cardInfoCentro"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="30dp"
-            app:cardElevation="8dp"
-            android:layout_marginTop="-130dp"
-            app:cardCornerRadius="15dp"
-          >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#2A7FB8"
-                android:padding="1dp">
-
-                <ImageView
-                    android:id="@+id/btnApriMappa"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/mapbutton_removebg_preview"
-                    android:scaleType="fitCenter"
-                    android:paddingTop="5dp"
-                    android:layout_weight="1"
-
-                     />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mappa_string"
-                    android:textAlignment="center"
-                    android:paddingBottom="8dp"
-                    android:textColor="#FFFFFF" />
-
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
+            android:layout_marginTop="403dp"
+            android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="140dp"
             android:layout_height="130dp"
             android:id="@+id/cardMedia"
-            android:layout_below="@id/cardMap"
-           android:layout_alignParentLeft="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="30dp"
+
+            android:padding="6dp"
+            android:layout_marginStart="28dp"
+
+            android:layout_marginTop="10dp"
+
             app:cardCornerRadius="15dp"
             app:cardElevation="8dp"
            >
@@ -179,10 +229,12 @@
                 <ImageView
                     android:id="@+id/btnMediaImage"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:paddingTop="5dp"
+                    android:layout_height="104dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:src="@drawable/medic_removebg_preview" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/untitled_design__8__removebg_preview" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -199,10 +251,10 @@
             android:id="@+id/cardSaluteR"
             android:layout_width="140dp"
             android:layout_height="130dp"
-            android:layout_below="@id/cardMedia"
-            android:layout_alignParentEnd="true"
+           android:padding="6dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="-131dp"
+            android:layout_marginTop="10dp"
             app:cardElevation="8dp"
             app:cardCornerRadius="15dp"
 
@@ -232,6 +284,6 @@
                     android:textColor="#FFFFFF" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
+        </LinearLayout>
     </RelativeLayout>
-</ScrollView>
+

@@ -109,7 +109,7 @@ public class HomeR extends AppCompatActivity {
                 }
             });
 
-            Button btnGeneraQR = findViewById(R.id.generaQrRichiedente);
+            CardView btnGeneraQR = findViewById(R.id.generaQrRichiedente);
             btnGeneraQR.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
