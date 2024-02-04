@@ -10,11 +10,25 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Title -->
+        <TextView
+            android:id="@+id/titleParametri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/parametri_medici"
+            android:textSize="24sp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp" />
+
         <!-- BarChart for TemperaturaCorporea -->
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChartTemperaturaCorporea"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="200dp"
+            android:layout_below="@id/titleParametri"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
 
         <!-- BarChart for FrequenzaCardiaca -->
         <com.github.mikephil.charting.charts.BarChart
@@ -22,7 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/barChartTemperaturaCorporea"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
 
         <!-- BarChart for PressioneMax -->
         <com.github.mikephil.charting.charts.BarChart
@@ -30,7 +46,9 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/barChartFrequenzaCardiaca"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
 
         <!-- BarChart for PressioneMin -->
         <com.github.mikephil.charting.charts.BarChart
@@ -38,7 +56,9 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/barChartPressioneMax"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
 
         <!-- BarChart for Saturazione -->
         <com.github.mikephil.charting.charts.BarChart
@@ -46,7 +66,9 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/barChartPressioneMin"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
 
         <!-- BarChart for Glucosio -->
         <com.github.mikephil.charting.charts.BarChart
@@ -54,7 +76,21 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/barChartSaturazione"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
+
+        <!-- Your message TextView -->
+        <TextView
+            android:id="@+id/messageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleParametri"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textSize="16sp"
+            android:layout_marginTop="24dp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

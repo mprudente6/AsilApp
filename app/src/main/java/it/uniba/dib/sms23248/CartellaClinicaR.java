@@ -147,7 +147,7 @@ public class CartellaClinicaR extends Fragment {
                         String field = entry.getKey();
 
                         // Skip the field you want to exclude (e.g., "Utente")
-                        if (!field.equals("Utente")) {
+                        if (!field.equals("Utente") && !field.equals("ID_RichiedenteAsilo")) {
                             Object value = entry.getValue();
 
                             // Update the corresponding view if the field exists

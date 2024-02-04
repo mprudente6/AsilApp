@@ -1,20 +1,25 @@
 package it.uniba.dib.sms23248;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,6 +64,7 @@ public class ParametriMediciR extends Fragment {
             BarChart barChart = barCharts.get(i);
             if (barChart != null) {
                 barChart.setNoDataText(getString(R.string.noChartData) + "\n" + getFieldName(i));
+                barChart.setVisibility(View.GONE); // Hide the empty chart
             }
         }
 
@@ -129,6 +135,7 @@ public class ParametriMediciR extends Fragment {
             dataSet.setColors(getColor(fieldName));
             dataSet.setDrawValues(true);
             dataSet.setValueTextSize(12f);
+            dataSet.setValueFormatter(new CustomValueFormatter(fieldName)); // Set custom value formatter
 
             BarData barData = new BarData(dataSet);
 
@@ -137,20 +144,65 @@ public class ParametriMediciR extends Fragment {
 
             barChart.setData(barData);
 
-            // Hide the empty chart if there are no values
-            if (entries.isEmpty()) {
-                barChart.setVisibility(View.GONE);
-            }
+            // Show the chart
+            barChart.setVisibility(View.VISIBLE);
 
             barChart.invalidate();
         }
 
         // Show toast only if all charts are empty
         if (allChartsEmpty) {
-            showToast(getString(R.string.noParametri));
+            displayMessage();
         }
 
         allChartsEmpty = true; // Reset the flag for the next iteration
+    }
+
+    // Custom ValueFormatter for formatting chart values
+    private static class CustomValueFormatter extends ValueFormatter {
+        private final String fieldName;
+
+        public CustomValueFormatter(String fieldName) {
+            this.fieldName = fieldName;
+        }
+
+        @Override
+        public String getBarLabel(BarEntry barEntry) {
+            // Append measurement unit based on field name
+            switch (fieldName) {
+                case "TemperaturaCorporea":
+                    return barEntry.getY() + " °C";
+                case "FrequenzaCardiaca":
+                    return barEntry.getY() + " BPM";
+                case "PressioneMax":
+                    return barEntry.getY() + " mmHg";
+                case "PressioneMin":
+                    return barEntry.getY() + " mmHg";
+                case "Saturazione":
+                    return barEntry.getY() + " %";
+                case "Glucosio":
+                    return barEntry.getY() + " mg/dL";
+                default:
+                    return String.valueOf(barEntry.getY());
+            }
+        }
+    }
+
+    private void displayMessage() {
+        // Get the RelativeLayout
+        RelativeLayout relativeLayout = requireView().findViewById(R.id.chartContainer);
+
+        // Remove all BarChart views
+        for (BarChart barChart : barCharts) {
+            if (barChart != null) {
+                relativeLayout.removeView(barChart);
+            }
+        }
+
+        // Display your message below the title
+        TextView messageTextView = requireView().findViewById(R.id.messageTextView);
+        messageTextView.setText(getString(R.string.noParametri));
+        messageTextView.setVisibility(View.VISIBLE);
     }
 
     private void customizeBarChart(BarChart barChart, List<String> dateValues) {
@@ -162,6 +214,18 @@ public class ParametriMediciR extends Fragment {
 
         // Disable X-axis labels
         barChart.getXAxis().setEnabled(false);
+
+        // Customize legend
+        Legend legend = barChart.getLegend();
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setTextSize(16f); // Set legend text size
+        legend.setTypeface(Typeface.DEFAULT_BOLD);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+
+        // Add margin to the legend
+        legend.setYOffset(12f); // Set the vertical offset
+        legend.setXOffset(10f); // Set the horizontal offset
     }
 
     private String getDisplayName(String fieldName) {
@@ -184,20 +248,20 @@ public class ParametriMediciR extends Fragment {
     }
 
     private int getColor(String fieldName) {
-        // Assign colors based on field name
+        // Assign colors based on field name using ColorTemplate
         switch (fieldName) {
             case "TemperaturaCorporea":
-                return Color.RED;
+                return ColorTemplate.JOYFUL_COLORS[0];
             case "FrequenzaCardiaca":
-                return Color.MAGENTA;
+                return ColorTemplate.LIBERTY_COLORS[1];
             case "PressioneMax":
-                return Color.CYAN;
+                return ColorTemplate.JOYFUL_COLORS[2];
             case "PressioneMin":
-                return Color.BLUE;
+                return ColorTemplate.LIBERTY_COLORS[2];
             case "Saturazione":
-                return Color.GREEN;
+                return ColorTemplate.JOYFUL_COLORS[4];
             case "Glucosio":
-                return Color.YELLOW;
+                return ColorTemplate.LIBERTY_COLORS[0];
             default:
                 return Color.GRAY;
         }
