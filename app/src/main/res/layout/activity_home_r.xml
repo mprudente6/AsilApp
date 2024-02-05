@@ -16,11 +16,11 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/generaQrRichiedente"
             android:layout_width="wrap_content"
-            android:layout_height="59dp"
+            android:layout_height="70dp"
             android:layout_below="@id/Benvenuto"
             android:layout_marginStart="25dp"
             android:layout_marginTop="2dp"
-            android:elevation="8dp"
+            android:elevation="3dp"
             android:layout_marginEnd="103dp"
             android:backgroundTint="#FD9D50"
            app:cardCornerRadius="100dp"
@@ -44,14 +44,14 @@
 
 
                 <ImageView
-                    android:layout_width="68dp"
-                    android:layout_height="61dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginRight="5dp"
-                    android:paddingTop="5dp"
-                    android:scaleType="centerCrop"
-                    android:paddingBottom="5dp"
-
                     android:layout_weight="1"
+
+
+
+                    android:scaleType="fitCenter"
                     android:src="@drawable/qcode_removebg_preview">
 
                 </ImageView>
@@ -79,7 +79,7 @@
                 android:id="@+id/avatar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/user1"
+                android:src="@drawable/profilllle_removebg_preview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/toolbar"
                 android:layout_marginEnd="2dp"

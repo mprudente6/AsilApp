@@ -64,19 +64,20 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btnSaluteS"
                     android:layout_width="wrap_content"
-                    android:layout_height="61dp"
+                    android:layout_height="70dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     app:cardCornerRadius="60dp"
                     android:layout_marginTop="120dp"
-                   app:cardElevation="8dp"
+                   app:cardElevation="3dp"
                     android:backgroundTint="#FF076AEC"
                     android:elevation="12dp"
 
                    >
                     <LinearLayout
                         android:layout_width="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_height="wrap_content">
 
                         <TextView
@@ -93,14 +94,14 @@
                         </TextView>
 
                         <ImageView
-                            android:layout_width="68dp"
-                            android:layout_height="61dp"
+                            android:layout_width="65dp"
+                            android:layout_height="63dp"
+                            android:layout_marginTop="-6dp"
                             android:layout_marginRight="5dp"
-                            android:paddingTop="5dp"
-                            android:scaleType="centerCrop"
-                            android:paddingBottom="5dp"
-
                             android:layout_weight="1"
+
+
+                            android:scaleType="fitCenter"
                             android:src="@drawable/qcode_removebg_preview">
 
                         </ImageView>
@@ -134,7 +135,7 @@
 
                     android:layout_marginTop="110dp"
                     android:backgroundTint="#FD9D50"
-                    android:elevation="12dp"
+                    android:elevation="4dp"
                     app:cardCornerRadius="60dp">
 
                     <LinearLayout
@@ -172,7 +173,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="200dp"
                     android:backgroundTint="#FD9D50"
-                    android:elevation="12dp"
+                    android:elevation="4dp"
                     app:cardCornerRadius="60dp">
 
                     <LinearLayout
@@ -198,7 +199,7 @@
                             android:layout_height="60dp"
                             android:layout_weight="1"
                             android:paddingRight="7dp"
-                            android:src="@drawable/user1">
+                            android:src="@drawable/profilllle_removebg_preview">
 
                         </ImageView>
                     </LinearLayout>
