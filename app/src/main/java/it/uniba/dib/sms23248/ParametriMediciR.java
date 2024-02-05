@@ -1,17 +1,22 @@
 package it.uniba.dib.sms23248;
 
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -25,12 +30,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
+
 public class ParametriMediciR extends Fragment {
+
     private FirebaseFirestore firestore;
     private String userId;
     private List<BarChart> barCharts;
@@ -47,11 +56,9 @@ public class ParametriMediciR extends Fragment {
         if (currentUser != null) {
             userId = currentUser.getUid();
         } else {
-            // Handle the case where the user is not logged in
             showToast("User not logged in");
         }
 
-        // Initialize the list of BarCharts
         barCharts = new ArrayList<>();
         barCharts.add(view.findViewById(R.id.barChartTemperaturaCorporea));
         barCharts.add(view.findViewById(R.id.barChartFrequenzaCardiaca));
@@ -64,17 +71,33 @@ public class ParametriMediciR extends Fragment {
             BarChart barChart = barCharts.get(i);
             if (barChart != null) {
                 barChart.setNoDataText(getString(R.string.noChartData) + "\n" + getFieldName(i));
-                barChart.setVisibility(View.GONE); // Hide the empty chart
+                barChart.setVisibility(View.GONE);
             }
         }
 
-        fetchDataFromFirestore(userId);
+        Button shareButton = view.findViewById(R.id.shareButton);
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                    shareData();
+                } else {
+                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            fetchDataFromFirestore(userId);
+        } else {
+            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+        }
 
         return view;
     }
 
     private String getFieldName(int index) {
-        // Return the field name based on the index
         String[] fieldNames = {"Temperatura Corporea", "Frequenza Cardiaca", "Pressione Massima", "Pressione Minima", "Saturazione", "Glicemia"};
         return fieldNames[index];
     }
@@ -99,7 +122,6 @@ public class ParametriMediciR extends Fragment {
                                 Object fieldValue = entry.getValue();
 
                                 if (!fieldName.equals("Utente") && !fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
-                                    // Handle the field name and value
                                     float value = ((Number) fieldValue).floatValue();
 
                                     if (value != 0) {
@@ -115,10 +137,8 @@ public class ParametriMediciR extends Fragment {
                             }
                         }
 
-                        // Populate and adjust the BarCharts
                         setupBarCharts(fieldEntriesMap, dateValues);
                     } else {
-                        // Handle errors
                         showToast("Error fetching data");
                     }
                 });
@@ -135,7 +155,7 @@ public class ParametriMediciR extends Fragment {
             dataSet.setColors(getColor(fieldName));
             dataSet.setDrawValues(true);
             dataSet.setValueTextSize(12f);
-            dataSet.setValueFormatter(new CustomValueFormatter(fieldName)); // Set custom value formatter
+            dataSet.setValueFormatter(new CustomValueFormatter(fieldName));
 
             BarData barData = new BarData(dataSet);
 
@@ -144,21 +164,18 @@ public class ParametriMediciR extends Fragment {
 
             barChart.setData(barData);
 
-            // Show the chart
             barChart.setVisibility(View.VISIBLE);
 
             barChart.invalidate();
         }
 
-        // Show toast only if all charts are empty
         if (allChartsEmpty) {
             displayMessage();
         }
 
-        allChartsEmpty = true; // Reset the flag for the next iteration
+        allChartsEmpty = true;
     }
 
-    // Custom ValueFormatter for formatting chart values
     private static class CustomValueFormatter extends ValueFormatter {
         private final String fieldName;
 
@@ -168,7 +185,6 @@ public class ParametriMediciR extends Fragment {
 
         @Override
         public String getBarLabel(BarEntry barEntry) {
-            // Append measurement unit based on field name
             switch (fieldName) {
                 case "TemperaturaCorporea":
                     return barEntry.getY() + " °C";
@@ -188,44 +204,86 @@ public class ParametriMediciR extends Fragment {
         }
     }
 
+    private void shareData() {
+        String subject = "MISURAZIONE PARAMETRI MEDICI - ULTIMA VISITA";
+
+        fetchLastDocumentFromFirestore(userId, new FirestoreCallback() {
+            @Override
+            public void onDataFetched(String text) {
+                if (text.isEmpty()) {
+                    showToast("Non ci sono dati da condividere");
+                } else {
+                    List<Intent> targetedShareIntents = new ArrayList<>();
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+
+                    List<ResolveInfo> resInfo = requireContext().getPackageManager().queryIntentActivities(shareIntent, 0);
+
+                    if (!resInfo.isEmpty()) {
+                        for (ResolveInfo resolveInfo : resInfo) {
+                            String packageName = resolveInfo.activityInfo.packageName;
+                            if (packageName.contains("com.whatsapp") || packageName.contains("com.google.android.gm")) {
+                                Intent targeted = new Intent(Intent.ACTION_SEND);
+                                targeted.setType("text/plain");
+                                targeted.putExtra(Intent.EXTRA_SUBJECT, subject);
+                                targeted.putExtra(Intent.EXTRA_TEXT, text);
+                                targeted.setPackage(packageName);
+                                targetedShareIntents.add(targeted);
+                            }
+                        }
+
+                        if (!targetedShareIntents.isEmpty()) {
+                            Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "Scegli l'app con cui condividere i tuoi dati");
+                            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Intent[]{}));
+                            startActivity(chooserIntent);
+                        } else {
+                            showToast("Nessuna app è in grado di eseguire questa azione.");
+                        }
+                    } else {
+                        showToast("Nessuna app è in grado di eseguire questa azione.");
+                    }
+                }
+            }
+        });
+    }
+
     private void displayMessage() {
-        // Get the RelativeLayout
         RelativeLayout relativeLayout = requireView().findViewById(R.id.chartContainer);
 
-        // Remove all BarChart views
         for (BarChart barChart : barCharts) {
             if (barChart != null) {
                 relativeLayout.removeView(barChart);
             }
         }
 
-        // Display your message below the title
+        Button shareButton = requireView().findViewById(R.id.shareButton);
+        shareButton.setVisibility(View.GONE);
+
         TextView messageTextView = requireView().findViewById(R.id.messageTextView);
         messageTextView.setText(getString(R.string.noParametri));
         messageTextView.setVisibility(View.VISIBLE);
     }
 
     private void customizeBarChart(BarChart barChart, List<String> dateValues) {
-        barChart.getDescription().setEnabled(false); // Disable description
+        barChart.getDescription().setEnabled(false);
 
         barChart.getXAxis().setValueFormatter(new DateAxisValueFormatter(dateValues));
 
-        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM); // Display X-axis at the bottom
+        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        // Disable X-axis labels
         barChart.getXAxis().setEnabled(false);
 
-        // Customize legend
         Legend legend = barChart.getLegend();
         legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setTextSize(16f); // Set legend text size
+        legend.setTextSize(16f);
         legend.setTypeface(Typeface.DEFAULT_BOLD);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
 
-        // Add margin to the legend
-        legend.setYOffset(12f); // Set the vertical offset
-        legend.setXOffset(10f); // Set the horizontal offset
+        legend.setYOffset(12f);
+        legend.setXOffset(10f);
     }
 
     private String getDisplayName(String fieldName) {
@@ -248,7 +306,6 @@ public class ParametriMediciR extends Fragment {
     }
 
     private int getColor(String fieldName) {
-        // Assign colors based on field name using ColorTemplate
         switch (fieldName) {
             case "TemperaturaCorporea":
                 return ColorTemplate.JOYFUL_COLORS[0];
@@ -271,7 +328,6 @@ public class ParametriMediciR extends Fragment {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    // Custom ValueFormatter for X-axis to display date values
     private static class DateAxisValueFormatter extends ValueFormatter {
         private final List<String> dateValues;
 
@@ -286,6 +342,65 @@ public class ParametriMediciR extends Fragment {
                 return dateValues.get(index);
             }
             return "";
+        }
+    }
+
+    private interface FirestoreCallback {
+        void onDataFetched(String text);
+    }
+
+    private void fetchLastDocumentFromFirestore(String uid, FirestoreCallback callback) {
+        firestore.collection("PARAMETRI_UTENTI")
+                .whereEqualTo("ID_RichiedenteAsilo", uid)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String shareText = "";
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String dateValue = document.getString("DataVisita");
+                            shareText = "Data Ultima Visita: " + dateValue + "\n";
+                            Map<String, Object> data = document.getData();
+
+                            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                                String fieldName = entry.getKey();
+                                Object fieldValue = entry.getValue();
+
+                                if (!fieldName.equals("Utente") && !fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
+                                    float value = ((Number) fieldValue).floatValue();
+
+                                    if (value != 0) {
+                                        shareText += "Parametro: " + getDisplayName(fieldName) + "\n" +
+                                                "Valore: " + value + " " + getMeasurementUnit(fieldName) + "\n";
+                                    }
+                                }
+                            }
+                        }
+
+                        callback.onDataFetched(shareText);
+                    } else {
+                        callback.onDataFetched("");
+                    }
+                });
+    }
+
+    private String getMeasurementUnit(String fieldName) {
+        // Return the measurement unit based on the field name
+        switch (fieldName) {
+            case "TemperaturaCorporea":
+                return "°C";
+            case "FrequenzaCardiaca":
+                return "BPM";
+            case "PressioneMax":
+            case "PressioneMin":
+                return "mmHg";
+            case "Saturazione":
+                return "%";
+            case "Glucosio":
+                return "mg/dL";
+            default:
+                return "";
         }
     }
 }
