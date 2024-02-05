@@ -89,7 +89,7 @@ public class ParametriMediciR extends Fragment {
         });
 
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
-            fetchDataFromFirestore(userId);
+            fetchUserDataFromFirestore(userId);
         } else {
             Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
         }
@@ -102,7 +102,7 @@ public class ParametriMediciR extends Fragment {
         return fieldNames[index];
     }
 
-    private void fetchDataFromFirestore(String uid) {
+    private void fetchUserDataFromFirestore(String uid) {
         firestore.collection("PARAMETRI_UTENTI")
                 .whereEqualTo("ID_RichiedenteAsilo", uid)
                 .get()
