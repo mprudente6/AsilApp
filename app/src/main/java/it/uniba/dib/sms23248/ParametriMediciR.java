@@ -31,9 +31,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
@@ -45,6 +50,9 @@ public class ParametriMediciR extends Fragment {
     private List<BarChart> barCharts;
 
     boolean allChartsEmpty = true;
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+//    String formattedCurrentDate = dateFormat.format(new Date());
 
     @Nullable
     @Override
@@ -213,12 +221,12 @@ public class ParametriMediciR extends Fragment {
                 if (text.isEmpty()) {
                     showToast("Non ci sono dati da condividere");
                 } else {
-                    List<Intent> targetedShareIntents = new ArrayList<>();
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
                     shareIntent.putExtra(Intent.EXTRA_TEXT, text);
 
+                    List<Intent> targetedShareIntents = new ArrayList<>();
                     List<ResolveInfo> resInfo = requireContext().getPackageManager().queryIntentActivities(shareIntent, 0);
 
                     if (!resInfo.isEmpty()) {
@@ -352,37 +360,82 @@ public class ParametriMediciR extends Fragment {
     private void fetchLastDocumentFromFirestore(String uid, FirestoreCallback callback) {
         firestore.collection("PARAMETRI_UTENTI")
                 .whereEqualTo("ID_RichiedenteAsilo", uid)
-                .limit(1)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        String shareText = "";
+                        List<String> documentStrings = new ArrayList<>();
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String dateValue = document.getString("DataVisita");
-                            shareText = "Data Ultima Visita: " + dateValue + "\n";
-                            Map<String, Object> data = document.getData();
 
-                            for (Map.Entry<String, Object> entry : data.entrySet()) {
-                                String fieldName = entry.getKey();
-                                Object fieldValue = entry.getValue();
+                            // Convert dateValue to Date object
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            Date date = null;
+                            try {
+                                date = dateFormat.parse(dateValue);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
 
-                                if (!fieldName.equals("Utente") && !fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
-                                    float value = ((Number) fieldValue).floatValue();
-
-                                    if (value != 0) {
-                                        shareText += "Parametro: " + getDisplayName(fieldName) + "\n" +
-                                                "Valore: " + value + " " + getMeasurementUnit(fieldName) + "\n";
-                                    }
-                                }
+                            if (date != null) {
+                                documentStrings.add(documentDataToString(document.getData(), date));
                             }
                         }
 
-                        callback.onDataFetched(shareText);
+                        // Sort the array based on the parsed date
+                        Collections.sort(documentStrings, (s1, s2) -> {
+                            try {
+                                Date date1 = dateFormat.parse(getDateValueFromString(s1));
+                                Date date2 = dateFormat.parse(getDateValueFromString(s2));
+                                return date2.compareTo(date1);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            return 0;
+                        });
+
+                        if (!documentStrings.isEmpty()) {
+                            String shareText = documentStrings.get(0); // Get the most recent document
+                            callback.onDataFetched(shareText);
+                        } else {
+                            callback.onDataFetched("");
+                        }
                     } else {
                         callback.onDataFetched("");
                     }
                 });
+    }
+
+    private String documentDataToString(Map<String, Object> data, Date date) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Data Ultima Visita: ").append(dateFormat.format(date)).append("\n");
+
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            String fieldName = entry.getKey();
+            Object fieldValue = entry.getValue();
+
+            if (!fieldName.equals("Utente") && !fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
+                float value = ((Number) fieldValue).floatValue();
+
+                if (value != 0) {
+                    stringBuilder.append("Parametro: ").append(getDisplayName(fieldName)).append("\n")
+                            .append("Valore: ").append(value).append(" ").append(getMeasurementUnit(fieldName)).append("\n");
+                }
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
+    private String getDateValueFromString(String documentString) {
+        // Extract and return the date value from the document string
+        String[] lines = documentString.split("\n");
+        for (String line : lines) {
+            if (line.startsWith("Data Ultima Visita:")) {
+                return line.substring("Data Ultima Visita: ".length()).trim();
+            }
+        }
+        return "";
     }
 
     private String getMeasurementUnit(String fieldName) {

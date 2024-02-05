@@ -337,7 +337,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         data.put("TemperaturaCorporea", formatDouble(simulatedTemperature));
 
         if (heartRate != 0) {
-            data.put("FrequenzaCardiaca", heartRate);
+            data.put("FrequenzaCardiaca", formatDouble(heartRate));
         } else {
             data.put("FrequenzaCardiaca", simulatedHeartRate);
         }
