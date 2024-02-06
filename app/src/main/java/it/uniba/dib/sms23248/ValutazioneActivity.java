@@ -43,21 +43,20 @@ public class ValutazioneActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         userId = mAuth.getCurrentUser().getUid();
 
-        // Initialize RatingBar and Submit Button
         ratingBar = findViewById(R.id.ratingBar);
         submitRatingButton = findViewById(R.id.submitRatingButton);
 
-        // Set listener for changes in RatingBar
+            // Imposta listener per le modifiche nella RatingBar
         ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
-            // Enable the submit button once the user rates
-            enableSubmitButton(rating > 0); // Hide button if no stars are selected
+            // pulsante di invio abilitato solo dopo aver selezionato le stelle
+            enableSubmitButton(rating > 0); // pulsante nascosto se nessuna stella è selezionata
         });
 
-        // Set click listener for submit button
+        // al click del pulsante di invio ottieni punteggio
         submitRatingButton.setOnClickListener(view -> {
             float userRating = ratingBar.getRating();
 
-            if (userRating > 0) {
+            if (userRating > 0) { // salva dato solo se > 0
                 // Call method to submit the rating to Firestore
                 if (NetworkUtils.isNetworkAvailable(ValutazioneActivity.this)) {
                 submitUserRatingToFirestore(userId, userRating);
@@ -68,38 +67,34 @@ public class ValutazioneActivity extends AppCompatActivity {
         });
     }
 
-    // Method to enable the submit button once the user rates
+    // abilita-disabilita e mostra-nascondi pulsante
     private void enableSubmitButton(boolean enable) {
         submitRatingButton.setEnabled(enable);
         submitRatingButton.setVisibility(enable ? View.VISIBLE : View.GONE);
     }
 
-    // Method to submit the user's rating data to Firestore
+    // salva nel db
     private void submitUserRatingToFirestore(String userId, float userRating) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
-        // Get the document reference based on the UID
         DocumentReference documentRef = db.collection("VALUTAZIONE").document(userId);
 
-        // Check if the document exists in the collection based on the UID
         documentRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
-                    // Document exists, update the 'Voto' field
+                    // documento esistente: aggiornalo
                     updateExistingDocument(documentRef, userRating);
                 } else {
-                    // Document does not exist, create a new one
+                    // altrimenti: creane uno
                     createNewDocument(documentRef, userRating);
                 }
             } else {
-                // Handle error
                 Toast.makeText(getApplicationContext(), "Errore nella ricerca del documento", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Method to update an existing document
     private void updateExistingDocument(DocumentReference documentRef, float userRating) {
         Map<String, Object> ratingData = new HashMap<>();
         ratingData.put("Voto", (int) userRating);
@@ -107,35 +102,29 @@ public class ValutazioneActivity extends AppCompatActivity {
         documentRef.update(ratingData)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Show success message using Toast
                         Toast.makeText(getApplicationContext(), "Recensione aggiornata con successo!", Toast.LENGTH_SHORT).show();
                     } else {
-                        // Handle error
                         Toast.makeText(getApplicationContext(), "Errore nell'aggiornamento della recensione", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    // Method to create a new document in the Firestore collection
     private void createNewDocument(DocumentReference documentRef, float userRating) {
         Map<String, Object> ratingData = new HashMap<>();
-        ratingData.put("ID_RichiedenteAsilo", userId);
+        ratingData.put("ID_RichiedenteAsilo", userId); // salva UID dell'utente loggato come campo
         ratingData.put("Voto", (int) userRating);
 
         documentRef.set(ratingData)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Show success message using Toast
                         Toast.makeText(getApplicationContext(), "Recensione salvata con successo!", Toast.LENGTH_SHORT).show();
                     } else {
-                        // Handle error
                         Toast.makeText(getApplicationContext(), "Errore nel salvataggio della recensione", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
     @Override
     protected void onDestroy() {
-        // Unregister the BroadcastReceiver when the activity is destroyed
         super.onDestroy();
         if (networkChangeReceiver != null) {
             unregisterReceiver(networkChangeReceiver);
