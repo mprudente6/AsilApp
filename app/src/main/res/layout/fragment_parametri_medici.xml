@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,14 +21,16 @@
             android:layout_height="wrap_content"
             android:visibility="gone">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/temperatureButton"
+                style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Temperatura"
+                android:text="@string/temperatura"
                 android:drawableLeft="@drawable/temperature_icon"
-                android:minWidth="224dp"
-                android:minHeight="64dp" />
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/temperatureProgressBar"
@@ -43,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:textStyle="bold"
                 android:visibility="gone"
                 android:layout_marginStart="16dp" />
         </LinearLayout>
@@ -55,14 +57,16 @@
             android:layout_below="@id/temperatureLayout"
             android:visibility="gone">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/heartRateButton"
+                style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Frequenza cardiaca"
+                android:text="@string/frequenza_cardiaca"
                 android:drawableLeft="@drawable/heart_rate_icon"
-                android:minWidth="224dp"
-                android:minHeight="64dp" />
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/heartRateProgressBar"
@@ -76,6 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:textStyle="bold"
                 android:visibility="gone"
                 android:layout_marginStart="16dp" />
         </LinearLayout>
@@ -88,14 +93,16 @@
             android:layout_below="@id/heartRateLayout"
             android:visibility="gone">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/bloodPressureButton"
+                style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pressione"
+                android:text="@string/pressione"
                 android:drawableLeft="@drawable/blood_pressure_icon"
-                android:minWidth="224dp"
-                android:minHeight="64dp" />
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/bloodPressureProgressBar"
@@ -109,6 +116,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:textStyle="bold"
                 android:visibility="gone"
                 android:layout_marginStart="16dp" />
         </LinearLayout>
@@ -121,14 +129,16 @@
             android:layout_below="@id/bloodPressureLayout"
             android:visibility="gone">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pulseOxButton"
+                style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Saturazione"
+                android:text="@string/saturazione"
                 android:drawableLeft="@drawable/pulse_ox_icon"
-                android:minWidth="224dp"
-                android:minHeight="64dp" />
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/pulseOxProgressBar"
@@ -142,6 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:textStyle="bold"
                 android:visibility="gone"
                 android:layout_marginStart="16dp" />
         </LinearLayout>
@@ -154,14 +165,16 @@
             android:layout_below="@id/pulseOxLayout"
             android:visibility="gone">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/glucoseButton"
+                style="@style/Widget.MaterialComponents.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Glicemia"
+                android:text="@string/glicemia"
                 android:drawableLeft="@drawable/glucose_icon"
-                android:minWidth="224dp"
-                android:minHeight="64dp" />
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/glucoseProgressBar"
@@ -175,25 +188,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:textStyle="bold"
                 android:visibility="gone"
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <!-- Sixth Row: Save Button -->
+        <!-- Save Button -->
         <Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/glucoseLayout"
-            android:text="SALVA"
-
-            app:icon="@android:drawable/ic_menu_save"
-            android:padding="12dp"
-            android:layout_marginTop="40dp"
-            app:cornerRadius="22dp"
+            android:text="@string/salva"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
             android:visibility="gone"
-            android:background="#FF076AEC" />
+            android:backgroundTint="#FF076AEC" />
 
+        <!-- 'Apri Contenitore' Button -->
         <Button
             android:id="@+id/apriContenitore"
             android:layout_width="wrap_content"
@@ -205,8 +217,7 @@
             android:backgroundTint="#FF076AEC"
             android:minWidth="224dp"
             android:minHeight="64dp"
-            android:text="Apri contenitore" />
-
+            android:text="@string/apri_contenitore" />
 
     </RelativeLayout>
 </ScrollView>

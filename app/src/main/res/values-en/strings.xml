@@ -136,7 +136,14 @@
     <string name="app_utile">Enjoying AsilApp?</string>
     <string name="punteggio_stelle">Tap a star to rate the app (select 1-5 stars).</string>
     <string name="conferma_valutazione">Submit</string>
-    <string name="salva">SAVE</string>
+    <string name="salva">Save</string>
     <string name="noChartData">No measurement detected for </string>
     <string name="noParametri">You haven\'t made your first visit yet...</string>
+    <string name="anagrafica_utente">Personal details</string>
+    <string name="apri_contenitore">Open container</string>
+    <string name="temperatura">Temperature</string>
+    <string name="frequenza_cardiaca">Heart rate</string>
+    <string name="pressione">Blood pressure</string>
+    <string name="saturazione">Pulse ox</string>
+    <string name="glicemia">Glycemia</string>
 </resources>

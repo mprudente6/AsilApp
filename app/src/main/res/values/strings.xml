@@ -143,8 +143,14 @@
     <string name="app_utile">Trovi che l’app sia utile?</string>
     <string name="punteggio_stelle">Valuta l’app lasciando un punteggio da 1 a 5 stelle (da pessimo a eccellente)</string>
     <string name="conferma_valutazione">Conferma Valutazione</string>
-    <string name="salva">SALVA</string>
+    <string name="salva">Salva</string>
     <string name="noChartData">Nessuna misurazione di </string>
     <string name="noParametri">Non hai ancora effettuato la tua prima visita...</string>
     <string name="anagrafica_utente">Anagrafica Utente</string>
+    <string name="apri_contenitore">Apri contenitore</string>
+    <string name="temperatura">Temperatura</string>
+    <string name="frequenza_cardiaca">Frequenza cardiaca</string>
+    <string name="pressione">Pressione</string>
+    <string name="saturazione">Saturazione</string>
+    <string name="glicemia">Glicemia</string>
 </resources>

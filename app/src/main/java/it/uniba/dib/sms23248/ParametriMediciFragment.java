@@ -11,7 +11,6 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -39,9 +39,10 @@ import java.util.Map;
 import java.util.Random;
 
 public class ParametriMediciFragment extends Fragment implements SensorEventListener {
+
     private LinearLayout temperatureLayout, heartRateLayout, bloodPressureLayout, pulseOxLayout, glucoseLayout;
     private FirebaseFirestore firestore;
-    private String userId; // Assuming you have the user ID stored somewhere in your app
+    private String userId;
 
     Random random = new Random();
     private double simulatedTemperature = 0;
@@ -60,6 +61,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     boolean contenitoreAperto = pwContenitore.contenitoreAperto;
 
 
+    // conversione da tipo di dato Date a String
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     String formattedCurrentDate = dateFormat.format(new Date());
 
@@ -68,78 +70,91 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parametri_medici, container, false);
 
-        firestore = FirebaseFirestore.getInstance(); // Initialize Firebase
+        firestore = FirebaseFirestore.getInstance(); // Inizializza Firebase
 
+        // LinearLayout di ogni parametro medico
         temperatureLayout = view.findViewById(R.id.temperatureLayout);
         heartRateLayout = view.findViewById(R.id.heartRateLayout);
         bloodPressureLayout = view.findViewById(R.id.bloodPressureLayout);
         pulseOxLayout = view.findViewById(R.id.pulseOxLayout);
         glucoseLayout = view.findViewById(R.id.glucoseLayout);
 
-        userId = HomeS.UID; // Replace with your actual user ID
+        userId = HomeS.UID; // valore del QR code utente RichiedenteAsilo inquadrato dall'utente Staff loggato (= UID di RichiedenteAsilo)
 
-        Button temperatureButton = view.findViewById(R.id.temperatureButton);
-        Button heartRateButton = view.findViewById(R.id.heartRateButton);
-        Button bloodPressureButton = view.findViewById(R.id.bloodPressureButton);
-        Button pulseOxButton = view.findViewById(R.id.pulseOxButton);
-        Button glucoseButton = view.findViewById(R.id.glucoseButton);
+        // Pulsanti di misurazione
+        MaterialButton temperatureButton = view.findViewById(R.id.temperatureButton);
+        MaterialButton heartRateButton = view.findViewById(R.id.heartRateButton);
+        MaterialButton bloodPressureButton = view.findViewById(R.id.bloodPressureButton);
+        MaterialButton pulseOxButton = view.findViewById(R.id.pulseOxButton);
+        MaterialButton glucoseButton = view.findViewById(R.id.glucoseButton);
 
+        // unico elemento visualizzabile con la scansione del QR code utente nella pagina 'Contenitore Biomedicale'
         Button apriContenitoreButton = view.findViewById(R.id.apriContenitore);
         apriContenitoreButton.setOnClickListener(v -> apriContenitoreButtonClicked());
 
-
-        temperatureButton.setOnClickListener(v -> {
-            showLoadingLayout(temperatureLayout, R.id.temperatureProgressBar, R.id.temperatureResultTextView);
-            simulateTemperatureMeasurement();
-        });
-
-        heartRateButton.setOnClickListener(v -> {
-            checkHeartRateSensor();
-        });
-
-        bloodPressureButton.setOnClickListener(v -> {
-            showLoadingLayout(bloodPressureLayout, R.id.bloodPressureProgressBar, R.id.bloodPressureResultTextView);
-            simulateBloodPressureMeasurement();
-        });
-
-        pulseOxButton.setOnClickListener(v -> {
-            showLoadingLayout(pulseOxLayout, R.id.pulseOxProgressBar, R.id.pulseOxResultTextView);
-            simulatePulseOxMeasurement();
-        });
-
-        glucoseButton.setOnClickListener(v -> {
-            showLoadingLayout(glucoseLayout, R.id.glucoseProgressBar, R.id.glucoseResultTextView);
-            simulateGlucoseMeasurement();
-        });
-
-        // Find the save button by its ID
         Button saveButton = view.findViewById(R.id.saveButton);
 
-        // Set a click listener for the save button
+        // Al click del pulsante 'Salva' procedi con salvataggio dei dati di misurazione raccolti
         saveButton.setOnClickListener(v -> saveButtonClicked());
 
         if (contenitoreAperto) {
-            // Set visibility of other layouts to visible
+            // rendi visibile i pulsanti di misurazione
             temperatureLayout.setVisibility(View.VISIBLE);
             heartRateLayout.setVisibility(View.VISIBLE);
             bloodPressureLayout.setVisibility(View.VISIBLE);
             pulseOxLayout.setVisibility(View.VISIBLE);
             glucoseLayout.setVisibility(View.VISIBLE);
-            saveButton.setVisibility(View.VISIBLE);
 
-            // Set visibility of the button to gone
+            // nascondi il pulsante 'Apri Contenitore'
             apriContenitoreButton.setVisibility(View.GONE);
         }
 
+        // Al click di ciascun pulsante di misurazione:
+        // mostra il pulsante 'Salva' ancora nascosto;
+        // mostra progress bar per simulare misurazione con ritardo di caricamento;
+        // mostra risultato della misurazione.
+
+        // Tutte le misurazioni dei parametri medici sono simulate.
+        // Se il dispositivo usato ha il sensore hardware Heart Rate, la frequenza cardiaca si potrà misurare realmente
+        temperatureButton.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            showLoadingLayout(temperatureLayout, R.id.temperatureProgressBar, R.id.temperatureResultTextView);
+            simulateTemperatureMeasurement();
+        });
+
+        heartRateButton.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            checkHeartRateSensor(); // controllo su presenza del sensore
+        });
+
+        bloodPressureButton.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            showLoadingLayout(bloodPressureLayout, R.id.bloodPressureProgressBar, R.id.bloodPressureResultTextView);
+            simulateBloodPressureMeasurement();
+        });
+
+        pulseOxButton.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            showLoadingLayout(pulseOxLayout, R.id.pulseOxProgressBar, R.id.pulseOxResultTextView);
+            simulatePulseOxMeasurement();
+        });
+
+        glucoseButton.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            showLoadingLayout(glucoseLayout, R.id.glucoseProgressBar, R.id.glucoseResultTextView);
+            simulateGlucoseMeasurement();
+        });
+
+        // premendo il tasto indietro da questa scheda l'utente visualizzerà:
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // Your logic for back press goes here
                 boolean contenitoreAperto = pwContenitore.contenitoreAperto;
+                // nuovamente la schermata con il solo pulsante 'Apri Contenitore' visibile
                 if (contenitoreAperto) {
                     pwContenitore.contenitoreAperto = false;
                     contenitoreAperto = pwContenitore.contenitoreAperto;
-                    // Set visibility of other layouts to visible
+
                     temperatureLayout.setVisibility(View.GONE);
                     heartRateLayout.setVisibility(View.GONE);
                     bloodPressureLayout.setVisibility(View.GONE);
@@ -147,10 +162,9 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
                     glucoseLayout.setVisibility(View.GONE);
                     saveButton.setVisibility(View.GONE);
 
-                    // Set visibility of the button to gone
                     apriContenitoreButton.setVisibility(View.VISIBLE);
-                } else {
-                    openScanCode();
+                } else { // l'utente sarà reindirizzato alla Home lato Staff
+                    openHomeS();
                 }
             }
         };
@@ -160,28 +174,35 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         return view;
     }
 
+    // al click del pulsante 'Apri Contenitore' procedi con funzionalità di:
+    // apertura della fotocamera;
+    // scansione del QR code Contenitore;
+    // inserimento di una password del Contenitore
     private void apriContenitoreButtonClicked() {
         Intent intent = new Intent(ParametriMediciFragment.this.getActivity(), Contenitore.class);
         startActivity(intent);
     }
 
     private void checkHeartRateSensor() {
-        // Initialize SensorManager
+        // Inizializza SensorManager
         sensorManager = (SensorManager) requireActivity().getSystemService(Context.SENSOR_SERVICE);
 
-        // Heart Rate Sensor
+        // Inizializza Heart Rate Sensor
         heartRateSensor = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
-        if (heartRateSensor != null) {
+        if (heartRateSensor != null) { // sensore disponibile: mostra istruzioni per l'uso
             sensorManager.registerListener(this, heartRateSensor, SensorManager.SENSOR_DELAY_NORMAL);
             showToast("Sensore Heart Rate disponibile sul tuo dispositivo!");
-            showMeasurementInstructions();
-        } else {
+
+            // Mostra istruzioni per misurare la frequenza cardiaca tramite il sensore presente nel dispositivo
+            showToast("Poggia il dito sul sensore per misurare la frequenza cardiaca");
+
+        } else { // sensore non disponibile: mostra risultato simulato con ritardo di caricamento
             showToast("Sensore Heart Rate non disponibile sul dispositivo...");
             showLoadingLayout(heartRateLayout, R.id.heartRateProgressBar, R.id.heartRateResultTextView);
             simulateHeartRateMeasurement();
         }
 
-        // Request runtime permissions if needed
+        // Richiesta di permessi a runtime se necessario
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (requireContext().checkSelfPermission(Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.BODY_SENSORS}, REQUEST_BODY_SENSORS);
@@ -189,53 +210,66 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         }
     }
 
-    private void showMeasurementInstructions() {
-        // Display instructions on how to measure heart rate through available hardware
-        Toast.makeText(requireContext(), "Poggia il dito sul sensore per misurare la frequenza cardiaca", Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void onSensorChanged(SensorEvent event) {
-        // Handle only heart rate sensor data changes
+        // Al cambiamento dei dati rilevati col sensore Heart Rate
         if (event.sensor.getType() == Sensor.TYPE_HEART_RATE) {
-            // Heart Rate data
+            // salva dati rilevati
             float heartRateTmp = event.values[0];
 
-            // Display heart rate measurement if it is different from 0
+            // Mostra il risultato della misurazione solo se:
+            // diverso da 0 e non ancora mostrato
             if (heartRateTmp != 0 && !isFirstHeartRateValueDisplayed) {
                 heartRate = heartRateTmp;
 
-                Log.d("HeartRate", "Frequenza cardiaca: " + formatDouble(heartRate) + " bpm");
-                showToast("Frequenza cardiaca: " + formatDouble(heartRate) + " bpm");
+                showToast("Valore di 'Frequenza cardiaca' rilevato con successo!");
+                showHeartRate(formatDouble(heartRate));
+
+                // il risultato è stato mostrato
                 isFirstHeartRateValueDisplayed = true;
 
-                onDestroy();
+                onDestroy(); // termina l'attività del sensore
             }
 
-            // Reset the flag when the heart rate becomes 0
+            // Fino a che il risultato è uguale a 0:
+            // la variabile flag booleana è false (dato non mostrato);
+            // mostra istruzioni
             if (heartRateTmp == 0) {
                 isFirstHeartRateValueDisplayed = false;
-                showMeasurementInstructions();
+
+                // Mostra istruzioni per misurare la frequenza cardiaca tramite il sensore presente nel dispositivo
+                showToast("Poggia il dito sul sensore per misurare la frequenza cardiaca");
             }
         }
     }
 
+    private void showHeartRate(double value) { // con sensore
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                TextView resultTextView = heartRateLayout.findViewById(R.id.heartRateResultTextView);
+                resultTextView.setVisibility(View.VISIBLE);
+                resultTextView.setText(String.format(Locale.getDefault(), "%.2f bpm", value));
+            }
+        },0);
+    }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Handle accuracy changes if needed
+        // Gestione della diversa precisione dei dati rilevati
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // Unregister sensor listeners when the fragment is destroyed
+        // Annulla la registrazione dei sensor listeners
         if (sensorManager != null) {
             sensorManager.unregisterListener(this, heartRateSensor);
         }
     }
 
     private void saveButtonClicked() {
-        // Check if any document exists for the user
+        // Controlla l'esistenza nel db del documento per lo specifico utente
         firestore.collection("PARAMETRI_UTENTI")
                 .whereEqualTo("ID_RichiedenteAsilo", userId)
                 .get()
@@ -244,15 +278,14 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
                         boolean documentExists = !task.getResult().isEmpty();
 
                         if (documentExists) {
-                            // If documents exist, check if there is a document with the current date
+                            // controlla se il documento esistente ha la data di oggi come valore del campo DataVisita
                             checkExistingDocumentWithCurrentDate();
                         } else {
-                            // If no documents exist, create a new document
+                            // documento inesistente: creane uno
                             showToast("Benvenuto! Questa è la tua prima visita.");
                             createNewDocument();
                         }
-                    } else {
-                        // Handle error
+                    } else { // Errore
                         showToast("Errore durante la verifica del documento");
                     }
                 });
@@ -260,7 +293,6 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
     private void checkExistingDocumentWithCurrentDate() {
 
-        // Check if there is a document with the current date
         firestore.collection("PARAMETRI_UTENTI")
                 .whereEqualTo("ID_RichiedenteAsilo", userId)
                 .whereEqualTo("DataVisita", formattedCurrentDate)
@@ -270,15 +302,15 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
                         boolean documentExistsWithCurrentDate = !task.getResult().isEmpty();
 
                         if (documentExistsWithCurrentDate) {
-                            // If a document with the current date exists, update it
+                            // se il documento esistente ha la data odierna, aggiornalo
                             DocumentSnapshot existingDocument = task.getResult().getDocuments().get(0);
                             updateExistingDocument(existingDocument.getId());
                         } else {
-                            // If no document with the current date exists, create a new one
+                            // altrimenti, creane uno nuovo
                             createNewDocument();
                         }
-                    } else {
-                        // Handle error
+
+                    } else { // Errore
                         showToast("Errore durante la verifica del documento");
                     }
                 });
@@ -287,11 +319,11 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     private void updateExistingDocument(String documentId) {
         Map<String, Object> data = new HashMap<>();
 
-        // Check and update each field if it has a non-zero value
+        // aggiorna il documento con ogni valore diverso da 0
         if (simulatedTemperature != 0) {
             data.put("TemperaturaCorporea", formatDouble(simulatedTemperature));
         }
-        if (heartRate != 0) {
+        if (heartRate != 0) { // se presente sensore, salva il valore rilevato
             data.put("FrequenzaCardiaca", formatDouble(heartRate));
         } else if (simulatedHeartRate != 0) {
             data.put("FrequenzaCardiaca", simulatedHeartRate);
@@ -310,19 +342,18 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
             //        data.put("Glicemia", simulatedGlucose);
         }
 
-        // Update the document in the database
+        // aggiorna nel db
         firestore.collection("PARAMETRI_UTENTI").document(documentId)
                 .update(data)
                 .addOnSuccessListener(aVoid -> {
-                    // Document successfully updated
                     showToast("Parametri medici aggiornati con successo!");
                 })
                 .addOnFailureListener(e -> {
-                    // Handle update failures
                     showToast("Errore nell'aggiornamento dei parametri medici");
                 });
     }
 
+    // arrotonda i valori di tipo double
     private double formatDouble(double value) {
         BigDecimal bd = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
@@ -350,24 +381,19 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         data.put("Glucosio", simulatedGlucose);
 //        data.put("Glicemia", simulatedGlucose);
 
-        // Use the userId as the document ID
-        String documentId = userId;
-
-        // Create a new document in the database
+        // creazione nel db
         firestore.collection("PARAMETRI_UTENTI")
                 .add(data)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Handle success if needed
-                        showToast("Nuovi parametri medici creati con successo!");
+                        showToast("Dati raccolti nella visita salvati con successo!");
                     } else {
-                        // Handle error
-                        showToast("Errore nella creazione dei parametri medici");
+                        showToast("Errore nel salvataggio dei parametri medici di questa visita...");
                     }
                 });
     }
 
-    private void showToast(String message) {
+    private void showToast(String message) { // mostra messaggio
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -375,16 +401,17 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         ProgressBar progressBar = layout.findViewById(progressBarId);
         TextView resultTextView = layout.findViewById(resultTextViewId);
 
+        // simula misurazione con attesa nel caricamento del risultato
         progressBar.setVisibility(View.VISIBLE);
         resultTextView.setVisibility(View.GONE);
     }
 
-    private void simulateTemperatureMeasurement() {
-        simulatedTemperature = 36.5 + random.nextDouble() * 2; // Replace this with actual measurement logic
+    private void simulateTemperatureMeasurement() { // simula valore di temperatura corporea
+        simulatedTemperature = 36.5 + random.nextDouble() * 2; // 36.5 - 38.5
 
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
+            public void run() { // mostra risultato simulazione
                 ProgressBar progressBar = temperatureLayout.findViewById(R.id.temperatureProgressBar);
                 TextView resultTextView = temperatureLayout.findViewById(R.id.temperatureResultTextView);
 
@@ -393,13 +420,13 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
                 resultTextView.setText(String.format("%.2f °C", simulatedTemperature));
             }
-        }, 2000); // Simulating loading for 2 seconds
+        }, 2000); // Simula caricamento per 2 secondi
     }
 
-    private void simulateHeartRateMeasurement() {
-        simulatedHeartRate = 60 + random.nextInt(100); // Replace this with actual measurement logic
+    private void simulateHeartRateMeasurement() { // simula valore di frequenza cardiaca
+        simulatedHeartRate = 60 + random.nextInt(100); // 60 - 159
 
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() { // mostra risultato simulazione
             @Override
             public void run() {
                 ProgressBar progressBar = heartRateLayout.findViewById(R.id.heartRateProgressBar);
@@ -410,14 +437,13 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
                 resultTextView.setText(String.format("%d bpm", simulatedHeartRate));
             }
-        }, 2000); // Simulating loading for 2 seconds
+        }, 2000);  // Simula caricamento per 2 secondi
     }
 
-    private void simulateBloodPressureMeasurement() {
-        // Simulate blood pressure measurement
-        simulatedBloodPressure = getBloodPressure(); // Simulated blood pressure
+    private void simulateBloodPressureMeasurement() { // simula valore di pressione
+        simulatedBloodPressure = getBloodPressure();
 
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() { // mostra risultato simulazione
             @Override
             public void run() {
                 ProgressBar progressBar = bloodPressureLayout.findViewById(R.id.bloodPressureProgressBar);
@@ -428,19 +454,19 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
                 resultTextView.setText(String.format("%d mmHg\n%d mmHg", simulatedBloodPressure[0], simulatedBloodPressure[1]));
             }
-        }, 2000); // Simulating loading for 2 seconds
+        }, 2000);  // Simula caricamento per 2 secondi
     }
 
     private int[] getBloodPressure() {
-        int systolic = 110 + random.nextInt(50); // Simulated range: 110-160 mmHg
-        int diastolic = 70 + random.nextInt(30); // Simulated range: 70-100 mmHg
-        return new int[]{systolic, diastolic};
+        int max = 110 + random.nextInt(50); // 110-160
+        int min = 70 + random.nextInt(30); // 70-100
+        return new int[]{max, min};
     }
 
-    private void simulatePulseOxMeasurement() {
-        simulatedPulseOx = 80 + random.nextInt(20); // Simulated range: 80-100%
+    private void simulatePulseOxMeasurement() { // simula valore di saturazione ossigeno
+        simulatedPulseOx = 80 + random.nextInt(20); // 80 - 100
 
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() { // mostra risultato
             @Override
             public void run() {
                 ProgressBar progressBar = pulseOxLayout.findViewById(R.id.pulseOxProgressBar);
@@ -451,13 +477,13 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
                 resultTextView.setText(String.format("%d%%", simulatedPulseOx));
             }
-        }, 2000); // Simulating loading for 2 seconds
+        }, 2000); // Simula caricamento per 2 secondi
     }
 
-    private void simulateGlucoseMeasurement() {
-        simulatedGlucose = 70 + random.nextInt(200); // Simulated range: 70-270 mg/dL
+    private void simulateGlucoseMeasurement() { // simula valore di glicemia
+        simulatedGlucose = 70 + random.nextInt(200); // 70 - 270
 
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() { // mostra risultato
             @Override
             public void run() {
                 ProgressBar progressBar = glucoseLayout.findViewById(R.id.glucoseProgressBar);
@@ -468,19 +494,17 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
                 resultTextView.setText(String.format("%d mg/dL", simulatedGlucose));
             }
-        }, 2000); // Simulating loading for 2 seconds
+        }, 2000); // Simula caricamento per 2 secondi
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Initialize views and set listeners here if needed
     }
 
-    private void openScanCode() {
-        // Create an Intent to navigate to another activity
+    private void openHomeS() {
+        // naviga nell'activity HomeS
         Intent intent = new Intent(ParametriMediciFragment.this.getActivity(), HomeS.class);
-        // Start the other activity
         startActivity(intent);
     }
 }
