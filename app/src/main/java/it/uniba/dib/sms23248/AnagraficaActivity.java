@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.android.material.textview.MaterialTextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,7 +60,7 @@ public class AnagraficaActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         personalDataLayout = findViewById(R.id.personalDataLayout);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser(); // utente loggato
 
         if (NetworkUtils.isNetworkAvailable(AnagraficaActivity.this)) {
             fetchUserDataFromFirestore();
@@ -73,7 +73,7 @@ public class AnagraficaActivity extends AppCompatActivity {
         String subject = "SCHEDA DATI ANAGRAFICI";
         String text = prepareTextToShare();
 
-        // Get the list of apps that can handle the share intent
+        // intent per la condivisione di dati testuali su altre app
         List<Intent> targetedShareIntents = new ArrayList<>();
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
@@ -85,6 +85,7 @@ public class AnagraficaActivity extends AppCompatActivity {
         if (!resInfo.isEmpty()) {
             for (ResolveInfo resolveInfo : resInfo) {
                 String packageName = resolveInfo.activityInfo.packageName;
+                // filtra tra la lista di app solo Gmail e Whatsapp
                 if (packageName.contains("com.whatsapp") || packageName.contains("com.google.android.gm")) {
                     Intent targeted = new Intent(Intent.ACTION_SEND);
                     targeted.setType("text/plain");
@@ -138,7 +139,7 @@ public class AnagraficaActivity extends AppCompatActivity {
                                     String field = entry.getKey();
                                     Object value = entry.getValue();
 
-                                    // Fields to exclude from display
+                                    // mostra i dati escludendo campi con dati sensibili
                                     if (!field.equals("Budget") && !field.equals("Centro") && !field.equals("ID_RichiedenteAsilo") && !field.equals("Password") && !field.equals("Ruolo")) {
                                         String displayName = getDisplayNameForField(field);
                                         addDataToLayout(displayName, value);
@@ -147,7 +148,7 @@ public class AnagraficaActivity extends AppCompatActivity {
                             }
                         }
                     } else {
-                        // Handle failure
+                        // Errore
                     }
                 }
             });
@@ -166,24 +167,23 @@ public class AnagraficaActivity extends AppCompatActivity {
     }
 
     private void addDataToLayout(String field, Object value) {
-        TextView fieldTextView = new TextView(this);
+        MaterialTextView fieldTextView = new MaterialTextView(this);
         fieldTextView.setText(field);
         fieldTextView.setTypeface(null, Typeface.BOLD);
-        fieldTextView.setPadding(26, 6, 6, 6);
-        fieldTextView.setTextSize(15);
+        fieldTextView.setPadding(28, 8, 8, 8);
+        fieldTextView.setTextSize(16);
 
-        TextView valueTextView = new TextView(this);
-
+        MaterialTextView valueTextView = new MaterialTextView(this);
         valueTextView.setText(value.toString());
-        valueTextView.setTextSize(15);
-        valueTextView.setPadding(26, 6, 6, 6);
+        valueTextView.setTextSize(18);
+        valueTextView.setPadding(28, 8, 8, 8);
 
         personalDataLayout.addView(fieldTextView);
         personalDataLayout.addView(valueTextView);
     }
+
     @Override
     protected void onDestroy() {
-        // Unregister the BroadcastReceiver when the activity is destroyed
         super.onDestroy();
         if (networkChangeReceiver != null) {
             unregisterReceiver(networkChangeReceiver);

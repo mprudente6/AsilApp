@@ -6,62 +6,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AnagraficaActivity">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="#fe9e50"
-        app:title="AsilApp"
-        app:titleTextColor="#FFFFFF"
-       />
+        android:layout_height="match_parent"
+        >
 
-
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleAnagrafica"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/scheda_anagrafica"
-        android:textSize="24sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="95dp" />
-
-    <!-- Share Button -->
-    <Button
-        android:id="@+id/shareButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleAnagrafica"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="16dp"
-        android:text="@string/condividi_su" />
-
-    <!-- Personal Data Sheet/List -->
-    <ScrollView
-        android:id="@+id/personalDataScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/shareButton"
-        android:layout_marginTop="18dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="18dp">
-
-        <LinearLayout
-            android:id="@+id/personalDataLayout"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        </LinearLayout>
-    </ScrollView>
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#fe9e50"
+            app:title="AsilApp"
+            app:titleTextColor="#FFFFFF"
+            />
 
-</RelativeLayout>
+
+        <TextView
+            android:id="@+id/titleAnagrafica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scheda_anagrafica"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="95dp" />
+
+        <ScrollView
+            android:id="@+id/personalDataScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleAnagrafica"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="18dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/personalDataCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                    android:id="@+id/personalDataLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/shareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/personalDataScrollView"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="8dp"
+            android:text="@string/condividi_su" />
+
+    </RelativeLayout>
 </ScrollView>

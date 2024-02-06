@@ -18,12 +18,30 @@
             app:title="AsilApp"
             app:titleTextColor="#FFFFFF"/>
 
+        <ImageView
+            android:id="@+id/profil"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            android:layout_below="@id/toolbar"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/profilllle_removebg_preview" />
+
+        <TextView
+            android:id="@+id/textnomeUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/profil"
+            android:textStyle="bold"
+            android:textSize="22sp" />
 
         <LinearLayout
             android:id="@+id/l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="78dp"
             android:layout_below="@id/profil"
             android:gravity="center_horizontal"
             android:orientation="vertical">
@@ -34,7 +52,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:padding="0dp"
                 android:layout_gravity="center"
                 app:cardCornerRadius="25dp"
@@ -125,7 +143,7 @@
             android:layout_marginBottom="379dp"
             android:backgroundTint="#FD9D50"
             android:elevation="8dp"
-            app:cardCornerRadius="100dp">
+            app:cardCornerRadius="25dp">
 
 
             <LinearLayout
@@ -158,24 +176,5 @@
                 </ImageView>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <ImageView
-            android:id="@+id/profil"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="60dp"
-            android:layout_below="@id/toolbar"
-            android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/profilllle_removebg_preview" />
-
-        <TextView
-            android:id="@+id/textnomeUtente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/profil"
-            android:textStyle="bold"
-            android:textSize="15sp" />
     </RelativeLayout>
 </ScrollView>

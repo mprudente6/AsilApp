@@ -2,7 +2,6 @@ package it.uniba.dib.sms23248;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,20 +27,18 @@ public class ProfiloActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo);
 
-         nomeUtente=findViewById(R.id.textnomeUtente);
+        nomeUtente=findViewById(R.id.textnomeUtente);
 
-         valutaApp= findViewById(R.id.Cardvalutazione);
+        valutaApp= findViewById(R.id.Cardvalutazione);
 
         CardView   schedaAnagrafica = findViewById(R.id.cardAnagraficaUser);
-         CardView bilancioSpese = findViewById(R.id.cardBilancioSpese);
+        CardView bilancioSpese = findViewById(R.id.cardBilancioSpese);
 
         ProfileName();
 
+        // al click dei pulsanti naviga nelle pagine corrispondenti
         schedaAnagrafica.setOnClickListener(view -> {
-
             Intent intent = new Intent(ProfiloActivity.this, AnagraficaActivity.class);
-
-
             startActivity(intent);
         });
 
@@ -49,28 +46,15 @@ public class ProfiloActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfiloActivity.this, Spese.class);
-
                 startActivity(intent);
             }
         });
 
-
-
-
         valutaApp.setOnClickListener(view -> {
 
             Intent intent = new Intent(ProfiloActivity.this, ValutazioneActivity.class);
-
-
             startActivity(intent);
         });
-    }
-
-
-    public void goToHomeScreen() {
-        Intent intent = new Intent(this, HomeR.class);
-        startActivity(intent);
-        finish();
     }
 
     private void ProfileName(){
@@ -88,7 +72,6 @@ public class ProfiloActivity extends AppCompatActivity {
 
                                 String nome = document.getString("Nome");
                                 String cognome = document.getString("Cognome");
-
 
                                 nomeUtente.setText( nome+" "+cognome );
                             }
