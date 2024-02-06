@@ -64,7 +64,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btnSaluteS"
                     android:layout_width="wrap_content"
-                    android:layout_height="70dp"
+                    android:layout_height="60dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
@@ -128,7 +128,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btnAmministrazione"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_below="@id/toolbar"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"

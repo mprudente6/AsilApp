@@ -16,7 +16,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/generaQrRichiedente"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_below="@id/Benvenuto"
             android:layout_marginStart="25dp"
             android:layout_marginTop="2dp"
@@ -44,14 +44,13 @@
 
 
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="68dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
 
 
-
-                    android:scaleType="fitCenter"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/qcode_removebg_preview">
 
                 </ImageView>

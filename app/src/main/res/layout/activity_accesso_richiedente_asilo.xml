@@ -40,17 +40,16 @@
         android:id="@+id/benvenutoText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="45dp"
         android:text="@string/Login"
         android:shadowColor="#4A4A49"
         android:shadowDx="3"
         android:shadowRadius="3"
         android:shadowDy="2"
         android:textAlignment="center"
-        android:fontFamily="@font/poor_story"
         android:textColor="#076aec"
-        android:textSize="60dp"
-        android:textStyle="bold" />
+        android:textSize="38dp"
+        android:textStyle="normal" />
 
 
     <LinearLayout

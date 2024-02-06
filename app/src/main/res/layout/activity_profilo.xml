@@ -19,44 +19,25 @@
             app:titleTextColor="#FFFFFF"/>
 
 
-        <!--  Title: Il mio Profilo  -->
-        <TextView android:id="@+id/titleServices"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profilo"
-            android:textSize="30sp"
-            android:layout_marginTop="110dp"
-            android:layout_centerHorizontal="true"/>
-
-
-        <!--  Avatar Image  -->
-        <ImageView
-            android:id="@+id/bigAvatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/profilllle_removebg_preview"
-            android:layout_below="@id/titleServices"
-            android:layout_marginTop="14dp"
-            android:layout_centerHorizontal="true"/>
-
-
         <LinearLayout
             android:id="@+id/l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="90dp"
+            android:layout_below="@id/profil"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAnagraficaUser"
-                android:layout_width="140dp"
-                android:layout_height="130dp"
-                android:layout_marginStart="30dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="10dp"
-                android:padding="10dp"
-                app:cardCornerRadius="15dp"
+                android:padding="0dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="25dp"
                 app:cardElevation="8dp">
 
 
@@ -64,25 +45,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#2A7FB8"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
                     android:padding="1dp">
 
-                    <ImageView android:id="@+id/btnSchedaUser"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="1"
-                        android:paddingTop="5dp"
-                        android:src="@drawable/user_card"/>
 
-
-                    <TextView android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="163dp"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
+                        android:layout_gravity="center"
+
                         android:text="@string/anagrafica_utente"
                         android:textAlignment="center"
-                        android:textColor="#FFFFFF"/>
+                        android:textColor="#FFFFFF" />
+
+                    <ImageView
+                        android:id="@+id/btnSchedaUser"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_weight="1"
+                        android:padding="8dp"
+
+                        android:layout_gravity="center"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ana" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -90,28 +76,40 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardBilancioSpese"
-                android:layout_width="140dp"
-                android:layout_height="130dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                android:padding="6dp"
-                app:cardCornerRadius="15dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="30dp"
+              android:layout_gravity="center"
+                app:cardCornerRadius="25dp"
                 app:cardElevation="8dp">
+
                 <LinearLayout android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#2A7FB8"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:padding="1dp">
-                    <ImageView android:id="@+id/btnSpeseRichiedente"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+
+                    <TextView
+                        android:layout_width="165dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+
+                        android:text="Bilancio spese"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/btnSpeseRichiedente"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
+
                         android:scaleType="fitCenter"
-                        android:src="@drawable/financial_help"/>
-                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingBottom="8dp" android:text="Bilancio spese" android:textAlignment="center" android:textColor="#FFFFFF"/>
+                        android:src="@drawable/financial_help" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -120,10 +118,10 @@
             android:id="@+id/valutazioneApp"
             android:layout_width="200dp"
             android:layout_height="65dp"
-            android:layout_below="@+id/toolbar"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="103dp"
-            android:layout_marginTop="35dp"
+            android:layout_below="@+id/l"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="379dp"
             android:backgroundTint="#FD9D50"
             android:elevation="8dp"
@@ -158,5 +156,24 @@
                 </ImageView>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/profil"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="60dp"
+            android:layout_below="@id/toolbar"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/profilllle_removebg_preview" />
+
+        <TextView
+            android:id="@+id/textnomeUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/profil"
+            android:textStyle="bold"
+            android:textSize="15sp" />
     </RelativeLayout>
 </ScrollView>
