@@ -3,8 +3,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import it.uniba.dib.sms23248.SpeseRichiedente.Spese;
 
@@ -16,11 +18,11 @@ public class ProfiloActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profilo);
 
         // Find the 'Scheda anagrafica' button by its ID
-        Button schedaAnagraficaButton = findViewById(R.id.schedaAnagraficaButton);
-        Button bilancioSpese = findViewById(R.id.bilancioSpeseButton);
+        ImageView schedaAnagrafica = findViewById(R.id.btnSchedaUser);
+        ImageView bilancioSpese = findViewById(R.id.btnSpeseRichiedente);
 
         // Set a click listener for the 'Scheda anagrafica' button
-        schedaAnagraficaButton.setOnClickListener(view -> {
+        schedaAnagrafica.setOnClickListener(view -> {
             // Create an intent to navigate to AnagraficaActivity
             Intent intent = new Intent(ProfiloActivity.this, AnagraficaActivity.class);
 
@@ -37,10 +39,10 @@ public class ProfiloActivity extends AppCompatActivity {
             }
         });
         // Find the 'Valuta l'app' text view by its ID
-        View valutaLAppTextView = findViewById(R.id.valutaAppTextView);
+        CardView valutazione = findViewById(R.id.valutazioneApp);
 
         // Set a click listener for the 'Valuta l'app' text view
-        valutaLAppTextView.setOnClickListener(view -> {
+        valutazione.setOnClickListener(view -> {
             // Create an intent to navigate to ValutazioneActivity
             Intent intent = new Intent(ProfiloActivity.this, ValutazioneActivity.class);
 

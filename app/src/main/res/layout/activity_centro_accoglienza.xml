@@ -107,9 +107,9 @@
 
             <ImageView
                 android:id="@+id/imageTel"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/phone" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/phone_icon" />
 
             <TextView
                 android:id="@+id/Tel"
@@ -154,9 +154,9 @@
 
             <ImageView
                 android:id="@+id/imageLink"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/website" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/web_icon" />
 
             <TextView
                 android:id="@+id/Link"
@@ -181,7 +181,7 @@
 
 
             android:layout_centerInParent="true"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="1dp"
             android:layout_marginTop="312dp"
             android:layout_marginEnd="4dp"
             android:orientation="horizontal"
@@ -189,9 +189,9 @@
 
             <ImageView
                 android:id="@+id/imageEmail"
-                android:layout_width="50dp"
+                android:layout_width="55dp"
                 android:layout_height="50dp"
-                android:src="@drawable/email" />
+                android:src="@drawable/email_icon" />
 
             <TextView
                 android:id="@+id/Email"
@@ -216,17 +216,16 @@
 
 
             android:layout_centerInParent="true"
-            android:layout_marginStart="-1dp"
+            android:layout_marginStart="1dp"
             android:layout_marginTop="198dp"
-            android:layout_marginEnd="-1dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
             <ImageView
                 android:id="@+id/imageAddress"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/place" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/place_icon1" />
 
             <TextView
                 android:id="@+id/Indirizzo"
@@ -277,9 +276,9 @@
 
             <ImageView
                 android:id="@+id/imageHome"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/casa" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/home" />
 
             <TextView
                 android:id="@+id/Nome"

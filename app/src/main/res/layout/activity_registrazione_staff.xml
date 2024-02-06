@@ -78,9 +78,9 @@
 
                 <ImageView
                     android:id="@+id/emailIcon"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/email" />
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/email_icon" />
 
                 <EditText
                     android:id="@+id/email"
@@ -116,9 +116,9 @@
 
                 <ImageView
                     android:id="@+id/passwordIcon2"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/password" />
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/password_icon" />
 
                 <EditText
                     android:id="@+id/password"
@@ -154,9 +154,9 @@
 
                 <ImageView
                     android:id="@+id/cellIcon"
-                    android:layout_width="49dp"
-                    android:layout_height="49dp"
-                    android:src="@drawable/phone" />
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/phone_icon" />
 
                 <EditText
                     android:id="@+id/cell"
@@ -193,9 +193,9 @@
 
                 <ImageView
                     android:id="@+id/placeIcon"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/casa" />
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/home" />
 
                 <Spinner
                     android:id="@+id/spinner_centro"

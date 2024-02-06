@@ -58,9 +58,9 @@
 
             <ImageView
                 android:id="@+id/emailIcon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/email" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/email_icon" />
 
             <EditText
                 android:id="@+id/Logemail"
@@ -85,9 +85,9 @@
 
             <ImageView
                 android:id="@+id/passwordIcon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/password" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/password_icon" />
 
             <EditText
                 android:id="@+id/Logpassword"

@@ -119,9 +119,9 @@
 
             <ImageView
                 android:id="@+id/imageTel"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/phone" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/phone_icon" />
 
             <EditText
                 android:id="@+id/editTel"
@@ -165,9 +165,9 @@
 
             <ImageView
                 android:id="@+id/imageLink"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/website" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/web_icon" />
 
             <EditText
                 android:id="@+id/editLink"
@@ -200,9 +200,9 @@
 
             <ImageView
                 android:id="@+id/imageEmail"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/email" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/email_icon" />
 
             <EditText
                 android:id="@+id/editEmail"
@@ -234,9 +234,9 @@
 
             <ImageView
                 android:id="@+id/imageAddress"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/place" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/place_icon1" />
 
             <EditText
                 android:id="@+id/editIndirizzo"
@@ -288,9 +288,9 @@
 
             <ImageView
                 android:id="@+id/imageHome"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/casa" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/home" />
 
             <EditText
                 android:id="@+id/editNome"

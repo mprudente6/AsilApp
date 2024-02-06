@@ -146,4 +146,5 @@
     <string name="salva">SALVA</string>
     <string name="noChartData">Nessuna misurazione di </string>
     <string name="noParametri">Non hai ancora effettuato la tua prima visita...</string>
+    <string name="anagrafica_utente">Anagrafica Utente</string>
 </resources>
