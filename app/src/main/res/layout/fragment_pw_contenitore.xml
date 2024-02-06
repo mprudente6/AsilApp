@@ -20,9 +20,9 @@
         android:layout_marginTop="82dp"
         android:padding="40dp"
 
-        android:text="@string/pw_contenitore2"
+        android:text="@string/pw_contenitore1"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,7 +42,7 @@
         android:padding="40dp"
         android:text="@string/pw_contenitore2"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -54,14 +54,15 @@
     <Button
         android:id="@+id/buttonInvia"
         android:layout_width="wrap_content"
-        android:layout_height="65dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+
+
+
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="162dp"
-        android:layout_marginTop="506dp"
-        android:layout_marginBottom="159dp"
+
+        android:layout_marginTop="60dp"
+        android:layout_below="@id/Lp"
+
         android:backgroundTint="#076aec"
         android:text="@string/pw_contenitore_invia"
         android:textAlignment="center"
@@ -104,29 +105,27 @@
             android:id="@+id/CodiceContenitore"
             android:layout_width="226dp"
             android:layout_height="52dp"
-            android:layout_marginTop="268dp"
-            android:ems="10"
+
+
             android:inputType="text"
 
-            app:layout_constraintHorizontal_bias="0.891"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
         />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/Lp"
         android:layout_width="match_parent"
         android:layout_height="74dp"
-        android:padding="15dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="370dp"
+        android:layout_marginTop="300dp"
         android:layout_marginEnd="11dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="15dp">
 
         <TextView
             android:id="@+id/Password"
@@ -146,7 +145,7 @@
 
         <EditText
             android:id="@+id/PasswordContenitore"
-            android:layout_width="217dp"
+            android:layout_width="180dp"
             android:layout_height="52dp"
             android:layout_marginBottom="304dp"
             android:ems="10"

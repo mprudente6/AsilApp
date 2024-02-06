@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
@@ -89,7 +90,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         MaterialButton glucoseButton = view.findViewById(R.id.glucoseButton);
 
         // unico elemento visualizzabile con la scansione del QR code utente nella pagina 'Contenitore Biomedicale'
-        Button apriContenitoreButton = view.findViewById(R.id.apriContenitore);
+        CardView apriContenitoreButton = view.findViewById(R.id.apriContenitore);
         apriContenitoreButton.setOnClickListener(v -> apriContenitoreButtonClicked());
 
         Button saveButton = view.findViewById(R.id.saveButton);

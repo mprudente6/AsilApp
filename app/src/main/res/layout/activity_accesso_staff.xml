@@ -31,13 +31,10 @@
         android:layout_height="wrap_content"
         android:text="@string/Login_staff"
         android:layout_marginTop="45dp"
-        android:shadowColor="#4A4A49"
-        android:shadowDx="3"
-        android:shadowRadius="3"
-        android:shadowDy="2"
+
         android:textAlignment="center"
         android:textColor="#076aec"
-        android:textSize="38dp" />
+        android:textSize="33dp" />
 
 
     <LinearLayout

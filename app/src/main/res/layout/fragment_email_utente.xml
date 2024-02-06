@@ -46,8 +46,8 @@
 
     <Button
         android:id="@+id/buttonInvia"
-        android:layout_width="185dp"
-        android:layout_height="65dp"
+        android:layout_width="142dp"
+        android:layout_height="47dp"
         android:layout_marginTop="100dp"
         android:backgroundTint="#076aec"
         android:text="@string/pw_contenitore_invia"

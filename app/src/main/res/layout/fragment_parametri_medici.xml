@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ParametriMediciFragment">
     <!-- Measurements -->
     <RelativeLayout
@@ -203,21 +203,52 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
             android:visibility="gone"
+
             android:backgroundTint="#FF076AEC" />
 
-        <!-- 'Apri Contenitore' Button -->
-        <Button
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/apriContenitore"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/saveButton"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="213dp"
-            android:textSize="18sp"
-            android:backgroundTint="#FF076AEC"
-            android:minWidth="224dp"
-            android:minHeight="64dp"
-            android:text="@string/apri_contenitore" />
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="260dp"
+            android:padding="0dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="25dp"
+
+
+            app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF076AEC"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:padding="1dp">
+
+
+            <TextView
+                android:layout_width="163dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:text="@string/apri_contenitore"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF" />
+
+            <ImageView
+                android:id="@+id/btnSchedaUser"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_weight="1"
+                android:padding="8dp"
+
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/first_aid_kit_p24" />
+        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
 </ScrollView>

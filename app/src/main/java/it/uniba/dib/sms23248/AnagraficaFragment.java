@@ -2,11 +2,13 @@ package it.uniba.dib.sms23248;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,9 +22,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AnagraficaFragment extends Fragment {
+
 
     private FirebaseFirestore db;
     private LinearLayout personalDataLayout;
@@ -34,9 +40,11 @@ public class AnagraficaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_anagrafica, container, false);
 
         db = FirebaseFirestore.getInstance();
+        TextView anag=view.findViewById(R.id.titleAnagrafica);
         personalDataLayout = view.findViewById(R.id.personalDataLayout);
 
         fetchUserDataFromFirestore(view);
+
 
         return view;
     }
@@ -53,24 +61,23 @@ public class AnagraficaFragment extends Fragment {
                         Map<String, Object> userData = documentSnapshot.getData();
 
                         if (userData != null) {
-                            for (Map.Entry<String, Object> entry : userData.entrySet()) {
-                                String field = entry.getKey();
-                                Object value = entry.getValue();
 
-                                // Fields to exclude from display
-                                if (!field.equals("Budget") && !field.equals("Centro") && !field.equals("ID_RichiedenteAsilo") && !field.equals("Password") && !field.equals("Ruolo")) {
+                            List<String> orderedFields = Arrays.asList("Nome", "Cognome","Genere","Email","Cellulare","DataNascita", "LuogoNascita");
+
+                            for (String field : orderedFields) {
+                                Object value = userData.get(field);
+                                if (value != null) {
                                     String displayName = getDisplayNameForField(field);
                                     addDataToLayout(view, displayName, value);
                                 }
                             }
                         }
                     }
-                } else {
-                    // Handle failure
                 }
             }
         });
     }
+
 
     private String getDisplayNameForField(String field) {
         switch (field) {
@@ -87,16 +94,29 @@ public class AnagraficaFragment extends Fragment {
         TextView fieldTextView = new TextView(view.getContext());
         fieldTextView.setText(field);
         fieldTextView.setTypeface(null, Typeface.BOLD);
-        fieldTextView.setPadding(26, 6, 6, 6);
-        fieldTextView.setTextSize(15);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(20, 20, 6, 0);
+        fieldTextView.setLayoutParams(params);
+
+        fieldTextView.setTextSize(19);
+
+
 
         TextView valueTextView = new TextView(view.getContext());
 
         valueTextView.setText(value.toString());
-        valueTextView.setTextSize(15);
-        valueTextView.setPadding(26, 6, 6, 6);
+        valueTextView.setTextSize(18);
+        valueTextView.setPadding(20, 5, 8, 6);
+
+
+
 
         personalDataLayout.addView(fieldTextView);
         personalDataLayout.addView(valueTextView);
     }
+
+
 }

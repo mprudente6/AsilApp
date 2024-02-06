@@ -35,9 +35,7 @@
         android:layout_marginTop="25dp"
         android:text="@string/Benvenuto_Main"
         android:shadowColor="#4A4A49"
-        android:shadowDx="3"
-        android:shadowRadius="3"
-        android:shadowDy="2"
+
         android:textAlignment="center"
         android:fontFamily="@font/eastseadokdo_font"
         android:textColor="#FFFFFF"
@@ -59,17 +57,16 @@
     </ImageView>
 
 
-
     <Spinner
         android:id="@+id/spinner_scelta_Utente"
         style="@android:style/Widget.DeviceDefault.DropDownItem.Spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:elevation="10dp"
         android:layout_marginBottom="25dp"
         android:background="#076AEC"
+        android:elevation="10dp"
         android:entries="@array/vista_utente"
         android:spinnerMode="dropdown"
 
@@ -78,10 +75,10 @@
     <Spinner
         android:id="@+id/spinner_utenteDemo"
         style="@android:style/Widget.DeviceDefault.DropDownItem.Spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:elevation="10dp"
         android:layout_marginBottom="25dp"
         android:background="#076AEC"

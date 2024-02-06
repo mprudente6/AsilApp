@@ -107,8 +107,8 @@
 
             <ImageView
                 android:id="@+id/imageTel"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
                 android:src="@drawable/phone_icon" />
 
             <TextView
@@ -154,8 +154,8 @@
 
             <ImageView
                 android:id="@+id/imageLink"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
                 android:src="@drawable/web_icon" />
 
             <TextView
@@ -173,8 +173,8 @@
 
         <LinearLayout
 
-            android:layout_width="455dp"
-            android:layout_height="118dp"
+            android:layout_width="410dp"
+            android:layout_height="128dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
@@ -183,14 +183,14 @@
             android:layout_centerInParent="true"
             android:layout_marginStart="1dp"
             android:layout_marginTop="312dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="0dp"
             android:orientation="horizontal"
             android:padding="35dp">
 
             <ImageView
                 android:id="@+id/imageEmail"
                 android:layout_width="55dp"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:src="@drawable/email_icon" />
 
             <TextView

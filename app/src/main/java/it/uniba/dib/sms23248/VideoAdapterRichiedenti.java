@@ -22,7 +22,7 @@ public class VideoAdapterRichiedenti extends RecyclerView.Adapter<VideoAdapterRi
     private OnDeleteClickListener onDeleteClickListener;
     private OnDownloadClickListener onDownloadClickListener;
 
-    // Constructor
+
     public VideoAdapterRichiedenti(List<VideoModel> videoList, OnDownloadClickListener onDownloadClickListener) {
         this.videoList = videoList;
         this.onDownloadClickListener = onDownloadClickListener;

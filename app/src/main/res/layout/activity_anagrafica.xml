@@ -7,8 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".AnagraficaActivity">
 <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".AnagraficaActivity">
    >
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -34,6 +38,19 @@
         android:layout_marginTop="95dp" />
 
     <!-- Share Button -->
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="28dp"
+        android:layout_marginTop="80dp"
+        android:layout_weight="1"
+        android:visibility="visible"
+        android:src="@drawable/anagrafica">
+
+    </ImageView>
+
     <Button
         android:id="@+id/shareButton"
         android:layout_width="wrap_content"

@@ -8,23 +8,41 @@
 
     tools:context=".AnagraficaFragment">
 
-    <!-- Title -->
-    <TextView
-        android:id="@+id/titleAnagrafica"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/scheda_anagrafica"
-        android:textSize="24sp"
+        android:id="@+id/lT"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp" />
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/titleAnagrafica"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/cartella_clinica"
+            android:layout_weight="1"
+            android:textSize="24sp"
+            android:paddingRight="15dp"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp" />
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_weight="1"
+            android:src="@drawable/anagrafica"
+            android:layout_height="55dp">
+
+        </ImageView>
+    </LinearLayout>
 
     <!-- Personal Data Sheet/List -->
     <ScrollView
         android:id="@+id/personalDataScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titleAnagrafica"
-        android:layout_marginTop="18dp"
+        android:layout_below="@id/lT"
+        android:layout_marginTop="35dp"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
         android:layout_marginBottom="18dp">

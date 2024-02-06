@@ -154,8 +154,8 @@
 
                 <ImageView
                     android:id="@+id/cellIcon"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:layout_width="59dp"
+                    android:layout_height="59dp"
                     android:src="@drawable/phone_icon" />
 
                 <EditText

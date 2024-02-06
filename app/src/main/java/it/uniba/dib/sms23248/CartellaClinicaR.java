@@ -48,7 +48,7 @@ public class CartellaClinicaR extends Fragment {
         db = FirebaseFirestore.getInstance();
         personalDataLayout = view.findViewById(R.id.personalDataLayout);
 
-        // Find views by ID
+
         Button shareButton = view.findViewById(R.id.shareButton);
 
         shareButton.setOnClickListener(new View.OnClickListener() {
