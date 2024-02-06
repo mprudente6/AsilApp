@@ -115,7 +115,7 @@
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/valutazioneApp"
+            android:id="@+id/Cardvalutazione"
             android:layout_width="200dp"
             android:layout_height="65dp"
             android:layout_below="@+id/l"
@@ -135,16 +135,18 @@
 
 
                 <TextView
+                    android:id="@+id/mettiValutazione"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
-                    android:text="Valuta l'app"
+                    android:text="@string/valutazione"
                     android:textAlignment="center"
                     android:textColor="@color/white"/>
 
                 <ImageView
+                    android:id="@+id/reviewBtn"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:layout_marginRight="25dp"

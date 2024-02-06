@@ -20,6 +20,7 @@ import it.uniba.dib.sms23248.SpeseRichiedente.Spese;
 
 public class ProfiloActivity extends AppCompatActivity {
     TextView nomeUtente;
+    CardView valutaApp;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -28,8 +29,11 @@ public class ProfiloActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profilo);
 
          nomeUtente=findViewById(R.id.textnomeUtente);
-        ImageView schedaAnagrafica = findViewById(R.id.btnSchedaUser);
-        ImageView bilancioSpese = findViewById(R.id.btnSpeseRichiedente);
+
+         valutaApp= findViewById(R.id.Cardvalutazione);
+
+        CardView   schedaAnagrafica = findViewById(R.id.cardAnagraficaUser);
+         CardView bilancioSpese = findViewById(R.id.cardBilancioSpese);
 
         ProfileName();
 
@@ -50,10 +54,10 @@ public class ProfiloActivity extends AppCompatActivity {
             }
         });
 
-        CardView valutazione = findViewById(R.id.valutazioneApp);
 
 
-        valutazione.setOnClickListener(view -> {
+
+        valutaApp.setOnClickListener(view -> {
 
             Intent intent = new Intent(ProfiloActivity.this, ValutazioneActivity.class);
 

@@ -78,6 +78,8 @@ public class DocumentiFragment extends Fragment {
     private List<UploadedFile> fileListUploads;
     private List<UploadedFile> fileListDocumentiUtili;
 
+    String connect=getString(R.string.connessione);
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,7 +89,7 @@ public class DocumentiFragment extends Fragment {
         Button upload2=view.findViewById(R.id.upload2);
         selectNotification = view.findViewById(R.id.selectNotification);
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),connect, Toast.LENGTH_LONG).show();
 
             return view;
         }
@@ -551,6 +553,7 @@ private void fetchDocumentiUtili(){
         parentNodeReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
 
