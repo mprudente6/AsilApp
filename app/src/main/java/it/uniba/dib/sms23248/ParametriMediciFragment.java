@@ -27,6 +27,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -83,12 +84,11 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         userId = HomeS.UID; // valore del QR code utente RichiedenteAsilo inquadrato dall'utente Staff loggato (= UID di RichiedenteAsilo)
 
         // Pulsanti di misurazione
-        MaterialButton temperatureButton = view.findViewById(R.id.temperatureButton);
-        MaterialButton heartRateButton = view.findViewById(R.id.heartRateButton);
-        MaterialButton bloodPressureButton = view.findViewById(R.id.bloodPressureButton);
-        MaterialButton pulseOxButton = view.findViewById(R.id.pulseOxButton);
-        MaterialButton glucoseButton = view.findViewById(R.id.glucoseButton);
-
+        MaterialCardView temperatureCard = view.findViewById(R.id.temperatureCard);
+        MaterialCardView heartRateButton = view.findViewById(R.id.heartRateButton);
+        MaterialCardView bloodPressureButton = view.findViewById(R.id.bloodPressureButton);
+        MaterialCardView pulseOxButton = view.findViewById(R.id.pulseOxButton);
+        MaterialCardView glucoseButton = view.findViewById(R.id.glucoseButton);
         // unico elemento visualizzabile con la scansione del QR code utente nella pagina 'Contenitore Biomedicale'
         CardView apriContenitoreButton = view.findViewById(R.id.apriContenitore);
         apriContenitoreButton.setOnClickListener(v -> apriContenitoreButtonClicked());
@@ -117,7 +117,14 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
         // Tutte le misurazioni dei parametri medici sono simulate.
         // Se il dispositivo usato ha il sensore hardware Heart Rate, la frequenza cardiaca si potrà misurare realmente
-        temperatureButton.setOnClickListener(v -> {
+        temperatureCard.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            showLoadingLayout(temperatureLayout, R.id.temperatureProgressBar, R.id.temperatureResultTextView);
+            simulateTemperatureMeasurement();
+        });
+
+        TextView temperatureTextView = view.findViewById(R.id.temperatureTextView);
+        temperatureTextView.setOnClickListener(v -> {
             saveButton.setVisibility(View.VISIBLE);
             showLoadingLayout(temperatureLayout, R.id.temperatureProgressBar, R.id.temperatureResultTextView);
             simulateTemperatureMeasurement();
@@ -127,24 +134,53 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
             saveButton.setVisibility(View.VISIBLE);
             checkHeartRateSensor(); // controllo su presenza del sensore
         });
+        TextView heartRateTextView = view.findViewById(R.id.heartRateTextView);
+        heartRateTextView.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            showLoadingLayout(heartRateLayout, R.id.heartRateProgressBar, R.id.heartRateResultTextView);
+            checkHeartRateSensor();
+        });
+
 
         bloodPressureButton.setOnClickListener(v -> {
             saveButton.setVisibility(View.VISIBLE);
             showLoadingLayout(bloodPressureLayout, R.id.bloodPressureProgressBar, R.id.bloodPressureResultTextView);
             simulateBloodPressureMeasurement();
         });
+        TextView bloodPressureTextView = view.findViewById(R.id.bloodPressureTextView);
+        bloodPressureTextView.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            showLoadingLayout(bloodPressureLayout, R.id.bloodPressureProgressBar, R.id.bloodPressureResultTextView);
+            simulateBloodPressureMeasurement();
+
+        });
+
 
         pulseOxButton.setOnClickListener(v -> {
             saveButton.setVisibility(View.VISIBLE);
             showLoadingLayout(pulseOxLayout, R.id.pulseOxProgressBar, R.id.pulseOxResultTextView);
             simulatePulseOxMeasurement();
         });
+        TextView pulseOxTextView = view.findViewById(R.id.pulseOxTextView);
+        pulseOxTextView.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            showLoadingLayout(pulseOxLayout, R.id.pulseOxProgressBar, R.id.pulseOxResultTextView);
+            simulatePulseOxMeasurement();
+        });
+
 
         glucoseButton.setOnClickListener(v -> {
             saveButton.setVisibility(View.VISIBLE);
             showLoadingLayout(glucoseLayout, R.id.glucoseProgressBar, R.id.glucoseResultTextView);
             simulateGlucoseMeasurement();
         });
+        TextView glucoseTextView = view.findViewById(R.id.glucoseTextView);
+        glucoseTextView.setOnClickListener(v -> {
+            saveButton.setVisibility(View.VISIBLE);
+            showLoadingLayout(glucoseLayout, R.id.glucoseProgressBar, R.id.glucoseResultTextView);
+            simulateGlucoseMeasurement();
+        });
+
 
         // premendo il tasto indietro da questa scheda l'utente visualizzerà:
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
