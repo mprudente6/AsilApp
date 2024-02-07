@@ -227,13 +227,13 @@ android:layout_marginTop="230dp"
 
 
             <TextView
-                android:layout_width="163dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-
                 android:text="@string/apri_contenitore"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/btnSchedaUser"

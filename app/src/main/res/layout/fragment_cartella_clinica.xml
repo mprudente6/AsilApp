@@ -25,6 +25,7 @@
         android:layout_weight="1"
         android:textSize="24sp"
         android:paddingRight="15dp"
+        android:textStyle="bold"
         android:layout_gravity="center"
 
         android:layout_centerHorizontal="true"
@@ -40,8 +41,8 @@
 
     <ScrollView
         android:id="@+id/personalDataScrollView"
-        android:layout_width="377dp"
-        android:layout_height="432dp"
+        android:layout_width="393dp"
+        android:layout_height="411dp"
         android:layout_below="@id/lT"
         android:layout_marginLeft="18dp"
         android:layout_marginTop="18dp"

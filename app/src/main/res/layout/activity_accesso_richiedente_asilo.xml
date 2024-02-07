@@ -44,14 +44,14 @@
         android:text="@string/Login"
 
         android:textAlignment="center"
-        android:textColor="#076aec"
-        android:textSize="33dp"
+        android:textColor="#504F4F"
+        android:textSize="25sp"
         android:textStyle="normal" />
 
 
     <LinearLayout
-        android:layout_width="377dp"
-        android:layout_height="521dp"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
