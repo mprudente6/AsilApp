@@ -23,6 +23,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,19 +139,18 @@ public class CartellaClinicaR extends Fragment {
                     showToast("Errore durante l'ascolto delle modifiche della cartella clinica");
                     return;
                 }
+                List<String> orderedFields = Arrays.asList("Anamnesi", "Diagnosi", "GruppoSanguigno", "Allergie", "Altezza", "Peso", "NoteMediche");
 
                 if (documentSnapshot != null && documentSnapshot.exists()) {
                     Map<String, Object> userData = documentSnapshot.getData();
 
-                    // Iterate through the fields in the database
-                    for (Map.Entry<String, Object> entry : userData.entrySet()) {
-                        String field = entry.getKey();
+                    // Iterate through the ordered fields
+                    for (String field : orderedFields) {
+                        Object value = userData.get(field);
 
-                        // Skip the field you want to exclude (e.g., "Utente")
-                        if (!field.equals("Utente") && !field.equals("ID_RichiedenteAsilo")) {
-                            Object value = entry.getValue();
-
-                            // Update the corresponding view if the field exists
+                        // Check if the value for the field exists
+                        if (value != null) {
+                            // Update the corresponding view
                             updateDataInView(field, value);
                         }
                     }
@@ -170,6 +170,7 @@ public class CartellaClinicaR extends Fragment {
             showToast("Utente non autenticato");
         }
     }
+
 
     // Check if all fields are empty (excluding specified fields)
     private boolean allFieldsAreEmpty(Map<String, Object> userData, String... excludedFields) {
@@ -216,12 +217,12 @@ public class CartellaClinicaR extends Fragment {
         TextView fieldTextView = new TextView(requireContext());
         fieldTextView.setText(field);
         fieldTextView.setTypeface(null, Typeface.BOLD);
-        fieldTextView.setPadding(26, 6, 6, 6);
-        fieldTextView.setTextSize(15);
+        fieldTextView.setPadding(26, 15, 6, 6);
+        fieldTextView.setTextSize(18);
 
         TextView valueTextView = new TextView(requireContext());
         valueTextView.setText(value != null ? value.toString() : "");
-        valueTextView.setTextSize(15);
+        valueTextView.setTextSize(16);
         valueTextView.setPadding(26, 6, 6, 6);
 
         personalDataLayout.addView(fieldTextView);

@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -134,26 +135,25 @@ public class AnagraficaActivity extends AppCompatActivity {
                         if (documentSnapshot.exists()) {
                             Map<String, Object> userData = documentSnapshot.getData();
 
-                            if (userData != null) {
-                                for (Map.Entry<String, Object> entry : userData.entrySet()) {
-                                    String field = entry.getKey();
-                                    Object value = entry.getValue();
 
-                                    // mostra i dati escludendo campi con dati sensibili
-                                    if (!field.equals("Budget") && !field.equals("Centro") && !field.equals("ID_RichiedenteAsilo") && !field.equals("Password") && !field.equals("Ruolo")) {
+                            if (userData != null) {
+                                List<String> orderedFields = Arrays.asList("Nome", "Cognome","Genere","Email","Cellulare","DataNascita", "LuogoNascita");
+
+                                for (String field : orderedFields) {
+                                    Object value = userData.get(field);
+                                    if (value != null) {
                                         String displayName = getDisplayNameForField(field);
                                         addDataToLayout(displayName, value);
                                     }
                                 }
                             }
                         }
-                    } else {
-                        // Errore
                     }
                 }
             });
         }
     }
+
 
     private String getDisplayNameForField(String field) {
         switch (field) {
