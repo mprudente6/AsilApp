@@ -553,6 +553,14 @@ private void fetchDocumentiUtili(){
         parentNodeReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String deleteSuccess=getString(R.string.DeleteSuccess);
+                String ErrorRemoveDB=getString(R.string.erroreDB);
+                String ErrorRemoveStorage=getString(R.string.erroreStorage);
+                String fileNotFound=getString(R.string.fileNotFound);
+
+
+
+
 
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
@@ -577,12 +585,12 @@ private void fetchDocumentiUtili(){
                                         fetchDocumentiUtili();
                                         fileAdapter2.notifyDataSetChanged();
                                     }
-                                    Toast.makeText(requireContext(), "File deleted successfully", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(requireContext(),deleteSuccess, Toast.LENGTH_SHORT).show();
                                 }).addOnFailureListener(e -> {
-                                    Toast.makeText(requireContext(), "Error removing file from database: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(requireContext(), ErrorRemoveDB + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 });
                             }).addOnFailureListener(e -> {
-                                Toast.makeText(requireContext(), "Error deleting file from storage: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), ErrorRemoveStorage + e.getMessage(), Toast.LENGTH_SHORT).show();
                             });
                             return;
                         }
@@ -590,12 +598,13 @@ private void fetchDocumentiUtili(){
                 }
 
 
-                Toast.makeText(requireContext(), "File not found in database", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), fileNotFound, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(requireContext(), "Error finding file: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                String errorSearch=getString(R.string.erroreRicerca);
+                Toast.makeText(requireContext(), errorSearch + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
