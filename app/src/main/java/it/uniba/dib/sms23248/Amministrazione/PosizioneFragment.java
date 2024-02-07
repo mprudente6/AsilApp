@@ -60,12 +60,13 @@ public class PosizioneFragment extends Fragment {
     FirebaseAuth mauth;
     FirebaseUser currentUser;
 
-
+    String connesso=getString(R.string.connessione);
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
+
+            Toast.makeText(getContext(),connesso, Toast.LENGTH_LONG).show();
 
             return view;
         }
@@ -93,7 +94,7 @@ public class PosizioneFragment extends Fragment {
                     saveChosenPositionToFirestore(p);
                     updateCoordinatesTextView( p);
                 } else {
-                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(),connesso, Toast.LENGTH_LONG).show();
                 }
 
 

@@ -153,5 +153,13 @@
     <string name="pressione">Pressione</string>
     <string name="saturazione">Saturazione</string>
     <string name="glicemia">Glicemia</string>
-    <string name="valutazione">Valuta l\'app</string>
+    <string name="valutaApp">Valuta l\'app</string>
+    <string name="DeleteSuccess">File eliminato con successo</string>
+    <string name="erroreDB">Errore nella rimozione del file dal database:</string>
+    <string name="erroreStorage">Errore nella rimozione del file dall\'archivio:</string>
+    <string name="fileNotFound">File non trovato nel database</string>
+    <string name="erroreRicerca">" Errore durante la ricerca del file:"</string>
+    <string name="errStaffcollection">Errore durante il recupero del documento dalla raccolta Staff:</string>
+    <string name="datiAggiornati">I dati sono stati aggiornati!</string>
+
 </resources>

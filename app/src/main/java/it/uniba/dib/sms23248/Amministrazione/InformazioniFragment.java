@@ -50,15 +50,17 @@ public class InformazioniFragment extends Fragment {
 
 NetworkChangeReceiver networkChangeReceiver;
 
-
+    String connesso=getString(R.string.connessione);
     String uid;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         view = inflater.inflate(R.layout.fragment_informazioni, container, false);
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), connesso, Toast.LENGTH_LONG).show();
 
             return view;
         }
@@ -82,7 +84,7 @@ NetworkChangeReceiver networkChangeReceiver;
                 if (NetworkUtils.isNetworkAvailable(requireContext())) {
                     salvaInformazioniFirestore();
                 } else {
-                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(),connesso, Toast.LENGTH_LONG).show();
                 }
 
             });
@@ -104,6 +106,7 @@ NetworkChangeReceiver networkChangeReceiver;
 
 
     private void fetchInformazioniCentro() {
+        String errorStaffCollection=getString(R.string.errStaffcollection);
         CollectionReference centroAccoglienzaCollection = dbS.collection("CENTRI_ACCOGLIENZA");
         documentStaff.get()
                 .addOnSuccessListener(documentSnapshot -> {
@@ -139,11 +142,12 @@ NetworkChangeReceiver networkChangeReceiver;
                         }
                        }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Error retrieving document from Staff collection: " + e.getMessage()));
+                .addOnFailureListener(e -> Log.e(TAG, errorStaffCollection + e.getMessage()));
     }
 
 
     private void salvaInformazioniFirestore() {
+        String aggiornaDati= getString(R.string.datiAggiornati);
         CollectionReference centroAccoglienzaCollection = dbS.collection("CENTRI_ACCOGLIENZA");
         String nome = editNome.getText().toString();
         String indirizzo = editIndirizzo.getText().toString();
@@ -153,7 +157,7 @@ NetworkChangeReceiver networkChangeReceiver;
         String descr = editDescr.getText().toString();
 
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), connesso, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -180,7 +184,7 @@ NetworkChangeReceiver networkChangeReceiver;
                                             documentRef.update(newData)
                                                     .addOnSuccessListener(aVoid -> {
 
-                                                        Toast.makeText(getContext(), "I dati sono stati aggiornati!", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getContext(), aggiornaDati, Toast.LENGTH_SHORT).show();
                                                     })
                                                     .addOnFailureListener(e -> Log.e(TAG, "Errore: " + e.getMessage()));
                                         }

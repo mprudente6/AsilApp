@@ -23,34 +23,15 @@
             />
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
             android:id="@+id/titleAnagrafica"
-            android:layout_below="@id/toolbar"
-            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scheda_anagrafica"
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:id="@+id/tan"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/cartella_clinica"
-                android:layout_weight="1"
-                android:textSize="24sp"
-                android:paddingRight="15dp"
-                android:layout_gravity="center"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp" />
-            <ImageView
-                android:layout_width="55dp"
-                android:layout_weight="1"
-                android:src="@drawable/anagrafica"
-                android:layout_height="55dp">
-
-            </ImageView>
-        </LinearLayout>
+            android:layout_marginTop="95dp" />
 
         <ScrollView
             android:id="@+id/personalDataScrollView"
@@ -66,10 +47,9 @@
                 android:id="@+id/personalDataCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 app:cardCornerRadius="24dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="#FBDABD">
+                app:cardBackgroundColor="#FFFFFF">
 
             <LinearLayout
                     android:id="@+id/personalDataLayout"
