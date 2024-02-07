@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
+
 public class CartellaClinicaFragment extends Fragment {
 
     private FirebaseFirestore db;
@@ -162,8 +164,9 @@ public class CartellaClinicaFragment extends Fragment {
     }
 
     private void updateDataInFirestore() {
+        String connessione = getString(R.string.connessione);
         hideKeyboard();
-
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
         DocumentReference userRef = db.collection("CARTELLA_CLINICA_UTENTI").document(userId);
 
         Map<String, Object> updatedData = new HashMap<>();
@@ -202,6 +205,9 @@ public class CartellaClinicaFragment extends Fragment {
                 Toast.makeText(requireContext(), "Errore nella ricerca del documento", Toast.LENGTH_SHORT).show();
             }
         });
+        } else {
+            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
+        }
     }
 
 

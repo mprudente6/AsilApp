@@ -97,11 +97,9 @@ public class CentroAccoglienza extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (NetworkUtils.isNetworkAvailable(CentroAccoglienza.this)) {
+
             retrieveCentroFromRichiedente(uid);
-        } else {
-            Toast.makeText(CentroAccoglienza.this, "No internet connection", Toast.LENGTH_LONG).show();
-        }
+
     }
 
     private void retrieveCentroFromRichiedente(String currentUserUid) {
@@ -196,7 +194,7 @@ public class CentroAccoglienza extends AppCompatActivity {
                                 Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         } else {
-                            // If "url" doesn't exist as a child, try to directly get the value as a URL
+
                             String fileUrl = fileSnapshot.getValue(String.class);
                             if (fileName != null && fileUrl != null) {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);

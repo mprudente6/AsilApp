@@ -60,16 +60,12 @@ public class PosizioneFragment extends Fragment {
     FirebaseAuth mauth;
     FirebaseUser currentUser;
 
-    String connesso=getString(R.string.connessione);
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+        String connesso=getString(R.string.connessione);
 
-            Toast.makeText(getContext(),connesso, Toast.LENGTH_LONG).show();
-
-            return view;
-        }
         view = inflater.inflate(R.layout.fragment_posizione, container, false);
 
         coordinates = view.findViewById(R.id.textCoordinate);

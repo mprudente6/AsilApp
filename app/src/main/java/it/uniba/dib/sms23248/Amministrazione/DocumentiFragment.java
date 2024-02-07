@@ -78,21 +78,18 @@ public class DocumentiFragment extends Fragment {
     private List<UploadedFile> fileListUploads;
     private List<UploadedFile> fileListDocumentiUtili;
 
-    String connect=getString(R.string.connessione);
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_documenti, container, false);
+
         selectFile = view.findViewById(R.id.selectFile);
         upload = view.findViewById(R.id.upload);
         Button upload2=view.findViewById(R.id.upload2);
         selectNotification = view.findViewById(R.id.selectNotification);
-        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(getContext(),connect, Toast.LENGTH_LONG).show();
 
-            return view;
-        }
 
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -258,7 +255,6 @@ public class DocumentiFragment extends Fragment {
 
                         String fileName = fileSnapshot.getKey();
 
-                        // Check if "url" exists as a child
                         if (fileSnapshot.hasChild("url")) {
                             String fileUrl = fileSnapshot.child("url").getValue().toString();
                             Log.d("FirebaseDebug", "File URL: " + fileUrl);
@@ -270,13 +266,13 @@ public class DocumentiFragment extends Fragment {
                                 Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         } else {
-                            // If "url" doesn't exist as a child, try to directly get the value as a URL
+
                             String fileUrl = fileSnapshot.getValue(String.class);
                             if (fileName != null && fileUrl != null) {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
                                 fileListUploads.add(uploadedFile);
 
-                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+
                             }
                         }
                     }
@@ -289,8 +285,7 @@ public class DocumentiFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FirebaseDebug", "Error fetching data: " + databaseError.getMessage());
-                Toast.makeText(requireContext(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -312,7 +307,7 @@ private void fetchDocumentiUtili(){
 
                     String fileName = fileSnapshot.getKey();
 
-                    // Check if "url" exists as a child
+
                     if (fileSnapshot.hasChild("url")) {
                         String fileUrl = fileSnapshot.child("url").getValue().toString();
                         Log.d("FirebaseDebug", "File URL: " + fileUrl);

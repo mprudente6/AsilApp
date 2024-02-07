@@ -40,6 +40,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
+import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
+
 public class ParametriMediciFragment extends Fragment implements SensorEventListener {
 
     private LinearLayout temperatureLayout, heartRateLayout, bloodPressureLayout, pulseOxLayout, glucoseLayout;
@@ -306,7 +308,9 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     }
 
     private void saveButtonClicked() {
+        String connessione = getString(R.string.connessione);
         // Controlla l'esistenza nel db del documento per lo specifico utente
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
         firestore.collection("PARAMETRI_UTENTI")
                 .whereEqualTo("ID_RichiedenteAsilo", userId)
                 .get()
@@ -326,6 +330,9 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
                         showToast("Errore durante la verifica del documento");
                     }
                 });
+        } else {
+            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void checkExistingDocumentWithCurrentDate() {

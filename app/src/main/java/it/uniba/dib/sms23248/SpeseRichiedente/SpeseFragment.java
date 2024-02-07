@@ -57,11 +57,9 @@ public class SpeseFragment extends Fragment {
 
         pieChart.getDescription().setEnabled(false);
 
-        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+
             fetchSubSpese();
-        } else {
-            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
-        }
+
 
 
         return view;
@@ -86,11 +84,8 @@ public class SpeseFragment extends Fragment {
     }
 
     private void calculatePercentagesAndDisplayChart(List<DocumentSnapshot> documents) {
-        String connessione = getString(R.string.connessione);
-        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
-            return;
-        }
+
+
         Map<String, Float> tipoTotalPrice = new HashMap<>();
         int currentMonth = getCurrentMonth();
 

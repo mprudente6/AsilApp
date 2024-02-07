@@ -87,13 +87,11 @@ public class BilancioFragment extends Fragment {
 
            showLoadingIndicator();
 
-        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+
             loadBudget();
             QuerySett();
             QueryMese();
-        } else {
-            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
-        }
+
 
 
 
@@ -101,6 +99,11 @@ public class BilancioFragment extends Fragment {
                @Override
                public void onClick(View v) {
                    loadBudget();
+                   if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                       loadBudget();
+                   } else {
+                       Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
+                   }
                }
            });
 

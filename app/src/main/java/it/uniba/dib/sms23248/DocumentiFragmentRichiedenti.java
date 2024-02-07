@@ -65,9 +65,7 @@ public class DocumentiFragmentRichiedenti extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_documenti_richiedenti, container, false);
 
-        networkChangeReceiver = new NetworkChangeReceiver();
-        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        requireContext().registerReceiver(networkChangeReceiver, intentFilter);
+
 
         storage = FirebaseStorage.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -114,7 +112,7 @@ public class DocumentiFragmentRichiedenti extends Fragment {
 
                         String fileName = fileSnapshot.getKey();
 
-                        // Check if "url" exists as a child
+
                         if (fileSnapshot.hasChild("url")) {
                             String fileUrl = fileSnapshot.child("url").getValue().toString();
                             Log.d("FirebaseDebug", "File URL: " + fileUrl);
@@ -126,7 +124,7 @@ public class DocumentiFragmentRichiedenti extends Fragment {
                                 Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         } else {
-                            // If "url" doesn't exist as a child, try to directly get the value as a URL
+
                             String fileUrl = fileSnapshot.getValue(String.class);
                             if (fileName != null && fileUrl != null) {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);

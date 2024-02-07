@@ -64,11 +64,9 @@ public class CartellaClinicaR extends Fragment {
             }
         });
 
-        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+
             fetchUserDataFromFirestore();
-        } else {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
-        }
+
 
         return view;
     }
@@ -200,20 +198,20 @@ public class CartellaClinicaR extends Fragment {
 
     // Method to update data in the layout
     private void updateDataInView(String field, Object value) {
-        // Iterate through existing views
+
         for (int i = 0; i < personalDataLayout.getChildCount(); i += 2) {
             TextView existingFieldTextView = (TextView) personalDataLayout.getChildAt(i);
 
-            // Check if the field matches
+
             if (existingFieldTextView.getText().toString().equals(field)) {
-                // Update the corresponding value view
+
                 TextView valueTextView = (TextView) personalDataLayout.getChildAt(i + 1);
                 valueTextView.setText(value != null ? value.toString() : "");
-                return;  // Exit the method after updating
+                return;
             }
         }
 
-        // If the field doesn't exist, create and add both field and value views
+
         TextView fieldTextView = new TextView(requireContext());
         fieldTextView.setText(field);
         fieldTextView.setTypeface(null, Typeface.BOLD);

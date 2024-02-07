@@ -96,11 +96,9 @@ public class ParametriMediciR extends Fragment {
             }
         });
 
-        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+
             fetchUserDataFromFirestore(userId);
-        } else {
-            Toast.makeText(requireContext(),connect, Toast.LENGTH_LONG).show();
-        }
+
 
         return view;
     }

@@ -40,7 +40,7 @@ public class MappaCentro extends AppCompatActivity {
     Double longitude;
     Double zoomlevel;
 
-    private NetworkChangeReceiver networkChangeReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,30 +51,28 @@ public class MappaCentro extends AppCompatActivity {
 
         setContentView(R.layout.activity_mappa_centro);
 
-        if (NetworkUtils.isNetworkAvailable(MappaCentro.this)) {
-            retrieveCentroFromRichiedente(uid); // Replace with actual user UID
-        } else {
-            Toast.makeText(MappaCentro.this, "No internet connection", Toast.LENGTH_LONG).show();
-        }
+
+            retrieveCentroFromRichiedente(uid);
+
     }
 
     private void onSuccessRenderMap() {
-        // Check if the activity is finishing or has been destroyed
+
         if (isFinishing()) {
             Log.e(TAG, "Aggiornamento in corso. Riprovare più tardi");
             return;
         }
 
-        // Find the MapView by its ID
+
         map = findViewById(R.id.mapView);
 
-        // Check if the MapView is null (e.g., if the layout is not correctly inflated)
+
         if (map == null) {
             Log.e(TAG, "Mappa inesistente");
             return;
         }
 
-        // Set up the MapView and render the map
+
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
         map.setMultiTouchControls(true);
@@ -88,10 +86,10 @@ public class MappaCentro extends AppCompatActivity {
         startMarker.setPosition(startPoint);
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
-        // Add the marker to the map overlays
+
         map.getOverlays().add(startMarker);
 
-        // Set the center of the map
+
         mapController.setCenter(startPoint);
     }
 
@@ -128,7 +126,7 @@ public class MappaCentro extends AppCompatActivity {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         DocumentSnapshot centroAccoglienzaDoc = queryDocumentSnapshots.getDocuments().get(0);
 
-                        // Retrieve fields from Centro Accoglienza document
+
                         String nome = centroAccoglienzaDoc.getString("Nome");
                         String descrizione = centroAccoglienzaDoc.getString("Descrizione");
                         String sitoWeb = centroAccoglienzaDoc.getString("Sito web");
@@ -139,7 +137,7 @@ public class MappaCentro extends AppCompatActivity {
                         longitude = centroAccoglienzaDoc.getDouble("longitude");
                         zoomlevel = centroAccoglienzaDoc.getDouble("zoomlevel");
 
-                        onSuccessRenderMap(); // Call the map rendering method
+                        onSuccessRenderMap();
                     }
                 });
     }

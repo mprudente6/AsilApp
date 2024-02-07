@@ -60,11 +60,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         view = inflater.inflate(R.layout.fragment_video, container, false);
         String connessione = getString(R.string.connessione);
 
-        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(getContext(), connessione, Toast.LENGTH_LONG).show();
 
-            return view;
-        }
 
         Button uploadButtonGenerico = view.findViewById(R.id.uploadButton);
         Button uploadButtonDonna = view.findViewById(R.id.uploadButton2);
@@ -101,7 +97,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setCancelable(true);
 
-        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+
             uploadButtonGenerico.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,9 +105,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                     openVideoChooser(PICK_VIDEO_REQUEST_GEN);
                 }
             });
-        } else {
-            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
-        }
+
 
         uploadButtonDonna.setOnClickListener(new View.OnClickListener() {
             @Override

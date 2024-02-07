@@ -64,11 +64,9 @@ public class AnagraficaActivity extends AppCompatActivity {
         personalDataLayout = findViewById(R.id.personalDataLayout);
         currentUser = FirebaseAuth.getInstance().getCurrentUser(); // utente loggato
 
-        if (NetworkUtils.isNetworkAvailable(AnagraficaActivity.this)) {
+
             fetchUserDataFromFirestore();
-        } else {
-            Toast.makeText(AnagraficaActivity.this,connect, Toast.LENGTH_LONG).show();
-        }
+
     }
 
     private void shareData() {

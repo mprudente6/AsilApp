@@ -70,7 +70,7 @@
 
                 app:cardCornerRadius="24dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="#C9E1FA">
+                app:cardBackgroundColor="#E1EEFB">
 
                 <LinearLayout
                     android:id="@+id/personalDataLayout"

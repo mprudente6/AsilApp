@@ -50,20 +50,16 @@ public class InformazioniFragment extends Fragment {
 
 NetworkChangeReceiver networkChangeReceiver;
 
-    String connesso=getString(R.string.connessione);
+
     String uid;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        String connesso=getString(R.string.connessione);
         view = inflater.inflate(R.layout.fragment_informazioni, container, false);
-        if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(getContext(), connesso, Toast.LENGTH_LONG).show();
 
-            return view;
-        }
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
@@ -95,9 +91,7 @@ NetworkChangeReceiver networkChangeReceiver;
 
 
 
-        networkChangeReceiver = new NetworkChangeReceiver();
-        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        requireContext().registerReceiver(networkChangeReceiver, intentFilter);
+
 
 
         return view;
@@ -147,6 +141,7 @@ NetworkChangeReceiver networkChangeReceiver;
 
 
     private void salvaInformazioniFirestore() {
+        String connesso=getString(R.string.connessione);
         String aggiornaDati= getString(R.string.datiAggiornati);
         CollectionReference centroAccoglienzaCollection = dbS.collection("CENTRI_ACCOGLIENZA");
         String nome = editNome.getText().toString();

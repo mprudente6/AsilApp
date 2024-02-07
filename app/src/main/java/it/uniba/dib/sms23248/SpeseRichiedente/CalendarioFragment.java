@@ -106,12 +106,9 @@ public class CalendarioFragment extends Fragment {
         //Inseirto listener al bottone per aggiungere un nuovo ItemSpesa
         btnAddItem.setOnClickListener(v -> addItemAction());
 
-        //Se Interent non è disponibile, mostra il messaggio
-        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+
             fetchItems();
-        } else {
-            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
-        }
+
 
 
 

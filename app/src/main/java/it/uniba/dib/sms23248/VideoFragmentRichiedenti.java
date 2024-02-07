@@ -65,9 +65,7 @@ public class VideoFragmentRichiedenti extends Fragment implements VideoAdapterRi
 
         Log.e("UID","uid: "+uid);
 
-        networkChangeReceiver = new NetworkChangeReceiver();
-        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        requireContext().registerReceiver(networkChangeReceiver, intentFilter);
+
 
         view = inflater.inflate(R.layout.fragment_video_richiedenti, container, false);
 
