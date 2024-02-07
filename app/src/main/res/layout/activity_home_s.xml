@@ -59,7 +59,7 @@
                     android:layout_marginStart="29dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="17dp"
-                    app:srcCompat="@drawable/stetoscopio_removebg_preview" />
+                    app:srcCompat="@drawable/stetoscopio__2__removebg_preview" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btnSaluteS"

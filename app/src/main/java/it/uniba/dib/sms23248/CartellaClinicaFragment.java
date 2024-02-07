@@ -114,12 +114,12 @@ public class CartellaClinicaFragment extends Fragment {
                     textView.setText(getDisplayNameForField(field));
                     textView.setTypeface(null, Typeface.BOLD);
                     textView.setPadding(25, 30, 25, 2);
-                    textView.setTextSize(19);
+                    textView.setTextSize(18);
 
                     MultiAutoCompleteTextView multiAutoCompleteTextView = new MultiAutoCompleteTextView(requireContext());
                     multiAutoCompleteTextView.setText(value != null ? value.toString() : "");
                     multiAutoCompleteTextView.setHint(getDisplayNameForField(field));
-                    multiAutoCompleteTextView.setTextSize(17);
+                    multiAutoCompleteTextView.setTextSize(16);
                     multiAutoCompleteTextView.setPadding(25, 0, 25, 20); // Modifica il padding come desiderato
                     multiAutoCompleteTextView.setMaxLines(5); // Imposta il numero massimo di righe
                     multiAutoCompleteTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);

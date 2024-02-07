@@ -101,14 +101,14 @@ public class AnagraficaFragment extends Fragment {
         params.setMargins(20, 20, 6, 0);
         fieldTextView.setLayoutParams(params);
 
-        fieldTextView.setTextSize(19);
+        fieldTextView.setTextSize(18);
 
 
 
         TextView valueTextView = new TextView(view.getContext());
 
         valueTextView.setText(value.toString());
-        valueTextView.setTextSize(18);
+        valueTextView.setTextSize(16);
         valueTextView.setPadding(20, 5, 8, 6);
 
 
