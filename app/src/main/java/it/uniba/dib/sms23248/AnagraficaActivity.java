@@ -41,6 +41,7 @@ public class AnagraficaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anagrafica);
+        String connect=getString(R.string.connessione);
 
 
 
@@ -54,7 +55,7 @@ public class AnagraficaActivity extends AppCompatActivity {
                 if (NetworkUtils.isNetworkAvailable(AnagraficaActivity.this)) {
                     shareData();
                 } else {
-                    Toast.makeText(AnagraficaActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AnagraficaActivity.this,connect, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -66,7 +67,7 @@ public class AnagraficaActivity extends AppCompatActivity {
         if (NetworkUtils.isNetworkAvailable(AnagraficaActivity.this)) {
             fetchUserDataFromFirestore();
         } else {
-            Toast.makeText(AnagraficaActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(AnagraficaActivity.this,connect, Toast.LENGTH_LONG).show();
         }
     }
 

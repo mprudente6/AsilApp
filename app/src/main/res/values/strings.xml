@@ -161,5 +161,16 @@
     <string name="erroreRicerca">" Errore durante la ricerca del file:"</string>
     <string name="errStaffcollection">Errore durante il recupero del documento dalla raccolta Staff:</string>
     <string name="datiAggiornati">I dati sono stati aggiornati!</string>
+    <string name="failURL">Impossibile ottenere l\'URL di download:</string>
+    <string name="failFetch">Impossibile recuperare i dati:</string>
+    <string name="selectFile">Seleziona un file</string>
+    <string name="errore_ricerca">Errore nella ricerca del documento</string>
+    <string name="reviewAggiornata">Recensione aggiornata con successo!</string>
+    <string name="reviewFallita">Errore nell\'aggiornamento della recensione</string>
+    <string name="review_saved">Recensione salvata con successo!</string>
+    <string name="errorSavingReview">Errore nel salvataggio della recensione</string>
+    <string name="no_fetchData">Impossibile recuperare i dati dell\'utente</string>
+    <string name="noListVideo">Impossibile elencare i video</string>
+
 
 </resources>

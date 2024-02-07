@@ -41,15 +41,6 @@ public class pwContenitore extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        /*
-        Button btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
-        btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
-        btnCamera.setVisibility(View.INVISIBLE);
-
-        Button btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
-        btnGenaraQr = (Button) getActivity().findViewById(R.id.generaQrRichiedente);
-        btnGenaraQr.setVisibility(View.INVISIBLE);*/
 
 
 

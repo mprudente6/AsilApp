@@ -32,6 +32,7 @@ public class ValutazioneActivity extends AppCompatActivity {
     private NetworkChangeReceiver networkChangeReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String connect=getString(R.string.connessione);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_valutazione);
 
@@ -61,7 +62,7 @@ public class ValutazioneActivity extends AppCompatActivity {
                 if (NetworkUtils.isNetworkAvailable(ValutazioneActivity.this)) {
                 submitUserRatingToFirestore(userId, userRating);
                 } else {
-                    Toast.makeText(ValutazioneActivity.this, "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ValutazioneActivity.this,connect, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -75,6 +76,7 @@ public class ValutazioneActivity extends AppCompatActivity {
 
     // salva nel db
     private void submitUserRatingToFirestore(String userId, float userRating) {
+        String errorSearch=getString(R.string.errore_ricerca);
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         DocumentReference documentRef = db.collection("VALUTAZIONE").document(userId);
@@ -90,26 +92,31 @@ public class ValutazioneActivity extends AppCompatActivity {
                     createNewDocument(documentRef, userRating);
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Errore nella ricerca del documento", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), errorSearch, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void updateExistingDocument(DocumentReference documentRef, float userRating) {
+        String review_registrata=getString(R.string.reviewAggiornata);
+        String review_fallita=getString(R.string.reviewFallita);
         Map<String, Object> ratingData = new HashMap<>();
         ratingData.put("Voto", (int) userRating);
 
         documentRef.update(ratingData)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "Recensione aggiornata con successo!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), review_registrata, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Errore nell'aggiornamento della recensione", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),review_fallita, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void createNewDocument(DocumentReference documentRef, float userRating) {
+        String review_saved=getString(R.string.review_saved);
+        String reviewNotSaved=getString(R.string.errorSavingReview);
+
         Map<String, Object> ratingData = new HashMap<>();
         ratingData.put("ID_RichiedenteAsilo", userId); // salva UID dell'utente loggato come campo
         ratingData.put("Voto", (int) userRating);
@@ -117,9 +124,9 @@ public class ValutazioneActivity extends AppCompatActivity {
         documentRef.set(ratingData)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "Recensione salvata con successo!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),review_saved, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Errore nel salvataggio della recensione", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),reviewNotSaved, Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -104,6 +104,7 @@ public class VideoFragmentRichiedenti extends Fragment implements VideoAdapterRi
     }
 
     private void fetchUserSexAndVideos() {
+        String noFetch_userData= getString(R.string.no_fetchData);
       Log.e("UID","uid: "+uid);
 
         db.collection("RICHIEDENTI_ASILO").document(uid).get().addOnCompleteListener(task -> {
@@ -119,13 +120,15 @@ public class VideoFragmentRichiedenti extends Fragment implements VideoAdapterRi
                     }
                 }
             } else {
-                Toast.makeText(getContext(), "Failed to fetch user data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), noFetch_userData, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void fetchVideosFromFolder(String folder) {
         StorageReference videosRef = storageReference.child(folder);
+        String NoURLdownload=getString(R.string.failURL);
+        String noListvideo=getString(R.string.noListVideo);
 
         videosRef.listAll()
                 .addOnSuccessListener(listResult -> {
@@ -136,12 +139,12 @@ public class VideoFragmentRichiedenti extends Fragment implements VideoAdapterRi
                             videoList.add(videoModel);
                             videoAdapterRichiedenti.notifyDataSetChanged();
                         }).addOnFailureListener(exception -> {
-                            Toast.makeText(getContext(), "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), NoURLdownload, Toast.LENGTH_SHORT).show();
                         });
                     }
                 })
                 .addOnFailureListener(exception -> {
-                    Toast.makeText(getContext(), "Failed to list videos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),noListvideo, Toast.LENGTH_SHORT).show();
                 });
     }
 

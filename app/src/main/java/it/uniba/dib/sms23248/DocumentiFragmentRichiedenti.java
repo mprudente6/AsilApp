@@ -143,7 +143,8 @@ public class DocumentiFragmentRichiedenti extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(requireContext(), "Failed to fetch data: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                String failFetch= getString(R.string.failFetch);
+                Toast.makeText(requireContext(),failFetch + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -180,7 +181,8 @@ public class DocumentiFragmentRichiedenti extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(requireContext(), "Failed to get download URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                String failURL=getString(R.string.failURL);
+                Toast.makeText(requireContext(),failURL  + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -207,19 +209,22 @@ public class DocumentiFragmentRichiedenti extends Fragment {
         if (downloadManager != null) {
             downloadManager.enqueue(request);
         } else {
-            Toast.makeText(requireContext(), "DownloadManager not available", Toast.LENGTH_SHORT).show();
+
+            String downManager=getString(R.string.download_manager);
+            Toast.makeText(requireContext(),downManager, Toast.LENGTH_SHORT).show();
         }
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        String select_file=getString(R.string.selectFile);
         if(requestCode == 86 && resultCode == RESULT_OK && data != null){
             pdfUri = data.getData();
             String fileName = getFileNameFromUri(pdfUri);
             notification.setText(fileName);
         } else {
-            Toast.makeText(requireContext(), "Seleziona un file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(),select_file, Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -58,7 +58,7 @@ public class ParametriMediciR extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_parametri_medici_r, container, false);
-
+        String connect=getString(R.string.connessione);
         firestore = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -91,7 +91,7 @@ public class ParametriMediciR extends Fragment {
                 if (NetworkUtils.isNetworkAvailable(requireContext())) {
                     shareData();
                 } else {
-                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(),connect, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -99,7 +99,7 @@ public class ParametriMediciR extends Fragment {
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
             fetchUserDataFromFirestore(userId);
         } else {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(),connect, Toast.LENGTH_LONG).show();
         }
 
         return view;
