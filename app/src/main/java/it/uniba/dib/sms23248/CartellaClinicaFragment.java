@@ -212,26 +212,29 @@ public class CartellaClinicaFragment extends Fragment {
 
 
     private void createNewDocument(DocumentReference userRef, Map<String, Object> updatedData) {
-
+String newFolder=getString(R.string.new_medicalFolder);
+        String updateFolder= getString(R.string.errorUpdatefolder);
         userRef.set(updatedData)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(requireContext(), "Nuova cartella clinica creata con successo!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), newFolder, Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
 
-                    Toast.makeText(requireContext(), "Errore nella creazione della cartella clinica", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), updateFolder, Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void updateExistingDocument(DocumentReference userRef, Map<String, Object> updatedData) {
+        String updateSuccess=getString(R.string.successUpdate);
+        String errorUpdate=getString(R.string.errorUpdate);
 
         userRef.update(updatedData)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(requireContext(), "Cartella clinica aggiornata con successo!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(),updateSuccess, Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
 
-                    Toast.makeText(requireContext(), "Errore nell'aggiornamento della cartella clinica", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), errorUpdate, Toast.LENGTH_SHORT).show();
                 });
     }
 

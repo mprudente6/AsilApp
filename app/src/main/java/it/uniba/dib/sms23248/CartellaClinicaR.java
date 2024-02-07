@@ -45,6 +45,7 @@ public class CartellaClinicaR extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_cartella_clinica_r, container, false);
+        String connessione=getString(R.string.connessione);
 
         db = FirebaseFirestore.getInstance();
         personalDataLayout = view.findViewById(R.id.personalDataLayout);
@@ -59,7 +60,7 @@ public class CartellaClinicaR extends Fragment {
                 if (NetworkUtils.isNetworkAvailable(requireContext())) {
                     shareData();
                 } else {
-                    Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireContext(),connessione, Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -171,6 +171,10 @@
     <string name="errorSavingReview">Errore nel salvataggio della recensione</string>
     <string name="no_fetchData">Impossibile recuperare i dati dell\'utente</string>
     <string name="noListVideo">Impossibile elencare i video</string>
+    <string name="new_medicalFolder">Nuova cartella clinica creata con successo!</string>
+    <string name="errorUpdatefolder">Errore nella creazione della cartella clinica</string>
+    <string name="successUpdate">Cartella clinica aggiornata con successo!</string>
+    <string name="errorUpdate">Errore nell\'aggiornamento della cartella clinica</string>
 
 
 </resources>

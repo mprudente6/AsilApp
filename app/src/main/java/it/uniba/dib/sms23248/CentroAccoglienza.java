@@ -211,7 +211,8 @@ public class CentroAccoglienza extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(CentroAccoglienza.this, "Failed to fetch data: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                String fallitoRecupero=getString(R.string.failFetch);
+                Toast.makeText(CentroAccoglienza.this, fallitoRecupero + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -248,7 +249,8 @@ public class CentroAccoglienza extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(CentroAccoglienza.this, "Failed to get download URL: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                String fallitoDownload=getString(R.string.failURL);
+                Toast.makeText(CentroAccoglienza.this, fallitoDownload + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -262,6 +264,7 @@ public class CentroAccoglienza extends AppCompatActivity {
         }
     }
     private void downloadPdf(String url, String fileName) {
+        String DownloadManage=getString(R.string.download_manager);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String fileNameOnly = getFileNameFromPath(fileName);
         request.setTitle(fileNameOnly);
@@ -275,7 +278,7 @@ public class CentroAccoglienza extends AppCompatActivity {
         if (downloadManager != null) {
             downloadManager.enqueue(request);
         } else {
-            Toast.makeText(CentroAccoglienza.this, "DownloadManager not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CentroAccoglienza.this, DownloadManage, Toast.LENGTH_SHORT).show();
         }
     }
 

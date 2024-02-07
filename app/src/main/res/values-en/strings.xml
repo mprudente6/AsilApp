@@ -146,4 +146,26 @@
     <string name="pressione">Blood pressure</string>
     <string name="saturazione">Pulse ox</string>
     <string name="glicemia">Glycemia</string>
+    <string name="valutaApp">Rate the app</string>
+    <string name="DeleteSuccess">File successfully deleted</string>
+    <string name="erroreDB">Error removing file from database:</string>
+    <string name="erroreStorage">Error removing file from archive:</string>
+    <string name="fileNotFound">File not found in database</string>
+    <string name="erroreRicerca">Error searching for file:</string>
+    <string name="errStaffcollection">Error retrieving document from Staff collection:</string>
+    <string name="datiAggiornati">The data has been updated!</string>
+    <string name="failURL">Unable to get download URL:</string>
+    <string name="failFetch">Unable to recover data:</string>
+    <string name="selectFile">Select a file</string>
+    <string name="errore_ricerca">Error searching for document</string>
+    <string name="reviewAggiornata">Review successfully updated!</string>
+    <string name="reviewFallita">Error updating review</string>
+    <string name="review_saved">Review successfully saved!</string>
+    <string name="errorSavingReview">Error saving review</string>
+    <string name="no_fetchData">Unable to retrieve user data</string>
+    <string name="noListVideo">Unable to list videos</string>
+    <string name="new_medicalFolder">New medical folder created successfully!</string>
+    <string name="errorUpdatefolder">Error in creating the medical folder</string>
+    <string name="successUpdate">Medical folder updated successfully!</string>
+    <string name="errorUpdate">Error updating the medical folder</string>
 </resources>
