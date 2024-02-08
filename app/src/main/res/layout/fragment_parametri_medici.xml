@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ParametriMediciFragment">
     <!-- Measurements -->
     <RelativeLayout
@@ -21,45 +21,18 @@
             android:layout_height="wrap_content"
             android:visibility="gone">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/temperatureCard"
-                android:layout_width="220dp"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/temperatureButton"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="20dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:background="#FF03A9F4"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:paddingLeft="15dp"
-                        android:src="@drawable/temperature_vector_icon_png_261811_removebg_preview">
-
-                    </ImageView>
-                    <TextView
-                        android:id="@+id/temperatureTextView"
-                        style="@style/Widget.MaterialComponents.Button.Icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/temperatura"
-                       android:clickable="true"
-                        android:focusable="true"
-                        android:minWidth="240dp"
-                        android:minHeight="72dp"
-                        android:backgroundTint="#FF03A9F4" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
+                android:text="@string/temperatura"
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/temperatureProgressBar"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -67,7 +40,6 @@
 
             <TextView
                 android:id="@+id/temperatureResultTextView"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -81,50 +53,21 @@
             android:id="@+id/heartRateLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_below="@id/temperatureLayout"
             android:visibility="gone">
 
-            <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/heartRateButton"
-                android:layout_width="220dp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="20dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:background="#FF03A9F4"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_marginStart="5sp"
-                        android:paddingStart="17dp"
-                        android:padding="13dp"
-                        android:src="@drawable/png_clipart_heart_with_beat_heart_beat_love_other_removebg_preview">
-
-                    </ImageView>
-                    <TextView
-                        android:id="@+id/heartRateTextView"
-                        style="@style/Widget.MaterialComponents.Button.Icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/frequenza_cardiaca"
-
-                        android:minWidth="240dp"
-                        android:minHeight="72dp"
-                        android:backgroundTint="#FF03A9F4" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
+                android:text="@string/frequenza_cardiaca"
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/heartRateProgressBar"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -132,7 +75,6 @@
 
             <TextView
                 android:id="@+id/heartRateResultTextView"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -146,52 +88,23 @@
             android:id="@+id/bloodPressureLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_below="@id/heartRateLayout"
             android:visibility="gone">
 
-            <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/bloodPressureButton"
-                android:layout_width="220dp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardElevation="4dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="20dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:background="#FF03A9F4"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:paddingLeft="15dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/blood_pressure_1024x1024_removebg_preview__1_">
-
-                    </ImageView>
-                    <TextView
-                        android:id="@+id/bloodPressureTextView"
-                        style="@style/Widget.MaterialComponents.Button.Icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pressione"
-
-                        android:minWidth="240dp"
-                        android:minHeight="72dp"
-                        android:backgroundTint="#FF03A9F4" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                android:text="@string/pressione"
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/bloodPressureProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:visibility="gone"
                 android:layout_marginStart="16dp" />
 
@@ -199,7 +112,6 @@
                 android:id="@+id/bloodPressureResultTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text=""
                 android:textStyle="bold"
                 android:visibility="gone"
@@ -212,50 +124,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/bloodPressureLayout"
-            android:layout_marginTop="20dp"
             android:visibility="gone">
 
-            <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pulseOxButton"
-                android:layout_width="220dp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="20dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:background="#FF03A9F4"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:paddingLeft="15dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/pulse_oximeter_with_normal_value_digital_device_to_measure_oxygen_saturation_isolated_illustration_on_white_background_vector_removebg_preview">
-
-                    </ImageView>
-                    <TextView
-                        android:id="@+id/pulseOxTextView"
-                        style="@style/Widget.MaterialComponents.Button.Icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/saturazione"
-
-                        android:minWidth="240dp"
-                        android:minHeight="72dp"
-                        android:backgroundTint="#FF03A9F4" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                android:text="@string/saturazione"
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/pulseOxProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:layout_gravity="center"
                 android:layout_marginStart="16dp" />
 
             <TextView
@@ -263,7 +148,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:layout_gravity="center"
                 android:textStyle="bold"
                 android:visibility="gone"
                 android:layout_marginStart="16dp" />
@@ -275,58 +159,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/pulseOxLayout"
-            android:layout_marginTop="20dp"
             android:visibility="gone">
 
-            <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/glucoseButton"
-                android:layout_width="220dp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardElevation="4dp"
-                app:cardCornerRadius="20dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:background="#FF03A9F4"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:paddingLeft="15dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/untitled_design__10__removebg_preview">
-
-                    </ImageView>
-                    <TextView
-                        android:id="@+id/glucoseTextView"
-                        style="@style/Widget.MaterialComponents.Button.Icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/glicemia"
-
-                        android:minWidth="240dp"
-                        android:minHeight="72dp"
-                        android:backgroundTint="#FF03A9F4" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                android:text="@string/glicemia"
+                android:minWidth="240dp"
+                android:minHeight="72dp"
+                android:backgroundTint="#FF03A9F4" />
 
             <ProgressBar
                 android:id="@+id/glucoseProgressBar"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:layout_marginStart="16dp"  />
+                android:layout_marginStart="16dp" />
 
             <TextView
                 android:id="@+id/glucoseResultTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:layout_gravity="center"
                 android:textStyle="bold"
                 android:visibility="gone"
                 android:layout_marginStart="16dp" />
@@ -342,50 +198,21 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
             android:visibility="gone"
-
             android:backgroundTint="#FF076AEC" />
 
-        <com.google.android.material.card.MaterialCardView
+        <!-- 'Apri Contenitore' Button -->
+        <Button
             android:id="@+id/apriContenitore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/saveButton"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_vertical"
-            app:cardCornerRadius="25dp"
-            android:layout_marginTop="230dp"
-
-            app:cardElevation="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#FF076AEC"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:padding="1dp">
-
-
-                <TextView
-                    android:layout_width="140dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/apri_contenitore"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/btnSchedaUser"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:layout_weight="1"
-                    android:padding="8dp"
-
-                    android:layout_gravity="center"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/first_aid_kit_p24" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            android:layout_marginTop="213dp"
+            android:textSize="18sp"
+            android:backgroundTint="#FF076AEC"
+            android:minWidth="224dp"
+            android:minHeight="64dp"
+            android:text="@string/apri_contenitore" />
 
     </RelativeLayout>
 </ScrollView>

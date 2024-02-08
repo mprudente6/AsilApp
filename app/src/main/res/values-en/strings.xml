@@ -168,4 +168,14 @@
     <string name="errorUpdatefolder">Error in creating the medical folder</string>
     <string name="successUpdate">Medical folder updated successfully!</string>
     <string name="errorUpdate">Error updating the medical folder</string>
+    <string name="sensore_disponibile">Heart Rate Sensor available on your device!</string>
+    <string name="sensore_non_disponibile">Heart Rate Sensor not available on device…</string>
+    <string name="istruzioni_sensore">Place your finger on the sensor to measure your heart rate</string>
+    <string name="detected_heart_rate">\'Heart rate\' value detected successfully!</string>
+    <string name="prima_visita">Welcome! This is your first visit.</string>
+    <string name="errore_parametri_medici_s">Error verifying document</string>
+    <string name="parametri_medici_aggiornati">Medical parameters updated successfully!</string>
+    <string name="errore_parametri_medici_aggiornati">Error updating medical parameters</string>
+    <string name="parametri_medici_creati">Data collected during the visit saved successfully!</string>
+    <string name="errore_parametri_medici_creati">Error saving the medical parameters of this visit…</string>
 </resources>

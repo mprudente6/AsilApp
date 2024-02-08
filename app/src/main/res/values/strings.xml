@@ -175,6 +175,14 @@
     <string name="errorUpdatefolder">Errore nella creazione della cartella clinica</string>
     <string name="successUpdate">Cartella clinica aggiornata con successo!</string>
     <string name="errorUpdate">Errore nell\'aggiornamento della cartella clinica</string>
-
-
+    <string name="sensore_disponibile">Sensore Heart Rate disponibile sul tuo dispositivo!</string>
+    <string name="sensore_non_disponibile">Sensore Heart Rate non disponibile sul dispositivo…</string>
+    <string name="istruzioni_sensore">Poggia il dito sul sensore per misurare la frequenza cardiaca</string>
+    <string name="detected_heart_rate">Valore di \'Frequenza cardiaca\' rilevato con successo!</string>
+    <string name="prima_visita">Benvenuto! Questa è la tua prima visita.</string>
+    <string name="errore_parametri_medici_s">Errore durante la verifica del documento</string>
+    <string name="parametri_medici_aggiornati">Parametri medici aggiornati con successo!</string>
+    <string name="errore_parametri_medici_aggiornati">Errore nell\'aggiornamento dei parametri medici</string>
+    <string name="parametri_medici_creati">Dati raccolti nella visita salvati con successo!</string>
+    <string name="errore_parametri_medici_creati">Errore nel salvataggio dei parametri medici di questa visita…</string>
 </resources>

@@ -20,14 +20,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -39,8 +36,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-
-import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 
 public class ParametriMediciFragment extends Fragment implements SensorEventListener {
 
@@ -86,13 +81,14 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         userId = HomeS.UID; // valore del QR code utente RichiedenteAsilo inquadrato dall'utente Staff loggato (= UID di RichiedenteAsilo)
 
         // Pulsanti di misurazione
-        MaterialCardView temperatureCard = view.findViewById(R.id.temperatureCard);
-        MaterialCardView heartRateButton = view.findViewById(R.id.heartRateButton);
-        MaterialCardView bloodPressureButton = view.findViewById(R.id.bloodPressureButton);
-        MaterialCardView pulseOxButton = view.findViewById(R.id.pulseOxButton);
-        MaterialCardView glucoseButton = view.findViewById(R.id.glucoseButton);
+        MaterialButton temperatureButton = view.findViewById(R.id.temperatureButton);
+        MaterialButton heartRateButton = view.findViewById(R.id.heartRateButton);
+        MaterialButton bloodPressureButton = view.findViewById(R.id.bloodPressureButton);
+        MaterialButton pulseOxButton = view.findViewById(R.id.pulseOxButton);
+        MaterialButton glucoseButton = view.findViewById(R.id.glucoseButton);
+
         // unico elemento visualizzabile con la scansione del QR code utente nella pagina 'Contenitore Biomedicale'
-        CardView apriContenitoreButton = view.findViewById(R.id.apriContenitore);
+        Button apriContenitoreButton = view.findViewById(R.id.apriContenitore);
         apriContenitoreButton.setOnClickListener(v -> apriContenitoreButtonClicked());
 
         Button saveButton = view.findViewById(R.id.saveButton);
@@ -119,14 +115,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
 
         // Tutte le misurazioni dei parametri medici sono simulate.
         // Se il dispositivo usato ha il sensore hardware Heart Rate, la frequenza cardiaca si potrà misurare realmente
-        temperatureCard.setOnClickListener(v -> {
-            saveButton.setVisibility(View.VISIBLE);
-            showLoadingLayout(temperatureLayout, R.id.temperatureProgressBar, R.id.temperatureResultTextView);
-            simulateTemperatureMeasurement();
-        });
-
-        TextView temperatureTextView = view.findViewById(R.id.temperatureTextView);
-        temperatureTextView.setOnClickListener(v -> {
+        temperatureButton.setOnClickListener(v -> {
             saveButton.setVisibility(View.VISIBLE);
             showLoadingLayout(temperatureLayout, R.id.temperatureProgressBar, R.id.temperatureResultTextView);
             simulateTemperatureMeasurement();
@@ -136,79 +125,24 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
             saveButton.setVisibility(View.VISIBLE);
             checkHeartRateSensor(); // controllo su presenza del sensore
         });
-        TextView heartRateTextView = view.findViewById(R.id.heartRateTextView);
-        heartRateTextView.setOnClickListener(v -> {
-            saveButton.setVisibility(View.VISIBLE);
-            showLoadingLayout(heartRateLayout, R.id.heartRateProgressBar, R.id.heartRateResultTextView);
-            checkHeartRateSensor();
-        });
-
 
         bloodPressureButton.setOnClickListener(v -> {
             saveButton.setVisibility(View.VISIBLE);
             showLoadingLayout(bloodPressureLayout, R.id.bloodPressureProgressBar, R.id.bloodPressureResultTextView);
             simulateBloodPressureMeasurement();
         });
-        TextView bloodPressureTextView = view.findViewById(R.id.bloodPressureTextView);
-        bloodPressureTextView.setOnClickListener(v -> {
-            saveButton.setVisibility(View.VISIBLE);
-            showLoadingLayout(bloodPressureLayout, R.id.bloodPressureProgressBar, R.id.bloodPressureResultTextView);
-            simulateBloodPressureMeasurement();
-
-        });
-
 
         pulseOxButton.setOnClickListener(v -> {
             saveButton.setVisibility(View.VISIBLE);
             showLoadingLayout(pulseOxLayout, R.id.pulseOxProgressBar, R.id.pulseOxResultTextView);
             simulatePulseOxMeasurement();
         });
-        TextView pulseOxTextView = view.findViewById(R.id.pulseOxTextView);
-        pulseOxTextView.setOnClickListener(v -> {
-            saveButton.setVisibility(View.VISIBLE);
-            showLoadingLayout(pulseOxLayout, R.id.pulseOxProgressBar, R.id.pulseOxResultTextView);
-            simulatePulseOxMeasurement();
-        });
-
 
         glucoseButton.setOnClickListener(v -> {
             saveButton.setVisibility(View.VISIBLE);
             showLoadingLayout(glucoseLayout, R.id.glucoseProgressBar, R.id.glucoseResultTextView);
             simulateGlucoseMeasurement();
         });
-        TextView glucoseTextView = view.findViewById(R.id.glucoseTextView);
-        glucoseTextView.setOnClickListener(v -> {
-            saveButton.setVisibility(View.VISIBLE);
-            showLoadingLayout(glucoseLayout, R.id.glucoseProgressBar, R.id.glucoseResultTextView);
-            simulateGlucoseMeasurement();
-        });
-
-
-        // premendo il tasto indietro da questa scheda l'utente visualizzerà:
-        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                boolean contenitoreAperto = pwContenitore.contenitoreAperto;
-                // nuovamente la schermata con il solo pulsante 'Apri Contenitore' visibile
-                if (contenitoreAperto) {
-                    pwContenitore.contenitoreAperto = false;
-                    contenitoreAperto = pwContenitore.contenitoreAperto;
-
-                    temperatureLayout.setVisibility(View.GONE);
-                    heartRateLayout.setVisibility(View.GONE);
-                    bloodPressureLayout.setVisibility(View.GONE);
-                    pulseOxLayout.setVisibility(View.GONE);
-                    glucoseLayout.setVisibility(View.GONE);
-                    saveButton.setVisibility(View.GONE);
-
-                    apriContenitoreButton.setVisibility(View.VISIBLE);
-                } else { // l'utente sarà reindirizzato alla Home lato Staff
-                    openHomeS();
-                }
-            }
-        };
-
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
 
         return view;
     }
@@ -230,13 +164,13 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         heartRateSensor = sensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
         if (heartRateSensor != null) { // sensore disponibile: mostra istruzioni per l'uso
             sensorManager.registerListener(this, heartRateSensor, SensorManager.SENSOR_DELAY_NORMAL);
-            showToast("Sensore Heart Rate disponibile sul tuo dispositivo!");
+            showToast(getString(R.string.sensore_disponibile));
 
             // Mostra istruzioni per misurare la frequenza cardiaca tramite il sensore presente nel dispositivo
-            showToast("Poggia il dito sul sensore per misurare la frequenza cardiaca");
+            showToast(getString(R.string.istruzioni_sensore));
 
         } else { // sensore non disponibile: mostra risultato simulato con ritardo di caricamento
-            showToast("Sensore Heart Rate non disponibile sul dispositivo...");
+            showToast(getString(R.string.sensore_non_disponibile));
             showLoadingLayout(heartRateLayout, R.id.heartRateProgressBar, R.id.heartRateResultTextView);
             simulateHeartRateMeasurement();
         }
@@ -261,7 +195,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
             if (heartRateTmp != 0 && !isFirstHeartRateValueDisplayed) {
                 heartRate = heartRateTmp;
 
-                showToast("Valore di 'Frequenza cardiaca' rilevato con successo!");
+                showToast(getString(R.string.detected_heart_rate));
                 showHeartRate(formatDouble(heartRate));
 
                 // il risultato è stato mostrato
@@ -277,7 +211,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
                 isFirstHeartRateValueDisplayed = false;
 
                 // Mostra istruzioni per misurare la frequenza cardiaca tramite il sensore presente nel dispositivo
-                showToast("Poggia il dito sul sensore per misurare la frequenza cardiaca");
+                showToast(getString(R.string.istruzioni_sensore));
             }
         }
     }
@@ -308,9 +242,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     }
 
     private void saveButtonClicked() {
-        String connessione = getString(R.string.connessione);
         // Controlla l'esistenza nel db del documento per lo specifico utente
-        if (NetworkUtils.isNetworkAvailable(requireContext())) {
         firestore.collection("PARAMETRI_UTENTI")
                 .whereEqualTo("ID_RichiedenteAsilo", userId)
                 .get()
@@ -323,16 +255,13 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
                             checkExistingDocumentWithCurrentDate();
                         } else {
                             // documento inesistente: creane uno
-                            showToast("Benvenuto! Questa è la tua prima visita.");
+                            showToast(getString(R.string.prima_visita));
                             createNewDocument();
                         }
                     } else { // Errore
-                        showToast("Errore durante la verifica del documento");
+                        showToast(getString(R.string.errore_parametri_medici_s));
                     }
                 });
-        } else {
-            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
-        }
     }
 
     private void checkExistingDocumentWithCurrentDate() {
@@ -355,7 +284,7 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
                         }
 
                     } else { // Errore
-                        showToast("Errore durante la verifica del documento");
+                        showToast(getString(R.string.errore_parametri_medici_s));
                     }
                 });
     }
@@ -390,10 +319,10 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
         firestore.collection("PARAMETRI_UTENTI").document(documentId)
                 .update(data)
                 .addOnSuccessListener(aVoid -> {
-                    showToast("Parametri medici aggiornati con successo!");
+                    showToast(getString(R.string.parametri_medici_aggiornati));
                 })
                 .addOnFailureListener(e -> {
-                    showToast("Errore nell'aggiornamento dei parametri medici");
+                    showToast(getString(R.string.errore_parametri_medici_aggiornati));
                 });
     }
 
@@ -430,9 +359,9 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
                 .add(data)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        showToast("Dati raccolti nella visita salvati con successo!");
+                        showToast(getString(R.string.parametri_medici_creati));
                     } else {
-                        showToast("Errore nel salvataggio dei parametri medici di questa visita...");
+                        showToast(getString(R.string.errore_parametri_medici_creati));
                     }
                 });
     }
