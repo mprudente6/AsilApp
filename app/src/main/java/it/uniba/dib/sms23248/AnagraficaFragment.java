@@ -1,18 +1,13 @@
 package it.uniba.dib.sms23248;
 
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -23,7 +18,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +27,7 @@ public class AnagraficaFragment extends Fragment {
     private FirebaseFirestore db;
     private LinearLayout personalDataLayout;
 
-    private final String userId =  HomeS.UID;   //"1qRWhwM51WP3VjEfMnc4NejOzBh2";  Da sostituire con UID di Richiedente Asilo di cui si è scansionato QR CODE
+    private final String userId =  HomeS.UID;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,10 +39,10 @@ public class AnagraficaFragment extends Fragment {
 
         fetchUserDataFromFirestore(view);
 
-
         return view;
     }
 
+    // legge e mostra (con una chiamata a addDataToLayout) la scheda anagrafica del richiedente asilo di cui si è scansionato il QR code
     private void fetchUserDataFromFirestore(View view) {
         DocumentReference userRef = db.collection("RICHIEDENTI_ASILO").document(userId);
 
@@ -103,16 +97,11 @@ public class AnagraficaFragment extends Fragment {
 
         fieldTextView.setTextSize(18);
 
-
-
         TextView valueTextView = new TextView(view.getContext());
 
         valueTextView.setText(value.toString());
         valueTextView.setTextSize(16);
         valueTextView.setPadding(20, 5, 8, 6);
-
-
-
 
         personalDataLayout.addView(fieldTextView);
         personalDataLayout.addView(valueTextView);

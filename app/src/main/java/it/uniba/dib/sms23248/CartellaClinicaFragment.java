@@ -1,49 +1,37 @@
 package it.uniba.dib.sms23248;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 
 public class CartellaClinicaFragment extends Fragment {
 
     private FirebaseFirestore db;
     private LinearLayout dataLayout;
-    private Button submitButton;
-
-    private String documentId;
-    private final String userId = HomeS.UID;
+    private MaterialButton submitButton;
+    private final String userId = HomeS.UID; // UID del richiedente asilo di cui si è scansionato il QR code
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,168 +61,130 @@ public class CartellaClinicaFragment extends Fragment {
         return view;
     }
 
-    private class EditTextWatcher implements TextWatcher {
-        private EditText editText;
-
-        EditTextWatcher(EditText editText) {
-            this.editText = editText;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            // Calcola l'altezza necessaria per visualizzare tutto il testo
-            int lineCount = editText.getLineCount();
-            int lineHeight = editText.getLineHeight();
-            int height = lineHeight * lineCount;
-
-            // Imposta l'altezza dell'EditText
-            ViewGroup.LayoutParams layoutParams = editText.getLayoutParams();
-            layoutParams.height = height;
-            editText.setLayoutParams(layoutParams);
-        }
-    }
-
+    // legge e mostra i dati di cartella clinica dal db
     private void fetchUserDataFromFirestore() {
         DocumentReference userRef = db.collection("CARTELLA_CLINICA_UTENTI").document(userId);
 
         userRef.get().addOnSuccessListener(documentSnapshot -> {
-            documentId = documentSnapshot.getId();
             Map<String, Object> userData = documentSnapshot.getData();
-            List<String> orderedFields = Arrays.asList("Anamnesi", "Diagnosi", "GruppoSanguigno", "Allergie", "Altezza", "Peso", "NoteMediche", "ID_RichiedenteAsilo");
 
-            for (String field : orderedFields) {
+            for (Map.Entry<String, Object> entry : getDefaultFields().entrySet()) {
+                String field = entry.getKey();
                 Object value = userData != null ? userData.get(field) : null;
 
-                if (!"ID_RichiedenteAsilo".equals(field)) {
+                if (!"ID_RichiedenteAsilo".equals(field)) {  // escludi campi con dati sensilibi
                     TextView textView = new TextView(requireContext());
                     textView.setText(getDisplayNameForField(field));
                     textView.setTypeface(null, Typeface.BOLD);
-                    textView.setPadding(25, 30, 25, 2);
-                    textView.setTextSize(18);
+                    textView.setPadding(6, 6, 6, 2);
+                    textView.setTextSize(15);
 
-                    MultiAutoCompleteTextView multiAutoCompleteTextView = new MultiAutoCompleteTextView(requireContext());
-                    multiAutoCompleteTextView.setText(value != null ? value.toString() : "");
-                    multiAutoCompleteTextView.setHint(getDisplayNameForField(field));
-                    multiAutoCompleteTextView.setTextSize(16);
-                    multiAutoCompleteTextView.setPadding(25, 0, 25, 20); // Modifica il padding come desiderato
-                    multiAutoCompleteTextView.setMaxLines(5); // Imposta il numero massimo di righe
-                    multiAutoCompleteTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    layoutParams.topMargin = 20; // Imposta la distanza tra il testo precedente e il MultiAutoCompleteTextView
-
-                    Log.d("Field Name", field); // Aggiungi log per verificare il nome del campo
-                    Log.d("Field Value", value != null ? value.toString() : "null"); // Aggiungi log per verificare il valore del campo
+                    EditText editText = new EditText(requireContext());
+                    editText.setText(value != null ? value.toString() : ""); // se il valore del campo è null, mostra il campo vuoto
+                    editText.setHint(getDisplayNameForField(field));
+                    editText.getBackground().mutate().setColorFilter(ContextCompat.getColor(requireContext(), android.R.color.holo_blue_light), PorterDuff.Mode.SRC_ATOP);
+                    int bottomPaddingInDp = 6;
+                    int bottomPaddingInPx = (int) (bottomPaddingInDp * getResources().getDisplayMetrics().density);
+                    editText.setPadding(editText.getPaddingLeft(), editText.getPaddingTop(), editText.getPaddingRight(), bottomPaddingInPx);
 
                     dataLayout.addView(textView);
-                    LinearLayout multiAutoCompleteTextViewLayout = new LinearLayout(requireContext());
-                    multiAutoCompleteTextViewLayout.setOrientation(LinearLayout.VERTICAL); // Orientamento verticale
-                    multiAutoCompleteTextViewLayout.addView(multiAutoCompleteTextView);
-                    dataLayout.addView(multiAutoCompleteTextViewLayout, layoutParams);
-
+                    dataLayout.addView(editText);
                 }
+
+                submitButton.setVisibility(View.VISIBLE);
             }
-
-            submitButton.setVisibility(View.VISIBLE);
         }).addOnFailureListener(e -> {
-
+            // Errore
         });
     }
 
-
-
-
+    // mostra intestazioni puù leggibili quando necessario
     private String getDisplayNameForField(String field) {
-
         switch (field) {
             case "GruppoSanguigno":
                 return "Gruppo Sanguigno";
             case "NoteMediche":
                 return "Note Mediche";
-
             default:
                 return field;
         }
     }
 
+    private Map<String, Object> getDefaultFields() {
+        // nomi campi da mostrare
+        String[] fields = {"Allergie", "Altezza", "Anamnesi", "Diagnosi", "GruppoSanguigno", "NoteMediche", "Peso", "ID_RichiedenteAsilo"};
+
+        Map<String, Object> defaultFields = new HashMap<>();
+        for (String field : fields) {
+            defaultFields.put(field, userId);
+        }
+
+        return defaultFields;
+    }
+
+    // aggiorna salvando i dati modificati nel db
     private void updateDataInFirestore() {
-        String connessione = getString(R.string.connessione);
         hideKeyboard();
-        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+
         DocumentReference userRef = db.collection("CARTELLA_CLINICA_UTENTI").document(userId);
 
         Map<String, Object> updatedData = new HashMap<>();
 
         for (int i = 0; i < dataLayout.getChildCount(); i += 2) {
-            View view = dataLayout.getChildAt(i + 1);
-            String field = ((TextView) dataLayout.getChildAt(i)).getText().toString();
-            field = field.replace(" ", "");
-            Log.d("Field Name", field); // Aggiungi questo log per verificare il nome del campo
-            Log.d("Child View", view.toString());
+            if (dataLayout.getChildAt(i + 1) instanceof EditText) {
+                EditText editText = (EditText) dataLayout.getChildAt(i + 1);
 
-            if (view instanceof ViewGroup) {
-                ViewGroup viewGroup = (ViewGroup) view;
-                if (viewGroup.getChildCount() > 0 && viewGroup.getChildAt(0) instanceof MultiAutoCompleteTextView) {
-                    MultiAutoCompleteTextView multiAutoCompleteTextView = (MultiAutoCompleteTextView) viewGroup.getChildAt(0);
-                    String updatedValue = multiAutoCompleteTextView.getText().toString();
-                    Log.d("Field value", updatedValue);
-                    updatedData.put(field, updatedValue.isEmpty() ? null : updatedValue);
+                String field = editText.getHint().toString();
+                // sistema leggibilità intestazioni
+                if ("Note Mediche".equals(field)) {
+                    field = "NoteMediche";
+                } else if ("Gruppo Sanguigno".equals(field)) {
+                    field = "GruppoSanguigno";
                 }
+
+                String updatedValue = editText.getText().toString();
+
+                // salva i campi vuoti con valore null
+                updatedData.put(field, updatedValue.isEmpty() ? null : updatedValue);
             }
         }
 
         updatedData.put("ID_RichiedenteAsilo", userId);
 
-        Log.d("Updated Data", updatedData.toString()); // Aggiungi questo log per verificare i dati aggiornati
-
         userRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
                 if (document.exists()) {
+                    // aggiorna campi
                     updateExistingDocument(userRef, updatedData);
                 } else {
+                    // crea documento
                     createNewDocument(userRef, updatedData);
                 }
             } else {
-                Toast.makeText(requireContext(), "Errore nella ricerca del documento", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), getString(R.string.errore_ricerca), Toast.LENGTH_SHORT).show();
             }
         });
-        } else {
-            Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
-        }
     }
 
-
+    // crea nel db: cartella clinica per il richiedente asilo con valore UID equivalente a userId
     private void createNewDocument(DocumentReference userRef, Map<String, Object> updatedData) {
-String newFolder=getString(R.string.new_medicalFolder);
-        String updateFolder= getString(R.string.errorUpdatefolder);
         userRef.set(updatedData)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(requireContext(), newFolder, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.new_medicalFolder), Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-
-                    Toast.makeText(requireContext(), updateFolder, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.errorUpdatefolder), Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void updateExistingDocument(DocumentReference userRef, Map<String, Object> updatedData) {
-        String updateSuccess=getString(R.string.successUpdate);
-        String errorUpdate=getString(R.string.errorUpdate);
-
         userRef.update(updatedData)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(requireContext(),updateSuccess, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.successUpdate), Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-
-                    Toast.makeText(requireContext(), errorUpdate, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), getString(R.string.errorUpdate), Toast.LENGTH_SHORT).show();
                 });
     }
 
