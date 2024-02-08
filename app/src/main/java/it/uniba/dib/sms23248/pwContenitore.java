@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +27,7 @@ public class pwContenitore extends Fragment {
     Button btnInvia;
     String passwordContenitore;
     String codiceQrContenitore;
-    TextView Codice;
+    ImageView Codice;
 
     EditText InserisciCodice;
 
@@ -46,13 +46,15 @@ public class pwContenitore extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_pw_contenitore, container, false);
 
+        //Controllo per verificare se sono stati accettati o meno i permessi della fotocamera
+
         if (ContextCompat.checkSelfPermission(getActivity(), "android.permission.CAMERA")
                 == PackageManager.PERMISSION_GRANTED)
         {
             TitoloCodice = rootView.findViewById(R.id.textViewNoPermission);
             TitoloCodice.setVisibility(View.INVISIBLE);
 
-            Codice = rootView.findViewById(R.id.Codice);
+            Codice = rootView.findViewById(R.id.CodiceIcon);
             Codice.setVisibility(View.INVISIBLE);
 
             InserisciCodice = rootView.findViewById(R.id.CodiceContenitore);
@@ -84,27 +86,33 @@ public class pwContenitore extends Fragment {
         btnInvia = rootView.findViewById(R.id.buttonInvia);
 
         btnInvia.setOnClickListener(new View.OnClickListener() {
+
+            //Controllo per verificare la correttezza della password o del codice del contenitore
             @Override
             public void onClick(View v) {
                 try {
-                    if(isTextViewVisible(Codice)){
-                        Log.d("CodiceNull ",pw.getText().toString());
+                    if(isTextViewVisible(TitoloCodice)){
                         if (pw.getText().toString().equals(passwordContenitore)){
-                            Log.d("Vai  a ","Strumenti biomedicali");
                             contenitoreAperto = true;
                             Intent i = new Intent(pwContenitore.this.getActivity(), SaluteS.class);
                             startActivity(i);
+                        }
+                        else{
+                            Toast.makeText(getActivity(), getString(R.string.toastPwErrata),
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
                     else{
 
                         InserisciCodice = rootView.findViewById(R.id.CodiceContenitore);
-                        Log.d("CodiceNoNull ",InserisciCodice.getText().toString());
                         if (InserisciCodice.getText().toString().equals(codiceQrContenitore) && pw.getText().toString().equals(passwordContenitore)){
-                            Log.d("Vai  a ","Strumenti biomedicali");
                             contenitoreAperto = true;
                             Intent i = new Intent(pwContenitore.this.getActivity(), SaluteS.class);
                             startActivity(i);
+                        }
+                        else{
+                            Toast.makeText(getActivity(), getString(R.string.toastPweCodiceErrati),
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
 

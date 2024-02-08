@@ -53,10 +53,8 @@
 
     <Button
         android:id="@+id/buttonInvia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-
+        android:layout_width="158dp"
+        android:layout_height="57dp"
 
         android:layout_centerHorizontal="true"
 
@@ -66,7 +64,7 @@
         android:backgroundTint="#076aec"
         android:text="@string/pw_contenitore_invia"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,85 +73,55 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="74dp"
-        android:layout_alignParentStart="true"
+        android:layout_height="60dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="9dp"
         android:layout_marginTop="258dp"
-        android:layout_marginEnd="7dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/Codice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/pw_contenitore_codice"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/Password"
-            app:layout_constraintEnd_toStartOf="@+id/CodiceContenitore"
-            app:layout_constraintHorizontal_bias="0.456"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.761"
-            tools:ignore="MissingConstraints" />
+        <ImageView
+            android:id="@+id/CodiceIcon"
+            android:layout_width="137dp"
+            android:layout_height="53dp"
+            android:src="@drawable/biomedical_icon" />
 
         <EditText
             android:id="@+id/CodiceContenitore"
-            android:layout_width="226dp"
-            android:layout_height="52dp"
-
-
+            android:layout_width="208dp"
+            android:layout_height="55dp"
+            android:drawablePadding="10dp"
+            android:hint="@string/pw_contenitore_codice"
             android:inputType="text"
-
-        />
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/Lp"
         android:layout_width="match_parent"
-        android:layout_height="74dp"
-        android:layout_alignParentStart="true"
+        android:layout_height="60dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="11dp"
-        android:orientation="horizontal"
-        android:padding="15dp">
+        android:layout_marginTop="328dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/Password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/pw_contenitore_password"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/Password"
-            app:layout_constraintEnd_toStartOf="@+id/CodiceContenitore"
-            app:layout_constraintHorizontal_bias="0.456"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.761"
-            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/passwordIcon"
+            android:layout_width="137dp"
+            android:layout_height="53dp"
+            android:src="@drawable/password_icon" />
 
         <EditText
             android:id="@+id/PasswordContenitore"
-            android:layout_width="180dp"
-            android:layout_height="52dp"
-            android:layout_marginBottom="304dp"
-            android:ems="10"
+            android:layout_width="208dp"
+            android:layout_height="55dp"
+            android:drawablePadding="10dp"
+            android:hint="@string/password"
             android:inputType="textPassword"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.85"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
 
     </LinearLayout>
 

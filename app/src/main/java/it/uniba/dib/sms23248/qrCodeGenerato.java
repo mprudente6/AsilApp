@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -95,10 +94,6 @@ public class qrCodeGenerato extends Fragment {
         chiudi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Button btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
-                btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
-                btnCamera.setVisibility(View.VISIBLE);*/
-
                 CardView btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
                 btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
                 btnGenaraQr.setVisibility(View.VISIBLE);

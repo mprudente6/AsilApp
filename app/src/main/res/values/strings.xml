@@ -185,4 +185,8 @@
     <string name="errore_parametri_medici_aggiornati">Errore nell\'aggiornamento dei parametri medici</string>
     <string name="parametri_medici_creati">Dati raccolti nella visita salvati con successo!</string>
     <string name="errore_parametri_medici_creati">Errore nel salvataggio dei parametri medici di questa visita…</string>
+
+    <string name="toastPwErrata">Password Errata! Riprovare</string>
+    <string name="toastPweCodiceErrati">Password o codice errati! Riprovare</string>
+    <string name="noContenitore">Contenitore non trovato</string>
 </resources>

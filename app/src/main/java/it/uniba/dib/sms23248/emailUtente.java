@@ -2,7 +2,6 @@ package it.uniba.dib.sms23248;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class emailUtente extends Fragment {
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,6 +30,7 @@ public class emailUtente extends Fragment {
         EditText Email = rootView.findViewById(R.id.EditEmail);
 
         Button Invia = rootView.findViewById((R.id.buttonInvia));
+
 
         Invia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +44,6 @@ public class emailUtente extends Fragment {
                             public void onComplete(Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d("UID", document.getId() );
                                         HomeS.UID = document.getId();
                                         Intent i = new Intent(emailUtente.this.getActivity(), SaluteS.class);
                                         startActivity(i);
@@ -60,7 +56,9 @@ public class emailUtente extends Fragment {
         });
 
 
-
         return rootView;
+
     }
+
+
 }

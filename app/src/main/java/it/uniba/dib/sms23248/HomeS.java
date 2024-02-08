@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -54,7 +54,6 @@ public class HomeS extends AppCompatActivity {
 
 
     public Boolean userExist = false;
-
     private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
@@ -201,7 +200,18 @@ public class HomeS extends AppCompatActivity {
     @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
-        showLogoutConfirmationDialog();
+
+        FragmentManager fragmentManager = getSupportFragmentManager(); // Ottieni il FragmentManager
+        Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayoutEmailUtente); // Trova il Fragment
+        if (fragment != null) {
+            fragmentManager.beginTransaction().remove(fragment).commit(); // Rimuovi il Fragment
+            RelativeLayout layoutHomeS = findViewById(R.id.LayoutHomeS);
+            layoutHomeS.setVisibility(View.VISIBLE);
+        }else
+        {
+            showLogoutConfirmationDialog();
+        }
+
     }
 
     private void scanCode()
@@ -270,7 +280,7 @@ public class HomeS extends AppCompatActivity {
             layoutHomeS.setVisibility(View.GONE);
             Fragment emailUtente = null;
             emailUtente = new emailUtente();
-            getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutEmailUtente, emailUtente)
+            getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutEmailUtente, emailUtente, "emailUtente")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
         }
     });

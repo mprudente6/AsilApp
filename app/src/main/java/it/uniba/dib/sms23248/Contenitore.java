@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -55,18 +54,17 @@ public class Contenitore extends AppCompatActivity {
         options.setCaptureActivity(CaptureAct.class);
         barLaucher.launch(options);
     }
+    //Controllo per verificare se sono stati accettati o meno i permessi della fotocamera
     ActivityResultLauncher<ScanOptions> barLaucher = registerForActivityResult(new ScanContract(), result->
     {
         if (ContextCompat.checkSelfPermission(Contenitore.this, "android.permission.CAMERA")
                 == PackageManager.PERMISSION_GRANTED) {
-            // I permessi sono già stati concessi, puoi procedere con l'utilizzo della fotocamera.
             if(result.getContents() !=null)
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Contenitore.this);
                 builder.setTitle("Result");
 
-
-                Log.d("qrContenitore1",qrCodeContenitore);
+                //Controllo per verificare se èstato scansionato un codice presente nel database
 
                 if (result.getContents().equals(qrCodeContenitore)){
 
@@ -78,7 +76,7 @@ public class Contenitore extends AppCompatActivity {
                 }
                 else{
                     //builder.setMessage(result.getContents());
-                    builder.setMessage("CONTENITORE NON TROVATO");
+                    builder.setMessage(getString(R.string.noContenitore));
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -93,7 +91,7 @@ public class Contenitore extends AppCompatActivity {
 
             }
         } else {
-            // Richiedi i permessi della fotocamera se non sono stati concessi
+
             Fragment fragmentPwContenitore = null;
             fragmentPwContenitore = new pwContenitore();
             getSupportFragmentManager().beginTransaction().add(R.id.frameLayoutPwContenitore, fragmentPwContenitore)

@@ -178,4 +178,8 @@
     <string name="errore_parametri_medici_aggiornati">Error updating medical parameters</string>
     <string name="parametri_medici_creati">Data collected during the visit saved successfully!</string>
     <string name="errore_parametri_medici_creati">Error saving the medical parameters of this visit…</string>
+
+    <string name="toastPwErrata">Incorrect password! Try again</string>
+    <string name="toastPweCodiceErrati">Incorrect password or code! Try again</string>
+    <string name="noContenitore">Container not found</string>
 </resources>
