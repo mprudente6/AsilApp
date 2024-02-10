@@ -19,7 +19,6 @@ import it.uniba.dib.sms23248.R;
 public class VideoAdapterRichiedenti extends RecyclerView.Adapter<VideoAdapterRichiedenti.VideoViewHolder> {
 
     private List<VideoModel> videoList;
-    private OnDeleteClickListener onDeleteClickListener;
     private OnDownloadClickListener onDownloadClickListener;
 
 
@@ -79,20 +78,6 @@ public class VideoAdapterRichiedenti extends RecyclerView.Adapter<VideoAdapterRi
             videoThumbnailImageView = itemView.findViewById(R.id.videoThumbnailImageView);
             textNomeVideo = itemView.findViewById(R.id.NomeVideo);
         }
-    }
-
-    public interface OnDeleteClickListener {
-        void onDeleteClick(VideoModel videoModel, String targetFolder);
-
-        void onDownloadClick(VideoModel videoModel);
-    }
-
-    public void setOnDeleteClickListener(OnDeleteClickListener onDeleteClickListener) {
-        this.onDeleteClickListener = onDeleteClickListener;
-    }
-
-    public void setOnDownloadClickListener(OnDownloadClickListener onDownloadClickListener) {
-        this.onDownloadClickListener = onDownloadClickListener;
     }
 
     private String removeFileExtension(String fileName) {

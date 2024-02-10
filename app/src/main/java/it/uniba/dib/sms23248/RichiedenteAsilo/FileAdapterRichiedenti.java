@@ -26,12 +26,6 @@ public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.Vie
         this.documentiFragment = documentiFragment;
     }
 
-
-
-    public interface OnItemClickListener {
-        void onItemClick(UploadedFile uploadedFile);
-    }
-
     private FileAdapter.OnItemClickListener listener;
 
     public void setOnItemClickListener(FileAdapter.OnItemClickListener listener) {
@@ -53,7 +47,6 @@ public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.Vie
         holder.fileNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Check if the clicked view is the TextView
                 Log.d("FileAdapter", "Text clicked for item: " + uploadedFile.getFileName());
                 if (listener != null) {
                     listener.onItemClick(uploadedFile);
@@ -65,16 +58,6 @@ public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.Vie
     @Override
     public int getItemCount() {
         return fileList.size();
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView fileNameTextView;
-
-        public ViewHolder(View view) {
-            super(view);
-            fileNameTextView = view.findViewById(R.id.fileNameTextView);
-        }
     }
 }
 

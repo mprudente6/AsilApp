@@ -11,7 +11,6 @@ public class MyViewPageAdapterRichiedenti extends FragmentStateAdapter {
         private final Context context;
     public MyViewPageAdapterRichiedenti(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-        //context serve per fare l'inflate di activity_amministrazione per usare tab_lyout
         this.context = fragmentActivity;
     }
 

@@ -46,12 +46,8 @@ import it.uniba.dib.sms23248.R;
 public class DocumentiFragmentRichiedenti extends Fragment {
 
     View view;
-    Button selectFile, upload;
-    TextView notification;
     FirebaseDatabase database;
     FirebaseStorage storage;
-    int MY_PERMISSIONS_REQUEST_READ_MEDIA = 1;
-    Uri pdfUri;
 
 
     private RecyclerView recyclerView;
@@ -144,24 +140,6 @@ public class DocumentiFragmentRichiedenti extends Fragment {
             }
         });
     }
-    private String getFileNameFromUri(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            try (Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    int displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    if (displayNameIndex != -1) {
-                        result = cursor.getString(displayNameIndex);
-                    }
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.getLastPathSegment();
-        }
-        result = sanitizeFileName(result);
-        return result;
-    }
 
     public void downloadFile(String fileUrl, String fileName) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(fileUrl);
@@ -209,23 +187,6 @@ public class DocumentiFragmentRichiedenti extends Fragment {
             String downManager=getString(R.string.download_manager);
             Toast.makeText(requireContext(),downManager, Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        String select_file=getString(R.string.selectFile);
-        if(requestCode == 86 && resultCode == RESULT_OK && data != null){
-            pdfUri = data.getData();
-            String fileName = getFileNameFromUri(pdfUri);
-            notification.setText(fileName);
-        } else {
-            Toast.makeText(requireContext(),select_file, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private String sanitizeFileName(String originalFileName) {
-        return originalFileName.replaceAll("[.#$\\[\\]]", "_");
     }
 
     @Override

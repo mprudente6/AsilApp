@@ -30,8 +30,6 @@ import it.uniba.dib.sms23248.R;
 
 public class MappaCentro extends AppCompatActivity {
     private MapView map = null;
-    private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
-    private ItemizedIconOverlay<OverlayItem> itemizedOverlay;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser mAuth = FirebaseAuth.getInstance().getCurrentUser();
     String uid = mAuth.getUid();
@@ -127,13 +125,6 @@ public class MappaCentro extends AppCompatActivity {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         DocumentSnapshot centroAccoglienzaDoc = queryDocumentSnapshots.getDocuments().get(0);
 
-
-                        String nome = centroAccoglienzaDoc.getString("Nome");
-                        String descrizione = centroAccoglienzaDoc.getString("Descrizione");
-                        String sitoWeb = centroAccoglienzaDoc.getString("Sito web");
-                        String indirizzo = centroAccoglienzaDoc.getString("Indirizzo");
-                        String telefono = centroAccoglienzaDoc.getString("Telefono");
-                        String email = centroAccoglienzaDoc.getString("Email");
                         latitude = centroAccoglienzaDoc.getDouble("latitude");
                         longitude = centroAccoglienzaDoc.getDouble("longitude");
                         zoomlevel = centroAccoglienzaDoc.getDouble("zoomlevel");
