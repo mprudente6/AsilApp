@@ -125,7 +125,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                 String genereValue = genderSpinner.getSelectedItem().toString();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 String staffUid=currentUser.getUid();
-                Log.e(TAG, "Current UID: " + staffUid);
 
                 if (useremail.isEmpty()) {
                     email.setError(obbligoMail);
@@ -155,25 +154,23 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
                 if (NetworkUtils.isNetworkAvailable(RegistrazioneRichiedenteAsilo.this)) {
-                mAuth.createUserWithEmailAndPassword(useremail, userpass)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
+                    mAuth.createUserWithEmailAndPassword(useremail, userpass)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
 
-                                    String uid = task.getResult().getUser().getUid();
-                                    Log.e(TAG, "User UID: " + uid);
+                                        String uid = task.getResult().getUser().getUid();
 
-                                    registerUser(uid);
+                                        registerUser(uid);
 
 
-                                } else {
-                                    progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(RegistrazioneRichiedenteAsilo.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    Log.e(TAG, "Firebase authentication failed: " + task.getException().getMessage());
+                                    } else {
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(RegistrazioneRichiedenteAsilo.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        }); } else {
+                            }); } else {
                     Toast.makeText(RegistrazioneRichiedenteAsilo.this, noConnection, Toast.LENGTH_LONG).show();
                 }
             }
@@ -202,10 +199,8 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    Log.e("REGISTRAZIONE","onComplete: "+uidStaff);
                     DocumentSnapshot staffDocument = task.getResult();
                     if (staffDocument.exists()) {
-                        Log.e("REGISTRAZIONE","inserting data");
                         String regSuccess=getString(R.string.registraCompletato);
                         String regFail=getString(R.string.registrazione_fallita);                     String centroValue = staffDocument.getString("Centro");
 
@@ -266,7 +261,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
 
 
-                                        Log.d("BUDGET", "uid: "+uid);
                                         scheduleMonthlyAlarm(uid);
 
 
@@ -291,7 +285,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                     }
                 } else {
                     progressBar.setVisibility(View.GONE);
-                    Log.e(TAG, "Error: " + task.getException().getMessage());
                 }
             }
         });
@@ -356,7 +349,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
                                             FirebaseUser user = mAuth.getCurrentUser();
                                             if (user != null) {
-                                                Log.d(TAG, "User signed in: " + user.getUid());
                                             }
                                             Intent intent= new Intent(RegistrazioneRichiedenteAsilo.this, HomeS.class);
                                             startActivity(intent);

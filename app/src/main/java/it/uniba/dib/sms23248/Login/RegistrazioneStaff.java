@@ -94,7 +94,6 @@ public class RegistrazioneStaff extends AppCompatActivity {
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         centroSpinner.setAdapter(adapter);
                     } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
 
@@ -178,19 +177,16 @@ public class RegistrazioneStaff extends AppCompatActivity {
                                                 progressBar.setVisibility(View.GONE);
                                                 Toast.makeText(RegistrazioneStaff.this,regSuccess, Toast.LENGTH_SHORT).show();
                                                 startActivity(new Intent(RegistrazioneStaff.this, AccessoStaff.class));
-                                                Log.d(TAG, "FINISH successful");
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Log.e(TAG, "Error", e);
                                                 progressBar.setVisibility(View.GONE);
                                                 Toast.makeText(RegistrazioneStaff.this,regFail + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             } else {
-                                Log.e(TAG, "Authentication failed", task.getException());
                                 progressBar.setVisibility(View.GONE);
                                 Toast.makeText(RegistrazioneStaff.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }

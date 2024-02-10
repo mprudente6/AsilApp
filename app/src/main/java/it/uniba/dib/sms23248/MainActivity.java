@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedLang = parent.getItemAtPosition(position).toString();
                 if(selectedLang.equals("ITA")){
-                    Log.d("ITA","ITA");
                     Locale locale = new Locale("it");
                     Locale.setDefault(locale);
                     Resources resources = MainActivity.this.getResources();
@@ -168,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 } else if (selectedLang.equals("ENG")){
-                    Log.d("ENG","ENG");
+
                     Locale locale = new Locale("en");
                     Locale.setDefault(locale);
                     Resources resources = MainActivity.this.getResources();

@@ -70,8 +70,6 @@ public class SpeseFragment extends Fragment {
         db.collection("SPESE").document(uid).collection("Subspese")
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
-
-                        Log.e("FirestoreListener", "Error: ", error);
                         return;
                     }
 

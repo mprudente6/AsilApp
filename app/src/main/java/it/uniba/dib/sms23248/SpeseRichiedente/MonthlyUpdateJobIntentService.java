@@ -17,7 +17,6 @@ public class MonthlyUpdateJobIntentService extends JobIntentService {
         String uid = intent.getStringExtra("UID");
 
 
-        Log.d("BUDGET", "onHandleWork with UID: " + uid);
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         DocumentReference documentReference = firestore.collection("RICHIEDENTI_ASILO").document(uid);
@@ -27,19 +26,13 @@ public class MonthlyUpdateJobIntentService extends JobIntentService {
                 Double currentBudget = documentSnapshot.getDouble("Budget");
 
                 double updatedBudget = currentBudget + 60.0;
-                Log.d("BUDGET", "+ 60: " + updatedBudget);
-
                 documentReference.update("Budget", updatedBudget)
                         .addOnSuccessListener(aVoid -> {
-                            Log.d("BUDGET", "Budget updated successfully");
                         })
                         .addOnFailureListener(e -> {
-                            Log.e("BUDGET", "Failed to update budget: " + e.getMessage());
                         });
             }
-        }).addOnFailureListener(e -> {
-            Log.e("BUDGET", "Failed to fetch current budget: " + e.getMessage());
-        });
+        }).addOnFailureListener(e -> {});
     }
 
     public static void enqueueWork(Context context, Intent work) {

@@ -60,9 +60,10 @@ public class HomeS extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_s);
+        String connesso=getString(R.string.connessione);
 
         if (!NetworkUtils.isNetworkAvailable(getApplicationContext())) {
-            Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),connesso, Toast.LENGTH_LONG).show();
 
             return;
         }
@@ -234,7 +235,6 @@ public class HomeS extends AppCompatActivity {
             if (result.getContents() != null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomeS.this);
                 builder.setTitle("Result");
-                Log.d("Result", result.getContents());
 
                 UID = result.getContents();
 

@@ -48,7 +48,7 @@ public class InformazioniFragment extends Fragment {
     DocumentReference documentStaff;
 
 
-NetworkChangeReceiver networkChangeReceiver;
+    NetworkChangeReceiver networkChangeReceiver;
 
 
     String uid;
@@ -86,7 +86,6 @@ NetworkChangeReceiver networkChangeReceiver;
             });
         } else {
 
-            Log.d(TAG, "Current user is null");
         }
 
 
@@ -107,7 +106,6 @@ NetworkChangeReceiver networkChangeReceiver;
                     if (documentSnapshot.exists()) {
 
                         String centroValue = documentSnapshot.getString("Centro");
-                        Log.e(TAG, "Centro : " + centroValue);
                         if (centroValue != null) {
                             centroAccoglienzaCollection.whereEqualTo("Nome", centroValue)
                                     .limit(1) // prendi solo un documento
@@ -134,7 +132,7 @@ NetworkChangeReceiver networkChangeReceiver;
                                     })
                                     .addOnFailureListener(e -> Log.e(TAG, "Error: " + e.getMessage()));
                         }
-                       }
+                    }
                 })
                 .addOnFailureListener(e -> Log.e(TAG, errorStaffCollection + e.getMessage()));
     }

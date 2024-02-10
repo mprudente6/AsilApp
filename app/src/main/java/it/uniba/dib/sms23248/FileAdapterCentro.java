@@ -52,7 +52,6 @@ public class FileAdapterCentro extends RecyclerView.Adapter<FileAdapter.ViewHold
             @Override
             public void onClick(View v) {
 
-                Log.d("FileAdapter", "Text clicked for item: " + uploadedFile.getFileName());
                 if (listener != null) {
                     listener.onItemClick(uploadedFile);
                 }

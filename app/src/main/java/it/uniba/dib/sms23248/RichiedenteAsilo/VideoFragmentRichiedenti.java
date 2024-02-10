@@ -59,7 +59,6 @@ public class VideoFragmentRichiedenti extends Fragment implements VideoAdapterRi
         FirebaseUser currentUser = mAuth.getCurrentUser();
         uid = currentUser.getUid();
 
-        Log.e("UID","uid: "+uid);
 
 
 
@@ -75,7 +74,6 @@ public class VideoFragmentRichiedenti extends Fragment implements VideoAdapterRi
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(videoAdapterRichiedenti);
-        Log.e("UID","uid: "+uid);
         fetchUserSexAndVideos();
 
         return view;
@@ -99,7 +97,7 @@ public class VideoFragmentRichiedenti extends Fragment implements VideoAdapterRi
 
     private void fetchUserSexAndVideos() {
         String noFetch_userData= getString(R.string.no_fetchData);
-      Log.e("UID","uid: "+uid);
+
 
         db.collection("RICHIEDENTI_ASILO").document(uid).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

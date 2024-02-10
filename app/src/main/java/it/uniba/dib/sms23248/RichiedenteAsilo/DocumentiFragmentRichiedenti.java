@@ -101,21 +101,18 @@ public class DocumentiFragmentRichiedenti extends Fragment {
 
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
-                        Log.d("FirebaseDebug", "File Snapshot Key: " + fileSnapshot.getKey());
-                        Log.d("FirebaseDebug", "File Snapshot Value: " + fileSnapshot.getValue());
+
 
                         String fileName = fileSnapshot.getKey();
 
 
                         if (fileSnapshot.hasChild("url")) {
                             String fileUrl = fileSnapshot.child("url").getValue().toString();
-                            Log.d("FirebaseDebug", "File URL: " + fileUrl);
 
                             if (fileName != null && fileUrl != null) {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
                                 fileList.add(uploadedFile);
 
-                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         } else {
 
@@ -124,7 +121,6 @@ public class DocumentiFragmentRichiedenti extends Fragment {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
                                 fileList.add(uploadedFile);
 
-                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         }
                     }

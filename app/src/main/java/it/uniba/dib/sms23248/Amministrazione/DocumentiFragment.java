@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 
 
+
 public class DocumentiFragment extends Fragment {
 
 
@@ -117,7 +118,7 @@ public class DocumentiFragment extends Fragment {
 
 
 
-       fetchUploads();
+        fetchUploads();
         fetchDocumentiUtili();
 
         selectFile.setOnClickListener(new View.OnClickListener() {
@@ -292,57 +293,57 @@ public class DocumentiFragment extends Fragment {
 
     }
 
-private void fetchDocumentiUtili(){
-    DatabaseReference documentiUtiliReference = database.getReference("DocumentiUtili");
-    documentiUtiliReference.addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            fileListDocumentiUtili.clear();
+    private void fetchDocumentiUtili(){
+        DatabaseReference documentiUtiliReference = database.getReference("DocumentiUtili");
+        documentiUtiliReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                fileListDocumentiUtili.clear();
 
 
-            for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
-                for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
-                    Log.d("FirebaseDebug", "File Snapshot Key: " + fileSnapshot.getKey());
-                    Log.d("FirebaseDebug", "File Snapshot Value: " + fileSnapshot.getValue());
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
+                        Log.d("FirebaseDebug", "File Snapshot Key: " + fileSnapshot.getKey());
+                        Log.d("FirebaseDebug", "File Snapshot Value: " + fileSnapshot.getValue());
 
-                    String fileName = fileSnapshot.getKey();
+                        String fileName = fileSnapshot.getKey();
 
 
-                    if (fileSnapshot.hasChild("url")) {
-                        String fileUrl = fileSnapshot.child("url").getValue().toString();
-                        Log.d("FirebaseDebug", "File URL: " + fileUrl);
+                        if (fileSnapshot.hasChild("url")) {
+                            String fileUrl = fileSnapshot.child("url").getValue().toString();
+                            Log.d("FirebaseDebug", "File URL: " + fileUrl);
 
-                        if (fileName != null && fileUrl != null) {
-                            UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
-                            fileListDocumentiUtili.add(uploadedFile);
+                            if (fileName != null && fileUrl != null) {
+                                UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
+                                fileListDocumentiUtili.add(uploadedFile);
 
-                            Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
-                        }
-                    } else {
+                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                            }
+                        } else {
 
-                        String fileUrl = fileSnapshot.getValue(String.class);
-                        if (fileName != null && fileUrl != null) {
-                            UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
-                            fileListDocumentiUtili.add(uploadedFile);
+                            String fileUrl = fileSnapshot.getValue(String.class);
+                            if (fileName != null && fileUrl != null) {
+                                UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
+                                fileListDocumentiUtili.add(uploadedFile);
 
-                            Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                            }
                         }
                     }
                 }
+
+                fileAdapter2.notifyDataSetChanged();
             }
 
-            fileAdapter2.notifyDataSetChanged();
-        }
 
 
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-            Log.e("FirebaseDebug", "Error fetching data: " + databaseError.getMessage());
-            Toast.makeText(requireContext(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    });
-}
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FirebaseDebug", "Error fetching data: " + databaseError.getMessage());
+                Toast.makeText(requireContext(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
     private void startsUploadAndCheckExistingFile(Uri pdfUri, String destinationPath) {
@@ -352,6 +353,7 @@ private void fetchDocumentiUtili(){
         progressDialog.setTitle(caricamento);
         progressDialog.setProgress(0);
         progressDialog.show();
+        String err=getString(R.string.errore);
 
         String fileName = getFileNameFromUri(pdfUri);
 
@@ -366,7 +368,7 @@ private void fetchDocumentiUtili(){
                 uploadNewFile(fileReference, pdfUri, fileName, destinationPath);
             } else {
                 progressDialog.dismiss();
-                Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), err + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -385,13 +387,12 @@ private void fetchDocumentiUtili(){
 
                 int index = destinationPath.indexOf('/');
 
-                    String folderName= destinationPath.substring(0, index);
+                String folderName= destinationPath.substring(0, index);
 
                 reference.child(fileName).setValue(url).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Log.e("UPLOAD","Upload Centro: "+folderName);
                         if (folderName.equals("Uploads")) {
-                            Log.e("UPLOAD","Upload Centro: "+folderName);
+
                             UploadedFile uploadedFile = new UploadedFile(fileName, url);
                             fileListUploads.add(uploadedFile);
 
@@ -462,6 +463,7 @@ private void fetchDocumentiUtili(){
 
 
     public void downloadFile(String fileUrl) {
+        String err=getString(R.string.errore);
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(fileUrl);
 
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -475,7 +477,7 @@ private void fetchDocumentiUtili(){
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), err + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -491,6 +493,7 @@ private void fetchDocumentiUtili(){
         }
     }
     private void downloadingOnDevice(String url, String fileName) {
+        String downMan=getString(R.string.download_manager);
         String downloadM = getString(R.string.FilegiaCaricato);
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String fileNameOnly = getFileNameFromPath(fileName);
@@ -505,7 +508,7 @@ private void fetchDocumentiUtili(){
         if (downloadManager != null) {
             downloadManager.enqueue(request);
         } else {
-            Toast.makeText(requireContext(), "DownloadManager not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(),downMan, Toast.LENGTH_SHORT).show();
         }
     }
 

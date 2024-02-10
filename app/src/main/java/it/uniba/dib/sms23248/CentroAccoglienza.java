@@ -115,7 +115,6 @@ public class CentroAccoglienza extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error retrieving Centro from STAFF collection", e);
                 });
     }
 
@@ -124,7 +123,6 @@ public class CentroAccoglienza extends AppCompatActivity {
                 .whereEqualTo("Nome", centro)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
-                        Log.e(TAG, "Error listening for updates in Centro Accoglienza document", e);
                         return;
                     }
 
@@ -177,21 +175,18 @@ public class CentroAccoglienza extends AppCompatActivity {
 
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
-                        Log.d("FirebaseDebug", "File Snapshot Key: " + fileSnapshot.getKey());
-                        Log.d("FirebaseDebug", "File Snapshot Value: " + fileSnapshot.getValue());
+
 
                         String fileName = fileSnapshot.getKey();
 
 
                         if (fileSnapshot.hasChild("url")) {
                             String fileUrl = fileSnapshot.child("url").getValue().toString();
-                            Log.d("FirebaseDebug", "File URL: " + fileUrl);
 
                             if (fileName != null && fileUrl != null) {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
                                 fileList.add(uploadedFile);
 
-                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         } else {
 
@@ -200,7 +195,6 @@ public class CentroAccoglienza extends AppCompatActivity {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
                                 fileList.add(uploadedFile);
 
-                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         }
                     }

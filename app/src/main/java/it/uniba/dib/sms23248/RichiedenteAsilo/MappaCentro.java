@@ -58,7 +58,6 @@ public class MappaCentro extends AppCompatActivity {
     private void onSuccessRenderMap() {
 
         if (isFinishing()) {
-            Log.e(TAG, "Aggiornamento in corso. Riprovare più tardi");
             return;
         }
 
@@ -67,7 +66,6 @@ public class MappaCentro extends AppCompatActivity {
 
 
         if (map == null) {
-            Log.e(TAG, "Mappa inesistente");
             return;
         }
 
@@ -108,7 +106,6 @@ public class MappaCentro extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error retrieving Centro from STAFF collection", e);
                 });
     }
 
@@ -118,7 +115,6 @@ public class MappaCentro extends AppCompatActivity {
                 .whereEqualTo("Nome", centro)
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
-                        Log.e(TAG, "Error listening for updates in Centro Accoglienza document", e);
                         return;
                     }
 

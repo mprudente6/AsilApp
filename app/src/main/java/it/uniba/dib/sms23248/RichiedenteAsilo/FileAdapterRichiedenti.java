@@ -47,7 +47,6 @@ public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.Vie
         holder.fileNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("FileAdapter", "Text clicked for item: " + uploadedFile.getFileName());
                 if (listener != null) {
                     listener.onItemClick(uploadedFile);
                 }

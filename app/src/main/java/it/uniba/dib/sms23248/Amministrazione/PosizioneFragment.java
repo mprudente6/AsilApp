@@ -70,7 +70,6 @@ public class PosizioneFragment extends Fragment {
 
         coordinates = view.findViewById(R.id.textCoordinate);
 
-
         map = view.findViewById(R.id.mapView);
 
 
@@ -84,7 +83,6 @@ public class PosizioneFragment extends Fragment {
             public boolean singleTapConfirmedHelper(GeoPoint p) {
 
                 if (NetworkUtils.isNetworkAvailable(requireContext())) {
-                    Log.d(TAG, "Map tapped at: " + p.getLatitude() + ", " + p.getLongitude());
 
                     savedZoomLevel = map.getZoomLevelDouble();
                     saveChosenPositionToFirestore(p);
@@ -110,7 +108,7 @@ public class PosizioneFragment extends Fragment {
 
 
 
-         //controlla la connessione internet
+        //controlla la connessione internet
         networkChangeReceiver = new NetworkChangeReceiver();
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         requireContext().registerReceiver(networkChangeReceiver, intentFilter);
@@ -122,6 +120,7 @@ public class PosizioneFragment extends Fragment {
 
     private void saveChosenPositionToFirestore(GeoPoint chosenPosition) {
         String positionsaved = getString(R.string.posizione_salvata);
+       String errore=getString(R.string.errore);
 
         Map<String, Object> data = new HashMap<>();
         data.put("latitude", chosenPosition.getLatitude());
@@ -144,7 +143,7 @@ public class PosizioneFragment extends Fragment {
 
                 .addOnFailureListener(e -> {
 
-                    Toast.makeText(getContext(), "Error: "+e, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), errore +e, Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -179,7 +178,6 @@ public class PosizioneFragment extends Fragment {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error", e);
                 });
     }
 
@@ -263,7 +261,6 @@ public class PosizioneFragment extends Fragment {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error", e);
                 });
     }
 
@@ -281,7 +278,6 @@ public class PosizioneFragment extends Fragment {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error", e);
                 });
     }
 

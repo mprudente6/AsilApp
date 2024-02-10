@@ -324,9 +324,6 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
             fileName = fileName.substring(targetFolder.length() + 1);
         }
 
-        Log.d("VideoFragment", "Target Folder: " + targetFolder);
-        Log.d("VideoFragment", "File Name: " + fileName);
-
         StorageReference videoReference = storageReference.child(targetFolder).child(fileName);
 
         videoReference.getMetadata().addOnSuccessListener(metadata -> {

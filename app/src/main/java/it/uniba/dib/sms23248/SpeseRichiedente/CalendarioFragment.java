@@ -140,10 +140,11 @@ public class CalendarioFragment extends Fragment {
     private void addItemAction() {
         String riempicampi = getString(R.string.Riempicampi);
         String prezzoalto = getString(R.string.PrezzoAlto);
+        String connesso=getString(R.string.connessione);
 
         //Se Internet non è disponibile non è possibile aggiungere nuovi ItemSpesa
         if (!NetworkUtils.isNetworkAvailable(requireContext())) {
-            Toast.makeText(requireContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(),connesso, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -162,7 +163,6 @@ public class CalendarioFragment extends Fragment {
 
                 //viene impostato l'ItemSpesa con i dati frontiti dall'EditText e la data selezionata dall'utente
                 ItemSpese newItem = new ItemSpese(selectedDate, itemId, itemName, itemPrice, itemType);
-                Log.e("DATE ADD", "data: " + selectedDate);
 
                 // L'itemSpesa è aggiunto nel Map per la data selezionata
                 List<ItemSpese> ItemSpesaForDate = itemSpesaMap.get(selectedDate);
@@ -224,7 +224,6 @@ public class CalendarioFragment extends Fragment {
                          //converte il documento in un oggetto ItemSpese
                         ItemSpese subspeseItem = document.toObject(ItemSpese.class);
 
-                        Log.d("fetchItems", "Retrieved Event: " + subspeseItem.getNome() + ", " + subspeseItem.getTipo() + ", " + subspeseItem.getPrezzo() + ", " + subspeseItem.getData());
 
                         //Ottiene la data
                         String subspeseItemDate = subspeseItem.getData();

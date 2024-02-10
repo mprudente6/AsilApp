@@ -195,4 +195,5 @@
 
     <string name="documentiUtili">Documenti utili</string>
     <string name="videoPerTe">Video per te</string>
+    <string name="errore">Errore: </string>
 </resources>

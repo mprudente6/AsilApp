@@ -129,13 +129,10 @@ public class BilancioFragment extends Fragment {
 
 
      void loadBudget() {
-         Log.d("BUDGET", "started");
          documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
              @Override
              public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                  if (e != null) {
-
-                     Log.e("BUDGET", "Error fetching budget", e);
                      return;
                  }
 
@@ -189,8 +186,6 @@ public class BilancioFragment extends Fragment {
         parentDocument.collection("Subspese")
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
-
-                        Log.e("Fetching", "Error getting prices for the current week", e);
                         return;
                     }
 
@@ -210,7 +205,6 @@ public class BilancioFragment extends Fragment {
                             Double prezzo = document.getDouble("prezzo");
                             if (prezzo != null) {
                                 totSett += prezzo;
-                                Log.e("TotSett", "Getting prices for the current week: " + totSett);
                             }
                         }
                     }
@@ -262,12 +256,10 @@ public class BilancioFragment extends Fragment {
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
 
-                        Log.e("Fetching", "Error getting prices for the current month", e);
                         return;
                     }
 
                     Double totMese = 0.00;
-                    Log.d("TotSett", "Getting prices for the current month: " + totMese);
 
 
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
@@ -282,7 +274,6 @@ public class BilancioFragment extends Fragment {
                             Double prezzo = document.getDouble("prezzo");
                             if (prezzo != null) {
                                 totMese += prezzo;
-                                Log.d("TotSett", "Getting prices for the current month: " + totMese);
                             }
                         }
                     }
