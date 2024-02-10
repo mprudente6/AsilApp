@@ -1,9 +1,8 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.RichiedenteAsilo;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +14,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import it.uniba.dib.sms23248.Amministrazione.VideoModel;
+import it.uniba.dib.sms23248.R;
 
 public class VideoAdapterRichiedenti extends RecyclerView.Adapter<VideoAdapterRichiedenti.VideoViewHolder> {
 

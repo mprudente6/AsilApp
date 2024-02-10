@@ -182,4 +182,7 @@
     <string name="toastPwErrata">Incorrect password! Try again</string>
     <string name="toastPweCodiceErrati">Incorrect password or code! Try again</string>
     <string name="noContenitore">Container not found</string>
+
+    <string name="documentiUtili">Useful documents</string>
+    <string name="videoPerTe">Video for you</string>
 </resources>

@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.RichiedenteAsilo;
 
 import static android.content.ContentValues.TAG;
 
@@ -26,6 +26,7 @@ import org.osmdroid.views.overlay.OverlayItem;
 
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
+import it.uniba.dib.sms23248.R;
 
 public class MappaCentro extends AppCompatActivity {
     private MapView map = null;

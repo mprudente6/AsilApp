@@ -48,7 +48,7 @@
             android:name=".SaluteR"
             android:exported="false"/>
         <activity
-            android:name=".MediaRichiedente"
+            android:name=".RichiedenteAsilo.MediaRichiedente"
             android:exported="false" />
         <activity
             android:name=".ProfiloActivity"
@@ -64,7 +64,7 @@
             android:exported="true"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".MappaCentro"
+            android:name=".RichiedenteAsilo.MappaCentro"
             android:exported="false" />
         <activity
             android:name=".CentroAccoglienza"

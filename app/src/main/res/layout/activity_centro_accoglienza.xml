@@ -72,7 +72,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="295dp"
             android:padding="20dp"
-            android:text="E-mail"
+            android:text="@string/email"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -84,7 +84,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="518dp"
             android:padding="20dp"
-            android:text="Telefono"
+            android:text="@string/Telefono"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -132,7 +132,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="407dp"
             android:padding="20dp"
-            android:text="Sito web"
+            android:text="@string/Sito_web"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -247,7 +247,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="5dp"
             android:padding="20dp"
-            android:text="Nome"
+            android:text="@string/Nome"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -259,7 +259,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="180dp"
             android:padding="20dp"
-            android:text="Indirizzo"
+            android:text="@string/Indirizzo"
             android:textSize="16dp"
             android:textStyle="bold" />
 

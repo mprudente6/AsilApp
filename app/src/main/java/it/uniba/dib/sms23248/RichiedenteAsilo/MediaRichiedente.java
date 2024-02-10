@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.RichiedenteAsilo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import it.uniba.dib.sms23248.HomeR;
+import it.uniba.dib.sms23248.R;
 
 public class MediaRichiedente extends AppCompatActivity {
     TabLayout tabLayout;
@@ -41,14 +44,17 @@ public class MediaRichiedente extends AppCompatActivity {
         viewPager2.setOffscreenPageLimit(2);
         viewPager2.setUserInputEnabled(false);
 
+        String documentiUtili = getString(R.string.documentiUtili);
+        String videoPerTe = getString(R.string.videoPerTe);
+
         new TabLayoutMediator(tabLayout, viewPager2,
                 (tab, position) -> {
                     switch (position) {
                         case 1:
-                            tab.setText("Documenti utili");
+                            tab.setText(documentiUtili);
                             break;
                         case 0:
-                            tab.setText("Video per te");
+                            tab.setText(videoPerTe);
                             break;
                     }
                 }).attach();

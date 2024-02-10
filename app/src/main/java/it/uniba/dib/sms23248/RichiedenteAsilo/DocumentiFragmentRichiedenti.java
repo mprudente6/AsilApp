@@ -1,14 +1,11 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.RichiedenteAsilo;
 
 import static android.app.Activity.RESULT_OK;
 
 import android.app.DownloadManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -43,6 +40,7 @@ import java.util.List;
 import it.uniba.dib.sms23248.Amministrazione.FileAdapter;
 import it.uniba.dib.sms23248.Amministrazione.UploadedFile;
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.R;
 
 
 public class DocumentiFragmentRichiedenti extends Fragment {

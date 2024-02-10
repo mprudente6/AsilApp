@@ -1,9 +1,7 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.RichiedenteAsilo;
 
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,13 +14,10 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -33,6 +28,7 @@ import java.util.List;
 
 import it.uniba.dib.sms23248.Amministrazione.VideoModel;
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
+import it.uniba.dib.sms23248.R;
 
 public class VideoFragmentRichiedenti extends Fragment implements VideoAdapterRichiedenti.OnDownloadClickListener {
 

@@ -1,10 +1,9 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.RichiedenteAsilo;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +13,8 @@ import java.util.List;
 
 import it.uniba.dib.sms23248.Amministrazione.FileAdapter;
 import it.uniba.dib.sms23248.Amministrazione.UploadedFile;
+import it.uniba.dib.sms23248.R;
+import it.uniba.dib.sms23248.RichiedenteAsilo.DocumentiFragmentRichiedenti;
 
 public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
 
