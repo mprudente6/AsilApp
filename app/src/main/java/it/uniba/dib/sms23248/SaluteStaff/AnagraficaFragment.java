@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.SaluteStaff;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -20,6 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import it.uniba.dib.sms23248.HomeS;
+import it.uniba.dib.sms23248.R;
 
 public class AnagraficaFragment extends Fragment {
 

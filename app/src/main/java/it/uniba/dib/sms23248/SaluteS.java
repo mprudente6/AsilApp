@@ -14,6 +14,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import it.uniba.dib.sms23248.SaluteStaff.AnagraficaFragment;
+import it.uniba.dib.sms23248.SaluteStaff.CartellaClinicaFragment;
+
 public class SaluteS extends AppCompatActivity {
 
     private ViewPager2 viewPager;

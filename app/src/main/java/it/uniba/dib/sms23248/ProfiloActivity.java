@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import it.uniba.dib.sms23248.ProfiloRichiedenteAsilo.AnagraficaActivity;
+import it.uniba.dib.sms23248.ProfiloRichiedenteAsilo.ValutazioneActivity;
 import it.uniba.dib.sms23248.SpeseRichiedente.Spese;
 
 public class ProfiloActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.SaluteStaff;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
@@ -25,6 +25,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import it.uniba.dib.sms23248.HomeS;
+import it.uniba.dib.sms23248.R;
 
 public class CartellaClinicaFragment extends Fragment {
 

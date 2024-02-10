@@ -45,7 +45,7 @@
             android:name=".Contenitore"
             android:exported="false"/>
         <activity
-            android:name=".SaluteR"
+            android:name=".SaluteRichiedenteAsilo.SaluteR"
             android:exported="false"/>
         <activity
             android:name=".RichiedenteAsilo.MediaRichiedente"
@@ -54,10 +54,10 @@
             android:name=".ProfiloActivity"
             android:exported="false" />
         <activity
-            android:name=".AnagraficaActivity"
+            android:name=".ProfiloRichiedenteAsilo.AnagraficaActivity"
             android:exported="false" />
         <activity
-            android:name=".ValutazioneActivity"
+            android:name=".ProfiloRichiedenteAsilo.ValutazioneActivity"
             android:exported="false" />
         <activity
             android:name=".SpeseRichiedente.Spese"

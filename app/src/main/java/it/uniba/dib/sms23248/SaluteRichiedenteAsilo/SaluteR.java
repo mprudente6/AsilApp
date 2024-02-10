@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.SaluteRichiedenteAsilo;
 
 import android.os.Bundle;
 
@@ -7,6 +7,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import it.uniba.dib.sms23248.MergedPagerAdapter;
+import it.uniba.dib.sms23248.R;
 
 public class SaluteR extends AppCompatActivity {
 

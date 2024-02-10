@@ -7,7 +7,7 @@
     android:layout_weight="55"
     android:backgroundTint="#FE9E50"
 
-    tools:context=".AnagraficaFragment">
+    tools:context=".SaluteStaff.AnagraficaFragment">
 
     <LinearLayout
         android:layout_width="wrap_content"

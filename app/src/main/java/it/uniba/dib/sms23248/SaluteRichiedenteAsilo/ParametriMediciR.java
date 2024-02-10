@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.SaluteRichiedenteAsilo;
 
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
@@ -42,6 +42,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
+import it.uniba.dib.sms23248.R;
 
 public class ParametriMediciR extends Fragment {
 

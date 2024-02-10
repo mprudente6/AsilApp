@@ -1,4 +1,4 @@
-package it.uniba.dib.sms23248;
+package it.uniba.dib.sms23248.ProfiloRichiedenteAsilo;
 
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -21,6 +21,7 @@ import java.util.Map;
 
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
+import it.uniba.dib.sms23248.R;
 
 public class ValutazioneActivity extends AppCompatActivity {
 
