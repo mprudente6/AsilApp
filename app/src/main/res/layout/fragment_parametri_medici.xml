@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ParametriMediciFragment">
-    <!-- Measurements -->
+    <!-- Misurazioni -->
     <RelativeLayout
         android:id="@+id/measurementsLayout"
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center">
 
-        <!-- First Row: Body Temperature -->
+        <!-- prima riga: temperatura -->
         <LinearLayout
             android:id="@+id/temperatureLayout"
             android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <!-- Second Row: Heart Rate -->
+        <!-- seconda riga: frequenza cardiaca -->
         <LinearLayout
             android:id="@+id/heartRateLayout"
             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <!-- Third Row: Blood Pressure -->
+        <!-- terza riga: pressione -->
         <LinearLayout
             android:id="@+id/bloodPressureLayout"
             android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <!-- Fourth Row: Pulse Ox -->
+        <!-- quarta riga: saturazione -->
         <LinearLayout
             android:id="@+id/pulseOxLayout"
             android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <!-- Fifth Row: Glucose -->
+        <!-- quinta riga: glicemia -->
         <LinearLayout
             android:id="@+id/glucoseLayout"
             android:layout_width="wrap_content"
@@ -188,7 +188,7 @@
                 android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <!-- Save Button -->
+        <!-- 'Salva' -->
         <Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
@@ -200,7 +200,7 @@
             android:visibility="gone"
             android:backgroundTint="#FF076AEC" />
 
-        <!-- 'Apri Contenitore' Button -->
+        <!-- 'Apri Contenitore' -->
         <Button
             android:id="@+id/apriContenitore"
             android:layout_width="wrap_content"

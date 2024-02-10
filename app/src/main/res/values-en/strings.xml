@@ -134,11 +134,11 @@
     <string name="scheda_anagrafica">Personal details</string>
     <string name="profilo">My Account</string>
     <string name="app_utile">Enjoying AsilApp?</string>
-    <string name="punteggio_stelle">Tap a star to rate the app (select 1-5 stars).</string>
+    <string name="punteggio_stelle">Tap a star to rate the app (select 1–5 stars).</string>
     <string name="conferma_valutazione">Submit</string>
     <string name="salva">Save</string>
     <string name="noChartData">No measurement detected for </string>
-    <string name="noParametri">You haven\'t made your first visit yet...</string>
+    <string name="noParametri">You haven\'t made your first visit yet…</string>
     <string name="anagrafica_utente">Personal details</string>
     <string name="apri_contenitore">Open container</string>
     <string name="temperatura">Temperature</string>
@@ -178,6 +178,9 @@
     <string name="errore_parametri_medici_aggiornati">Error updating medical parameters</string>
     <string name="parametri_medici_creati">Data collected during the visit saved successfully!</string>
     <string name="errore_parametri_medici_creati">Error saving the medical parameters of this visit…</string>
+    <string name="errore_condivisione">There is no data to share</string>
+    <string name="nessuna_app">No app can perform the action</string>
+    <string name="errore_ricerca_dati">Error searching for data</string>
 
     <string name="toastPwErrata">Incorrect password! Try again</string>
     <string name="toastPweCodiceErrati">Incorrect password or code! Try again</string>

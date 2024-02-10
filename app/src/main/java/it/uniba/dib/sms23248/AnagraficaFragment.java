@@ -60,6 +60,7 @@ public class AnagraficaFragment extends Fragment {
 
                             for (String field : orderedFields) {
                                 Object value = userData.get(field);
+                                // mostra solo i campi con valori non vuoti
                                 if (value != null) {
                                     String displayName = getDisplayNameForField(field);
                                     addDataToLayout(view, displayName, value);

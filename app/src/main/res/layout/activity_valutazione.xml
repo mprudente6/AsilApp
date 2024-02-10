@@ -6,61 +6,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ValutazioneActivity">
-<RelativeLayout
+    <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    >
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="#fe9e50"
-        app:title="AsilApp"
-        app:titleTextColor="#FFFFFF"
-      />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#fe9e50"
+            app:title="AsilApp"
+            app:titleTextColor="#FFFFFF"
+          />
 
-    <TextView
-        android:id="@+id/titleUsefulness"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_utile"
-        android:textSize="24sp"
-        android:layout_marginTop="150dp"
-        android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/titleUsefulness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_utile"
+            android:textSize="24sp"
+            android:layout_marginTop="150dp"
+            android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="296dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleUsefulness"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:layout_marginTop="25dp"
-        android:text="@string/punteggio_stelle" />
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleUsefulness"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:layout_marginTop="25dp"
+            android:text="@string/punteggio_stelle" />
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/description"
-        android:layout_centerHorizontal="true"
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:layout_centerHorizontal="true"
 
-        android:layout_marginTop="40dp"
-        android:numStars="5"
-        android:progressTint="#FFC107"
-        android:stepSize="1" />
+            android:layout_marginTop="40dp"
+            android:numStars="5"
+            android:progressTint="#FFC107"
+            android:stepSize="1" />
 
-    <Button
-        android:id="@+id/submitRatingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/conferma_valutazione"
-        android:layout_below="@id/ratingBar"
-        android:layout_marginTop="32dp"
-        android:layout_centerHorizontal="true"
-        android:enabled="false" />
-</RelativeLayout>
+        <Button
+            android:id="@+id/submitRatingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/conferma_valutazione"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginTop="32dp"
+            android:layout_centerHorizontal="true"
+            android:enabled="false" />
+    </RelativeLayout>
 </ScrollView>

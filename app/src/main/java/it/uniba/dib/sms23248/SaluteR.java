@@ -21,6 +21,8 @@ public class SaluteR extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         setupViewPager(viewPager);
 
+        // tab layout nella schermata Cartella Clinica di richiedente asilo
+        // contenente 2 pagine da visualizzare: Cartella Clinica, Parametri Medici
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(adapter.getFragmentTitle(position))

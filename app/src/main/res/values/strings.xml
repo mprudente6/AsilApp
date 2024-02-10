@@ -185,6 +185,9 @@
     <string name="errore_parametri_medici_aggiornati">Errore nell\'aggiornamento dei parametri medici</string>
     <string name="parametri_medici_creati">Dati raccolti nella visita salvati con successo!</string>
     <string name="errore_parametri_medici_creati">Errore nel salvataggio dei parametri medici di questa visita…</string>
+    <string name="errore_condivisione">Non ci sono dati da condividere</string>
+    <string name="nessuna_app">Nessuna app è in grado di eseguire l\'azione</string>
+    <string name="errore_ricerca_dati">Errore nella ricerca dei dati</string>
 
     <string name="toastPwErrata">Password Errata! Riprovare</string>
     <string name="toastPweCodiceErrati">Password o codice errati! Riprovare</string>

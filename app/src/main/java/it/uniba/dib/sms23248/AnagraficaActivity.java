@@ -43,9 +43,6 @@ public class AnagraficaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_anagrafica);
         String connect=getString(R.string.connessione);
 
-
-
-        // Find views by ID
         Button shareButton = findViewById(R.id.shareButton);
 
         shareButton.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +117,7 @@ public class AnagraficaActivity extends AppCompatActivity {
         return textBuilder.toString();
     }
 
+    // legge e mostra i dati dell'utente loggato (richiedente asilo)
     private void fetchUserDataFromFirestore() {
         if (currentUser != null) {
             String userId = currentUser.getUid();
@@ -140,6 +138,7 @@ public class AnagraficaActivity extends AppCompatActivity {
 
                                 for (String field : orderedFields) {
                                     Object value = userData.get(field);
+                                    // mostra solo i campi con valori non vuoti
                                     if (value != null) {
                                         String displayName = getDisplayNameForField(field);
                                         addDataToLayout(displayName, value);

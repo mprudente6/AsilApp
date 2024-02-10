@@ -52,7 +52,6 @@ public class ParametriMediciR extends Fragment {
     boolean allChartsEmpty = true;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//    String formattedCurrentDate = dateFormat.format(new Date());
 
     @Nullable
     @Override
@@ -64,9 +63,11 @@ public class ParametriMediciR extends Fragment {
         if (currentUser != null) {
             userId = currentUser.getUid();
         } else {
-            showToast("User not logged in");
+            showToast("Utente non loggato!");
         }
 
+        // crea un ArrayList contenente 6 oggetti di tipo Barchart
+        // (uno per ogni valore rilevato tramite misurazione)
         barCharts = new ArrayList<>();
         barCharts.add(view.findViewById(R.id.barChartTemperaturaCorporea));
         barCharts.add(view.findViewById(R.id.barChartFrequenzaCardiaca));
@@ -75,14 +76,16 @@ public class ParametriMediciR extends Fragment {
         barCharts.add(view.findViewById(R.id.barChartSaturazione));
         barCharts.add(view.findViewById(R.id.barChartGlucosio));
 
+        // nascondi ogni BarChart
         for (int i = 0; i < barCharts.size(); i++) {
             BarChart barChart = barCharts.get(i);
             if (barChart != null) {
-                barChart.setNoDataText(getString(R.string.noChartData) + "\n" + getFieldName(i));
+                barChart.setNoDataText(getString(R.string.noChartData) + "\n" + getFieldName(i)); // modifica il messaggio predefinito in assenza di dati
                 barChart.setVisibility(View.GONE);
             }
         }
 
+        // condividi i dati dell'ultima visita (la più recente)
         Button shareButton = view.findViewById(R.id.shareButton);
 
         shareButton.setOnClickListener(new View.OnClickListener() {
@@ -96,18 +99,19 @@ public class ParametriMediciR extends Fragment {
             }
         });
 
-
-            fetchUserDataFromFirestore(userId);
-
+        fetchUserDataFromFirestore(userId);
 
         return view;
     }
 
+    // fornisce i nomi completi e leggibili dei campi (usato nel ciclo for per modificare e personalizzare il messaggio predefinito)
     private String getFieldName(int index) {
         String[] fieldNames = {"Temperatura Corporea", "Frequenza Cardiaca", "Pressione Massima", "Pressione Minima", "Saturazione", "Glicemia"};
         return fieldNames[index];
     }
 
+    // leggi e mostra i dati delle misurazioni dell'utente loggato nel tempo
+    // (in tutte le visite in cui ha misurato i parametri)
     private void fetchUserDataFromFirestore(String uid) {
         firestore.collection("PARAMETRI_UTENTI")
                 .whereEqualTo("ID_RichiedenteAsilo", uid)
@@ -127,15 +131,17 @@ public class ParametriMediciR extends Fragment {
                                 String fieldName = entry.getKey();
                                 Object fieldValue = entry.getValue();
 
+                                // escludi campi con dati sensibili e che non sono valori risultanti da misurazioni
                                 if (!fieldName.equals("Utente") && !fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
                                     float value = ((Number) fieldValue).floatValue();
 
+                                    // considera solo i valori diversi da 0
                                     if (value != 0) {
                                         List<BarEntry> entries = fieldEntriesMap.get(fieldName);
                                         if (entries == null) {
                                             entries = new ArrayList<>();
                                             fieldEntriesMap.put(fieldName, entries);
-                                            allChartsEmpty = false;
+                                            allChartsEmpty = false; // almeno un bar chart non è vuoto
                                         }
                                         entries.add(new BarEntry(entries.size() + 1, value));
                                     }
@@ -145,18 +151,22 @@ public class ParametriMediciR extends Fragment {
 
                         setupBarCharts(fieldEntriesMap, dateValues);
                     } else {
-                        showToast("Error fetching data");
+                        showToast(getString(R.string.errore_ricerca_dati));
                     }
                 });
     }
 
+    // imposta i bar chart
     private void setupBarCharts(Map<String, List<BarEntry>> fieldEntriesMap, List<String> dateValues) {
         int index = 0;
 
+        // per ogni bar chart
         for (Map.Entry<String, List<BarEntry>> entry : fieldEntriesMap.entrySet()) {
+            // ottieni campo e valore
             String fieldName = entry.getKey();
             List<BarEntry> entries = entry.getValue();
 
+            // imposta dati da visualizzare e stile (colore del campo/bar chart es. temperatura, ecc.)
             BarDataSet dataSet = new BarDataSet(entries, getDisplayName(fieldName));
             dataSet.setColors(getColor(fieldName));
             dataSet.setDrawValues(true);
@@ -170,18 +180,19 @@ public class ParametriMediciR extends Fragment {
 
             barChart.setData(barData);
 
-            barChart.setVisibility(View.VISIBLE);
+            barChart.setVisibility(View.VISIBLE); // rendi visibile il bar chart (non vuoto)
 
             barChart.invalidate();
         }
 
-        if (allChartsEmpty) {
+        if (allChartsEmpty) { // se bar chart vuoto: mostra messaggio di assenza di tutti i dati (utente non ancora visitato)
             displayMessage();
         }
 
-        allChartsEmpty = true;
+        allChartsEmpty = true; // reimposta il valore iniziale della variabile flag
     }
 
+    // personalizza il valore di ogni bar chart indicandone l'unità di misura corrispondente
     private static class CustomValueFormatter extends ValueFormatter {
         private final String fieldName;
 
@@ -210,6 +221,7 @@ public class ParametriMediciR extends Fragment {
         }
     }
 
+    // condividi dati raccolti nell'ultima visita (solo su Gmail o Whatsapp)
     private void shareData() {
         String subject = "MISURAZIONE PARAMETRI MEDICI - ULTIMA VISITA";
 
@@ -217,7 +229,7 @@ public class ParametriMediciR extends Fragment {
             @Override
             public void onDataFetched(String text) {
                 if (text.isEmpty()) {
-                    showToast("Non ci sono dati da condividere");
+                    showToast(getString(R.string.errore_condivisione));
                 } else {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
@@ -245,16 +257,17 @@ public class ParametriMediciR extends Fragment {
                             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Intent[]{}));
                             startActivity(chooserIntent);
                         } else {
-                            showToast("Nessuna app è in grado di eseguire questa azione.");
+                            showToast(getString(R.string.nessuna_app));
                         }
                     } else {
-                        showToast("Nessuna app è in grado di eseguire questa azione.");
+                        showToast(getString(R.string.nessuna_app));
                     }
                 }
             }
         });
     }
 
+    // in assenza di tutti i dati (nessuna visita effettuata dall'utente loggato)
     private void displayMessage() {
         RelativeLayout relativeLayout = requireView().findViewById(R.id.chartContainer);
 
@@ -272,6 +285,10 @@ public class ParametriMediciR extends Fragment {
         messageTextView.setVisibility(View.VISIBLE);
     }
 
+    // personalizza un bar chart:
+    // nascondi descrizione;
+    // imposta la data delle visite nell'asse x e nascondila;
+    // setta legenda.
     private void customizeBarChart(BarChart barChart, List<String> dateValues) {
         barChart.getDescription().setEnabled(false);
 
@@ -292,6 +309,7 @@ public class ParametriMediciR extends Fragment {
         legend.setXOffset(10f);
     }
 
+    // mostra nome campo nel db / tipo di valore per ogni bar chart
     private String getDisplayName(String fieldName) {
         switch (fieldName) {
             case "TemperaturaCorporea":
@@ -311,6 +329,7 @@ public class ParametriMediciR extends Fragment {
         }
     }
 
+    // ogni campo nel db / tipo di valore per bar chart ha un proprio colore
     private int getColor(String fieldName) {
         switch (fieldName) {
             case "TemperaturaCorporea":
@@ -330,10 +349,12 @@ public class ParametriMediciR extends Fragment {
         }
     }
 
+    // mostra messaggio (es. feedback su presenza dei dati e su avvenuta visita o errori)
     private void showToast(String message) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    // aggiungi la data (di tipo stringa) nell'asse (x)
     private static class DateAxisValueFormatter extends ValueFormatter {
         private final List<String> dateValues;
 
@@ -355,6 +376,7 @@ public class ParametriMediciR extends Fragment {
         void onDataFetched(String text);
     }
 
+    // ottieni il documento più recente per data visita (di tipo stringa)
     private void fetchLastDocumentFromFirestore(String uid, FirestoreCallback callback) {
         firestore.collection("PARAMETRI_UTENTI")
                 .whereEqualTo("ID_RichiedenteAsilo", uid)
@@ -366,7 +388,8 @@ public class ParametriMediciR extends Fragment {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String dateValue = document.getString("DataVisita");
 
-                            // Convert dateValue to Date object
+                            // Conversione della data da String a Date
+                            // per confronto
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                             Date date = null;
                             try {
@@ -380,7 +403,7 @@ public class ParametriMediciR extends Fragment {
                             }
                         }
 
-                        // Sort the array based on the parsed date
+                        // ordina l'array di date
                         Collections.sort(documentStrings, (s1, s2) -> {
                             try {
                                 Date date1 = dateFormat.parse(getDateValueFromString(s1));
@@ -393,7 +416,8 @@ public class ParametriMediciR extends Fragment {
                         });
 
                         if (!documentStrings.isEmpty()) {
-                            String shareText = documentStrings.get(0); // Get the most recent document
+                            String shareText = documentStrings.get(0); // ottieni il documento più recente nella raccolta del db
+                            // quello il cui valore del campo DataVisita è il più recente
                             callback.onDataFetched(shareText);
                         } else {
                             callback.onDataFetched("");
@@ -404,6 +428,7 @@ public class ParametriMediciR extends Fragment {
                 });
     }
 
+    // prepara il testo da condividere
     private String documentDataToString(Map<String, Object> data, Date date) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Data Ultima Visita: ").append(dateFormat.format(date)).append("\n");
@@ -425,8 +450,8 @@ public class ParametriMediciR extends Fragment {
         return stringBuilder.toString();
     }
 
+    // ottieni la data dell'ultima visita
     private String getDateValueFromString(String documentString) {
-        // Extract and return the date value from the document string
         String[] lines = documentString.split("\n");
         for (String line : lines) {
             if (line.startsWith("Data Ultima Visita:")) {
@@ -436,8 +461,8 @@ public class ParametriMediciR extends Fragment {
         return "";
     }
 
+    // indica l'unità di misura corrispondente nel testo da condividere
     private String getMeasurementUnit(String fieldName) {
-        // Return the measurement unit based on the field name
         switch (fieldName) {
             case "TemperaturaCorporea":
                 return "°C";

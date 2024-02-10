@@ -38,7 +38,6 @@
         </ImageView>
     </LinearLayout>
 
-    <!-- Personal Data Sheet/List -->
     <ScrollView
         android:id="@+id/personalDataScrollView"
         android:layout_width="match_parent"

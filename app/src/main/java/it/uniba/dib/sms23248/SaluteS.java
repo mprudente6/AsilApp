@@ -33,10 +33,16 @@ public class SaluteS extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         setupViewPager(viewPager);
 
+        // se il contenitore è aperto mostra la terza scheda: Contenitore Biomedicale
+        // con visualizzazione dei pulsanti di misurazione anziché del solo pulsante 'Apri Contenitore'
+        // (poiché già aperto)
         if (contenitoreAperto) {
             viewPager.setCurrentItem(2, false);
         }
 
+        // tab layout nella schermata Salute lato Staff
+        // (accessibile dopo autenticazione tramite scansione del Qr code di un richiedente asilo)
+        // contenente 3 schede visualizzabili: Scheda Utente, Cartella Clinica e Contenitore Biomedicale
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(adapter.getFragmentTitle(position))
@@ -73,7 +79,7 @@ public class SaluteS extends AppCompatActivity {
 
                         apriContenitoreButton.setVisibility(View.VISIBLE);
                     }
-                    else {
+                    else { // naviga in HomeS
                         openHomeS();
                     }
 

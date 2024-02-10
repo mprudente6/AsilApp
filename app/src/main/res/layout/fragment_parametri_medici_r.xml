@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Title -->
+        <!-- titolo -->
         <TextView
             android:id="@+id/titleParametri"
             android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp" />
 
-        <!-- Share Button -->
+        <!-- condividi -->
         <Button
             android:id="@+id/shareButton"
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/condividi_su" />
 
-        <!-- BarChart for TemperaturaCorporea -->
+        <!-- BarChart per TemperaturaCorporea -->
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChartTemperaturaCorporea"
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"/>
 
-        <!-- BarChart for FrequenzaCardiaca -->
+        <!-- BarChart per FrequenzaCardiaca -->
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChartFrequenzaCardiaca"
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"/>
 
-        <!-- BarChart for PressioneMax -->
+        <!-- BarChart per PressioneMax -->
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChartPressioneMax"
             android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"/>
 
-        <!-- BarChart for PressioneMin -->
+        <!-- BarChart per PressioneMin -->
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChartPressioneMin"
             android:layout_width="match_parent"
@@ -72,7 +72,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"/>
 
-        <!-- BarChart for Saturazione -->
+        <!-- BarChart per Saturazione -->
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChartSaturazione"
             android:layout_width="match_parent"
@@ -82,7 +82,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"/>
 
-        <!-- BarChart for Glucosio -->
+        <!-- BarChart per Glucosio -->
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChartGlucosio"
             android:layout_width="match_parent"
@@ -92,7 +92,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"/>
 
-        <!-- Your message TextView -->
+        <!-- Messaggio da mostrare in assenza di tutti i dati (nessuna visita effettuata) -->
         <TextView
             android:id="@+id/messageTextView"
             android:layout_width="wrap_content"
