@@ -29,7 +29,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         String connessione=context.getString(R.string.connessione);
 
         if (NetworkUtils.isNetworkAvailable(context)) {
-            // Internet connection is available
+
         } else {
             Toast.makeText(context,connessione, Toast.LENGTH_LONG).show();
         }
