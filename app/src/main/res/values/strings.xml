@@ -192,6 +192,7 @@
     <string name="toastPwErrata">Password Errata! Riprovare</string>
     <string name="toastPweCodiceErrati">Password o codice errati! Riprovare</string>
     <string name="noContenitore">Contenitore non trovato</string>
+    <string name="noUtente">Utente non trovato</string>
 
     <string name="documentiUtili">Documenti utili</string>
     <string name="videoPerTe">Video per te</string>
