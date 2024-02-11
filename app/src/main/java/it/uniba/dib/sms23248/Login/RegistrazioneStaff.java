@@ -35,7 +35,7 @@ import java.util.Map;
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
 import it.uniba.dib.sms23248.R;
 
-public class RegistrazioneStaff extends AppCompatActivity {
+public class  RegistrazioneStaff extends AppCompatActivity {
 
     private static final String TAG = "AccessoRichiedenteAsilo";
     private FirebaseAuth mAuth;
@@ -98,6 +98,9 @@ public class RegistrazioneStaff extends AppCompatActivity {
                 });
 
 
+        /*vengono controllate delle condizioni prima della creazione di un nuovo utente Staff, sui valori da assegnare ai campi email, password
+        * i campi email e password devono avere valori diversi dal VUOTO
+        * la password deve avere un valore con lunghezza di ALMENO 6 caratteri*/
         register.setOnClickListener(new View.OnClickListener() {
 
             @Override

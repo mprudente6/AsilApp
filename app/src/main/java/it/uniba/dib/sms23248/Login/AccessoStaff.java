@@ -66,68 +66,67 @@ public class AccessoStaff extends AppCompatActivity {
                 String obbligoMail=getString(R.string.email_richiesta);
                 String obbligoPassword=getString(R.string.password_richiesta);
 
-                //controllo coneesione a Internet
+                //controllo connessione ad Internet
                 if (NetworkUtils.isNetworkAvailable(AccessoStaff.this)) {
-                String useremail = email.getText().toString().trim();
-                String userpass = password.getText().toString().trim();
+                    String useremail = email.getText().toString().trim();
+                    String userpass = password.getText().toString().trim();
 
-                if (useremail.isEmpty()) {
-                    email.setError(obbligoMail);
-                    return;
-                }
-                if (userpass.isEmpty()) {
-                    password    .setError(obbligoPassword);
-                    return;
-                }
+                    if (useremail.isEmpty()) {
+                        email.setError(obbligoMail);
+                        return;
+                    }
+                    if (userpass.isEmpty()) {
+                        password    .setError(obbligoPassword);
+                        return;
+                    }
 
 
-                getUserRole(useremail, new UserRoleCallback() {
-                    @Override
-                    public void onSuccess(String userRole) {
-                        String logpositivo=getString(R.string.login_con_successo);
-                        //controllo che l'user che sta accedendo sia uno staff
-                        if ("Staff".equals(userRole)) {
-                            // Continue with login process
-                            if (!useremail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(useremail).matches()) {
-                                if (!userpass.isEmpty()) {
+                    getUserRole(useremail, new UserRoleCallback() {
+                        @Override
+                        public void onSuccess(String userRole) {
+                            String logpositivo=getString(R.string.login_con_successo);
+                            //controllo che l'user che sta accedendo sia uno staff
+                            if ("Staff".equals(userRole)) {
+                                // Continue with login process
+                                if (!useremail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(useremail).matches()) {
+                                    if (!userpass.isEmpty()) {
 
-                                    //login
-                                    mAuth.signInWithEmailAndPassword(useremail, userpass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                        @Override
-                                        public void onSuccess(AuthResult authResult) {
-                                            Toast.makeText(AccessoStaff.this,logpositivo, Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(AccessoStaff.this, HomeS.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            startActivity(intent);
-                                            finish();
+                                        //login
+                                        mAuth.signInWithEmailAndPassword(useremail, userpass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                            @Override
+                                            public void onSuccess(AuthResult authResult) {
+                                                Toast.makeText(AccessoStaff.this,logpositivo, Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(AccessoStaff.this, HomeS.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
+                                                finish();
 
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(AccessoStaff.this, incorrectPass, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(AccessoStaff.this, incorrectPass, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    } else {
+                                        password.setError(obbligoPassword);
+                                    }
+                                } else if (useremail.isEmpty()) {
+                                    email.setError(obbligoMail);
                                 } else {
-                                    password.setError(obbligoPassword);
+                                    email.setError(invalidEmail);
                                 }
-                            } else if (useremail.isEmpty()) {
-                                email.setError(obbligoMail);
                             } else {
-                                email.setError(invalidEmail);
+                                Toast.makeText(AccessoStaff.this, permissionS, Toast.LENGTH_SHORT).show();
                             }
-                        } else {
-                            // User doesn't have the required role, show error message
-                            Toast.makeText(AccessoStaff.this, permissionS, Toast.LENGTH_SHORT).show();
                         }
-                    }
 
-                    @Override
-                    public void onFailure(String errorMessage) {
+                        @Override
+                        public void onFailure(String errorMessage) {
 
-                        Toast.makeText(AccessoStaff.this, errorMessage, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            Toast.makeText(AccessoStaff.this, errorMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
 
                     Toast.makeText(AccessoStaff.this,connessione, Toast.LENGTH_LONG).show();
@@ -156,35 +155,35 @@ public class AccessoStaff extends AppCompatActivity {
 
                 if (!userEmail.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
                     if (NetworkUtils.isNetworkAvailable(AccessoStaff.this)) {
-                    mAuth.sendPasswordResetEmail(userEmail)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
+                        mAuth.sendPasswordResetEmail(userEmail)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
 
-                                        Toast.makeText(AccessoStaff.this, invio_reset, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AccessoStaff.this, invio_reset, Toast.LENGTH_SHORT).show();
 
-                                        // ritardo di 10 secondi per dare il tempo all'utente di accedere alle email prima
-                                        //di essere rimandato all'email in cui avverrà la memorizzazione della password resettata
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                // Handle successful password reset, for example, navigate to another activity
-                                                Intent intent = new Intent(AccessoStaff.this, PasswordDimenticata.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }, 10000);
-                                    } else {
-                                        // Password reset email sending failed
-                                        Toast.makeText(AccessoStaff.this, resetFallito, Toast.LENGTH_SHORT).show();
+                                            // ritardo di 10 secondi per dare il tempo all'utente di accedere alle email prima
+                                            //di essere rimandato all'email in cui avverrÃ  la memorizzazione della password resettata
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    // Handle successful password reset, for example, navigate to another activity
+                                                    Intent intent = new Intent(AccessoStaff.this, PasswordDimenticata.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            }, 10000);
+                                        } else {
+                                            // Password reset email sending failed
+                                            Toast.makeText(AccessoStaff.this, resetFallito, Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
-                } else {
-                    // No internet connection, show a message to the user
-                    Toast.makeText(AccessoStaff.this, connessione, Toast.LENGTH_LONG).show();
-                }
+                                });
+                    } else {
+                        // No internet connection, show a message to the user
+                        Toast.makeText(AccessoStaff.this, connessione, Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     Toast.makeText(AccessoStaff.this, Emailfirst, Toast.LENGTH_LONG).show();
                 }
