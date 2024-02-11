@@ -210,24 +210,7 @@ public class CentroAccoglienza extends AppCompatActivity {
             }
         });
     }
-    private String getFileNameFromUri(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            try (Cursor cursor = CentroAccoglienza.this.getContentResolver().query(uri, null, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    int displayNameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                    if (displayNameIndex != -1) {
-                        result = cursor.getString(displayNameIndex);
-                    }
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.getLastPathSegment();
-        }
-        result = sanitizeFileName(result);
-        return result;
-    }
+
 
     public void startDownload(String fileUrl, String fileName) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(fileUrl);
@@ -276,12 +259,6 @@ public class CentroAccoglienza extends AppCompatActivity {
         }
     }
 
-
-
-
-    private String sanitizeFileName(String originalFileName) {
-        return originalFileName.replaceAll("[.#$\\[\\]]", "_");
-    }
 
     @Override
     protected void onDestroy() {

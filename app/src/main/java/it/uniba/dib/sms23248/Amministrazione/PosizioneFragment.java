@@ -190,7 +190,8 @@ public class PosizioneFragment extends Fragment {
             map.setBuiltInZoomControls(true);
             map.setMultiTouchControls(true);
 
-            itemizedOverlay = new ItemizedIconOverlay<>(new ArrayList<>(), getResources().getDrawable(org.osmdroid.library.R.drawable.marker_default), null, getContext());
+            itemizedOverlay = new ItemizedIconOverlay<>(new ArrayList<>(),
+                    getResources().getDrawable(org.osmdroid.library.R.drawable.marker_default), null, getContext());
 
             map.getOverlays().add(itemizedOverlay);
 
