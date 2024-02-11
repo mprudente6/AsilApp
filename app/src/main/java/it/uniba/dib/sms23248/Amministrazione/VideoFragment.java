@@ -162,9 +162,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         } else {
             Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
         }
-
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -172,9 +170,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         if (resultCode == RESULT_OK && data != null) {
             selectedVideoUri = data.getData();
             if (selectedVideoUri != null) {
-
                 String videoName = getFileName(selectedVideoUri);
-
                 if (requestCode == PICK_VIDEO_REQUEST_GEN) {
                     targetFolder = "videos";
                     uploadVideo(selectedVideoUri, videoName, "videos");
@@ -185,7 +181,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
             } else {
                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
             }
-        }
+         }
     }
 
     private String getFileName(Uri uri) {

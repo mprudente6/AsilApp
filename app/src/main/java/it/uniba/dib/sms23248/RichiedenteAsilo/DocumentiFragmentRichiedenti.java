@@ -146,7 +146,7 @@ public class DocumentiFragmentRichiedenti extends Fragment {
 
                 String downloadUrl = uri.toString();
                 String filename=uri.getPath();
-                openBrowser(downloadUrl, filename);
+                startDownload(downloadUrl, filename);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -165,7 +165,7 @@ public class DocumentiFragmentRichiedenti extends Fragment {
             return filePath;
         }
     }
-    private void openBrowser(String url, String fileName) {
+    private void startDownload(String url, String fileName) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String fileNameOnly = getFileNameFromPath(fileName);
         request.setTitle(fileNameOnly);
