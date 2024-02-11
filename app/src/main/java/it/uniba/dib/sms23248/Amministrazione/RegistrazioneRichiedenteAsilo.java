@@ -43,7 +43,7 @@ import it.uniba.dib.sms23248.SpeseRichiedente.MonthlyUpdateReceiver;
 
 public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
 
-    private static final String TAG = "AccessoRichiedenteAsilo";
+
     private FirebaseAuth mAuth;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -173,9 +173,9 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                             }); } else {
                     Toast.makeText(RegistrazioneRichiedenteAsilo.this, noConnection, Toast.LENGTH_LONG).show();
                 }
-            }
+              }
         });
-    }
+      }
 
     private void registerUser(String uid) {
         String useremail = email.getText().toString().trim();

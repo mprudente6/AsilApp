@@ -104,7 +104,7 @@ public class BilancioFragment extends Fragment {
                    } else {
                        Toast.makeText(requireContext(), connessione, Toast.LENGTH_LONG).show();
                    }
-               }
+                 }
            });
 
 
@@ -120,7 +120,7 @@ public class BilancioFragment extends Fragment {
 
 
             }
-        });
+          });
 
 
         return view;
@@ -142,7 +142,7 @@ public class BilancioFragment extends Fragment {
                      updateBudgetTextView(budget);
                      hideLoadingIndicator();
                  }
-             }
+              }
          });
      }
 
@@ -162,17 +162,17 @@ public class BilancioFragment extends Fragment {
 
         Calendar calendar = Calendar.getInstance();
 
-        // Imposta il calendario al primo giorno della settimana
+
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
 
 
-        // Ottieni la data di inizio settimana
+
         Date startDate = calendar.getTime();
 
-        // Spostati in avanti di 6 giorni per ottenere la fine della settimana
+
         calendar.add(Calendar.DAY_OF_WEEK, 6);
 
-        // Ottieni la data di fine settimana
+
         Date endDate = calendar.getTime();
 
 
@@ -236,12 +236,12 @@ public class BilancioFragment extends Fragment {
     public void QueryMese() {
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, 1); // Imposta al primo giorno del mese
-        Date startDate = calendar.getTime(); // La data di inizio è il primo giorno del mese
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date startDate = calendar.getTime();
 
-        calendar.add(Calendar.MONTH, 1); // Sposta al primo giorno del mese successivo
-        calendar.add(Calendar.DAY_OF_MONTH, -1); // Sposta all'ultimo giorno del mese corrente
-        Date endDate = calendar.getTime(); // La data di fine è l'ultimo giorno del mese
+        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Date endDate = calendar.getTime();
 
 
 

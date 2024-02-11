@@ -248,23 +248,25 @@ public class DocumentiFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 fileListUploads.clear();
-
+               //struttura realtime database: -folder
+                //                              -nome file
+                //                                 -nome file: url
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
-                        Log.d("FirebaseDebug", "File Snapshot Key: " + fileSnapshot.getKey());
-                        Log.d("FirebaseDebug", "File Snapshot Value: " + fileSnapshot.getValue());
+                        Log.d("Firebase", "File Snapshot Key: " + fileSnapshot.getKey());
+                        Log.d("Firebase", "File Snapshot Value: " + fileSnapshot.getValue());
 
-                        String fileName = fileSnapshot.getKey();
+                        String fileName = fileSnapshot.getKey();  //nome pdf
 
                         if (fileSnapshot.hasChild("url")) {
-                            String fileUrl = fileSnapshot.child("url").getValue().toString();
-                            Log.d("FirebaseDebug", "File URL: " + fileUrl);
+                            String fileUrl = fileSnapshot.child("url").getValue().toString(); //url pdf
+                            Log.d("Firebase", "File URL: " + fileUrl);
 
                             if (fileName != null && fileUrl != null) {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
                                 fileListUploads.add(uploadedFile);
 
-                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                                Log.d("Firebase", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         } else {
 
@@ -275,7 +277,7 @@ public class DocumentiFragment extends Fragment {
 
 
                             }
-                        }
+                          }
                     }
                 }
 
@@ -303,21 +305,21 @@ public class DocumentiFragment extends Fragment {
 
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
-                        Log.d("FirebaseDebug", "File Snapshot Key: " + fileSnapshot.getKey());
-                        Log.d("FirebaseDebug", "File Snapshot Value: " + fileSnapshot.getValue());
+                        Log.d("Firebase", "File Snapshot Key: " + fileSnapshot.getKey());
+                        Log.d("Firebase", "File Snapshot Value: " + fileSnapshot.getValue());
 
                         String fileName = fileSnapshot.getKey();
 
 
                         if (fileSnapshot.hasChild("url")) {
                             String fileUrl = fileSnapshot.child("url").getValue().toString();
-                            Log.d("FirebaseDebug", "File URL: " + fileUrl);
+                            Log.d("Firebase", "File URL: " + fileUrl);
 
                             if (fileName != null && fileUrl != null) {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
                                 fileListDocumentiUtili.add(uploadedFile);
 
-                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                                Log.d("Firebase", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         } else {
 
@@ -326,7 +328,7 @@ public class DocumentiFragment extends Fragment {
                                 UploadedFile uploadedFile = new UploadedFile(fileName, fileUrl);
                                 fileListDocumentiUtili.add(uploadedFile);
 
-                                Log.d("FirebaseDebug", "File Name: " + fileName + ", File URL: " + fileUrl);
+                                Log.d("Firebase", "File Name: " + fileName + ", File URL: " + fileUrl);
                             }
                         }
                     }
@@ -339,8 +341,8 @@ public class DocumentiFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FirebaseDebug", "Error fetching data: " + databaseError.getMessage());
-                Toast.makeText(requireContext(), "Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Firebase", "Error: " + databaseError.getMessage());
+
             }
         });
     }
@@ -391,7 +393,7 @@ public class DocumentiFragment extends Fragment {
 
                 reference.child(fileName).setValue(url).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        if (folderName.equals("Uploads")) {
+                        if (folderName.equals("Uploads")) {  //docuementi che vanno visualizzati in il mio Centro
 
                             UploadedFile uploadedFile = new UploadedFile(fileName, url);
                             fileListUploads.add(uploadedFile);
@@ -399,7 +401,7 @@ public class DocumentiFragment extends Fragment {
                             fileAdapter.notifyDataSetChanged();
                             fetchUploads();
 
-                        } else if (folderName.equals("DocumentiUtili")) {
+                        } else if (folderName.equals("DocumentiUtili")) { //documenti da far visualizzare nella sezione DocumentiUtili di media
                             UploadedFile uploadedFile = new UploadedFile(fileName, url);
                             fileListDocumentiUtili.add(uploadedFile);
                             fileAdapter2.notifyDataSetChanged();

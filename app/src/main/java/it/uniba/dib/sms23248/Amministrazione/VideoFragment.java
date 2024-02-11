@@ -336,14 +336,14 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
                 } else {
                     fetchVideoGenerico();
                     videoAdapterGen.notifyDataSetChanged();
-                }
+                    }
 
                 Toast.makeText(getContext(), deletedVideo, Toast.LENGTH_SHORT).show();
             }).addOnFailureListener(e -> {
             });
         }).addOnFailureListener(e -> {
         });
-    }
+       }
 
 
 

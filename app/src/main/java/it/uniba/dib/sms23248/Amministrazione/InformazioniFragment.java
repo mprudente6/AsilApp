@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class InformazioniFragment extends Fragment {
 
-    private static final String TAG = "InformazioniFragment";
+
 
     EditText editNome;
     EditText editIndirizzo;
@@ -83,9 +83,7 @@ public class InformazioniFragment extends Fragment {
                     Toast.makeText(requireContext(),connesso, Toast.LENGTH_LONG).show();
                 }
 
-            });
-        } else {
-
+              });
         }
 
 
@@ -94,11 +92,12 @@ public class InformazioniFragment extends Fragment {
 
 
         return view;
-    }
+     }
 
 
 
-    private void fetchInformazioniCentro() {
+    private void fetchInformazioniCentro() {  //cerca il documento in CENTRI_ACCOGLIENZA che abbia lo stesso nome del Centro dello Staff
+                                              // e ne fa visualizzare i campi
         String errorStaffCollection=getString(R.string.errStaffcollection);
         CollectionReference centroAccoglienzaCollection = dbS.collection("CENTRI_ACCOGLIENZA");
         documentStaff.get()
@@ -130,15 +129,15 @@ public class InformazioniFragment extends Fragment {
 
                                         }
                                     })
-                                    .addOnFailureListener(e -> Log.e(TAG, "Error: " + e.getMessage()));
+                                    .addOnFailureListener(e -> Log.e("InformazioniFragment", "Error: " + e.getMessage()));
                         }
                     }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, errorStaffCollection + e.getMessage()));
+                .addOnFailureListener(e -> Log.e("InformazioniFragment", errorStaffCollection + e.getMessage()));
     }
 
 
-    private void salvaInformazioniFirestore() {
+    private void salvaInformazioniFirestore() {         //aggiorna il databse con i nuovi dati
         String connesso=getString(R.string.connessione);
         String aggiornaDati= getString(R.string.datiAggiornati);
         CollectionReference centroAccoglienzaCollection = dbS.collection("CENTRI_ACCOGLIENZA");
@@ -179,14 +178,14 @@ public class InformazioniFragment extends Fragment {
 
                                                         Toast.makeText(getContext(), aggiornaDati, Toast.LENGTH_SHORT).show();
                                                     })
-                                                    .addOnFailureListener(e -> Log.e(TAG, "Errore: " + e.getMessage()));
+                                                    .addOnFailureListener(e -> Log.e("InformazioniFragment", "Errore: " + e.getMessage()));
                                         }
                                     })
-                                    .addOnFailureListener(e -> Log.e(TAG, "Error: " + e.getMessage()));
+                                    .addOnFailureListener(e -> Log.e("InformazioniFragment", "Error: " + e.getMessage()));
                         }
                     }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Error: " + e.getMessage()));
+                .addOnFailureListener(e -> Log.e("InformazioniFragment", "Error: " + e.getMessage()));
     }
 
 
