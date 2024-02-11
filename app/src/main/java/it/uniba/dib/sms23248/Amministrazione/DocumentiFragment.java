@@ -115,9 +115,6 @@ public class DocumentiFragment extends Fragment {
         recyclerView2.setAdapter(fileAdapter2);
 
 
-
-
-
         fetchUploads();
         fetchDocumentiUtili();
 
@@ -134,7 +131,7 @@ public class DocumentiFragment extends Fragment {
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
                 }
-            }
+               }
         });
 
 
@@ -379,13 +376,13 @@ public class DocumentiFragment extends Fragment {
         String uploaded_file = getString(R.string.upload_pdf);
         UploadTask uploadTask = fileReference.putFile(pdfUri);
 
-        uploadTask.addOnSuccessListener(taskSnapshot -> {
+        uploadTask.addOnSuccessListener(taskSnapshot -> {    //si inserisce nello storage
             progressDialog.dismiss();
             Toast.makeText(requireContext(), uploaded_file, Toast.LENGTH_SHORT).show();
 
             fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
                 String url = uri.toString();
-                DatabaseReference reference = database.getReference(destinationPath);
+                DatabaseReference reference = database.getReference(destinationPath); //si inserisce nel realtime database
 
                 int index = destinationPath.indexOf('/');
 
@@ -557,10 +554,6 @@ public class DocumentiFragment extends Fragment {
                 String ErrorRemoveDB=getString(R.string.erroreDB);
                 String ErrorRemoveStorage=getString(R.string.erroreStorage);
                 String fileNotFound=getString(R.string.fileNotFound);
-
-
-
-
 
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
                     for (DataSnapshot fileSnapshot : categorySnapshot.getChildren()) {
