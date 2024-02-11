@@ -82,19 +82,13 @@ public class SpeseFragment extends Fragment {
     }
 
     private void calculatePercentagesAndDisplayChart(List<DocumentSnapshot> documents) {
-
-
         Map<String, Float> tipoTotalPrice = new HashMap<>();
         int currentMonth = getCurrentMonth();
 
-
         for (DocumentSnapshot document : documents) {
-
             String  dataF = document.getString("data");
              Long timestampMillis= DateConverter.convertDateToTimestamp(dataF);
-
             Date date = new Date(timestampMillis);
-
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
 
@@ -141,8 +135,6 @@ public class SpeseFragment extends Fragment {
         pieChart.invalidate();
         pieChart.setCenterTextSize(16f);
         Legend legend = pieChart.getLegend();
-
-
         legend.setOrientation(Legend.LegendOrientation.VERTICAL);
         legend.setXEntrySpace(10f);
         legend.setYOffset(60f);

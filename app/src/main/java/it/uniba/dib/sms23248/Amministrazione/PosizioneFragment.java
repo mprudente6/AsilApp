@@ -256,7 +256,19 @@ public class PosizioneFragment extends Fragment {
                         String centro = documentSnapshot.getString("Centro");
                         if (centro != null) {
 
-                            retrieveCentroAccoglienzaDocument(centro);
+                            db.collection("CENTRI_ACCOGLIENZA")
+                                    .whereEqualTo("Nome", centro)
+                                    .get()
+                                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                                        if (!queryDocumentSnapshots.isEmpty()) {
+
+                                            documentRef = queryDocumentSnapshots.getDocuments().get(0).getReference();
+
+                                            retrievePositionFromFirestore(documentRef);
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                    });
                         }
                     }
                 })
@@ -264,22 +276,7 @@ public class PosizioneFragment extends Fragment {
                 });
     }
 
-    private void retrieveCentroAccoglienzaDocument(String centro) {
 
-        db.collection("CENTRI_ACCOGLIENZA")
-                .whereEqualTo("Nome", centro)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
-
-                        documentRef = queryDocumentSnapshots.getDocuments().get(0).getReference();
-
-                        retrievePositionFromFirestore(documentRef);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                });
-    }
 
 
 

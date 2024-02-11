@@ -83,7 +83,7 @@ public class CentroAccoglienza extends AppCompatActivity {
         fetchDataFromDatabase();
         fileAdapter.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(UploadedFile uploadedFile) {
+            public void onDownloadClick(UploadedFile uploadedFile) {
 
                 startDownload(uploadedFile.getFileUrl(), uploadedFile.getFileName());
             }

@@ -48,7 +48,7 @@ public class FileAdapterRichiedenti extends RecyclerView.Adapter<FileAdapter.Vie
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onItemClick(uploadedFile);
+                    listener.onDownloadClick(uploadedFile);
                 }
             }
         });

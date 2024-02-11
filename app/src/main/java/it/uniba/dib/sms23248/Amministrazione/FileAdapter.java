@@ -29,7 +29,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(UploadedFile uploadedFile);
+        void onDownloadClick(UploadedFile uploadedFile);
 
         void onDeleteClick(UploadedFile uploadedFile);
     }
@@ -56,7 +56,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onItemClick(uploadedFile);
+                    listener.onDownloadClick(uploadedFile);
                 }
             }
         });

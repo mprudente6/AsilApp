@@ -53,7 +53,7 @@ public class FileAdapterCentro extends RecyclerView.Adapter<FileAdapter.ViewHold
             public void onClick(View v) {
 
                 if (listener != null) {
-                    listener.onItemClick(uploadedFile);
+                    listener.onDownloadClick(uploadedFile);
                 }
             }
         });

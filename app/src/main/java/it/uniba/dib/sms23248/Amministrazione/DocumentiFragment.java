@@ -182,7 +182,7 @@ public class DocumentiFragment extends Fragment {
 
         fileAdapter.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(UploadedFile uploadedFile) {
+            public void onDownloadClick(UploadedFile uploadedFile) {
 
                 downloadFile(uploadedFile.getFileUrl());
             }
@@ -199,7 +199,7 @@ public class DocumentiFragment extends Fragment {
         });
         fileAdapter2.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(UploadedFile uploadedFile) {
+            public void onDownloadClick(UploadedFile uploadedFile) {
                 downloadFile(uploadedFile.getFileUrl());
             }
 

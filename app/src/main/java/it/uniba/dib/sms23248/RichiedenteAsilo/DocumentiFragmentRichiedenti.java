@@ -76,7 +76,7 @@ public class DocumentiFragmentRichiedenti extends Fragment {
 
         fileAdapter.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(UploadedFile uploadedFile) {
+            public void onDownloadClick(UploadedFile uploadedFile) {
 
                 downloadFile(uploadedFile.getFileUrl(), uploadedFile.getFileName());
             }

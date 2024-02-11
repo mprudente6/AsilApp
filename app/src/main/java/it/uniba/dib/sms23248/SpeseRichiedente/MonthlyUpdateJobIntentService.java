@@ -15,9 +15,6 @@ public class MonthlyUpdateJobIntentService extends JobIntentService {
     @Override
     protected void onHandleWork(Intent intent) {
         String uid = intent.getStringExtra("UID");
-
-
-
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         DocumentReference documentReference = firestore.collection("RICHIEDENTI_ASILO").document(uid);
         Log.d("BUDGET", "uid: " + uid);
