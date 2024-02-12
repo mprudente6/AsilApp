@@ -63,7 +63,15 @@ public class MainActivity extends AppCompatActivity {
         views_user.add(richiedente);
         views_user.add("Staff");
 
+/* Creazione adapter personalizzato per lo spinner che gestisce la selezione della vista utente (tra Richiedente Asilo e Staff).
+In base all'elemento selezionato viene intrapresa una determinata azione:
+-se setSelection prende come valore in ingresso 0, corrispondente alla stringa Scegli Utente , opzione di default in spinner, non esegue alcune azione;
+-se l'elemento selezionato è diverso da 0,si chiama il metodo getItemPosition che confronta il valore assegnato alla String Item con la posizione dell'elemento presa in input
+-se l'elemento selezionato da setItemPosition corrisponde alla stringa Richiedente Asilo, l'utente è condotto all'activity AccessoRichiedenteAsilo
+-se l'elemento selezionato da setItemPosition corrisponde alla stringa Staff,sarà aperta l'activity AccessoStaff
 
+
+*/
 
 
         UserSpinnerAdapter adapterChoice = new UserSpinnerAdapter(this, android.R.layout.simple_spinner_item, views_user.toArray(new String[0]));
@@ -111,12 +119,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (parent.getItemAtPosition(position).equals(utenteDemo)) {
-                    // Clear the selection
                     demo.setSelection(0);
                 } else {
                     String item = parent.getItemAtPosition(position).toString();
-
-                    // Clear the selection
                     demo.setSelection(0);
 
                     if (item.equals(richiedente)) {
@@ -142,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // MULTILINGUA
+        /*L'opzione multilingua è gestita da uno spinner, le due opzioni sono rappresentate dalle bandiere dei due paesi, che sono Italia e Regno Unito
+         * Se viene selezionata la bandiera italiana, essendo la lingua italiana impostata come lingua di default, non viene intrapresa alcuna azione;
+         * se viene selezionata la bandiera britannica, si esegue la traduzione dell'app in lingua inglese */
 
         List<String> languages = Arrays.asList("","ITA", "ENG");
 
@@ -195,22 +203,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    /*I metodi elencati di seguito signInDemoUserAsRichiedente() e signInDemoUserAsStaff() accettano l'utente Demo che non
+    esegue autenticazione o registrazione,che ricopre il ruolo di entrambi gli utenti, Richiedente Asilo e Staff
+    ed utilizza il servizio FirebaseAuth.
+In base alla selezione effettuata nello spinner dell'utente Demo, tra le due opzioni  Richiedente e Staff, saranno aperte rispettivamente
+le schermate homeR o HomeS.
+    * */
     private void signInDemoUserAsRichiedente() {
         String autFailed=getString(R.string.autenticaFallito);
 
-        // Simulate login process for demo user using FirebaseAuth
         mAuth.signInWithEmailAndPassword("utentedemo@gmail.com", "password")
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Sign in success, update UI or navigate to the appropriate activity
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            // The user is signed in, navigate to the appropriate activity
                             Intent intent = new Intent(MainActivity.this, HomeR.class);
                             startActivity(intent);
                         }
                     } else {
-                        // If sign in fails, display a message to the user.
                         Toast.makeText(MainActivity.this,autFailed,
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -220,19 +231,16 @@ public class MainActivity extends AppCompatActivity {
     private void signInDemoUserAsStaff() {
         String autFailed=getString(R.string.autenticaFallito);
 
-        // Simulate login process for demo user using FirebaseAuth
         mAuth.signInWithEmailAndPassword("utentedemo@gmail.com", "password")
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Sign in success, update UI or navigate to the appropriate activity
+
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            // The user is signed in, navigate to the appropriate activity
                             Intent intent = new Intent(MainActivity.this, HomeS.class);
                             startActivity(intent);
                         }
                     } else {
-                        // If sign in fails, display a message to the user.
                         Toast.makeText(MainActivity.this,autFailed, Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -247,5 +255,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
-

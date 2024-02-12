@@ -89,6 +89,10 @@ public class PasswordDimenticata extends AppCompatActivity {
         }
     }
 
+    /* questo metodo agisce dopo la modifica della password, viene chiesto all'utente di rieseguire
+    * l'accesso in qualità di Richiedente Asilo o Staff, ed in base all'elemento selezionato nello spinner utente
+    * si decide a quale schermata Home reindirizzarlo */
+
     private void updatePasswordAndRedirect(String uid, String newPassword, String userEmail) {
 
         DocumentReference userRoleRef = db.collection("RUOLI").document(userEmail);

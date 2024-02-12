@@ -10,7 +10,7 @@
     <string name="pw_contenitore1">Inserisci la password del contenitore per aprirlo</string>
     <string name="pw_contenitore2">Inserisci il codice la password del contenitore per aprirlo</string>
     <string name="emailUtente">Email</string>
-    <string name="titleEmailFragment">Inserisci l\'email dell\'utente</string>
+    <string name="titleEmailFragment">Inserisci l\'email dell'utente</string>
     <string name="pw_contenitore_codice">Codice</string>
     <string name="pw_contenitore_password">Password</string>
     <string name="pw_contenitore_invia">Invia</string>
@@ -68,7 +68,7 @@
     <string name="Prodotto">Prodotto: </string>
     <string name="Tipo">Tipo: </string>
     <string name="LatLong">Latitudine:     \n Longitudine:      </string>
-    <string name="ClickMap">Tocca un punto della mappa per salvare la posizione dle tuo centro</string>
+    <string name="ClickMap">Tocca un punto della mappa per salvare la posizione del tuo centro</string>
 
     <!-- Stringhe di HomeS, HomeR, Main(Benvenuto) -->
     <string name="Demo">Utente Demo</string>
@@ -192,6 +192,7 @@
     <string name="toastPwErrata">Password Errata! Riprovare</string>
     <string name="toastPweCodiceErrati">Password o codice errati! Riprovare</string>
     <string name="noContenitore">Contenitore non trovato</string>
+    <string name="noUtente">Utente non trovato</string>
 
     <string name="documentiUtili">Documenti utili</string>
     <string name="videoPerTe">Video per te</string>

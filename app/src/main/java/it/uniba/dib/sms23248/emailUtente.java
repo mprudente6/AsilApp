@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -32,9 +33,12 @@ public class emailUtente extends Fragment {
         Button Invia = rootView.findViewById((R.id.buttonInvia));
 
 
+
         Invia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Controllo per ricercare un utente tramite l'email verificando se presente nel database
                 HomeS.UID = "";
                 db.collection("RICHIEDENTI_ASILO")
                         .whereEqualTo("Email", Email.getText().toString())
@@ -43,12 +47,16 @@ public class emailUtente extends Fragment {
                             @Override
                             public void onComplete(Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        HomeS.UID = document.getId();
-                                        Intent i = new Intent(emailUtente.this.getActivity(), SaluteS.class);
-                                        startActivity(i);
+                                    if (!task.getResult().isEmpty()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            HomeS.UID = document.getId();
+                                            Intent i = new Intent(emailUtente.this.getActivity(), SaluteS.class);
+                                            startActivity(i);
+                                        }
+                                    } else {
+                                        // La query non ha restituito alcun risultato
+                                        Toast.makeText(emailUtente.this.getActivity(), R.string.noUtente, Toast.LENGTH_SHORT).show();
                                     }
-                                } else {
                                 }
                             }
                         });
