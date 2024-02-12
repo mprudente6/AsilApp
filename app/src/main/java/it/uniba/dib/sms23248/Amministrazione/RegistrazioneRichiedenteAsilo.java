@@ -103,13 +103,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
             }
         });
 
-        /*Vengono valutate condizioni che consentono la registrazione di un nuovo utente nel ruolo di Richiedente Asilo,
-        nello specifico si richiede che :
-         -ai campi mail e la password siano assegnati valori diversi da VUOTO;
-         -al campo password sia assegnata una stringa la cui lunghezza deve essere ALMENO DI 6 caratteri;
-         -al campo cellulare ed email sia assegnato un valore VALIDO;
-         */
-
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,13 +173,10 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                             }); } else {
                     Toast.makeText(RegistrazioneRichiedenteAsilo.this, noConnection, Toast.LENGTH_LONG).show();
                 }
-            }
+              }
         });
-    }
+      }
 
-    /*in questo metodo si ottengono i valori dei campi di input,si recuperano attraverso l'istanza db, riferita al database
-     Firestore Cloud i documenti ed i dettagli dello staff, per procedere con la registrazione del nuovo Richiedente Asilo creando
-      nuovi documenti per le collezioni che compongono il database Firestore*/
     private void registerUser(String uid) {
         String useremail = email.getText().toString().trim();
         String userpass=password.getText().toString().trim();
@@ -224,7 +214,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         documentCartellaClinica.set(cartella);
 
 
-
                         DocumentReference documentValutazione = db.collection("VALUTAZIONE").document(uid);
                         Map<String, Object> valutazione = new HashMap<>();
                         valutazione.put("Utente", uid);
@@ -242,7 +231,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         documentParametriUtenti.set(parametri);
 
 
-                        /* si crea un nuovo documento per l'utente con ruolo RICHIEDENTE ASILO */
                         Map<String, Object> richiedenteAsilo = new HashMap<>();
                         richiedenteAsilo.put("ID_RichiedenteAsilo", uid);
                         richiedenteAsilo.put("Nome", nomeValue);
@@ -298,9 +286,6 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         });
     }
 
-    /* questo metodo fa ottenere la data corrente, con la creazione di un oggetto di tipo DatePickerDialog, tramite cui
-    selezionare una data. La data scelta è il valore assegnato alla stringa datadinascita, uno dei campi da compilare
-    nel form di registrazione dell'applicazione */
 
     public void showDatePicker() {
         final Calendar currentDate = Calendar.getInstance();
