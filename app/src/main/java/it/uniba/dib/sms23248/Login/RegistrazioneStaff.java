@@ -37,7 +37,7 @@ import it.uniba.dib.sms23248.R;
 
 public class  RegistrazioneStaff extends AppCompatActivity {
 
-    private static final String TAG = "AccessoRichiedenteAsilo";
+    private static final String TAG = "AccessoRichiedenteAsilo"; 
     private FirebaseAuth mAuth;
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EditText email;
