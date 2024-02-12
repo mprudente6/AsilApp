@@ -22,7 +22,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -71,11 +73,12 @@ public class CartellaClinicaFragment extends Fragment {
         userRef.get().addOnSuccessListener(documentSnapshot -> {
             Map<String, Object> userData = documentSnapshot.getData();
 
-            for (Map.Entry<String, Object> entry : getDefaultFields().entrySet()) {
-                String field = entry.getKey();
-                Object value = userData != null ? userData.get(field) : null;
+            List<String> orderedFields = Arrays.asList("Anamnesi", "Diagnosi", "GruppoSanguigno", "Allergie", "Altezza", "Peso", "NoteMediche");
 
-                if (!"ID_RichiedenteAsilo".equals(field)) {  // escludi campi con dati sensilibi
+            for (String field : orderedFields) {
+                Object value = userData.get(field);
+
+                if (!"ID_RichiedenteAsilo".equals(field)) {  // escludi campi con dati sensibili
                     TextView textView = new TextView(requireContext());
                     textView.setText(getDisplayNameForField(field));
                     textView.setTypeface(null, Typeface.BOLD);
@@ -93,13 +96,13 @@ public class CartellaClinicaFragment extends Fragment {
                     dataLayout.addView(textView);
                     dataLayout.addView(editText);
                 }
-
-                submitButton.setVisibility(View.VISIBLE);
             }
+            submitButton.setVisibility(View.VISIBLE);
         }).addOnFailureListener(e -> {
-            // Errore
+            // Gestisci l'errore
         });
     }
+
 
     // mostra intestazioni puù leggibili quando necessario
     private String getDisplayNameForField(String field) {

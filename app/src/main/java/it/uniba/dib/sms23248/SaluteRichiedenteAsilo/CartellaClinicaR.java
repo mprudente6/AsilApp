@@ -207,7 +207,7 @@ public class CartellaClinicaR extends Fragment {
             }
         }
 
-        TextView fieldTextView = new TextView(requireContext());
+        TextView fieldTextView = new TextView(requireView().getContext());
         fieldTextView.setText(field);
         fieldTextView.setTypeface(null, Typeface.BOLD);
         fieldTextView.setPadding(26, 15, 6, 6);

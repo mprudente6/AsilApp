@@ -59,6 +59,7 @@
                 android:id="@+id/confirmButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_below="@id/personalDataLayout"
                 android:text="@string/salva"
                 android:padding="12dp"
