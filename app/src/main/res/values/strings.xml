@@ -121,7 +121,7 @@
     <string name="password_richiesta">Password obbligatoria!</string>
     <string name="login_con_successo">Autenticazione eseguita con successo!</string>
     <string name="connessione">Nessuna connessione ad internet.</string>
-    <string name="invio_reset">L\\\'email con il reset della password è stata inoltrata.Controlla in posta</string>
+    <string name="invio_reset">L\'email con il reset della password è stata inoltrata.Controlla in posta</string>
     <string name="resetFallito">Non è stata inoltrata l\'email con il reset della password.</string>
     <string name="erroreRecupero">Errore nel recupero del documento:</string>
     <string name="loginFallito">Autenticazione fallita.L\'utente è inesistente</string>

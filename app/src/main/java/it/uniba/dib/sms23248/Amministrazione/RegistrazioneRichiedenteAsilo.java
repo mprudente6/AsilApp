@@ -213,10 +213,7 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
                         cartella.put("Utente", uid);
                         documentCartellaClinica.set(cartella);
 
-                        DocumentReference documentTerapieUtenti = db.collection("TERAPIE_UTENTI").document(uid);
-                        Map<String, Object> terapia = new HashMap<>();
-                        cartella.put("Utente", uid);
-                        documentTerapieUtenti.set(terapia);
+
 
                         DocumentReference documentValutazione = db.collection("VALUTAZIONE").document(uid);
                         Map<String, Object> valutazione = new HashMap<>();
