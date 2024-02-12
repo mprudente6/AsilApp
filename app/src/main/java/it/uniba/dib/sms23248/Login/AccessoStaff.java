@@ -56,7 +56,6 @@ public class AccessoStaff extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +79,7 @@ public class AccessoStaff extends AppCompatActivity {
                         return;
                     }
 
-
+/*Ottengo con il metodo getUserRole() il ruolo dell'utente associato alla mail inserita*/
                     getUserRole(useremail, new UserRoleCallback() {
                         @Override
                         public void onSuccess(String userRole) {

@@ -122,19 +122,18 @@ public class AccessoRichiedenteAsilo extends AppCompatActivity {
                                     email.setError(invalidEmail);
                                 }
                             } else {
-                                // User doesn't have the required role, show error message
                                 Toast.makeText(AccessoRichiedenteAsilo.this, permissionR, Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(String errorMessage) {
-                            // Handle the failure, for example, show an error message
+
                             Toast.makeText(AccessoRichiedenteAsilo.this, errorMessage, Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
-                    // No internet connection, show a message to the user
+
                     Toast.makeText(AccessoRichiedenteAsilo.this,connession, Toast.LENGTH_LONG).show();
                 }
             }

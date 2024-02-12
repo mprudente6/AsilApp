@@ -177,6 +177,14 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         });
       }
 
+      /*: Questo metodo gestisce la registrazione dell'utente. Controlla la validità dei campi di input, con il riferimento al documento dello staff,
+       si controlla se l'utente che sta effettuando la registrazione di un nuovo Richiedente Asilo è già presente nel ruolo di staff.
+       Viene poi impostato il ruolo dell'utente come "RichiedenteAsilo" nel documento dei ruoli.
+       Vengono creati e inizializzati documenti per la cartella clinica, la valutazione, le spese e i parametri dell'utente nel database Firestore.
+Se la registrazione ha successo, la barra di avanzamento (progressBar) diventa invisibile, viene visualizzato un messaggio di successo e vengono eseguite azioni aggiuntive come l'autenticazione dello staff e l'impostazione di un allarme mensile.
+Se la registrazione fallisce, viene mostrato un messaggio di errore.
+
+      */
     private void registerUser(String uid) {
         String useremail = email.getText().toString().trim();
         String userpass=password.getText().toString().trim();
@@ -286,7 +294,12 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         });
     }
 
-
+/*Viene creato un oggetto DatePickerDialog che consente all'utente di selezionare una data.
+Il listener OnDateSetListener viene definito all'interno del costruttore del DatePickerDialog. Quando l'utente imposta una data nel dialogo, questo listener viene chiamato con i valori della data selezionata.
+All'interno del metodo onDateSet(), viene creato un oggetto String selectedDate che contiene la data selezionata dall'utente nel formato "giorno/mese/anno".
+Infine, la data selezionata viene assegnata e visualizzata nell'EditText datadinascita, uno dei campi di input da compilare alla registrazione di un nuovo Richiedente Asilo.
+*
+* */
     public void showDatePicker() {
         final Calendar currentDate = Calendar.getInstance();
         int year = currentDate.get(Calendar.YEAR);
@@ -319,7 +332,12 @@ public class RegistrazioneRichiedenteAsilo extends AppCompatActivity {
         String phoneRegex = "^[+]?[0-9]{10,13}$";
         return phoneNumber.matches(phoneRegex);
     }
-
+/*Viene ottenuto un riferimento al documento dello staff nel database Firestore utilizzando l'ID dello staff (uidStaff) e con una query al database è possibile ottenere .
+Viene aggiunto un listener OnCompleteListener per gestire il completamento dell'operazione asincrona. Se la query è completata con successo e il documento dello staff esiste,
+vengono ottenute le credenziali dello staff dal documento.Viene quindi utilizzato il metodo signInWithEmailAndPassword di Firebase Authentication per autenticare l'utente
+dello staff utilizzando le credenziali ottenute.Viene aggiunto un listener OnCompleteListener per gestire il completamento dell'autenticazione.
+ Se l'autenticazione ha successo, viene ottenuto l'utente corrente da Firebase Authentication.e tramite l'intent si avvia l'activity HomeS.
+ In caso contrario, viene visualizzato un messaggio di errore con Toast */
 
     private void getStaffCredentialsAndSignIn(String uid) {
         String Autfail=getString(R.string.autenticaFallito);
