@@ -73,21 +73,21 @@ public class CartellaClinicaFragment extends Fragment {
         userRef.get().addOnSuccessListener(documentSnapshot -> {
             Map<String, Object> userData = documentSnapshot.getData();
 
-            List<String> orderedFields = Arrays.asList("Anamnesi", "Diagnosi", "GruppoSanguigno", "Allergie", "Altezza", "Peso", "NoteMediche");
+            List<String> orderedFields = Arrays.asList("Anamnesi", "Diagnosi", "Gruppo sanguigno", "Allergie", "Altezza", "Peso", "Note mediche");
 
             for (String field : orderedFields) {
                 Object value = userData.get(field);
 
-                if (!"ID_RichiedenteAsilo".equals(field)) {  // escludi campi con dati sensibili
+                if (!"ID_RichiedenteAsilo".equals(field)) {
                     TextView textView = new TextView(requireContext());
-                    textView.setText(getDisplayNameForField(field));
+                    textView.setText(field);
                     textView.setTypeface(null, Typeface.BOLD);
                     textView.setPadding(6, 6, 6, 2);
                     textView.setTextSize(15);
 
                     EditText editText = new EditText(requireContext());
-                    editText.setText(value != null ? value.toString() : ""); // se il valore del campo è null, mostra il campo vuoto
-                    editText.setHint(getDisplayNameForField(field));
+                    editText.setText(value != null ? value.toString() : "");
+                    editText.setHint(field);
                     editText.getBackground().mutate().setColorFilter(ContextCompat.getColor(requireContext(), android.R.color.holo_blue_light), PorterDuff.Mode.SRC_ATOP);
                     int bottomPaddingInDp = 6;
                     int bottomPaddingInPx = (int) (bottomPaddingInDp * getResources().getDisplayMetrics().density);
@@ -99,21 +99,8 @@ public class CartellaClinicaFragment extends Fragment {
             }
             submitButton.setVisibility(View.VISIBLE);
         }).addOnFailureListener(e -> {
-            // Gestisci l'errore
+
         });
-    }
-
-
-    // mostra intestazioni puù leggibili quando necessario
-    private String getDisplayNameForField(String field) {
-        switch (field) {
-            case "GruppoSanguigno":
-                return "Gruppo Sanguigno";
-            case "NoteMediche":
-                return "Note Mediche";
-            default:
-                return field;
-        }
     }
 
     private Map<String, Object> getDefaultFields() {

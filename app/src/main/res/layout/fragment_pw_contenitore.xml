@@ -86,8 +86,8 @@
 
         <EditText
             android:id="@+id/CodiceContenitore"
-            android:layout_width="208dp"
-            android:layout_height="55dp"
+            android:layout_width="170dp"
+            android:layout_height="match_parent"
             android:drawablePadding="10dp"
             android:hint="@string/pw_contenitore_codice"
             android:inputType="text"
@@ -114,8 +114,8 @@
 
         <EditText
             android:id="@+id/PasswordContenitore"
-            android:layout_width="208dp"
-            android:layout_height="55dp"
+            android:layout_width="164dp"
+            android:layout_height="match_parent"
             android:drawablePadding="10dp"
             android:hint="@string/password"
             android:inputType="textPassword"
