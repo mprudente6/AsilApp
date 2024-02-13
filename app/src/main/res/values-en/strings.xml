@@ -190,4 +190,5 @@
     <string name="documentiUtili">Useful documents</string>
     <string name="videoPerTe">Videos for you</string>
     <string name="errore">Error:</string>
+    <string name="recupero_password">Reset Password</string>
 </resources>
