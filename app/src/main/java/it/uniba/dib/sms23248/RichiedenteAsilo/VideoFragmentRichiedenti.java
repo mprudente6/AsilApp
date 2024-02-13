@@ -31,19 +31,12 @@ import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
 import it.uniba.dib.sms23248.R;
 
 public class VideoFragmentRichiedenti extends Fragment implements VideoAdapterRichiedenti.OnDownloadClickListener {
-
-    private static final int PICK_VIDEO_REQUEST_GEN = 1;
-    private static final int PICK_VIDEO_REQUEST_DONNA = 2;
     private View view;
-    private Uri selectedVideoUri;
     private StorageReference storageReference;
     private VideoAdapterRichiedenti videoAdapterRichiedenti;
     private List<VideoModel> videoList;
     private RecyclerView recyclerView;
     private TextView textVideoName;
-    private String targetFolder;
-
-    String genere;
 
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
