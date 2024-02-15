@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -65,11 +67,18 @@ public class CartellaClinicaR extends Fragment {
             }
         });
 
-        fetchUserDataFromFirestore();
 
 
         return view;
     }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        fetchUserDataFromFirestore();
+    }
+
 
     private void shareData() {
         String subject = "CARTELLA CLINICA";
@@ -138,7 +147,7 @@ public class CartellaClinicaR extends Fragment {
                     showToast("Errore durante l'ascolto delle modifiche della cartella clinica");
                     return;
                 }
-                List<String> orderedFields = Arrays.asList("Anamnesi", "Diagnosi", "GruppoSanguigno", "Allergie", "Altezza", "Peso", "NoteMediche");
+                List<String> orderedFields = Arrays.asList("Anamnesi", "Diagnosi", "Gruppo sanguigno", "Allergie", "Altezza", "Peso", "Note mediche");
 
                 if (documentSnapshot != null && documentSnapshot.exists()) {
                     Map<String, Object> userData = documentSnapshot.getData();
@@ -207,7 +216,7 @@ public class CartellaClinicaR extends Fragment {
             }
         }
 
-        TextView fieldTextView = new TextView(requireView().getContext());
+        TextView fieldTextView = new TextView(requireContext());
         fieldTextView.setText(field);
         fieldTextView.setTypeface(null, Typeface.BOLD);
         fieldTextView.setPadding(26, 15, 6, 6);
