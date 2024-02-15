@@ -37,22 +37,14 @@ public class qrCodeGenerato extends Fragment {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public qrCodeGenerato() {
-        // Required empty public constructor
+
     }
-
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         mAuth = FirebaseAuth.getInstance();
-
-        /*Button btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
-        btnCamera = (Button) getActivity().findViewById(R.id.apriContenitore);
-        btnCamera.setVisibility(View.INVISIBLE);*/
 
         CardView btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
         btnGenaraQr = getActivity().findViewById(R.id.generaQrRichiedente);
@@ -77,11 +69,6 @@ public class qrCodeGenerato extends Fragment {
         CardView btnInformazioniSalute = getActivity().findViewById(R.id.cardSaluteR);
         btnInformazioniSalute = getActivity().findViewById(R.id.cardSaluteR);
         btnInformazioniSalute.setVisibility(View.INVISIBLE);
-
-        /*Spinner spinnerLingua = (Spinner) getActivity().findViewById(R.id.languageList);
-        spinnerLingua = (Spinner) getActivity().findViewById(R.id.languageList);
-        spinnerLingua.setVisibility(View.INVISIBLE);*/
-
 
         View rootView = inflater.inflate(R.layout.fragment_qr_code_generato, container, false);
 
@@ -127,6 +114,7 @@ public class qrCodeGenerato extends Fragment {
         if (currentUser != null) {
             String uid = currentUser.getUid();
 
+            //Generazione Codice QR sulla base dell UID dell'utente loggato come Richiedente Asilo
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                 try {
                     BitMatrix bitMatrix = multiFormatWriter.encode(uid, BarcodeFormat.QR_CODE, 300, 300);

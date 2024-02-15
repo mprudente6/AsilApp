@@ -75,7 +75,7 @@ public class Contenitore extends AppCompatActivity {
 
                 }
                 else{
-                    //builder.setMessage(result.getContents());
+
                     builder.setMessage(getString(R.string.noContenitore));
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
                     {
