@@ -91,7 +91,8 @@ public class DocumentiFragmentRichiedenti extends Fragment {
 
     }
 
-    private void fetchDataFromDatabase() {
+    private void fetchDataFromDatabase() { //Recupera tutti i dati dal database, se ci sono delle modifihe nel db svuota la lista
+                                            //e la ripopola con tutti i file aggiornati
         DatabaseReference documentiUtiliReference = database.getReference("DocumentiUtili");
         documentiUtiliReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -137,7 +138,8 @@ public class DocumentiFragmentRichiedenti extends Fragment {
         });
     }
 
-    public void downloadFile(String fileUrl, String fileName) {
+    public void downloadFile(String fileUrl, String fileName) { //se si riesce a connettere al DB passa i campi a
+                                                                //startDownload((downloadUrl, filename);) altrimenti mostra errore
         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(fileUrl);
 
         storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -165,7 +167,8 @@ public class DocumentiFragmentRichiedenti extends Fragment {
             return filePath;
         }
     }
-    private void startDownload(String url, String fileName) {
+    private void startDownload(String url, String fileName) { //imposta tutti i campi del downloadManager e successivamente
+                                                                //mette il download in coda
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         String fileNameOnly = getFileNameFromPath(fileName);
         request.setTitle(fileNameOnly);

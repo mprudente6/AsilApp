@@ -29,6 +29,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import it.uniba.dib.sms23248.RichiedenteAsilo.CentroAccoglienza;
 import it.uniba.dib.sms23248.RichiedenteAsilo.MappaCentro;
 import it.uniba.dib.sms23248.RichiedenteAsilo.MediaRichiedente;
 import it.uniba.dib.sms23248.SaluteRichiedenteAsilo.SaluteR;

@@ -67,7 +67,7 @@
             android:name=".RichiedenteAsilo.MappaCentro"
             android:exported="false" />
         <activity
-            android:name=".CentroAccoglienza"
+            android:name=".RichiedenteAsilo.CentroAccoglienza"
             android:exported="false" />
         <activity
             android:name=".Login.PasswordDimenticata"

@@ -1,24 +1,14 @@
-package it.uniba.dib.sms23248;
-
-import static android.content.ContentValues.TAG;
-
-import static androidx.core.content.ContentProviderCompat.requireContext;
+package it.uniba.dib.sms23248.RichiedenteAsilo;
 
 import android.app.DownloadManager;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.OpenableColumns;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,8 +32,9 @@ import java.util.List;
 
 import it.uniba.dib.sms23248.Amministrazione.FileAdapter;
 import it.uniba.dib.sms23248.Amministrazione.UploadedFile;
+import it.uniba.dib.sms23248.FileAdapterCentro;
 import it.uniba.dib.sms23248.NetworkAvailability.NetworkChangeReceiver;
-import it.uniba.dib.sms23248.NetworkAvailability.NetworkUtils;
+import it.uniba.dib.sms23248.R;
 
 public class CentroAccoglienza extends AppCompatActivity {
 
