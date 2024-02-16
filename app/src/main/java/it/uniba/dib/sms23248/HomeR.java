@@ -165,7 +165,7 @@ public class HomeR extends AppCompatActivity {
         PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.inflate(R.menu.menu_bar); // Create a separate menu resource file
 
-        // Set up the item click listener for the PopupMenu
+      
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

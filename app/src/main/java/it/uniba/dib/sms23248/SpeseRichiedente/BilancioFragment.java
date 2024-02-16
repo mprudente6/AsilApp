@@ -128,6 +128,9 @@ public class BilancioFragment extends Fragment {
 
 
 
+
+
+
      void loadBudget() {
          documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
              @Override
@@ -216,6 +219,10 @@ public class BilancioFragment extends Fragment {
 
     private void displayTotSett(Double totSett) {
 
+        if (!isAdded()) {
+            return;
+        }
+
         String spesaSett = getString(R.string.Spesasettimana);
 
 
@@ -285,6 +292,10 @@ public class BilancioFragment extends Fragment {
 
 
     private void displayTotMese(Double totMese) {
+
+        if (!isAdded()) {
+            return;
+        }
         String spesaMese = getString(R.string.SpesaMensile);
         String text = String.format(Locale.getDefault(), spesaMese+" "+"%.2f€", totMese);
 

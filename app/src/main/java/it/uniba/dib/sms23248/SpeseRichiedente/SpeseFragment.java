@@ -82,6 +82,10 @@ public class SpeseFragment extends Fragment {
     }
 
     private void calculatePercentagesAndDisplayChart(List<DocumentSnapshot> documents) {
+
+        if (!isAdded()) {
+            return;
+        }
         Map<String, Float> tipoTotalPrice = new HashMap<>();
         int currentMonth = getCurrentMonth();
 

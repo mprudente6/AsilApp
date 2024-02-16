@@ -2,10 +2,6 @@ package it.uniba.dib.sms23248.NetworkAvailability;
 
 
 
-
-
-
-
 import static java.security.AccessController.getContext;
 
 

@@ -197,5 +197,6 @@
     <string name="documentiUtili">Documenti utili</string>
     <string name="videoPerTe">Video per te</string>
     <string name="errore">Errore: </string>
+    <string name="bilancio">Bilancio spese</string>
     <string name="recupero_password">Recupero Password</string>
 </resources>
