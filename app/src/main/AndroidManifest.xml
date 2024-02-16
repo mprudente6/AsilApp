@@ -53,6 +53,7 @@
             android:exported="false" />
         <activity
             android:name=".ProfiloActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ProfiloRichiedenteAsilo.AnagraficaActivity"
@@ -63,6 +64,7 @@
         <activity
             android:name=".SpeseRichiedente.Spese"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".RichiedenteAsilo.MappaCentro"

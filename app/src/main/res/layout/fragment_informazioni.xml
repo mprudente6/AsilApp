@@ -63,7 +63,6 @@
                 android:layout_marginBottom="8dp"
                 android:inputType="textMultiLine"
                 android:lines="7"
-
                 android:minLines="4"
                 android:padding="7dp"
                 android:textSize="15dp" />
@@ -126,6 +125,7 @@
             <EditText
                 android:id="@+id/editTel"
                 android:layout_width="0dp"
+                android:textSize="16dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:inputType="phone"
@@ -172,6 +172,7 @@
             <EditText
                 android:id="@+id/editLink"
                 android:layout_width="0dp"
+                android:textSize="16dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
@@ -207,6 +208,7 @@
             <EditText
                 android:id="@+id/editEmail"
                 android:layout_width="0dp"
+                android:textSize="16dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
@@ -241,6 +243,7 @@
             <EditText
                 android:id="@+id/editIndirizzo"
                 android:layout_width="0dp"
+                android:textSize="16dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
@@ -298,6 +301,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
+                android:textSize="16dp"
                 android:inputType="none"
 
                 />

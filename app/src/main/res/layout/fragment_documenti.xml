@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Amministrazione.DocumentiFragment">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+
 
     <Button
         android:id="@+id/selectFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:backgroundTint="#076aec"
         android:layout_alignParentTop="true"
         android:layout_marginStart="26dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#076aec"
         android:text="@string/seleziona" />
 
     <Button
@@ -40,20 +38,20 @@
         android:layout_below="@id/selectFile"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="128dp"
-        android:layout_marginTop="346dp"
+        android:layout_marginTop="307dp"
         android:backgroundTint="#076aec"
         android:text="Upload Documenti Utili" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
-        android:layout_width="393dp"
-        android:layout_height="253dp"
+        android:layout_width="385dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/upload"
 
 
         android:layout_centerHorizontal="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="285dp"
+        android:layout_marginTop="259dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="275dp" />
 
@@ -71,8 +69,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="397dp"
-        android:layout_height="217dp"
+        android:layout_width="391dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/upload"
 
 
@@ -83,4 +81,3 @@
         android:layout_marginBottom="275dp" />
 
 </RelativeLayout>
-</ScrollView>
