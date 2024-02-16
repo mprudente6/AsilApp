@@ -474,10 +474,4 @@ public class ParametriMediciFragment extends Fragment implements SensorEventList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-
-    private void openHomeS() {
-        // naviga nell'activity HomeS
-        Intent intent = new Intent(ParametriMediciFragment.this.getActivity(), HomeS.class);
-        startActivity(intent);
-    }
 }
