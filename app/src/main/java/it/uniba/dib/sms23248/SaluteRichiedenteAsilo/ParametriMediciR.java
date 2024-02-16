@@ -133,7 +133,7 @@ public class ParametriMediciR extends Fragment {
                                 Object fieldValue = entry.getValue();
 
                                 // escludi campi con dati sensibili e che non sono valori risultanti da misurazioni
-                                if (!fieldName.equals("Utente") && !fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
+                                if (!fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
                                     float value = ((Number) fieldValue).floatValue();
 
                                     // considera solo i valori diversi da 0
@@ -438,7 +438,7 @@ public class ParametriMediciR extends Fragment {
             String fieldName = entry.getKey();
             Object fieldValue = entry.getValue();
 
-            if (!fieldName.equals("Utente") && !fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
+            if (!fieldName.equals("ID_RichiedenteAsilo") && !fieldName.equals("DataVisita")) {
                 float value = ((Number) fieldValue).floatValue();
 
                 if (value != 0) {

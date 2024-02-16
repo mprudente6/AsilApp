@@ -161,7 +161,7 @@ public class CartellaClinicaR extends Fragment {
                         }
                     }
 
-                    if (allFieldsAreEmpty(userData, "Utente")) {
+                    if (allFieldsAreEmpty(userData, "ID_RichiedenteAsilo")) {
                         // se tutti i campi sono vuoti
                         displayMessage("La tua cartella clinica non è stata ancora compilata.\n\nVedrai i tuoi dati dopo la prima visita.");
                     }

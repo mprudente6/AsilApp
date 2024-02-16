@@ -103,18 +103,6 @@ public class CartellaClinicaFragment extends Fragment {
         });
     }
 
-    private Map<String, Object> getDefaultFields() {
-        // nomi campi da mostrare
-        String[] fields = {"Allergie", "Altezza", "Anamnesi", "Diagnosi", "GruppoSanguigno", "NoteMediche", "Peso", "ID_RichiedenteAsilo"};
-
-        Map<String, Object> defaultFields = new HashMap<>();
-        for (String field : fields) {
-            defaultFields.put(field, userId);
-        }
-
-        return defaultFields;
-    }
-
     // aggiorna salvando i dati modificati nel db
     private void updateDataInFirestore() {
         hideKeyboard();
