@@ -157,10 +157,14 @@ public class  RegistrazioneStaff extends AppCompatActivity {
                                 String email=currentUser.getEmail();
 
                                 //inserimento dati in Firebase database
+                                //Crea un riferimento a un documento nella collezione "RUOLI" di Firestore utilizzando l'email dell'utente come identificatore univoco
+                                // e lo salva nel documento RUOLI stesso
                                 DocumentReference documentRuoli = db.collection("RUOLI").document(email);
                                 Map<String, Object> ruoli = new HashMap<>();
                                 ruoli.put("Ruolo", "Staff");
                                 documentRuoli.set(ruoli);
+
+                                //Crea un riferimento a un documento nella collezione "STAFF" di Firestore utilizzando l'UID utente come identificatore univoco con salvataggio
 
                                 DocumentReference documentStaff = db.collection("STAFF").document(uid);
 
@@ -174,8 +178,12 @@ public class  RegistrazioneStaff extends AppCompatActivity {
 
                                 documentStaff
                                         .set(RichiedenteAsilo)
+                                        // Viene aggiunto un listener per gestire il successo dell'operazione di inserimento dei dati in Firestore.
+                                        // Se l'operazione ha successo, viene visualizzato un messaggio di successo e l'utente viene reindirizzato alla pagina di accesso dello staff.
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
+
+
                                             public void onSuccess(Void aVoid) {
                                                 progressBar.setVisibility(View.GONE);
                                                 Toast.makeText(RegistrazioneStaff.this,regSuccess, Toast.LENGTH_SHORT).show();
@@ -201,6 +209,7 @@ public class  RegistrazioneStaff extends AppCompatActivity {
             }
         });
 
+        //Gestisce il click sul pulsante di reindirizzamento per effettuare il login e ricondurre l'utente alla pagina di accesso dello staff.
         loginRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

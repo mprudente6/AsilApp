@@ -73,7 +73,6 @@ In base all'elemento selezionato viene intrapresa una determinata azione:
 
 */
 
-
         UserSpinnerAdapter adapterChoice = new UserSpinnerAdapter(this, android.R.layout.simple_spinner_item, views_user.toArray(new String[0]));
         adapterChoice.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         choice.setAdapter(adapterChoice);

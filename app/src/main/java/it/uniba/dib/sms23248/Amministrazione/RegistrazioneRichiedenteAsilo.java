@@ -367,8 +367,8 @@ dello staff utilizzando le credenziali ottenute.Viene aggiunto un listener OnCom
                                             Intent intent= new Intent(RegistrazioneRichiedenteAsilo.this, HomeS.class);
                                             startActivity(intent);
                                         } else {
-
-                                            Toast.makeText(RegistrazioneRichiedenteAsilo.this, Autfail + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegistrazioneRichiedenteAsilo.this, Autfail + task.getException().getMessage(),
+                                                    Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });

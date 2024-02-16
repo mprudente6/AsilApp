@@ -43,4 +43,4 @@ public class FlagSpinnerAdapter extends ArrayAdapter<String> {
 
         return view;
     }
-}
+  }

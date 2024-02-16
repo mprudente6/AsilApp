@@ -174,13 +174,12 @@ public class AccessoStaff extends AppCompatActivity {
                                                 }
                                             }, 10000);
                                         } else {
-                                            // Password reset email sending failed
                                             Toast.makeText(AccessoStaff.this, resetFallito, Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
                     } else {
-                        // No internet connection, show a message to the user
+
                         Toast.makeText(AccessoStaff.this, connessione, Toast.LENGTH_LONG).show();
                     }
                 } else {
