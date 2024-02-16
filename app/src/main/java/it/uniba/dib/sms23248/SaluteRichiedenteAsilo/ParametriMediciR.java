@@ -28,6 +28,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -119,10 +120,29 @@ public class ParametriMediciR extends Fragment {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        List<DocumentSnapshot> documents = task.getResult().getDocuments();
+
+                        // Ordina i documenti dal più vecchio al più recente basando l'ordinamento sul valore del campo DataVisita
+                        // (da String a Date)
+                        Collections.sort(documents, (doc1, doc2) -> {
+                            String dateValue1 = doc1.getString("DataVisita");
+                            String dateValue2 = doc2.getString("DataVisita");
+
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            try {
+                                Date date1 = dateFormat.parse(dateValue1);
+                                Date date2 = dateFormat.parse(dateValue2);
+                                return date1.compareTo(date2); // confronta le date
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            return 0;
+                        });
+
                         Map<String, List<BarEntry>> fieldEntriesMap = new HashMap<>();
                         List<String> dateValues = new ArrayList<>();
 
-                        for (QueryDocumentSnapshot document : task.getResult()) {
+                        for (DocumentSnapshot document : documents) {
                             String dateValue = document.getString("DataVisita");
                             dateValues.add(dateValue);
 
