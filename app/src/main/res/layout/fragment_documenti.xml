@@ -38,20 +38,20 @@
         android:layout_below="@id/selectFile"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="128dp"
-        android:layout_marginTop="307dp"
+        android:layout_marginTop="290dp"
         android:backgroundTint="#076aec"
         android:text="@string/Upload2" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
-        android:layout_width="385dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/upload"
+        android:layout_width="391dp"
+        android:layout_height="150dp"
+        android:layout_below="@id/upload2"
 
 
         android:layout_centerHorizontal="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="259dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="275dp" />
 
@@ -70,7 +70,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="391dp"
-        android:layout_height="wrap_content"
+        android:layout_height="168dp"
         android:layout_below="@id/upload"
 
 
