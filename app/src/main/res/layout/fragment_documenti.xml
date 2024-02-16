@@ -29,7 +29,7 @@
         android:layout_marginStart="128dp"
         android:layout_marginTop="63dp"
         android:backgroundTint="#076aec"
-        android:text="Upload Centro" />
+        android:text="@string/Upload1" />
 
     <Button
         android:id="@+id/upload2"
@@ -40,7 +40,7 @@
         android:layout_marginStart="128dp"
         android:layout_marginTop="307dp"
         android:backgroundTint="#076aec"
-        android:text="Upload Documenti Utili" />
+        android:text="@string/Upload2" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"

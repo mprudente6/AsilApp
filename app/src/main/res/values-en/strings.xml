@@ -191,4 +191,6 @@
     <string name="videoPerTe">Videos for you</string>
     <string name="errore">Error:</string>
     <string name="recupero_password"> Password Recovery</string>
+    <string name="Upload1">Upload centre pdfs</string>
+    <string name="Upload2">Upload useful pdfs</string>
 </resources>

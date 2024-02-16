@@ -195,6 +195,8 @@
     <string name="noUtente">Utente non trovato</string>
 
     <string name="documentiUtili">Documenti utili</string>
+    <string name="Upload1">Upload documenti centro</string>
+    <string name="Upload2">Upload documenti utili</string>
     <string name="videoPerTe">Video per te</string>
     <string name="errore">Errore: </string>
     <string name="bilancio">Bilancio spese</string>
