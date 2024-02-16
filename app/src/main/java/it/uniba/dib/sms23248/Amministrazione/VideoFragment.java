@@ -156,7 +156,7 @@ public class VideoFragment extends Fragment implements VideoAdapter.OnDeleteClic
         String connessione = getString(R.string.connessione);
         if (NetworkUtils.isNetworkAvailable(requireContext())) {
             Intent intent = new Intent();
-            intent.setType("image/gif");;
+            intent.setType("image/gif");;  //carica video e gif. Abbiamo caricato gif per ragioni estetiche e per non intasare lo storage
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Video"), requestCode);
         } else {

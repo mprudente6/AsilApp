@@ -122,15 +122,9 @@ public class DocumentiFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.e("PDF", "On click");
-                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     selectPdf();
-                } else {
 
 
-                    ActivityCompat.requestPermissions(requireActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
-                }
                }
         });
 
